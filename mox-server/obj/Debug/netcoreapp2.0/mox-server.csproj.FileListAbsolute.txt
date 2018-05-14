@@ -1,0 +1,11 @@
+D:\Repositorio\mox\mox-server\bin\Debug\netcoreapp2.0\mox-server.deps.json
+D:\Repositorio\mox\mox-server\bin\Debug\netcoreapp2.0\mox-server.runtimeconfig.json
+D:\Repositorio\mox\mox-server\bin\Debug\netcoreapp2.0\mox-server.runtimeconfig.dev.json
+D:\Repositorio\mox\mox-server\bin\Debug\netcoreapp2.0\mox-server.dll
+D:\Repositorio\mox\mox-server\bin\Debug\netcoreapp2.0\mox-server.pdb
+D:\Repositorio\mox\mox-server\obj\Debug\netcoreapp2.0\mox-server.csprojAssemblyReference.cache
+D:\Repositorio\mox\mox-server\obj\Debug\netcoreapp2.0\mox-server.csproj.CoreCompileInputs.cache
+D:\Repositorio\mox\mox-server\obj\Debug\netcoreapp2.0\mox-server.AssemblyInfoInputs.cache
+D:\Repositorio\mox\mox-server\obj\Debug\netcoreapp2.0\mox-server.AssemblyInfo.cs
+D:\Repositorio\mox\mox-server\obj\Debug\netcoreapp2.0\mox-server.dll
+D:\Repositorio\mox\mox-server\obj\Debug\netcoreapp2.0\mox-server.pdb
