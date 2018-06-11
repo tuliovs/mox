@@ -10,7 +10,7 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "styleext": "sass"
         }
       },
       "architect": {
@@ -27,7 +27,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.sass",
+              "../mox-app/node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": []
           },

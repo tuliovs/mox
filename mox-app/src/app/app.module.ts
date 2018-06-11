@@ -3,19 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
-import { MaterialModule } from './app.material.module';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { HomeComponent } from './home/home.component';
+import { NavComponent } from './_shared/nav/nav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    NavComponent
   ],
   imports: [
-    MaterialModule,
+    Angular2FontawesomeModule,
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
@@ -24,7 +26,7 @@ import { HomeComponent } from './home/home.component';
     routing
   ],
   exports: [
-    MaterialModule
+
   ],
   providers: [
 
