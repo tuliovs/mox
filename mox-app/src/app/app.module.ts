@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { HomeComponent } from './home/home.component';
 import { NavComponent } from './_shared/nav/nav.component';
+import { CardComponent } from './_shared/magic/card/card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NavComponent
+    NavComponent,
+    CardComponent
   ],
   imports: [
     Angular2FontawesomeModule,
