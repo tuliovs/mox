@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MagicardService } from '../../../_mox/services';
+import { MoxMagiCardService } from '../../../_mox/mox.services';
 import { Card } from '../../../_scryfall/models';
 
 @Component({
@@ -11,7 +11,7 @@ import { Card } from '../../../_scryfall/models';
 export class CardComponent implements OnInit {
   @Input() cardId;
   private cardData: Card;
-  constructor(private _mcard: MagicardService ) { }
+  constructor(private _mcard: MoxMagiCardService ) { }
 
   ngOnInit() {
     this.getData();
@@ -20,7 +20,10 @@ export class CardComponent implements OnInit {
 
   getData() {
     this._mcard.getMagicCard(this.cardId).subscribe(
-      data => { this.cardData = data; },
+      data => {
+        this.cardData = data;
+        console.log('>>>> ', data);
+      },
       err => console.error(err),
       () => console.warn('done load card')
     );

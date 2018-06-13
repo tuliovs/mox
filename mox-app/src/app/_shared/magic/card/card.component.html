@@ -1,3 +1,16 @@
-<p>
-  card works!
-</p>
+<div>
+  <fieldset *ngIf="cardData">
+    <p><label>id: </label>{{cardData.id}}</p>
+    <p><label>mtgo_id: </label>{{cardData.mtgo_id}}</p>
+    <p><label>name: </label>{{cardData.name}}</p>
+    <p><label>lang: </label>{{cardData.lang}}</p>
+    <p><label>uri: </label>{{cardData.uri}}</p>
+    <p><label>scryfall_uri: </label>{{cardData.scryfall_uri}}</p>
+    <p><label>image_uris: </label>{{cardData.image_uris}}</p>
+    <p><label>mana_cost: </label>{{cardData.mana_cost}}</p>
+    <p><label>type_line: </label>{{cardData.type_line}}</p>
+    <p><label>colors: </label>{{cardData.colors}}</p>
+    <p><label>set_name: </label>{{cardData.set_name}}</p>
+    <p><label>rarity: </label>{{cardData.rarity}}</p>
+  </fieldset>
+</div>
