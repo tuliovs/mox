@@ -24,6 +24,9 @@ export class MoxMagiCardService {
     return this.http.get(uri + 'cards/' + cardId)
                 .pipe(
                   tap(),
+                  map(
+                    (res) => { res.json(); }
+                  ),
                   map( ( response: any) => {
                     return this.parseData(response);
                   } )
