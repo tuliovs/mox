@@ -1,3 +1,18 @@
-<p>
-  mox-card works!
-</p>
+<div>
+  <fieldset *ngIf="_card">
+    <div class="img" [ngStyle]="{ 'background-image': 'url(' + _card.image_uris.art_crop + ')' }">
+      </div>
+    <p><label>id: </label>{{_card.id}}</p>
+    <p><label>mtgo_id: </label>{{_card.mtgo_id}}</p>
+    <p><label>name: </label>{{_card.name}}</p>
+    <p><label>lang: </label>{{_card.lang}}</p>
+    <p><label>uri: </label>{{_card.uri}}</p>
+    <p><label>scryfall_uri: </label>{{_card.scryfall_uri}}</p>
+    <p><label>image_uris: </label>{{_card.image_uris}}</p>
+    <p><label>mana_cost: </label>{{_card.mana_cost}}</p>
+    <p><label>type_line: </label>{{_card.type_line}}</p>
+    <p><label>colors: </label>{{_card.colors}}</p>
+    <p><label>set_name: </label>{{_card.set_name}}</p>
+    <p><label>rarity: </label>{{_card.rarity}}</p>
+  </fieldset>
+</div>

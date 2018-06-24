@@ -1,0 +1,26 @@
+$gutter: 30px;
+$colluns: 12;
+
+.row{
+  margin-left:  ceil(($gutter / -2));
+  margin-right: floor(($gutter / -2));
+}
+[class*='col-'] {
+  float: left;
+  min-height: 1px;
+  position: relative;
+  box-sizing: border-box;
+  padding-left:  ceil(($gutter / 2));
+  padding-right: floor(($gutter / 2));
+}
+@for $i from 0 through $colluns {
+  .col-#{$i} {
+    width: percentage(($i / $colluns));
+  }
+  .col-offset-#{$i} {
+    margin-left: percentage(($i / $colluns));
+  }
+  .col-onset-#{$i} {
+    margin-right: percentage(($i / $colluns));
+  }
+}

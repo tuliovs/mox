@@ -1,0 +1,30 @@
+
+$fontPath: '/app/assets/fonts';
+
+@mixin setFontface($name, $file, $weight: 400, $style: normal) {
+	$filePath: '#{$fontPath}/#{$name}/#{$file}';
+
+	@font-face {
+		font-family: $name;
+		font-style: $style;
+		font-weight: $weight;
+		src: url('#{$filePath}.eot?') format('eot');
+		src: url('#{$filePath}.eot#iefix') format('eot'),
+			url('#{$filePath}.svg##{$file}') format('svg');
+	}
+};
+
+@include setFontface('Cursive', 'Audiowide', 300);
+// @include setFontface('Open Sans', 'OpenSans-Light', 300);
+// @include setFontface('Open Sans', 'OpenSans-LightItalic', 300, italic);
+// @include setFontface('Open Sans', 'OpenSans');
+// @include setFontface('Open Sans', 'OpenSans-Italic', 400, italic);
+// @include setFontface('Open Sans', 'OpenSans-SemiBold', 600);
+// @include setFontface('Open Sans', 'OpenSans-SemiBoldItalic', 600, italic);
+// @include setFontface('Open Sans', 'OpenSans-Bold', 700);
+// @include setFontface('Open Sans', 'OpenSans-BoldItalic', 700, italic);
+// @include setFontface('Open Sans', 'OpenSans-ExtraBold', 800);
+// @include setFontface('Open Sans', 'OpenSans-ExtraBoldItalic', 800, italic);
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
+@import url('https://fonts.googleapis.com/css?family=Audiowide|Exo+2:300,400,600,700');
