@@ -1,3 +1,37 @@
 <div class="main">
-  <a routerLink="/card/2ea8d5cb-cf7e-4194-8019-812b3f56cf20firebase login">Brainstorm</a>
+  <form class="search-box">
+      <section class="form-block">
+          <label>Card Search</label>
+          <div class="form-group">
+              <input type="text" #newParam id="requiredInput" required >
+              <button type="submit" class="btn btn-icon btn-primary" (click)="searchGo(newParam.value); $event.preventDefault()">
+                  <i class="material-icons">search</i>
+              </button>
+          </div>
+      </section>
+  </form>
+  <div *ngIf="settings_stats && searchResult.data" class="stats">
+    <p>[Total Results]: {{searchResult.total_cards}} | [Response Time]: {{resp_time}}ms</p>
+  </div>
+  <div class="search-result" *ngIf="searchResult.data && searchResult.data.length > 0">
+    <ol>
+      <li *ngFor="let item of searchResult.data">
+        <div>
+          <a routerLink='/card/{{item.id}}'>
+            <img class="img" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }" />
+          </a>
+          <span>[ {{item.rarity}} ]</span>
+          <section>
+            <h4>
+              {{item.name}}<label>{{item.mana_cost}}</label>
+            </h4>
+            <p class="description">
+              {{(item.oracle_text.length>140)? (item.oracle_text | slice:0:140)+'...':(item.oracle_text)}}
+            </p>
+          </section>
+        </div>
+      </li>
+    </ol>
+  </div>
+  <!-- <a routerLink="/card/2ea8d5cb-cf7e-4194-8019-812b3f56cf20firebase-admin@~5.4.0">Brainstorm</a> -->
 </div>

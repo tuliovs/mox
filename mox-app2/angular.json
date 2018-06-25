@@ -28,12 +28,16 @@
               "src/manifest.json"
             ],
             "styles": [
-              "../mox-app2/node_modules/onsenui/css/onsenui.css",
-              "../mox-app2/node_modules/onsenui/css/onsen-css-components.css",
               "src/styles/fontawesome-all.css",
-              "src/styles/theme.sass"
+              "src/styles/theme.sass",
+              "node_modules/@clr/ui/clr-ui.min.css",
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "node_modules/@clr/ui/clr-ui-dark.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/@clr/icons/clr-icons.min.js",
+              "node_modules/@webcomponents/custom-elements/custom-elements.min.js"
+            ]
           },
           "configurations": {
             "production": {

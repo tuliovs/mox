@@ -77,3 +77,12 @@ export interface RelatedUris {
   edhrec:          string;
   mtgtop8:         string;
 }
+
+export class List {
+  data: any[];
+  has_more: boolean;
+  next_page: string;
+  total_cards: number;
+  warnings: any[];
+
+}

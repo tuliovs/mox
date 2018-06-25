@@ -1,5 +1,4 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { OnsenModule } from 'ngx-onsenui';
 import { NgModule } from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -13,6 +12,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Browser } from 'protractor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ClarityModule } from '@clr/angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ScryfallSearchService } from './_application/_services/scryfall-services/search/scryfall-search.service';
 
 @NgModule({
   declarations: [
@@ -25,12 +27,14 @@ import { environment } from '../environments/environment';
     CommonModule,
     BrowserModule,
     HttpClientModule,
-    OnsenModule,
     AppRoutingModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    ClarityModule,
+    BrowserAnimationsModule
   ],
   providers: [
-    ScryfallCardService
+    ScryfallCardService,
+    ScryfallSearchService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
