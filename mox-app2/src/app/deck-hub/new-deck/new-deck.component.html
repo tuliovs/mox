@@ -1,0 +1,37 @@
+<div class="main">
+  <form class="search-box">
+    <section class="form-block">
+      <label>Deck Name</label>
+      <div class="form-group">
+        <input type="text" value="{{newDeck.name}}" name="iname" required>
+      </div>
+      <label>Deck Creator</label>
+      <div class="form-group">
+        <input type="text" readonly value="{{newDeck.owner}}">
+      </div>
+      <div class="form-group">
+        <div class="toggle-switch">
+          <input type="checkbox" id="ifroze" value="{{newDeck.froze}}">
+          <label for="ifroze">Froze</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="toggle-switch">
+          <input type="checkbox" id="ilegal" value="{{newDeck.legal}}" disabled>
+          <label for="ilegal">Legal</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="iformat">Format</label>
+        <div class="select">
+          <select id="iformat" [(ngModel)]="newDeck.format" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let f of formats" [value]="f">{{f}}</option>
+          </select>
+        </div>
+      </div>
+      <section class="form-block">
+        <button (click)="createDeck()" type="button" class="btn btn-primary">Save</button>
+      </section>
+    </section>
+  </form>
+</div>

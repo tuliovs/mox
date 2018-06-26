@@ -9,6 +9,9 @@
               </button>
           </div>
       </section>
+      <section class="form-block">
+        <button (click)="newDeck()" type="button" class="btn btn-primary">New Deck</button>
+      </section>
   </form>
   <div *ngIf="settings_stats && searchResult.data" class="stats">
     <p>[Total Results]: {{searchResult.total_cards}} | [Response Time]: {{resp_time}}ms</p>
