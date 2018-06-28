@@ -1,3 +1,37 @@
-<p>
-  deck-hub works!
-</p>
+<div *ngIf="auth.user | async; then authenticated else guest"></div>
+
+<ng-template #guest>
+  <h3>Hellow, guest!</h3>
+  <p>To start something in M0X.sys you have to loggin</p>
+  <button routerLink="/login" type="button" class="btn btn-primary">
+      <i class="fas fa-sign-in-alt"></i> Loggin
+  </button>
+</ng-template>
+
+<ng-template #authenticated>
+  <div *ngIf="deckList | async; then deckListed else emptyList"></div>
+
+  <ng-template #deckListed>
+    <div class="container">
+      <ol>
+        <li *ngFor="let deck of (deckList | async)">
+          <div class="cover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
+          <div class="content" (click)="deckSelected(deck)" >
+            <p style="vertical-align: text-top">
+              <span>[{{deck.format}}]</span> | <span>{{deck.public}}</span> | <span>{{deck.owner}}</span>
+            </p>
+            <p style="align-items: flex-end">
+              <label>{{deck.name}}</label> <span>{{deck.legal}}</span>
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </ng-template>
+
+  <ng-template #emptyList>
+    <div class="container">
+      <p>Empty Deck List</p>
+    </div>
+  </ng-template>
+</ng-template>

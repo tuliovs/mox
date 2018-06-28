@@ -3,11 +3,11 @@
     <section class="form-block">
       <label>Deck Name</label>
       <div class="form-group">
-        <input type="text" value="{{newDeck.name}}" name="iname" required>
+        <input type="text" [(ngModel)]="newDeck.name" value="{{newDeck.name}}" name="iname" required>
       </div>
       <label>Deck Creator</label>
       <div class="form-group">
-        <input type="text" readonly value="{{newDeck.owner}}">
+        <input type="text" readonly value="{{newDeck.ownerName}}">
       </div>
       <div class="form-group">
         <div class="toggle-switch">
@@ -24,7 +24,7 @@
       <div class="form-group">
         <label for="iformat">Format</label>
         <div class="select">
-          <select id="iformat" [(ngModel)]="newDeck.format" [ngModelOptions]="{standalone: true}">
+          <select id="iformat" [(ngModel)]="newDeck.format" [ngModelOptions]="{standalone: true}" required>
             <option *ngFor="let f of formats" [value]="f">{{f}}</option>
           </select>
         </div>

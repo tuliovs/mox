@@ -5,13 +5,14 @@ import { Card } from '../../../_models/_scryfall-models/models';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 @Injectable()
-export class ScryfallCardService {
-  constructor(private http: HttpClient) {}
-
-  url = `https://api.scryfall.com/cards`;
-
-  get(id: string): Observable<Card> {
-    return this.http.get<Card>(`${this.url}/${id}`);
+export class MoxCardService {
+  cardCollection: AngularFirestoreCollection<Card>;
+  card: Observable<Card[]>;
+  constructor (private afs: AngularFirestore) {
   }
 
+  fireStoreGet() {
+    this.cardCollection = this.afs.collection('cards');
+    this.card = this.cardCollection.valueChanges();
+  }
 }

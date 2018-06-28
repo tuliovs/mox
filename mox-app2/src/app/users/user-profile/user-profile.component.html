@@ -1,0 +1,19 @@
+<div *ngIf="auth.user | async; then authenticated else guest"></div>
+
+<ng-template #guest>
+  <h3>Hellow, guest!</h3>
+  <p>To start something in M0X.sys you have to loggin</p>
+  <button routerLink="/login">
+      <i class="material-icons">person</i> Loggin
+  </button>
+</ng-template>
+
+<ng-template #authenticated>
+  <div *ngIf="auth.user | async as user">
+    <h3>Oh boy! If it isn't {{user.nickName}}</h3>
+    <p>UID: {{user.uid}}</p>
+    <section class="form-block">
+        <button (click)="auth.signOut()" type="button" class="btn btn-primary">Sign Out</button>
+    </section>
+  </div>
+</ng-template>

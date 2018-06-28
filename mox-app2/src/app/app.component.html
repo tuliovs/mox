@@ -1,10 +1,12 @@
 <div class="main-container">
   <header class="header header-6">
-    <i (click)="viewNav = !viewNav" class="material-icons">menu</i>
+    <i (click)="viewNav = !viewNav" class="fas fa-bars"></i>
     <h4>Mox</h4>
+    <i [hidden]="_Deck"  class="fas fa-book deckIcon" style="opacity: 0.5;"></i>
+    <i [hidden]="!_Deck" class="fas fa-book-open deckIcon"></i>
   </header>
   <div class="content-container">
-      <div class="content-area">
+      <div class="content-area" (click)="viewNav = false">
         <!-- <clr-alert [clrAlertType]="'alert-item'" [clrAlertAppLevel]="false" [clrAlertSizeSmall]="true">
             <clr-alert-item>
                 <p class="alert-text">
@@ -16,9 +18,8 @@
       </div>
       <nav [hidden]="!viewNav" class="sidenav">
           <section class="sidenav-content">
-              <a routerLink="/" class="nav-link active">
-                  Home
-              </a>
+              <a routerLink="/" class="nav-link active">Home</a>
+              <a routerLink="/deckhub" class="nav-link">Decks</a>
               <!-- <section class="nav-group collapsible">
                   <input id="tabexample1" type="checkbox">
                   <label for="tabexample1">Collapsible Nav Element</label>
@@ -27,6 +28,12 @@
                       <li><a class="nav-link">Link 2</a></li>
                   </ul>
               </section> -->
+              <a routerLink="/user" class="nav-link user"
+                *ngIf="auth.user | async as user">
+                <div class="avatar" [ngStyle]="{ 'background-image': 'url(' + user.photoURL + ')' }"></div>
+                <label>{{user.displayName}}</label>
+                <i class="fas fa-address-card"></i>
+              </a>
           </section>
       </nav>
   </div>

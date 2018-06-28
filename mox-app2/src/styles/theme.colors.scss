@@ -64,8 +64,8 @@ $errorColor: #BBFF00;
 @function color($name, $variant: 1, $alpha: 1) {
   $finalColor: $errorColor;
 
-  @if map-has-key($colorsDark, $name) {
-    $finalColor: map-get($colorsDark, $name);
+  @if map-has-key($colors, $name) {
+    $finalColor: map-get($colors, $name);
 
     @if type-of($variant) != number {
       @if map-has-key($finalColor, $variant) {

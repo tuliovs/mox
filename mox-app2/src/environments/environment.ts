@@ -3,8 +3,18 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  moxurl: 'http://localhost:420/',
+  firebaseConfig: {
+    apiKey: 'AIzaSyCPEWNi0dsB5_rkYZzFXNgNePdlgZFLiKo',
+    authDomain: 'mox-mtg.firebaseapp.com',
+    databaseURL: 'https://mox-mtg.firebaseio.com',
+    projectId: 'mox-mtg',
+    storageBucket: 'mox-mtg.appspot.com',
+    messagingSenderId: '483320339910'
+  }
 };
+
 
 /*
  * In development mode, to ignore zone related error stack frames such as

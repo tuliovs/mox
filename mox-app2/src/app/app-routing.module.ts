@@ -5,13 +5,20 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { MoxCardComponent } from './_shared/mox-card/mox-card.component';
 import { DeckHubComponent } from './deck-hub/deck-hub.component';
 import { NewDeckComponent } from './deck-hub/new-deck/new-deck.component';
+import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless-auth.component';
+import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { LoginComponent } from './auth/login/login.component';
+import { AuthGuard } from 'src/app/karn/_services/auth.guard';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'card/:id', component: MoxCardComponent },
-  { path: 'deck', component: DeckHubComponent },
-  { path: 'deck/new', component: NewDeckComponent },
+  { path: 'deckhub', component: DeckHubComponent,  canActivate: [AuthGuard] },
+  { path: 'deck/new', component: NewDeckComponent,  canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent},
+  { path: 'user', component: UserProfileComponent,  canActivate: [AuthGuard]},
+  { path: 'nopass', component: PasswordlessAuthComponent},
   { path: '**', component: NotFoundComponent },
 ];
 

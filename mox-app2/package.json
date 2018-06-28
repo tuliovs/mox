@@ -24,16 +24,18 @@
     "@angular/router": "^6.0.6",
     "@angular/service-worker": "^6.0.6",
     "@clr/angular": "^0.12.0-rc.2",
+    "@clr/icons": "^0.12.0-rc.2",
+    "@clr/ui": "^0.12.0-rc.2",
+    "@webcomponents/custom-elements": "^1.0.0",
+    "angularfire2": "^5.0.0-rc.11",
     "core-js": "^2.5.4",
+    "firebase": "^5.1.0",
     "firebase-admin": "^5.12.1",
     "firebase-functions": "^1.1.0",
     "material-design-icons": "^3.0.1",
     "node-sass": "^4.9.0",
     "rxjs": "^6.0.0",
-    "zone.js": "^0.8.26",
-    "@clr/ui": "^0.12.0-rc.2",
-    "@clr/icons": "^0.12.0-rc.2",
-    "@webcomponents/custom-elements": "^1.0.0"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.1",

@@ -1,13 +1,22 @@
 
 export class MoxDeck {
-    cards: any[];
+    cards: MoxCardDeck[];
+    cover: string;
     format: string;
     froze: boolean;
     key: string;
     legal: boolean;
     name: string;
-    owner: string;
+    ownerId: string;
+    ownerName: string;
+    public: boolean;
     updated: any[];
+}
+
+export class MoxCardDeck {
+  cardId: string;
+  quantity: number;
+  side: number;
 }
 
   // "archetype": {
