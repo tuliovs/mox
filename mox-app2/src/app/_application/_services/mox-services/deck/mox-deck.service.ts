@@ -4,12 +4,13 @@ import { Observable, of, Subject } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { MoxDeck } from '../../../_models/_mox_models/MoxDeck';
 import { Card } from '../../../_models/_scryfall-models/models';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class MoxDeckService {
   private deckCollection: AngularFirestoreCollection<MoxDeck>;
   private deckDocument: AngularFirestoreDocument<MoxDeck>;
-  public workingDeck = new Subject<MoxDeck>();
+  public workingDeck = new Observable<MoxDeck>();
   constructor (private afs: AngularFirestore) {
   }
 
@@ -18,14 +19,12 @@ export class MoxDeckService {
   //   return this.workingDeck;
   // }
   public getWorkingDeck(): Observable<MoxDeck> {
-    return this.workingDeck.asObservable();
+    return this.workingDeck;
   }
 
   editDeck(d: MoxDeck) {
     this.deckCollection = this.afs.collection('decks');
-    this.deckCollection.doc(d.key).ref.onSnapshot( (doc) => {
-      this.workingDeck.next(<MoxDeck>doc.data());
-    });
+    this.workingDeck = this.deckCollection.doc<MoxDeck>(d.key).valueChanges();
   }
 
   setDeck(d: MoxDeck) {

@@ -28,6 +28,12 @@ $colors: (
   facebook:   #3B5998,
   instagram:  #C13584,
   youtube:    #FF0000,
+  notification: (
+    base:     #5E6066,
+    success:  #66CD6F,
+    warning:  #FF9900,
+    error:    #FF454A
+  )
 );
 // TODO Fix Themes
 $colorsDark: (

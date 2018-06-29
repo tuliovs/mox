@@ -12,8 +12,9 @@ import { AuthGuard } from 'src/app/karn/_services/auth.guard';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'card/:id', component: MoxCardComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'card/:id', component: MoxCardComponent, canActivate: [AuthGuard] },
   { path: 'deckhub', component: DeckHubComponent,  canActivate: [AuthGuard] },
   { path: 'deck/new', component: NewDeckComponent,  canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent},

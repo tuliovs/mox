@@ -9,19 +9,28 @@
 </ng-template>
 
 <ng-template #authenticated>
-  <div *ngIf="deckList | async; then deckListed else emptyList"></div>
+  <div *ngIf="(deckList) then deckListed else emptyList"></div>
 
   <ng-template #deckListed>
     <div class="container">
       <ol>
-        <li *ngFor="let deck of (deckList | async)">
+        <li *ngFor="let deck of deckList">
           <div class="cover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
           <div class="content" (click)="deckSelected(deck)" >
             <p style="vertical-align: text-top">
-              <span>[{{deck.format}}]</span> | <span>{{deck.public}}</span> | <span>{{deck.owner}}</span>
+              <span>[{{deck.format}}]</span> |
+              <span>
+                <i class="fas fa-lock" [hidden]="deck.public"></i>
+                <i class="fas fa-lock-open" [hidden]="!deck.public"></i>
+              </span> |
+              <span>{{deck.ownerName}}</span>
             </p>
             <p style="align-items: flex-end">
-              <label>{{deck.name}}</label> <span>{{deck.legal}}</span>
+              <label>{{deck.name}}</label>
+                <span>
+                  <i class="far fa-times-circle" [hidden]="deck.legal"></i>
+                  <i class="far fa-check-circle" [hidden]="!deck.legal"></i>
+                </span>
             </p>
           </div>
         </li>

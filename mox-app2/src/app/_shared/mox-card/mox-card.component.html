@@ -2,5 +2,10 @@
   <fieldset *ngIf="card">
     <div class="img" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.png + ')' }">
       </div>
+    <div class="actions">
+        <button type="button" class="btn btn-primary"><i class="fas fa-minus-square"></i></button>
+        <button (click)="setCover()" type="button" class="btn btn-primary">Set Deck Cover</button>
+        <button type="button" class="btn btn-primary"><i class="fas fa-plus-square"></i></button>
+    </div>
   </fieldset>
 </div>

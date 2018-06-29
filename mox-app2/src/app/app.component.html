@@ -2,8 +2,11 @@
   <header class="header header-6">
     <i (click)="viewNav = !viewNav" class="fas fa-bars"></i>
     <h4>Mox</h4>
-    <i [hidden]="_Deck"  class="fas fa-book deckIcon" style="opacity: 0.5;"></i>
-    <i [hidden]="!_Deck" class="fas fa-book-open deckIcon"></i>
+    <div style="align-self: center;">
+      <label *ngIf="_Deck">{{_Deck.name}}</label>
+      <i [hidden]="_Deck"  class="fas fa-book deckIcon" style="opacity: 0.5;"></i>
+      <i [hidden]="!_Deck" class="fas fa-book-open deckIcon" style="color: #F9FFFF;font-size: 25px;"></i>
+    </div>
   </header>
   <div class="content-container">
       <div class="content-area" (click)="viewNav = false">

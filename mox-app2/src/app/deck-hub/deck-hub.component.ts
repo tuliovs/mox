@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { MoxDeck } from '../_application/_models/_mox_models/MoxDeck';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { MoxDeckService } from '../_application/_services/mox-services/deck/mox-deck.service';
 import { AuthService } from '../karn/_services/auth.service';
 
@@ -22,8 +22,13 @@ export class DeckHubComponent implements OnInit {
     this.auth.user.subscribe(
       (u) => {
         if (u) {
-          this.deckCollection = this.afs.collection('decks', ref => ref.where('ownerId', '==' , u.uid));
-
+          this.deckCollection = this.afs.collection('decks', ref => ref.where('ownerId', '==', u.uid));
+          this.deckCollection.valueChanges().pipe(
+            tap((docL) => {
+              this.deckList = <MoxDeck[]>docL;
+              }
+            )
+          ).subscribe();
         }
       }
     );
