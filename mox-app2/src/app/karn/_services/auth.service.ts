@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import * as firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface User {
   uid: string;
@@ -13,7 +13,9 @@ interface User {
   displayName: string;
   photoURL?: string;
   nickName?: string;
+  fcmTokens?: { [token: string]: true };
 }
+
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +51,16 @@ export class AuthService {
 
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
+    return this.oAuthLogin(provider);
+  }
+
+  twitterLogin() {
+    const provider = new firebase.auth.TwitterAuthProvider();
+    return this.oAuthLogin(provider);
+  }
+
+  gitHubLogin() {
+    const provider = new firebase.auth.GithubAuthProvider();
     return this.oAuthLogin(provider);
   }
 

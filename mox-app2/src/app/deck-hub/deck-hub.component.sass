@@ -2,7 +2,6 @@
 
 .container
   width: 100%
-  height: 100%
   margin: 0
   padding: 0
   display: flex
@@ -11,9 +10,10 @@
     flex-direction: column
     list-style: none
     width: 100%
-    height: 100%
     li
       margin-bottom: 2em
+      display: block
+      position: relative
       .cover
         position: absolute
         background-size: cover
@@ -21,8 +21,7 @@
         background-color: color(gray, shade)
         border: solid 1px black
         filter: blur(1px)
-        width: 87%
-        max-width: 326px
+        width: 100%
         height: 78px
         box-shadow: RGBA(0,0,0,0.21) 7px 7px
         opacity: 0.6
@@ -32,7 +31,6 @@
         display: inline-block
         padding: 1%
         width: 100%
-        max-width: 326px
         height: 78px
         p
           display: inline-flex
@@ -50,3 +48,13 @@
             color: #FF454A
           .fa-check-circle
             color: #66CD6F
+
+.selectedDeck
+  border: 2px solid white
+  border-radius: 5px
+  .cover
+    box-shadow: RGBA(0, 0, 0, .7) 10px 10px !important
+    border: 0px solid white !important
+    border-radius: 5px !important
+  .content
+    border-radius: 5px !important

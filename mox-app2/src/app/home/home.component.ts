@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   public searchResult: List = new List();
   public resp_time = 0;
   public settings_stats = true;
+  showLoader = false;
   constructor(private _searchService: ScryfallSearchService, private _router: Router) { }
 
   ngOnInit() {
@@ -19,12 +20,14 @@ export class HomeComponent implements OnInit {
 
   searchGo(param: string) {
     console.log('param: ', param);
+    this.showLoader = true;
     this.resp_time = Date.now();
     this._searchService.search(param).subscribe(
         list => {
           // this._card = new CardMapper().map(card);
           this.searchResult = list;
           this.resp_time = Date.now() - this.resp_time;
+          this.showLoader = false;
           console.log('>> ', this.searchResult);
         }
       );

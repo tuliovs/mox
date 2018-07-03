@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {
+    AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument
+} from 'angularfire2/firestore';
 import { Observable, of, Subject } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { tap } from 'rxjs/operators';
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
 import { MoxDeck } from '../../../_models/_mox_models/MoxDeck';
 import { Card } from '../../../_models/_scryfall-models/models';
-import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class MoxDeckService {

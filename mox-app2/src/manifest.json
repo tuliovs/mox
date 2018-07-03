@@ -1,11 +1,13 @@
 {
-  "name": "mox-app2",
-  "short_name": "mox-app2",
+  "name": "M0X Mtg",
+  "short_name": "M0X",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
+  "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
+  "gcm_sender_id": "103953800507",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
