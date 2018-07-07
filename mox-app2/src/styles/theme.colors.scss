@@ -1,28 +1,10 @@
 $colors: (
-  primary: (
-    light:    #D6415B,
-    base:     #CC092F,
-    shade:    #990E26,
-    dark:     #660919
-  ),
-  secondary: (
-    light:    #0E81ED,
-    base:     #164384,
-    shade:    #103263,
-    dark:     #0B2242
-  ),
-  white: (
-    base:     #FFFFFF,
-    shade:    #F5F5F5,
-    dark:     #F0F0F0
-  ),
-  gray: (
-    light:    #E5E5E5,
-    base:     #C8C8C8,
-    shade:    #505050,
-    dark:     #2B2B2B
-  ),
+  white:      #F9FFFF,
   black:      #000000,
+  shadowBlue: #132030,
+  jeansBlue:  #435269,
+  conBlue:    #667A95,
+  conLight:   #AFC0DC,
   gplus:      #DD4B39,
   twitter:    #1DA1F2,
   facebook:   #3B5998,
@@ -38,18 +20,6 @@ $colors: (
 );
 // TODO Fix Themes
 $colorsDark: (
-  primary: (
-    light:    #0E81ED,
-    base:     #164384,
-    shade:    #103263,
-    dark:     #0B2242
-  ),
-  secondary: (
-    light:    #D6415B,
-    base:     #CC092F,
-    shade:    #990E26,
-    dark:     #660919
-  ),
   white: (
     base:     #14171A,
     shade:    #1b1c1d,
@@ -60,10 +30,19 @@ $colorsDark: (
     shade:    #C9C5C5,
     dark:     #FFFFFF,
   ),
-  black:      #FFFFFF,
+  black:      #F9FFFF,
   gplus:      #DD4B39,
   twitter:    #1DA1F2,
   facebook:   #3B5998,
+  instagram:  #C13584,
+  github:     #2b7489,
+  youtube:    #FF0000,
+  notification: (
+    base:     #5E6066,
+    success:  #66CD6F,
+    warning:  #FF9900,
+    error:    #FF454A
+  )
 );
 
 $errorColor: #BBFF00;

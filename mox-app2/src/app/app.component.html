@@ -6,21 +6,22 @@
     </div>
   </header>
   <div class="content-container">
-      <div class="content-area" (click)="viewNav = false">
-        <!-- <clr-alert [clrAlertType]="'alert-item'" [clrAlertAppLevel]="false" [clrAlertSizeSmall]="true">
+    <div class="content-area" (click)="viewNav = false">
+      <!-- <clr-alert [clrAlertType]="'alert-item'" [clrAlertAppLevel]="false" [clrAlertSizeSmall]="true">
             <clr-alert-item>
                 <p class="alert-text">
                     Wel... I guess, this is Mox
                 </p>
             </clr-alert-item>
         </clr-alert> -->
-        <router-outlet></router-outlet>
-      </div>
-      <nav [hidden]="!viewNav" class="sidenav">
-          <section class="sidenav-content">
-              <a routerLink="/" class="nav-link active">Home</a>
-              <a routerLink="/deckhub" class="nav-link">Decks</a>
-              <!-- <section class="nav-group collapsible">
+      <router-outlet></router-outlet>
+      <app-mox-toast-message></app-mox-toast-message>
+    </div>
+    <nav [hidden]="!viewNav" class="sidenav">
+      <section class="sidenav-content">
+        <a routerLink="/" class="nav-link active">Home</a>
+        <a routerLink="/deckhub" class="nav-link">Decks</a>
+        <!-- <section class="nav-group collapsible">
                   <input id="tabexample1" type="checkbox">
                   <label for="tabexample1">Collapsible Nav Element</label>
                   <ul class="nav-list">
@@ -28,13 +29,12 @@
                       <li><a class="nav-link">Link 2</a></li>
                   </ul>
               </section> -->
-              <a routerLink="/user" class="nav-link user"
-                *ngIf="auth.user | async as user">
-                <div class="avatar" [ngStyle]="{ 'background-image': 'url(' + user.photoURL + ')' }"></div>
-                <label>{{user.displayName}}</label>
-                <i class="fas fa-address-card"></i>
-              </a>
-          </section>
-      </nav>
+        <a routerLink="/user" class="nav-link user" *ngIf="auth.user | async as user">
+          <div class="avatar" [ngStyle]="{ 'background-image': 'url(' + user.photoURL + ')' }"></div>
+          <label>{{user.displayName}}</label>
+          <i class="fas fa-address-card"></i>
+        </a>
+      </section>
+    </nav>
   </div>
 </div>

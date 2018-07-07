@@ -1,8 +1,8 @@
 {
-  "name": "M0X Mtg",
-  "short_name": "M0X",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "Mox",
+  "short_name": "Mox",
+  "theme_color": "#132030",
+  "background_color": "#F9FFFF",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",

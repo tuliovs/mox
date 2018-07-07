@@ -14,7 +14,6 @@ import { AuthService } from './karn/_services/auth.service';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  private title = 'Mox';
   public viewNav = false;
   public _Deck: MoxDeck;
   constructor(private router: Router, private _dekService: MoxDeckService, public auth: AuthService, public msg: NotificationService) {

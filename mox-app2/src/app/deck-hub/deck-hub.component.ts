@@ -16,6 +16,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
   private internalDeck: any;
   private deckCollection: AngularFirestoreCollection;
   showLoader = true;
+  zeroDecks = false;
   constructor(private afs: AngularFirestore, private _moxService: MoxDeckService, public auth: AuthService) {
   }
 
@@ -28,6 +29,9 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
             tap((docL) => {
                 this.deckList = <MoxDeck[]>docL;
                 this.showLoader = false;
+                if (this.deckList.length === 0) {
+                  this.zeroDecks = true;
+                }
               }
             )
           ).subscribe();
