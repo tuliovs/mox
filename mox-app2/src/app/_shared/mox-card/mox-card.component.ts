@@ -1,19 +1,19 @@
-import { AuthService } from './../../karn/_services/auth.service';
 import {
     AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument
 } from 'angularfire2/firestore';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { MoxDeck } from '../../_application/_models/_mox_models/MoxDeck';
-import { MoxDeckService } from '../../_application/_services/mox-services/deck/mox-deck.service';
+import { MoxDeck } from 'src/app/_application/_models/_mox_models/MoxDeck';
+import { MoxDeckService } from 'src/app/_application/_services/mox-services/deck/mox-deck.service';
+
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { CardMapper } from '../../_application/_mappers/scryfall-mappers/card/cardMapper';
 import { Card } from '../../_application/_models/_scryfall-models/models';
 import {
     ScryfallCardService
 } from '../../_application/_services/scryfall-services/card/scryfall-card.service';
-import { ToastService } from '../../_application/_services/toast/toast.service';
-
 
 @Component({
   selector: 'app-mox-card',
@@ -21,7 +21,6 @@ import { ToastService } from '../../_application/_services/toast/toast.service';
   styleUrls: ['./mox-card.component.sass']
 })
 export class MoxCardComponent implements OnInit, AfterViewInit {
-  public user: any;
   public card: Card;
   public cardDoc: AngularFirestoreDocument<Card>;
   public cardCollection: AngularFirestoreCollection<Card>;
@@ -30,12 +29,10 @@ export class MoxCardComponent implements OnInit, AfterViewInit {
   public _Deck: MoxDeck;
   public subs: Subscription;
   constructor(
-    private _dekService: MoxDeckService,
     private _scryservice: ScryfallCardService,
     private afs: AngularFirestore,
     private route: ActivatedRoute,
-    public toast: ToastService,
-    public auth: AuthService,
+    private _dekService: MoxDeckService,
   ) { }
 
   ngOnInit() {
@@ -46,16 +43,9 @@ export class MoxCardComponent implements OnInit, AfterViewInit {
       )
     ).subscribe();
 
-    this.auth.user.pipe(
-      tap((u) => {
-        this.user = u;
-      })
-    ).subscribe();
-
     this.route.params.subscribe( params => {
         const id = params['id'];
         if (!id) {
-          this.toast.sendMessage('Id não fornecido ou inválido', 'danger', this.user.uid);
           throw new Error('Id não fornecido ou inválido');
         }
 
@@ -65,7 +55,7 @@ export class MoxCardComponent implements OnInit, AfterViewInit {
         this.cardDoc.ref.get().then((doc) => {
           if (doc.exists) {
             this.card = <Card>doc.data();
-            console.log('%c Data do Firebase - Document data:', 'color: green', doc.data());
+            console.log('Data do Firebase - Document data:', doc.data(), 'color: green');
           } else {
             this._scryservice.get(id).subscribe(
               card => {
@@ -73,12 +63,10 @@ export class MoxCardComponent implements OnInit, AfterViewInit {
                 this.cardCollection.doc(card.id).set(card);
               }
             );
-            this.toast.sendMessage('Doc not found, getting data from scryfall', 'info', this.user.uid);
-            console.log('%c Doc not found, getting data from scryfall', 'color: purple');
+            console.log('Doc not found, getting data from scryfall', 'color: purple');
           }
-      }).catch((error) => {
-          this.toast.sendMessage('Error getting document! Console has more info.', 'danger', this.user.uid);
-          console.log('%c Error getting document: ', error, 'color: red');
+      }).catch(function(error) {
+          console.log('Error getting document:', error, 'color: red');
       });
       // REFATORAR PRO MOX SERVICE
       }
@@ -101,8 +89,7 @@ export class MoxCardComponent implements OnInit, AfterViewInit {
         cover: this.card.image_uris.art_crop
     });
     } else {
-      this.toast.sendMessage('Error getting Deck:', 'danger', this.user.uid);
-      console.log('#ERROR REF 9887');
+      console.log('Erro! Deck não encontrado.');
     }
   }
 }

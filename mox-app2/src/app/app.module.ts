@@ -35,9 +35,6 @@ import { KarnModule } from './karn/karn.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { LoadingSpinnerComponent } from './_shared/ui/loading-spinner/loading-spinner.component';
-import { ReversePipe } from './_application/_pipes/reverse.pipe';
-import { ToastMessageComponent } from './_shared/ui/toast-message/toast-message.component';
-import { ToastService } from './_application/_services/toast/toast.service';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -53,8 +50,6 @@ export const firebaseConfig = environment.firebaseConfig;
     PasswordlessAuthComponent,
     UserProfileComponent,
     LoadingSpinnerComponent,
-    ReversePipe,
-    ToastMessageComponent,
   ],
   imports: [
     KarnModule,
@@ -70,7 +65,6 @@ export const firebaseConfig = environment.firebaseConfig;
     BrowserAnimationsModule
   ],
   providers: [
-    ToastService,
     MoxCardService,
     MoxDeckService,
     ScryfallCardService,

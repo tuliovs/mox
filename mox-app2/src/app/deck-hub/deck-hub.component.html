@@ -1,7 +1,7 @@
 <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
-<!-- <div *ngIf="(deckList) then deckListed else emptyList"></div> -->
+<div *ngIf="(deckList) then deckListed else emptyList"></div>
 
-<div *ngIf="deckList">
+<ng-template #deckListed>
   <div class="container">
     <ol>
       <li *ngFor="let deck of deckList" [ngClass]="{'selectedDeck': this.internalDeck === deck}" >
@@ -26,10 +26,11 @@
       </li>
     </ol>
   </div>
-</div>
+</ng-template>
 
-<div *ngIf="zeroDecks">
+<ng-template #emptyList>
   <div class="container">
     <p>Empty Deck List</p>
   </div>
-</div>
+</ng-template>
+

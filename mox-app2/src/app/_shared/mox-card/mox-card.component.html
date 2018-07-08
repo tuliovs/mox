@@ -1,11 +1,7 @@
 <div>
   <fieldset *ngIf="card">
-    <div class="img" *ngIf="!card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.normal + ')' }">
+    <div class="img" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.normal + ')' }">
       </div>
-    <div *ngIf="card.card_faces">
-      <div class="img" [hidden]="secondFace" (click)="secondFace = true" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.normal + ')' }" ></div>
-      <div class="img" [hidden]="!secondFace" (click)="secondFace = false" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[1].image_uris.normal + ')' }" ></div>
-    </div>
     <div class="actions">
         <button type="button" class="btn btn-primary"><i class="fas fa-minus-square"></i></button>
         <button (click)="setCover()" type="button" class="btn btn-primary">Set Deck Cover</button>

@@ -8,7 +8,7 @@ import { NewDeckComponent } from './deck-hub/new-deck/new-deck.component';
 import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless-auth.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { LoginComponent } from './auth/login/login.component';
-import { AuthGuard } from './karn/_services/auth.guard';
+import { AuthGuard } from 'src/app/karn/_services/auth.guard';
 
 
 const routes: Routes = [
