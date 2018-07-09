@@ -10,13 +10,51 @@
   font-family: 'Audiowide', cursive
 
 body
-	font-family: 'Exo 2', sans-serif
   margin: 0
-	padding: 0
-	min-width: 320px
-	overflow-x: hidden
+  padding: 0
+  min-width: 320px
+  overflow-x: hidden
 	color: color(black)
 	background-color: color(white)
+  font-family: 'Exo 2', sans-serif
 
 header
   justify-content: space-between
+
+h4
+  color: color(white)
+  font-weight: 600
+
+.main
+  text-align: center
+  background-color: #F9FFFF
+  border-radius: 10px
+  padding: 0em
+  width: 100%
+  height: 35em
+  margin: -5em 0 0 0
+  overflow-y: auto
+  mix-blend-mode: normal
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25)
+
+.loading
+  opacity: 0
+  position: fixed
+  height: 100%
+  width: 100%
+  background: color(darkBlue)
+  padding-top: 25vh
+  text-align: center
+  z-index: -1
+  transition: opacity .8s ease-out
+
+app-root:empty + .loading
+  opacity: 1
+  z-index: 100
+  h1
+    font-family: 'Audiowide', cursive
+    color: color(white)
+    margin-bottom: 50px
+  label
+    color: color(white)
+    width: 100%

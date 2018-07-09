@@ -1,0 +1,8 @@
+<div class="comming">
+  <i class="fas fa-bong"
+    [@cardAnimator]="animationState"
+    (@cardAnimator.done)="resetAnimationState()"
+    (tap)="startAnimation('wobble')"
+    (swipeleft)="startAnimation('wobble')"></i>
+  <h1>Comming Soon!</h1>
+</div>

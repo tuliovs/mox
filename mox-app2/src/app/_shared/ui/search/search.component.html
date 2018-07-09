@@ -1,0 +1,50 @@
+<button (click)="activeSearch()" type="button" class="btn btn-icon btn-search">
+  <i class="fas fa-search"></i>
+</button>
+<form [@searchTrigger]="searchState" class="search-box">
+  <section class="form-block">
+    <button (click)="closeSearch()" type="button" class="btn btn-icon btn-close">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <label>Card Search</label>
+    <hr>
+    <div class="form-group">
+      <input type="text" #newParam id="requiredInput" required>
+      <button type="submit" class="btn btn-icon btn-primary" (click)="searchGo(newParam.value); $event.preventDefault()">
+        <i class="material-icons">search</i>
+      </button>
+    </div>
+  </section>
+  <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
+  <section class="form-result">
+    <div *ngIf="settings_stats && searchResult.data" class="stats">
+      <p>[Total Results]: {{searchResult.total_cards}} | [Response Time]: {{resp_time}}ms</p>
+    </div>
+    <div class="search-result" *ngIf="searchResult.data && searchResult.data.length > 0">
+      <ol>
+        <li *ngFor="let item of searchResult.data">
+          <div>
+            <a routerLink='/card/{{item.id}}'>
+              <img class="img" *ngIf="!item.card_faces" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }" />
+              <img class="img" *ngIf="item.card_faces" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }" />
+            </a>
+            <span>[ {{item.rarity}} ]</span>
+            <section>
+              <h4>
+                {{item.name}}
+                <label *ngIf="!item.card_faces">{{item.mana_cost}}</label>
+                <label *ngIf="item.card_faces">{{item.card_faces[0].mana_cost}}</label>
+              </h4>
+              <p *ngIf="item.oracle_text" class="description">
+                {{(item.oracle_text.length>140)? (item.oracle_text | slice:0:140)+'...':(item.oracle_text)}}
+              </p>
+              <p *ngIf="item.card_faces" class="description">
+                {{(item.card_faces[0].oracle_text.length>140)? (item.card_faces[0].oracle_text | slice:0:140)+'...':(item.card_faces[0].oracle_text)}}
+              </p>
+            </section>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+</form>

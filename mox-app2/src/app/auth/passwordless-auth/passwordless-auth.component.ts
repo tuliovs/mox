@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { StackInput } from '@clr/angular';
 import { environment } from '../../../environments/environment';
 
 @Component({

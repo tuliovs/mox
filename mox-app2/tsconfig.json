@@ -2,6 +2,12 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@karn/*" : ["./src/app/karn/*"],
+      "@shared/*" : ["./src/app/_shared/*"],
+      "@application/*" : ["./src/app/_application/*"],
+      "@envoirment/*" : ["./src/environments/*"],
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,

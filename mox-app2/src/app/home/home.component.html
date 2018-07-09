@@ -1,41 +1,39 @@
+<app-mox-titlebar>
+  <h4>Wellcome!</h4>
+</app-mox-titlebar>
+
 <div class="main">
-  <form class="search-box">
-      <section class="form-block">
-          <label>Card Search</label>
-          <div class="form-group">
-              <input type="text" #newParam id="requiredInput" required >
-              <button type="submit" class="btn btn-icon btn-primary" (click)="searchGo(newParam.value); $event.preventDefault()">
-                  <i class="material-icons">search</i>
-              </button>
-          </div>
-      </section>
-      <section class="form-block">
-        <button (click)="newDeck()" type="button" class="btn btn-primary">New Deck</button>
-      </section>
-  </form>
-  <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
-  <div *ngIf="settings_stats && searchResult.data" class="stats">
-    <p>[Total Results]: {{searchResult.total_cards}} | [Response Time]: {{resp_time}}ms</p>
+  <div class="home-buttons">
+    <button (click)="goToUser()" type="button" class="btn btn-icon">
+        <i class="fas fa-user"></i>
+        <label>User</label>
+    </button>
+    <button type="button" class="btn btn-icon" disabled>
+        <i class="fas fa-address-book"></i>
+        <label>Friend List</label>
+    </button>
+    <button type="button" class="btn btn-icon" disabled>
+        <i class="fas fa-archive"></i>
+        <label>Collection</label>
+    </button>
+    <button (click)="goToDeckHub()" type="button" class="btn btn-icon">
+        <i class="fas fa-book"></i>
+        <label>Deck List</label>
+    </button>
+    <button type="button" class="btn btn-icon" disabled>
+        <i class="fas fa-dice"></i>
+        <label>Utils</label>
+    </button>
+    <button type="button" class="btn btn-icon" disabled>
+        <i class="fas fa-comments"></i>
+        <label>Messages</label>
+    </button>
   </div>
-  <div class="search-result" *ngIf="searchResult.data && searchResult.data.length > 0">
-    <ol>
-      <li *ngFor="let item of searchResult.data">
-        <div>
-          <a routerLink='/card/{{item.id}}'>
-            <img class="img" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }" />
-          </a>
-          <span>[ {{item.rarity}} ]</span>
-          <section>
-            <h4>
-              {{item.name}}<label>{{item.mana_cost}}</label>
-            </h4>
-            <p class="description">
-              {{(item.oracle_text.length>140)? (item.oracle_text | slice:0:140)+'...':(item.oracle_text)}}
-            </p>
-          </section>
-        </div>
-      </li>
-    </ol>
-  </div>
+  <section class="form-block">
+    <button (click)="newDeck()" type="button" class="btn btn-primary">New Deck</button>
+  </section>
   <!-- <a routerLink="/card/2ea8d5cb-cf7e-4194-8019-812b3f56cf20firebase-admin@~5.4.0">Brainstorm</a> -->
 </div>
+<app-mox-action-bar>
+  <app-mox-search></app-mox-search>
+</app-mox-action-bar>

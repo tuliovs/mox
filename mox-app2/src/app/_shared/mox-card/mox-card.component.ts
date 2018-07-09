@@ -55,7 +55,7 @@ export class MoxCardComponent implements OnInit, AfterViewInit {
         this.cardDoc.ref.get().then((doc) => {
           if (doc.exists) {
             this.card = <Card>doc.data();
-            console.log('Data do Firebase - Document data:', doc.data(), 'color: green');
+            console.log('%c Data do Firebase - Document data:', 'color: green', doc.data());
           } else {
             this._scryservice.get(id).subscribe(
               card => {
@@ -63,10 +63,10 @@ export class MoxCardComponent implements OnInit, AfterViewInit {
                 this.cardCollection.doc(card.id).set(card);
               }
             );
-            console.log('Doc not found, getting data from scryfall', 'color: purple');
+            console.log('%c Doc not found, getting data from scryfall', 'color: purple');
           }
       }).catch(function(error) {
-          console.log('Error getting document:', error, 'color: red');
+          console.log('%c Error getting document:', 'color: red', error);
       });
       // REFATORAR PRO MOX SERVICE
       }
@@ -89,7 +89,7 @@ export class MoxCardComponent implements OnInit, AfterViewInit {
         cover: this.card.image_uris.art_crop
     });
     } else {
-      console.log('Erro! Deck não encontrado.');
+      console.log('%c Erro! Deck não encontrado.');
     }
   }
 }

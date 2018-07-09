@@ -26,6 +26,7 @@ export class AuthService {
   constructor(private router: Router, private afAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.user = this.afAuth.authState.pipe(switchMap( user => {
       if (user) {
+        // console.log(user);
         return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
       } else {
         return of(null);

@@ -1,5 +1,6 @@
-import { tap, take, filter } from 'rxjs/operators';
+import { filter, take, tap } from 'rxjs/operators';
 
+import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
 import { AfterViewInit, Component, OnInit, Output } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
@@ -8,20 +9,62 @@ import { MoxDeckService } from './_application/_services/mox-services/deck/mox-d
 import { NotificationService } from './_application/_services/notification/notification.service';
 import { AuthService } from './karn/_services/auth.service';
 
+export const swing = [
+  style({transform: 'rotate3d(0, 0, 1, 15deg)', offset: .2}),
+  style({transform: 'rotate3d(0, 0, 1, -10deg)', offset: .4}),
+  style({transform: 'rotate3d(0, 0, 1, 5deg)', offset: .6}),
+  style({transform: 'rotate3d(0, 0, 1, -5deg)', offset: .8}),
+  style({transform: 'none', offset: 1})
+];
+
+export const rubberBand = [
+  style({transform: 'scale3d(1, 1, 1)'}),
+  style({transform: 'scale3d(1.25, 0.75, 1)'}),
+  style({transform: 'scale3d(0.75, 1.25, 1)'}),
+  style({transform: 'scale3d(1.15, 0.85, 1)'}),
+  style({transform: 'scale3d(0.95, 1.05, 1)'}),
+  style({transform: 'scale3d(1.05, 0.95, 1)'}),
+  style({transform: 'scale3d(1, 1, 1)'}),
+];
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.sass'],
+  animations: [
+    trigger('notificationAnimator', [
+      transition('* => swing', animate(1000, keyframes(swing))),
+    ]),
+    trigger('avatarAnimator', [
+      transition('* => rubberBand', animate(1000, keyframes(rubberBand))),
+    ]),
+    trigger('navTrigger', [
+      state('closed', style({
+        transform: 'translate3d(-100%, 0, 0)',
+        display: 'none'
+      })),
+      state('opened', style({
+        transform: 'translate3d(0, 0, 0)',
+        display: 'visible'
+      })),
+      transition('*=>opened', animate('300ms')),
+      transition('opened=>closed', animate('300ms'))
+    ])
+  ]
 })
 export class AppComponent implements OnInit, AfterViewInit {
   private title = 'Mox';
-  public viewNav = false;
+  public sideNavIsActive = false;
+  public navState = 'closed';
   public _Deck: MoxDeck;
+  public animationState: string;
+  public animationState2: string;
   constructor(private router: Router, private _dekService: MoxDeckService, public auth: AuthService, public msg: NotificationService) {
     router.events.subscribe((val) => {
       // console.log('mudança de rota', val instanceof NavigationEnd);
       if (val instanceof NavigationEnd) {
-        this.viewNav = false;
+        this.sideNavIsActive = false;
+        this.navState = 'closed';
       }
     });
   }
@@ -45,6 +88,38 @@ export class AppComponent implements OnInit, AfterViewInit {
           }
         }
       );
+  }
+
+  animateNav() {
+    this.navState = (!this.sideNavIsActive) ? 'opened' : 'closed';
+    this.sideNavIsActive = !this.sideNavIsActive;
+  }
+
+  startAnimation(_state: string) {
+    if (!this.animationState) {
+      this.animationState = _state;
+    }
+  }
+
+  menuOpen(_state: string) {
+    if (!this.animationState2) {
+      this.animationState2 = _state;
+    }
+  }
+
+  resetAnimationState() {
+    this.animationState = '';
+    this.animationState2 = '';
+  }
+  // startAnimate(state) {
+  //   console.log(state);
+  //   if (!this.animationState) {
+  //     this.animationState = state;
+  //   }
+  // }
+
+  reset() {
+    this.navState = '';
   }
 
   ngAfterViewInit() {

@@ -33,12 +33,9 @@
             "styles": [
               "src/styles/fontawesome-all.css",
               "src/styles/theme.sass",
-              "node_modules/@clr/ui/clr-ui.min.css",
-              "node_modules/@clr/icons/clr-icons.min.css",
-              "node_modules/@clr/ui/clr-ui-dark.min.css"
+              "node_modules/animate.css/animate.min.css"
             ],
             "scripts": [
-              "node_modules/@clr/icons/clr-icons.min.js",
               "node_modules/@webcomponents/custom-elements/custom-elements.min.js"
             ]
           },

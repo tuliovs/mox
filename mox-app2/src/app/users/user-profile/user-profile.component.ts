@@ -7,7 +7,7 @@ import { AuthService } from '../../karn/_services/auth.service';
   styleUrls: ['./user-profile.component.sass']
 })
 export class UserProfileComponent implements OnInit {
-
+  public tab = 'profileTab';
   constructor(public auth: AuthService) { }
 
   ngOnInit() {
