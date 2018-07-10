@@ -5,13 +5,18 @@
 
 *
 	box-sizing: border-box
+  margin: 0
+  padding: 0
+  border: 0
 
 .mox_font
   font-family: 'Audiowide', cursive
 a
   color: color(white)
   text-decoration: none
-
+ol,ul
+  padding: 0
+  margin: 0
 body
   font-family: 'Exo 2', sans-serif
   margin: 0
@@ -36,6 +41,35 @@ h4
   color: color(white)
   font-weight: 600
 
+fieldset
+  border: 0
+  margin: 0
+  padding: 5px
+  text-align: left
+
+input
+  &[type="text"]
+    flex: 1 1 50%
+    width: 85%
+    border: 0
+    border-bottom: 1px solid color(darkBlue)
+    height: 2.2em
+    vertical-align: sub
+    font-size: 15px
+    padding-left: 2%
+    color: gray
+  &[type="text"]:focus:not(:read-only)
+    border: solid 2px color(darkBlue)
+  &[type="text"]:read-only
+    background-color: RGBA(175,192,220,0.15)
+    color: color(darkBlue)
+select
+  width: 85%
+  font-size: 1em
+  border: 0
+  border-bottom: solid 1px black
+  padding: 0.5em 0em
+  font-variant-caps: small-caps
 .main
   text-align: center
   background-color: #F9FFFF
@@ -73,6 +107,7 @@ app-root:empty + .loading
 
 
 .btn
+  color: color(conBlue)
   cursor: pointer
   display: inline-block
   -webkit-appearance: none!important
@@ -87,3 +122,12 @@ app-root:empty + .loading
   font-weight: 500
   background-color: transparent
   margin: .25rem .5rem .25rem 0
+.btn
+  &:disabled
+    color: color(conLight)
+
+.btn-action
+  color: color(white)
+  font-size: 2em
+  border: 0
+  text-shadow: 2px 2px #000

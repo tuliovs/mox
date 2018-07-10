@@ -37,6 +37,7 @@ import { NewDeckComponent } from './deck-hub/new-deck/new-deck.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { HttpModule } from '@angular/http';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -65,6 +66,7 @@ export const firebaseConfig = environment.firebaseConfig;
     FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpModule,
     HttpClientModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

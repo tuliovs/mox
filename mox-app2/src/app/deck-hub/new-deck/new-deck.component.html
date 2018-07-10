@@ -1,5 +1,12 @@
+<app-mox-titlebar>
+  <ol>
+    <li (click)="importDeck()" >Import</li>
+    <li (click)="createDeck()" >Save</li>
+    <li (click)="cloneDeck()" >Clone</li>
+  </ol>
+</app-mox-titlebar>
 <div class="main">
-  <form class="search-box">
+  <form class="new-deck-form">
     <section class="form-block">
       <label>Deck Name</label>
       <div class="form-group">
@@ -11,14 +18,20 @@
       </div>
       <div class="form-group">
         <div class="toggle-switch">
-          <input type="checkbox" id="ifroze" value="{{newDeck.froze}}">
-          <label for="ifroze">Froze</label>
+          <button class="btn btn-action" (click)="newDeck.froze = !newDeck.froze">
+            <i class="fas fa-toggle-on"  *ngIf="!newDeck.froze"></i>
+            <i class="fas fa-toggle-off" *ngIf="newDeck.froze"></i>
+          </button>
+          <label for="ifroze" (click)="newDeck.froze = !newDeck.froze">Froze</label>
         </div>
       </div>
       <div class="form-group">
         <div class="toggle-switch">
-          <input type="checkbox" id="ilegal" value="{{newDeck.legal}}" disabled>
-          <label for="ilegal">Legal</label>
+          <button class="btn btn-action" (click)="newDeck.legal = !newDeck.legal">
+              <i class="fas fa-toggle-on"  *ngIf="!newDeck.legal"></i>
+              <i class="fas fa-toggle-off" *ngIf="newDeck.legal"></i>
+          </button>
+          <label for="ilegal" (click)="newDeck.legal = !newDeck.legal">Legal</label>
         </div>
       </div>
       <div class="form-group">
@@ -29,9 +42,17 @@
           </select>
         </div>
       </div>
-      <section class="form-block">
-        <button (click)="createDeck()" type="button" class="btn btn-primary">Save</button>
-      </section>
     </section>
   </form>
 </div>
+<app-mox-action-bar>
+  <button (click)="importDeck()" type="button" class="btn btn-action">
+    <i class="fas fa-cloud-upload-alt"></i>
+  </button>
+  <button (click)="createDeck()" type="button" class="btn btn-action">
+    <i class="fas fa-save"></i>
+  </button>
+  <button (click)="cloneDeck()" type="button" class="btn btn-action">
+    <i class="fas fa-cloud-download-alt"></i>
+  </button>
+</app-mox-action-bar>

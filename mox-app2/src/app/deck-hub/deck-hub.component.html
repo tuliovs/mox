@@ -2,30 +2,42 @@
 <div *ngIf="(deckList) then deckListed else emptyList"></div>
 
 <ng-template #deckListed>
-  <div class="container">
-    <ol>
+  <app-mox-titlebar>
+    <h4>[DeckHub]</h4>
+  </app-mox-titlebar>
+  <div class="main">
+    <ol *ngIf="!showLoader">
       <li *ngFor="let deck of deckList" [ngClass]="{'selectedDeck': this.internalDeck === deck}" >
         <div class="cover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
         <div class="content" (click)="deckSelected(deck)" >
           <p style="vertical-align: text-top">
             <span>[{{deck.format}}]</span> |
             <span>
-              <i class="fas fa-lock" [hidden]="deck.public"></i>
-              <i class="fas fa-lock-open" [hidden]="!deck.public"></i>
+              <i class="fas fa-lock" *ngIf="!deck.public"></i>
+              <i class="fas fa-lock-open" *ngIf="deck.public"></i>
             </span> |
             <span>{{deck.ownerName}}</span>
           </p>
           <p style="align-items: flex-end">
             <label>{{deck.name}}</label>
               <span>
-                <i class="far fa-times-circle" [hidden]="deck.legal"></i>
-                <i class="far fa-check-circle" [hidden]="!deck.legal"></i>
+                <i class="far fa-times-circle" *ngIf="!deck.legal"></i>
+                <i class="far fa-check-circle" *ngIf="deck.legal"></i>
               </span>
           </p>
         </div>
       </li>
     </ol>
   </div>
+  <app-mox-action-bar>
+    <button (click)="newDeck()" type="button" class="btn btn-action">
+      <i class="fas fa-plus"></i>
+    </button>
+    <app-mox-search></app-mox-search>
+    <button (click)="viewDeck()" type="button" class="btn btn-action">
+        <i class="fas fa-book-open"></i>
+    </button>
+  </app-mox-action-bar>
 </ng-template>
 
 <ng-template #emptyList>

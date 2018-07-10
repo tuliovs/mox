@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { MoxDeck } from '../_application/_models/_mox_models/MoxDeck';
@@ -17,7 +18,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
   private internalDeck: any;
   private deckCollection: AngularFirestoreCollection;
   showLoader = true;
-  constructor(private afs: AngularFirestore, private _moxService: MoxDeckService, public auth: AuthService) {
+  constructor(private afs: AngularFirestore, private _moxService: MoxDeckService, public auth: AuthService, private _router: Router) {
   }
 
   ngOnInit() {
@@ -29,6 +30,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
             tap((docL) => {
                 this.deckList = <MoxDeck[]>docL;
                 this.showLoader = false;
+                console.log(this.deckList);
               }
             )
           ).subscribe();
@@ -45,6 +47,14 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
         console.log('that', workingDeck);
       })
     ).subscribe();
+  }
+
+  newDeck() {
+    this._router.navigateByUrl('/deck/new');
+  }
+
+  viewDeck() {
+    alert('Not done yet!');
   }
 
   deckSelected(deck: MoxDeck) {

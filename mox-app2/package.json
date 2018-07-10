@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "pwa": "ng build --prod &&  sw-precache --root=dist --config=precache-config.js",
+    "pwa": "ng build --prod --stats-json &&  sw-precache --root=dist --config=precache-config.js",
     "moxDeploy": "npm run pwa && firebase deploy -p dist/mox-app2"
   },
   "private": true,

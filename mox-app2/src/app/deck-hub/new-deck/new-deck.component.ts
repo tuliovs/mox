@@ -54,6 +54,14 @@ export class NewDeckComponent implements OnInit {
     this.router.navigate(['/deckhub']);
   }
 
+  importDeck() {
+    alert('Not Implemented!');
+  }
+
+  cloneDeck() {
+    alert('Not Implemented!');
+  }
+
   private makeId() {
     let text = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

@@ -1,7 +1,7 @@
 <div *ngIf="auth.user | async; then authenticated else guest"></div>
 
 <ng-template #guest>
-  <h3>Hellow, guest!</h3>
+  <h3>[Hellow, guest]</h3>
   <p>To start something in mox.sys you have to loggin</p>
   <button routerLink="/login">
       <i class="material-icons">person</i> Loggin
@@ -12,9 +12,9 @@
   <div *ngIf="auth.user | async as user">
     <app-mox-titlebar>
       <ol>
-        <li (click)="tab = 'statsTab'">Stats</li>
-        <li (click)="tab = 'profileTab'">Profile</li>
-        <li (click)="tab = 'socialTab'">Social</li>
+        <li (click)="tab = 'statsTab'"   [ngClass]="{'active': tab == 'statsTab'}">Stats</li>
+        <li (click)="tab = 'profileTab'" [ngClass]="{'active': tab == 'profileTab'}">Profile</li>
+        <li (click)="tab = 'socialTab'"  [ngClass]="{'active': tab == 'socialTab'}">Social</li>
       </ol>
     </app-mox-titlebar>
     <div class="main">
@@ -27,13 +27,15 @@
         <p><i class="fas fa-envelope"></i>{{user.email}}</p>
         <p><i class="fas fa-at"></i>{{user.twitterUser}}</p>
         <p>UID: {{user.uid}}</p>
-        <section class="form-block">
-            <button (click)="auth.signOut()" type="button" class="btn btn-primary">Sign Out</button>
-        </section>
       </div>
       <div [hidden]=" tab !='socialTab'">
         <app-mox-comming-warning></app-mox-comming-warning>
       </div>
     </div>
   </div>
+  <app-mox-action-bar>
+    <button (click)="auth.signOut()" type="button" class="btn btn-action">
+      <i class="fas fa-sign-in-alt"></i>
+    </button>
+  </app-mox-action-bar>
 </ng-template>

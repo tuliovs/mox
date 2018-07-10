@@ -12,9 +12,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  newDeck() {
-    this._router.navigateByUrl('/deck/new');
-  }
   goToUser() {
     this._router.navigateByUrl('/user');
   }
