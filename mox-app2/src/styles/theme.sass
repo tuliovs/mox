@@ -8,18 +8,29 @@
 
 .mox_font
   font-family: 'Audiowide', cursive
+a
+  color: color(white)
+  text-decoration: none
 
 body
+  font-family: 'Exo 2', sans-serif
   margin: 0
   padding: 0
   min-width: 320px
   overflow-x: hidden
-	color: color(black)
-	background-color: color(white)
-  font-family: 'Exo 2', sans-serif
+  color: color(black)
+  background-color: color(white)
 
 header
+  display: flex
+  position: fixed
+  align-items: center
   justify-content: space-between
+  min-height: 3em
+  max-height: 3em
+  min-width: 100%
+  max-width: 100%
+  z-index: 9
 
 h4
   color: color(white)
@@ -29,13 +40,14 @@ h4
   text-align: center
   background-color: #F9FFFF
   border-radius: 10px
-  padding: 0em
-  width: 100%
-  height: 35em
-  margin: -5em 0 0 0
+  width: 93%
+  height: 30em
   overflow-y: auto
   mix-blend-mode: normal
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25)
+  position: fixed
+  z-index: 8
+  margin-top: 2em
 
 .loading
   opacity: 0
@@ -58,3 +70,20 @@ app-root:empty + .loading
   label
     color: color(white)
     width: 100%
+
+
+.btn
+  cursor: pointer
+  display: inline-block
+  -webkit-appearance: none!important
+  border-radius: .125rem
+  border: 1px solid color(darkBlue)
+  text-overflow: ellipsis
+  overflow: hidden
+  text-align: center
+  text-transform: uppercase
+  vertical-align: middle
+  letter-spacing: .12em
+  font-weight: 500
+  background-color: transparent
+  margin: .25rem .5rem .25rem 0

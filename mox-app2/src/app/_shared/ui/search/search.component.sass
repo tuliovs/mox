@@ -1,4 +1,4 @@
-@import '../../../../styles/theme.sass'
+@import '../../../../styles/theme.colors.scss'
 hr
   border: solid 1px color(jeans)
 
@@ -6,16 +6,27 @@ hr
   color: color(white)
   font-size: 2em
   border: 0
+  height: 1em
 
 .btn-close
   position: fixed
   border: 0
   top: 0
   left: 0
-  font-size: 1.2em
+  font-size: .8em
+  height: 2.2em
   i
     color: color(darkBlue) !important
 
+.btn-gosearch
+  background-color: color(darkBlue)
+  font-size: 1em
+  min-width: 0
+  padding: 1.5%
+  vertical-align: middle
+  text-align: center
+  border-radius: 10em
+  margin: 1%
 .search-box
   padding-top: 0 !important
   position: fixed
@@ -25,6 +36,7 @@ hr
   height: 100%
   overflow: hidden
   padding: 1em
+  z-index: 10
   .form-block
     margin: 0.5rem 0 0rem !important
     label
@@ -32,6 +44,14 @@ hr
       font-weight: 600
   input
     flex: 1 1 50%
+    width: 85%
+    border: 0
+    border-bottom: 1px solid color(darkBlue)
+    height: 2.2em
+    vertical-align: sub
+    font-size: 15px
+    padding-left: 2%
+    color: gray
   .form-group
     align-items: baseline
   i

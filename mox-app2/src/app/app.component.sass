@@ -1,4 +1,4 @@
-@import './../styles/theme.sass'
+@import './../styles/theme.colors.scss'
 
 .alert-text
   margin-top: 0rem !important
@@ -23,15 +23,36 @@
       vertical-align: super
       font-size: .8em
 
+.content
+  padding-top: 3em
 .content-area
   padding: 0.8em !important
 
 .sidenav
-  background-color: color(white)
+  background-color: color(darkBlue)
+  color: color(white)
+  top: 2.4em
+  height: 100vh
+  min-width: 70%
+  position: fixed
+  padding: 0
+  z-index: 10
+  line-height: 40px
+  font-size: 1.25em
+  font-weight: normal
+  text-align: center
+  max-width: 100%
+  overflow: scroll
+  box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.25)
   .sidenav-content
     a.user
       position: fixed
-      bottom: 2%
+      align-items: center
+      width: 100%
+      display: flex
+      bottom: 10%
+      font-size: 15px
+      padding: .7em
       .avatar
         display: block
         background-size: cover
@@ -39,12 +60,14 @@
         border-radius: 50px
         height: 2.5em
         width: 2.5em
-        margin-left: -10%
       i
         font-size: 1.1em
       label
-        padding: 0 2em
+        padding: 0
         position: relative
         line-height: 2.3
+        margin-left: 3em
+        color: color(white)
+        text-decoration: none
 
 

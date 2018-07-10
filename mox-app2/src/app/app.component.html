@@ -12,20 +12,23 @@
         (tap)="startAnimation('swing')"></i>
     </div>
   </header>
-  <div class="content-container">
+  <div class="content">
       <div class="content-area" (click)="navState = 'closed'">
         <router-outlet></router-outlet>
       </div>
       <nav class="sidenav" [@navTrigger]="navState">
           <section class="sidenav-content">
-              <a routerLink="/" class="nav-link active">Home</a>
-              <a routerLink="/deckhub" class="nav-link">Decks</a>
-              <a routerLink="/user" class="nav-link user"
-                *ngIf="auth.user | async as user">
-                <div class="avatar" [ngStyle]="{ 'background-image': 'url(' + user.photoURL + ')' }"></div>
-                <label>{{user.displayName}}</label>
-                <i class="fas fa-address-card"></i>
-              </a>
+            <ol>
+              <li><a routerLink="/" class="nav-link active">Home</a></li>
+              <li><a routerLink="/deckhub" class="nav-link">Decks</a></li>
+            </ol>
+
+            <a routerLink="/user" class="nav-link user"
+              *ngIf="auth.user | async as user">
+              <div class="avatar" [ngStyle]="{ 'background-image': 'url(' + user.photoURL + ')' }"></div>
+              <label>{{user.displayName}}</label>
+              <i class="fas fa-address-card"></i>
+            </a>
           </section>
       </nav>
   </div>

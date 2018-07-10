@@ -47,7 +47,7 @@ export const rubberBand = [
         transform: 'translate3d(0, 0, 0)',
         display: 'visible'
       })),
-      transition('*=>opened', animate('300ms')),
+      transition('closed=>opened', animate('300ms')),
       transition('opened=>closed', animate('300ms'))
     ])
   ]
