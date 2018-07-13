@@ -1,3 +1,4 @@
+import { DeckViewComponent } from './deck-hub/deck-view/deck-view.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -14,10 +15,11 @@ import { AuthGuard } from 'src/app/karn/_services/auth.guard';
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'card/:id', component: MoxCardComponent, canActivate: [AuthGuard] },
+  { path: 'card/:id', component: MoxCardComponent },
   { path: 'deckhub', component: DeckHubComponent,  canActivate: [AuthGuard] },
   { path: 'deck/new', component: NewDeckComponent,  canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent},
+  { path: 'deck/:id', component: DeckViewComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'user', component: UserProfileComponent,  canActivate: [AuthGuard]},
   { path: 'nopass', component: PasswordlessAuthComponent},
   { path: '**', component: NotFoundComponent },

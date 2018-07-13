@@ -90,7 +90,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       );
   }
 
-  animateNav() {
+  animateNav(event?) {
+    if (event) {
+      window.alert('sedoiiooodo');
+    }
     this.navState = (!this.sideNavIsActive) ? 'opened' : 'closed';
     this.sideNavIsActive = !this.sideNavIsActive;
   }

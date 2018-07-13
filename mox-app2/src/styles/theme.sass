@@ -14,6 +14,9 @@
 a
   color: color(white)
   text-decoration: none
+button
+  &:focus
+    outline: 0
 ol,ul
   padding: 0
   margin: 0
@@ -22,7 +25,7 @@ body
   margin: 0
   padding: 0
   min-width: 320px
-  overflow-x: hidden
+  overflow-y: hidden
   color: color(black)
   background-color: color(white)
 
@@ -40,6 +43,7 @@ header
 h4
   color: color(white)
   font-weight: 600
+  font-size: 1.2em
 
 fieldset
   border: 0
@@ -72,7 +76,7 @@ select
   font-variant-caps: small-caps
 .main
   text-align: center
-  background-color: #F9FFFF
+  // background-color: #F9FFFF
   border-radius: 10px
   width: 93%
   height: 30em

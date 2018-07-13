@@ -1,4 +1,5 @@
 @import '../../../../styles/theme.colors.scss'
+
 hr
   border: solid 1px color(jeans)
 
@@ -22,6 +23,7 @@ hr
   border-radius: 10em
   margin: 1%
 .search-box
+  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1)
   padding-top: 0 !important
   position: fixed
   top: 0
@@ -59,6 +61,13 @@ hr
         list-style: none
         display: inline-block
         li
+          .img-container
+            flex-direction: column
+            display: flex
+            width: 40%
+            min-height: 8em
+            max-height: 100%
+            border: 0
           div
             width: 100%
             height: 10em
@@ -67,24 +76,23 @@ hr
             display: inline-flex
             span
               position: relative
-              font-size: 8px
+              font-size: 9px
               width: 8em
               text-align: center
-              height: 3em
-              top: 90px
-              left: -66px
+              height: 2em
               color: grey
             img
-              margin-top: 6%
+              margin: 0
+              padding: 0
               border-radius: 5px
               width: 5em
               height: 5em
               background-size: cover
+              background-position: center
               display: flex
             section
-              width: 80%
+              width: 100%
               padding: 1%
-              margin-left: -60px
               h4
                 margin-top: 1%
                 color: color(darkBlue)

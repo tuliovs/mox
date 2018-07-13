@@ -30,7 +30,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
             tap((docL) => {
                 this.deckList = <MoxDeck[]>docL;
                 this.showLoader = false;
-                console.log(this.deckList);
+                // console.log(this.deckList);
               }
             )
           ).subscribe();
@@ -43,8 +43,8 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     this._moxService.getWorkingDeck().pipe(
       tap((workingDeck) => {
         this.internalDeck = workingDeck;
-        console.log('this', this.internalDeck);
-        console.log('that', workingDeck);
+        // console.log('this', this.internalDeck);
+        // console.log('that', workingDeck);
       })
     ).subscribe();
   }
@@ -53,8 +53,12 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     this._router.navigateByUrl('/deck/new');
   }
 
-  viewDeck() {
-    alert('Not done yet!');
+  viewDeck(deck?) {
+    if (deck) {
+      this._router.navigateByUrl('/deck/' + deck.key);
+    } else {
+      this._router.navigateByUrl('/deck/' + this.internalDeck.key);
+    }
   }
 
   deckSelected(deck: MoxDeck) {

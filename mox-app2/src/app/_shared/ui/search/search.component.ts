@@ -3,6 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { List } from '../../../_application/_models/_scryfall-models/models';
 import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
 
+export const bounceInDown = [
+  style({transform: 'translate3d(0, -3000px, 0)', opacity: 0, offset: .0}),
+  style({transform: 'translate3d(0, 25px, 0)', opacity: 1, offset: .60}),
+  style({transform: 'translate3d(0, -10px, 0)', offset: .75}),
+  style({transform: 'translate3d(0, 5px, 0)', offset: .90}),
+  style({transform: 'translate3d(0, 0, 0)', offset: 1}),
+];
+
 @Component({
   selector: 'app-mox-search',
   templateUrl: './search.component.html',
@@ -10,18 +18,20 @@ import { animate, keyframes, style, transition, trigger, state } from '@angular/
   animations: [
     trigger('searchTrigger', [
       state('closed', style({
-        transform: 'translate3d(0, 100%, 0)',
+        transform: 'translate3d(-100%, 0, 0)',
         display: 'none'
       })),
-      state('opened', style({
-        transform: 'translate3d(0, 0, 0)',
-        display: 'visible'
-      })),
-      transition('*=>opened', animate('300ms')),
-      transition('opened=>closed', animate('300ms'))
+      // state('opened', style({
+      //   transform: 'translate3d(0, 0, 0)',
+      //   display: 'visible'
+      // })),
+      transition('*=>opened', animate('800ms', keyframes(bounceInDown))),
+      transition('opened=>closed', animate('200ms'))
     ])
   ]
 })
+
+
 export class SearchComponent implements OnInit {
   public isSearchActive = false;
   public searchResult: List = new List();

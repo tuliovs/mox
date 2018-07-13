@@ -13,7 +13,7 @@
   </fieldset>
 </div>
 <app-mox-action-bar>
-  <button                       type="button" class="btn btn-action"><i class="fas fa-minus-square"></i></button>
-  <button (click)="setCover()"  type="button" class="btn btn-action"><i class="fas fa-book"></i></button>
-  <button                       type="button" class="btn btn-action"><i class="fas fa-plus-square"></i></button>
+  <app-mox-karn-info-card [card]="card" *ngIf="card"></app-mox-karn-info-card>
+  <app-mox-search></app-mox-search>
+  <app-mox-card-context [card]="card" [icon]="'fas fa-stream'" *ngIf="card"></app-mox-card-context>
 </app-mox-action-bar>

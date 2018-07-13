@@ -9,7 +9,7 @@
     <ol *ngIf="!showLoader">
       <li *ngFor="let deck of deckList" [ngClass]="{'selectedDeck': this.internalDeck === deck}" >
         <div class="cover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
-        <div class="content" (click)="deckSelected(deck)" >
+        <div class="content" (press)="deckSelected(deck)" (swiperight)="viewDeck(deck)" >
           <p style="vertical-align: text-top">
             <span>[{{deck.format}}]</span> |
             <span>

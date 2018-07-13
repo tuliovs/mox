@@ -1,0 +1,76 @@
+<app-mox-loading-spinner *ngIf="!_deck"></app-mox-loading-spinner>
+<div *ngIf="_deck | async as deck">
+  <app-mox-titlebar>
+    <ol>
+      <li (click)="tab = 'statsTab'" [ngClass]="{'active': tab == 'statsTab'}">Stats</li>
+      <li (click)="tab = 'profileTab'" [ngClass]="{'active': tab == 'profileTab'}">List</li>
+      <li (click)="tab = 'socialTab'" [ngClass]="{'active': tab == 'socialTab'}">Social</li>
+    </ol>
+  </app-mox-titlebar>
+  <div class="main">
+    <div [hidden]="tab != 'statsTab'">
+      <app-mox-comming-warning></app-mox-comming-warning>
+    </div>
+    <div [hidden]="tab !='profileTab'">
+      <div class="summary">
+        <label>{{deck.name}}</label>
+        <label><i class="fas fa-clone"></i>[{{deck.cards.length}}]</label>
+        <label><i class="far fa-clone"></i>[{{(deck.side) ? deck.side.length : 0}}]</label>
+        <label>{{deck.format}}</label>
+      </div>
+      <ul>
+        <li *ngFor="let card of _cardList">
+          <app-mox-row-card [cardAmout]="cardAmount(card)" [cardId]="card"
+            (plus)="cardPlus($event)" (minus)="cardMinus($event)"
+          ></app-mox-row-card>
+        </li>
+      </ul>
+    </div>
+    <div [hidden]=" tab !='socialTab'">
+      <form class="new-deck-form" *ngIf="tempDeck as deck">
+        <div class="deckCover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+        </div>
+        <section class="form-block">
+          <label>Deck Name</label>
+          <div class="form-group">
+            <input type="text" [(ngModel)]="deck.name" value="{{deck.name}}" name="iname" required>
+          </div>
+          <label>Deck Creator</label>
+          <div class="form-group">
+            <input type="text" readonly value="{{deck.ownerName}}">
+          </div>
+          <div class="form-group">
+            <div class="toggle-switch" (click)="deck.froze = !deck.froze">
+              <button class="btn btn-action">
+                <i class="fas fa-check-square" *ngIf="!deck.froze"></i>
+                <i class="far fa-square" *ngIf="deck.froze"></i>
+              </button>
+              <label for="ifroze">Froze</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="toggle-switch">
+              <button class="btn btn-action">
+                <i class="fas fa-check-square" *ngIf="!deck.legal"></i>
+                <i class="far fa-square" *ngIf="deck.legal"></i>
+              </button>
+              <label for="ilegal">Legal</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="iformat">Format</label>
+            <div class="select">
+              <select id="iformat" [(ngModel)]="deck.format" [ngModelOptions]="{standalone: true}" required>
+                <option *ngFor="let f of formats" [value]="f">{{f}}</option>
+              </select>
+            </div>
+          </div>
+        </section>
+      </form>
+    </div>
+  </div>
+</div>
+<app-mox-action-bar>
+  <app-mox-search></app-mox-search>
+  <button (click)="saveDeck()" class="btn btn-action"><i class="fas fa-save"></i></button>
+</app-mox-action-bar>

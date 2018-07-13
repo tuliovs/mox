@@ -1,0 +1,28 @@
+<button type="button" class="btn btn-action" (click)="activateContext()">
+  <i class="fas fa-info-circle"></i>
+</button>
+
+<div [@card-contextTrigger]="componentState" class="lightbox"
+    (click)="closeContext()"
+    (swipeleft)="closeContext()"
+    (swiperight)="closeContext()"
+    (swipedown)="closeContext()"
+></div>
+<div [@card-contextTrigger]="componentState" *ngIf="card" class="karn-info">
+  <p><label>{{card.name}}</label></p>
+  <p>{{card.rarity}}</p>
+  <p>{{card.mana_cost}}</p>
+  <p>{{card.cmc}}</p>
+  <p>{{card.loyalty}}</p>
+  <p>{{card.oracle_text}}</p>
+  <p>{{card.set_name}}</p>
+  <p>{{card.type_line}}</p>
+  <p>U${{card.usd}} | Tix{{card.tix}}</p>
+  <div>
+    <ul *ngIf="card.legalities">
+      <li *ngFor="let item of mapLegal(card.legalities)">
+        {{item.text}}: {{item.value}}
+      </li>
+    </ul>
+  </div>
+</div>

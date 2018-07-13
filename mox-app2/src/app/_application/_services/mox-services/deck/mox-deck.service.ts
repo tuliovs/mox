@@ -41,4 +41,16 @@ export class MoxDeckService {
     this.deckCollection = this.afs.collection('decks');
     return this.deckCollection.doc(id);
   }
+
+  // addOneCard(deckId: any, cardId: any, side?: boolean) {
+  //   // console.log('AddOneCard');
+  //   if (!side) {
+  //     this.deckCollection = this.afs.collection('decks');
+  //     this.deckCollection.doc(deckId).update({
+  //       cards: .push(cardId)
+  //     });
+  //   } else {
+  //     // console.log('Sideboard');
+  //   }
+  // }
 }

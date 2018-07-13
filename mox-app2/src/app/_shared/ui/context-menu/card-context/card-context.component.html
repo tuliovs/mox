@@ -1,0 +1,47 @@
+<div (click)="activateContext()">
+  <i *ngIf="!icon" class="fas fa-ellipsis-v"></i>
+  <button *ngIf="icon" class="btn btn-action">
+      <i class="{{icon}} action"></i>
+  </button>
+</div>
+
+<div [@card-contextTrigger]="componentState" class="lightbox"
+    (click)="closeContext()"
+    (swipeleft)="closeContext()"
+    (swiperight)="closeContext()"
+    (swipedown)="closeContext()"
+></div>
+<div [@card-contextTrigger]="componentState" *ngIf="card" class="action-menu">
+  <ul>
+    <li>
+      <div class="card-data">
+        <p>{{card.name}}</p>
+        <div (click)="fav = !fav" >
+          <img class="img" *ngIf="!card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }" />
+          <img class="img" *ngIf="card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }" />
+          <i *ngIf="!fav" class="far fa-heart"></i>
+          <i *ngIf="fav" class="fas fa-heart"></i>
+        </div>
+        <p>
+          U${{card.usd}} | tik${{card.tix}}
+        </p>
+      </div>
+    </li>
+    <li>
+      <button (click)="viewCard()">View Card</button>
+    </li>
+    <li *ngIf="_Deck">
+      <span>[{{_Deck.name}}]</span>
+      <button (click)="addOneCard()" (doubletap)="addFourCard()">Add 1 to Deck <span *ngIf="cardCount > 0">({{cardCount}})</span></button>
+    </li>
+    <li *ngIf="_Deck">
+      <button (click)="addOneCard(true)" (doubletap)="addFourCard(true)">Add 1 to Sideboard <span *ngIf="sideCount > 0">({{sideCount}})</span></button>
+    </li>
+    <li *ngIf="_Deck">
+      <button (click)="setCover()" >Make Deck cover</button>
+    </li>
+    <li>
+      <button>Share</button>
+    </li>
+  </ul>
+</div>

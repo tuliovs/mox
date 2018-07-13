@@ -38,6 +38,10 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { HttpModule } from '@angular/http';
+import { CardContextComponent } from './_shared/ui/context-menu/card-context/card-context.component';
+import { DeckViewComponent } from './deck-hub/deck-view/deck-view.component';
+import { RowCardComponent } from './deck-hub/deck-view/row-card/row-card.component';
+import { KarnInfoCardComponent } from './_shared/ui/karn-info-card/karn-info-card.component';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -58,7 +62,11 @@ export const firebaseConfig = environment.firebaseConfig;
     SearchComponent,
     ActionBarComponent,
     CommingWarningComponent,
-    ReversePipe
+    ReversePipe,
+    CardContextComponent,
+    DeckViewComponent,
+    RowCardComponent,
+    KarnInfoCardComponent
   ],
   imports: [
     CommonModule,

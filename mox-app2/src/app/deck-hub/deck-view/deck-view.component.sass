@@ -1,0 +1,64 @@
+@import './../../../styles/theme.colors.scss'
+
+.active::after
+  content: ']'
+.active::before
+  content: '['
+
+.deckCover
+  width: 20.95em
+  height: 14em
+  background-size: cover
+  border: solid 2px color(white)
+  border-radius: 15px
+
+.summary
+  background-color: color(darkBlue)
+  color: color(white)
+  border: solid 1px color(darkBlue)
+  position: fixed
+  width: 93%
+  height: 1.5em
+  display: flex
+  font-size: .81em
+  padding: 0 2%
+  justify-content: space-between
+
+.new-deck-form
+  background-color: color(white)
+  width: 100%
+  height: 100%
+  .form-block
+    label
+      display: flex
+      margin-left: 1.5em
+    .form-group
+      .toggle-switch
+        display: inline-flex
+        vertical-align: middle
+        text-align: start
+        width: 100%
+        padding-left: 1em
+        align-items: center
+        .btn-action
+          color: color(conLight)
+        label
+          margin-left: 0em
+          font-size: 1.1em
+ul
+  overflow-x: hidden
+  margin-top: 0%
+  padding-top: 2%
+ol
+  padding: 0
+  list-style: none
+  display: inline-flex
+  width: 100%
+  justify-content: space-evenly
+  li
+    cursor: pointer
+    color: color(white)
+    display: block
+    font-size: 1.5em
+    margin-top: 1em
+    width: 30%
