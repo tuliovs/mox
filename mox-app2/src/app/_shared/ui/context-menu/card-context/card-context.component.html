@@ -17,8 +17,8 @@
       <div class="card-data">
         <p>{{card.name}}</p>
         <div (click)="fav = !fav" >
-          <img class="img" *ngIf="!card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }" />
-          <img class="img" *ngIf="card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }" />
+          <img class="img" *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }" />
+          <img class="img" *ngIf="!card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }" />
           <i *ngIf="!fav" class="far fa-heart"></i>
           <i *ngIf="fav" class="fas fa-heart"></i>
         </div>

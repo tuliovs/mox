@@ -1,12 +1,12 @@
 <div class="cardRow" *ngIf="_card">
   <div class="cardCounter"><label>x{{cardAmout}}</label></div>
-  <div class="cardInfo" (click)="cardView = true" *ngIf="!_card.card_faces" [ngStyle]="{ 'background-image': 'url(' + _card.image_uris.art_crop + ')' }">
+  <div class="cardInfo" (click)="cardView = true" *ngIf="_card.image_uris" [ngStyle]="{ 'background-image': 'url(' + _card.image_uris.art_crop + ')' }">
     <div class="cardData">{{_card.rarity}}</div>
     <div class="cardData">{{_card.mana_cost}}</div>
     <div class="cardData"><h4>{{_card.name}}</h4></div>
     <div class="cardData">{{_card.type_line}}</div>
   </div>
-  <div class="cardInfo" (click)="cardView = true" *ngIf="_card.card_faces" [ngStyle]="{ 'background-image': 'url(' + _card.card_faces[0].image_uris.art_crop + ')' }">
+  <div class="cardInfo" (click)="cardView = true" *ngIf="!_card.image_uris" [ngStyle]="{ 'background-image': 'url(' + _card.card_faces[0].image_uris.art_crop + ')' }">
     <div class="cardData">{{_card.rarity}}</div>
     <div class="cardData">{{_card.card_faces[0].mana_cost}}</div>
     <div class="cardData"><h4>{{_card.card_faces[0].name}}</h4></div>
@@ -18,7 +18,7 @@
   </div>
 </div>
 <div *ngIf="cardView" class="cardViewer" (click)="cardView = false" >
-  <div class="fullcard" *ngIf="!_card.card_faces" [ngStyle]="{ 'background-image': 'url(' + _card.image_uris.normal + ')' }" ></div>
-  <div class="fullcard" (doubletap)="side = true" *ngIf="_card.card_faces && !side" [ngStyle]="{ 'background-image': 'url(' + _card.card_faces[0].image_uris.normal + ')' }" ></div>
-  <div class="fullcard" (doubletap)="side = false" *ngIf="_card.card_faces && side" [ngStyle]="{ 'background-image': 'url(' + _card.card_faces[1].image_uris.normal + ')' }" ></div>
+  <div class="fullcard" *ngIf="_card.image_uris" [ngStyle]="{ 'background-image': 'url(' + _card.image_uris.normal + ')' }" ></div>
+  <div class="fullcard" (doubletap)="side = true" *ngIf="!_card.image_uris && !side" [ngStyle]="{ 'background-image': 'url(' + _card.card_faces[0].image_uris.normal + ')' }" ></div>
+  <div class="fullcard" (doubletap)="side = false" *ngIf="!_card.image_uris && side" [ngStyle]="{ 'background-image': 'url(' + _card.card_faces[1].image_uris.normal + ')' }" ></div>
 </div>

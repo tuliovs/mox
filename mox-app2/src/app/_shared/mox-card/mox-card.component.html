@@ -4,11 +4,11 @@
 <div class="main">
   <app-mox-loading-spinner *ngIf="!card"></app-mox-loading-spinner>
   <fieldset *ngIf="card">
-    <div class="img" *ngIf="!card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.normal + ')' }">
+    <div class="img" *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.normal + ')' }">
       </div>
-    <div class="img" (click)="front = !front" *ngIf="card.card_faces && !front" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.normal + ')' }">
+    <div class="img" (click)="front = !front" *ngIf="!card.image_uris && !front" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.normal + ')' }">
       </div>
-    <div class="img" (click)="front = !front" *ngIf="card.card_faces && front" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[1].image_uris.normal + ')' }">
+    <div class="img" (click)="front = !front" *ngIf="!card.image_uris && front" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[1].image_uris.normal + ')' }">
       </div>
   </fieldset>
 </div>

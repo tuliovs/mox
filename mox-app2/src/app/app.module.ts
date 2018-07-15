@@ -10,6 +10,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { environment } from '../environments/environment';
 import { KarnModule } from './karn/karn.module';
+import * as Hammer from 'hammerjs';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { MoxCardService } from './_application/_services/mox-services/card/mox-card.service';
 import { MoxDeckService } from './_application/_services/mox-services/deck/mox-deck.service';
@@ -45,6 +47,13 @@ import { KarnInfoCardComponent } from './_shared/ui/karn-info-card/karn-info-car
 
 export const firebaseConfig = environment.firebaseConfig;
 
+export class MyHammerConfig extends HammerGestureConfig  {
+  overrides = <any>{
+      // override hammerjs default configuration
+      'swipe': { direction: Hammer.DIRECTION_ALL  }
+  };
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +75,7 @@ export const firebaseConfig = environment.firebaseConfig;
     CardContextComponent,
     DeckViewComponent,
     RowCardComponent,
-    KarnInfoCardComponent
+    KarnInfoCardComponent,
   ],
   imports: [
     CommonModule,
@@ -82,12 +91,16 @@ export const firebaseConfig = environment.firebaseConfig;
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
+    {
+      provide:  HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig
+    },
     MoxCardService,
     MoxDeckService,
     ToastService,
     NotificationService,
     ScryfallCardService,
-    ScryfallSearchService
+    ScryfallSearchService,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

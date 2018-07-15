@@ -1,13 +1,13 @@
 <app-mox-loading-spinner *ngIf="!_deck"></app-mox-loading-spinner>
 <div *ngIf="_deck | async as deck">
   <app-mox-titlebar>
-    <ol>
+    <ol (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
       <li (click)="tab = 'statsTab'" [ngClass]="{'active': tab == 'statsTab'}">Stats</li>
       <li (click)="tab = 'profileTab'" [ngClass]="{'active': tab == 'profileTab'}">List</li>
       <li (click)="tab = 'socialTab'" [ngClass]="{'active': tab == 'socialTab'}">Social</li>
     </ol>
   </app-mox-titlebar>
-  <div class="main">
+  <div class="main" (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
     <div [hidden]="tab != 'statsTab'">
       <app-mox-comming-warning></app-mox-comming-warning>
     </div>
@@ -70,7 +70,7 @@
     </div>
   </div>
 </div>
-<app-mox-action-bar>
+<app-mox-action-bar (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
   <app-mox-search></app-mox-search>
   <button (click)="saveDeck()" class="btn btn-action"><i class="fas fa-save"></i></button>
 </app-mox-action-bar>

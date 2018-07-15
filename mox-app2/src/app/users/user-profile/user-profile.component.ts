@@ -13,4 +13,45 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
   }
 
+  changetab(side) {
+    switch (side) {
+      case 'left':
+        // alert('LEFT');
+        switch (this.tab) {
+          case 'statsTab':
+              this.tab = 'socialTab';
+            break;
+          case 'socialTab':
+              this.tab = 'profileTab';
+            break;
+          case 'profileTab':
+              this.tab = 'statsTab';
+            break;
+          default:
+              alert('I`m sorry, I got lost');
+            break;
+        }
+        break;
+      case 'right':
+        // alert('RIGHT');
+        switch (this.tab) {
+          case 'statsTab':
+              this.tab = 'profileTab';
+            break;
+          case 'profileTab':
+              this.tab = 'socialTab';
+            break;
+          case 'socialTab':
+              this.tab = 'statsTab';
+            break;
+          default:
+              alert('I`m sorry, I got lost');
+            break;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
 }

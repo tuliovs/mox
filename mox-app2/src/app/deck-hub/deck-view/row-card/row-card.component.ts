@@ -35,7 +35,7 @@ export class RowCardComponent implements OnInit, AfterViewInit {
     this.afs.collection('cards').doc<Card>(this.cardId).valueChanges().pipe(
       tap((c) => {
         this._card = c;
-        console.log('cartinhas>', c);
+        // console.log('cartinhas>', c);
       })
     ).subscribe();
   }

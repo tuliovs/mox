@@ -7,7 +7,7 @@ import { List } from '../../../_models/_scryfall-models/models';
 export class ScryfallSearchService {
   constructor(private http: HttpClient) {}
 
-  url = `https://api.scryfall.com/cards/search?order=cmc&q=`;
+  url = `https://api.scryfall.com/cards/search?order=name&q=`;
 
   search(param: string): Observable<List> {
     return this.http.get<List>(`${this.url}${encodeURI(param)}`);

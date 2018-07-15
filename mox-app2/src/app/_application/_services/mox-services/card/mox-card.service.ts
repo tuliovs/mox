@@ -18,7 +18,7 @@ export class MoxCardService {
     this.cardDoc = this.cardCollection.doc(id);
     this.cardDoc.ref.get().then((doc) => {
       if (doc.exists) {
-        console.log('%c Data do Firebase - Document data:', 'color: green', doc.data());
+        // console.log('%c Data do Firebase - Document data:', 'color: green', doc.data());
         this._card = this.cardCollection.doc<Card>(id).valueChanges();
       } else {
         this._scryservice.get(id).subscribe(

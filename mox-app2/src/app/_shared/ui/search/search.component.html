@@ -26,8 +26,8 @@
           <div>
             <div class="img-container">
               <a routerLink='/card/{{item.id}}'>
-                <img class="img" *ngIf="!item.card_faces" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }" />
-                <img class="img" *ngIf="item.card_faces" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }" />
+                <img class="img" *ngIf="item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }" />
+                <img class="img" *ngIf="!item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }" />
               </a>
               <span>[ {{item.rarity}} ]</span>
               <span *ngIf="!item.card_faces">{{item.mana_cost}}</span>
@@ -40,7 +40,7 @@
               <p *ngIf="item.oracle_text" class="description">
                 {{(item.oracle_text.length>140)? (item.oracle_text | slice:0:140)+'...':(item.oracle_text)}}
               </p>
-              <p *ngIf="item.card_faces" class="description">
+              <p *ngIf="!item.image_uris" class="description">
                 {{(item.card_faces[0].oracle_text.length>140)? (item.card_faces[0].oracle_text | slice:0:140)+'...':(item.card_faces[0].oracle_text)}}
               </p>
             </section>

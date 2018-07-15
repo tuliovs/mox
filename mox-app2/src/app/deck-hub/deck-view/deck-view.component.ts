@@ -58,14 +58,14 @@ export class DeckViewComponent implements OnInit {
             this._cardList = Array.from(new Set(deck.cards));
             this._sideList = Array.from(new Set(deck.side));
             // console.log('#', this._rawCardList);
-            console.log('SARRA', this.tempDeck);
+            // console.log('SARRA', this.tempDeck);
           })
         ).subscribe();
       }
     });
   }
   saveDeck() {
-    console.log('Deck:', this.tempDeck);
+    // console.log('Deck:', this.tempDeck);
     this.deckCollection = this.afs.collection('decks');
     this.deckCollection.doc<MoxDeck>(this._id).update(this.tempDeck);
   }
@@ -92,4 +92,46 @@ export class DeckViewComponent implements OnInit {
         });
         return res;
     }
+
+    changetab(side) {
+      switch (side) {
+        case 'left':
+          // alert('LEFT');
+          switch (this.tab) {
+            case 'statsTab':
+                this.tab = 'socialTab';
+              break;
+            case 'socialTab':
+                this.tab = 'profileTab';
+              break;
+            case 'profileTab':
+                this.tab = 'statsTab';
+              break;
+            default:
+                alert('I`m sorry, I got lost');
+              break;
+          }
+          break;
+        case 'right':
+          // alert('RIGHT');
+          switch (this.tab) {
+            case 'statsTab':
+                this.tab = 'profileTab';
+              break;
+            case 'profileTab':
+                this.tab = 'socialTab';
+              break;
+            case 'socialTab':
+                this.tab = 'statsTab';
+              break;
+            default:
+                alert('I`m sorry, I got lost');
+              break;
+          }
+          break;
+        default:
+          break;
+      }
+    }
+
 }
