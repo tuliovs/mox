@@ -1,5 +1,7 @@
+import { tap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../karn/_services/auth.service';
+import { ToastService } from '@application/_services/toast/toast.service';
 
 @Component({
   selector: 'app-mox-user-profile',
@@ -8,9 +10,15 @@ import { AuthService } from '../../karn/_services/auth.service';
 })
 export class UserProfileComponent implements OnInit {
   public tab = 'profileTab';
-  constructor(public auth: AuthService) { }
+  public _user: any;
+  constructor(public auth: AuthService, public toast: ToastService) { }
 
   ngOnInit() {
+    this.auth.user.pipe(
+      tap((data) => {
+        this._user = data;
+      })
+    ).subscribe();
   }
 
   changetab(side) {
@@ -28,7 +36,7 @@ export class UserProfileComponent implements OnInit {
               this.tab = 'statsTab';
             break;
           default:
-              alert('I`m sorry, I got lost');
+              this.toast.sendMessage('I`m sorry, I got lost', 'warning', this._user.uid);
             break;
         }
         break;
@@ -45,7 +53,7 @@ export class UserProfileComponent implements OnInit {
               this.tab = 'statsTab';
             break;
           default:
-              alert('I`m sorry, I got lost');
+              this.toast.sendMessage('I`m sorry, I got lost', 'warning', this._user.uid);
             break;
         }
         break;

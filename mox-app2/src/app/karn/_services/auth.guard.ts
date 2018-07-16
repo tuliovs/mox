@@ -1,3 +1,4 @@
+import { ToastService } from '@application/_services/toast/toast.service';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor (private auth: AuthService, private router: Router) {}
+  constructor (private auth: AuthService, private router: Router, public toast: ToastService) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -18,10 +19,12 @@ export class AuthGuard implements CanActivate {
 
     return this.auth.user.pipe(
       take(1),
+      tap((user) => {
+        // this.toast.sendMessage('Acess denied!', 'danger', user.uid);
+      }),
       map(user => !!user),
       tap(loggedIn => {
-          if (!loggedIn) {
-            console.log('acess denied');
+        if (!loggedIn) {
             this.router.navigate(['/login']);
           }
         }

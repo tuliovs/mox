@@ -4,6 +4,8 @@ import { MoxCardComponent } from '@shared/mox-card/mox-card.component';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
 import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
 import { tap } from 'rxjs/operators';
+import { ToastService } from '@application/_services/toast/toast.service';
+import { AuthService } from '@karn/_services/auth.service';
 
 @Component({
   selector: 'app-mox-row-card',
@@ -13,6 +15,7 @@ import { tap } from 'rxjs/operators';
 export class RowCardComponent implements OnInit, AfterViewInit {
   public cardCollection: AngularFirestoreCollection<Card>;
   public _card: Card;
+  public _user: any;
   public cardView = false;
   @Output() plus: EventEmitter<any> = new EventEmitter();
   @Output() minus: EventEmitter<any> = new EventEmitter();
@@ -20,12 +23,20 @@ export class RowCardComponent implements OnInit, AfterViewInit {
   @Input() cardAmout;
   constructor(
     public _cardService: MoxCardService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    public toast: ToastService,
+    public auth: AuthService
   ) { }
 
   ngOnInit() {
+    this.auth.user.pipe(
+      tap((user) => {
+        this._user = user;
+      })
+    ).subscribe();
     if (!this.cardId) {
-      throw new Error('Id não fornecido ou inválido');
+      this.toast.sendMessage('Not founded CardID, thats wierd...', 'danger', this._user.uid);
+      throw new Error('Not founded CardID');
     } else {
       this._cardService.getCard(this.cardId);
     }

@@ -9,14 +9,6 @@ import { MoxDeckService } from './_application/_services/mox-services/deck/mox-d
 import { NotificationService } from './_application/_services/notification/notification.service';
 import { AuthService } from './karn/_services/auth.service';
 
-export const swing = [
-  style({transform: 'rotate3d(0, 0, 1, 15deg)', offset: .2}),
-  style({transform: 'rotate3d(0, 0, 1, -10deg)', offset: .4}),
-  style({transform: 'rotate3d(0, 0, 1, 5deg)', offset: .6}),
-  style({transform: 'rotate3d(0, 0, 1, -5deg)', offset: .8}),
-  style({transform: 'none', offset: 1})
-];
-
 export const rubberBand = [
   style({transform: 'scale3d(1, 1, 1)'}),
   style({transform: 'scale3d(1.25, 0.75, 1)'}),
@@ -32,9 +24,6 @@ export const rubberBand = [
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass'],
   animations: [
-    trigger('notificationAnimator', [
-      transition('* => swing', animate(1000, keyframes(swing))),
-    ]),
     trigger('avatarAnimator', [
       transition('* => rubberBand', animate(1000, keyframes(rubberBand))),
     ]),
@@ -91,9 +80,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   animateNav(event?) {
-    if (event) {
-      window.alert('sedoiiooodo');
-    }
     this.navState = (!this.sideNavIsActive) ? 'opened' : 'closed';
     this.sideNavIsActive = !this.sideNavIsActive;
   }

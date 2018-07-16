@@ -1,17 +1,18 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { ReversePipe } from './_application/_pipes/reverse.pipe';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { HammerGestureConfig, BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { environment } from '../environments/environment';
 import { KarnModule } from './karn/karn.module';
 import * as Hammer from 'hammerjs';
-import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { } from '@angular/platform-browser';
+import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { MoxCardService } from './_application/_services/mox-services/card/mox-card.service';
 import { MoxDeckService } from './_application/_services/mox-services/deck/mox-deck.service';
@@ -44,6 +45,7 @@ import { CardContextComponent } from './_shared/ui/context-menu/card-context/car
 import { DeckViewComponent } from './deck-hub/deck-view/deck-view.component';
 import { RowCardComponent } from './deck-hub/deck-view/row-card/row-card.component';
 import { KarnInfoCardComponent } from './_shared/ui/karn-info-card/karn-info-card.component';
+import { ImportDeckContextComponent } from './_shared/ui/context-menu/import-deck-context/import-deck-context.component';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -76,6 +78,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     DeckViewComponent,
     RowCardComponent,
     KarnInfoCardComponent,
+    ImportDeckContextComponent,
   ],
   imports: [
     CommonModule,

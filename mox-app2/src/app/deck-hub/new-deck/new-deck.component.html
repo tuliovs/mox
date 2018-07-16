@@ -1,8 +1,6 @@
 <app-mox-titlebar>
   <ol>
-    <li (click)="importDeck()" >Import</li>
-    <li (click)="createDeck()" >Save</li>
-    <li (click)="cloneDeck()" >Clone</li>
+    <li>New Deck</li>
   </ol>
 </app-mox-titlebar>
 <div class="main">
@@ -46,9 +44,7 @@
   </form>
 </div>
 <app-mox-action-bar>
-  <button (click)="importDeck()" type="button" class="btn btn-action">
-    <i class="fas fa-cloud-upload-alt"></i>
-  </button>
+  <app-mox-import-deck-context></app-mox-import-deck-context>
   <button (click)="createDeck()" type="button" class="btn btn-action">
     <i class="fas fa-save"></i>
   </button>

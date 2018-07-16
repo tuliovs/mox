@@ -1,7 +1,8 @@
+import { ToastService } from './../../_application/_services/toast/toast.service';
 import { Observable } from 'rxjs';
 import { MoxDeck, MoxCardDeck } from 'src/app/_application/_models/_mox_models/MoxDeck';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { tap } from 'rxjs/operators';
 
@@ -39,13 +40,16 @@ export class DeckViewComponent implements OnInit {
   constructor(
     private afs: AngularFirestore,
     private route: ActivatedRoute,
+    private toast: ToastService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe( params => {
       const id = params['id'];
       if (!id) {
-        throw new Error('Id não fornecido ou inválido');
+        this.toast.sendMessage('Not founded DeckID, maybe he got deleted?', 'danger', id);
+        throw new Error('Not founded DeckID');
       } else {
         this._id = id;
         this.deckCollection = this.afs.collection('decks');
@@ -68,6 +72,7 @@ export class DeckViewComponent implements OnInit {
     // console.log('Deck:', this.tempDeck);
     this.deckCollection = this.afs.collection('decks');
     this.deckCollection.doc<MoxDeck>(this._id).update(this.tempDeck);
+    this.toast.sendMessage('Deck Saved, have a nice day', 'success', this.tempDeck.ownerId);
   }
   cardAmount(cardId) {
     return this.countOccurrences(this._rawCardList, cardId);
@@ -81,6 +86,16 @@ export class DeckViewComponent implements OnInit {
   cardMinus(event) {
     this.tempDeck.cards.splice(this.tempDeck.cards.indexOf(event), 1);
     this.saveDeck();
+  }
+
+  delete(deck: MoxDeck) {
+    if (confirm('This action can not be undone, are you sure?')) {
+      this.afs.collection('decks').doc(deck.key).delete();
+      this.toast.sendMessage('Deck successfully deleted!', 'success', deck.ownerId);
+      this.router.navigate(['/deckhub']);
+    } else {
+      this.toast.sendMessage('Ops! Deck not deleted!', 'warning', deck.ownerId);
+    }
   }
 
   countOccurrences(arr: string[], value: string) {

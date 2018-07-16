@@ -28,7 +28,15 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
           this.deckCollection = this.afs.collection('decks', ref => ref.where('ownerId', '==', u.uid));
           this.deckCollection.valueChanges().pipe(
             tap((docL) => {
-                this.deckList = <MoxDeck[]>docL;
+                this.deckList = <MoxDeck[]>docL.sort((a, b) => {
+                  if (a.name < a.name) {
+                    return -1;
+                  } else if (a.name > a.name) {
+                    return 1;
+                  } else {
+                    return 0;
+                  }
+                } );
                 this.showLoader = false;
                 // console.log(this.deckList);
               }

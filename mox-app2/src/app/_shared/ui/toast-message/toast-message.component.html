@@ -1,21 +1,22 @@
-<div *ngIf="messages" class="wrapper">
-  <aside *ngFor="let message of messages | async ">
-    <div class="alert alert-app-level" [ngClass]="{'alert-info':     message.style=='info',
+<i class="fas fa-bell"
+        [@notificationAnimator]="animationState"
+        (@notificationAnimator.done)="resetAnimationState()"
+        (tap)="startAnimation('swing')"></i>
+<div class="wrapper" *ngIf="messages && messages.length > 0">
+  <aside>
+    <div *ngFor="let message of messages" class="alert" [ngClass]="{'alert-info':     message.style=='info',
                     'alert-danger':   message.style=='danger',
                     'alert-warning':   message.style=='warning',
-                    'is-success':  message.style=='success'}">
-        <div class="alert-items">
-          <div class="alert-item static">
-              <div class="alert-icon-wrapper">
-                  <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
-              </div>
-              <div class="alert-text">
-                {{message.content}}
-              </div>
-          </div>
+                    'alert-success':  message.style=='success'}">
+      <i class="fas " [ngClass]="{'fa-info-circle': message.style=='info',
+                    'fa-dizzy': message.style=='danger',
+                    'fa-exclamation-triangle': message.style=='warning',
+                    'fa-check-circle': message.style=='success'}"></i>
+      <div class="alert-text">
+        {{message.content}}
       </div>
-      <button type="button" class="close" aria-label="Close" (click)="dismiss(message.$key)">
-          <clr-icon aria-hidden="true" shape="close"></clr-icon>
+      <button type="button" class="btn btn-close" (click)="dismiss(message.key)">
+        <i class="far fa-times-circle"></i>
       </button>
     </div>
   </aside>

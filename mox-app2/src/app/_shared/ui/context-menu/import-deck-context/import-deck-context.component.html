@@ -1,0 +1,28 @@
+<button (click)="activateContext()" type="button" class="btn btn-action">
+  <i class="fas fa-cloud-upload-alt"></i>
+</button>
+
+<div [@importdeck-contextTrigger]="importState" class="lightbox"
+    (click)="closeContext()"
+    (swipeleft)="closeContext()"
+    (swiperight)="closeContext()"
+    (swipedown)="closeContext()"
+></div>
+<div [@importdeck-contextTrigger]="importState" class="action-menu">
+  <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
+  <ul *ngIf="!showLoader">
+    <li>
+      <div>
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>
+          Hello! This is Karn import interface. Here you can Import decks from MTG Arena Text Format!
+        </p>
+      </div>
+    </li>
+    <li>
+      <label>Import from MTG Arena:</label>
+      <textarea [(ngModel)]="importText" value="{{importText}}" ></textarea>
+      <button (press)="importDeck()" class="btn">Import</button>
+    </li>
+  </ul>
+</div>

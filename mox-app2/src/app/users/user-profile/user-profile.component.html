@@ -11,7 +11,7 @@
 <ng-template #authenticated>
   <div *ngIf="auth.user | async as user">
     <app-mox-titlebar>
-      <ol>
+      <ol (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
         <li (click)="tab = 'statsTab'"   [ngClass]="{'active': tab == 'statsTab'}">Stats</li>
         <li (click)="tab = 'profileTab'" [ngClass]="{'active': tab == 'profileTab'}">Profile</li>
         <li (click)="tab = 'socialTab'"  [ngClass]="{'active': tab == 'socialTab'}">Social</li>
@@ -33,7 +33,7 @@
       </div>
     </div>
   </div>
-  <app-mox-action-bar>
+  <app-mox-action-bar (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
     <button (click)="auth.signOut()" type="button" class="btn btn-action">
       <i class="fas fa-sign-in-alt"></i>
     </button>

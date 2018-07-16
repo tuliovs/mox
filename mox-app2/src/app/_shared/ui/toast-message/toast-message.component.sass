@@ -1,3 +1,48 @@
+@import '../../../../styles/theme.colors.scss'
+
 .wrapper
-  height: 0.5em
-  background-color: #785285
+  position: fixed
+  width: 100%
+  top: 7.5%
+  left: 0
+  height: 2.5em
+  text-align: center
+
+.fas
+  color: color(white)
+  font-size: 2.4em
+  padding: .4em
+
+.btn-close
+  border: 0
+  color: white
+  font-size: 1.3em
+  padding: 0
+  margin: 0 2%
+
+div
+  label
+    vertical-align: super
+    font-size: .8em
+
+.alert
+  color: color(white)
+  height: 2.5em
+  width: 98%
+  margin-bottom: 2%
+  display: inline-flex
+  justify-content: space-between
+  text-align: initial
+  vertical-align: middle
+  align-items: center
+  font-size: 0.8em
+  i
+    font-size: 1.4em
+.alert-success
+  background-color: color(notification, success)
+.alert-warning
+  background-color: color(notification, warning)
+.alert-danger
+  background-color: color(notification, error)
+.alert-info
+  background-color: color(notification, info)

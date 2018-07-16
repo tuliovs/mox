@@ -54,10 +54,6 @@ export class NewDeckComponent implements OnInit {
     this.router.navigate(['/deckhub']);
   }
 
-  importDeck() {
-    alert('Not Implemented!');
-  }
-
   cloneDeck() {
     alert('Not Implemented!');
   }

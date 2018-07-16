@@ -6,10 +6,7 @@
         (@avatarAnimator.done)="resetAnimationState()"
         (tap)="menuOpen('rubberBand');animateNav()"></i>
     <div style="align-self: center;">
-        <i class="fas fa-bell"
-        [@notificationAnimator]="animationState"
-        (@notificationAnimator.done)="resetAnimationState()"
-        (tap)="startAnimation('swing')"></i>
+      <app-mox-toast-message></app-mox-toast-message>
     </div>
   </header>
   <div class="content" (actionMenuActivate)="animateNav($event)">

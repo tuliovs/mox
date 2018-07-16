@@ -1,14 +1,11 @@
 {
-  // Example:
-  //
-  // "indexes": [
-  //   {
-  //     "collectionId": "widgets",
-  //     "fields": [
-  //       { "fieldPath": "foo", "mode": "ASCENDING" },
-  //       { "fieldPath": "bar", "mode": "DESCENDING" }
-  //     ]
-  //   }
-  // ]
-  "indexes": []
+  "indexes": [
+    {
+      "collectionId": "messages",
+      "fields": [
+        { "fieldPath": "owner", "mode": "ASCENDING" },
+        { "fieldPath": "key", "mode": "ASCENDING" }
+      ]
+    }
+  ]
 }

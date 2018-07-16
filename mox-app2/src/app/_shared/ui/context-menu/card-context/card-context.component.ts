@@ -1,3 +1,4 @@
+import { ToastService } from '@application/_services/toast/toast.service';
 import { Input, Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger, state } from '@angular/animations';
@@ -28,7 +29,7 @@ import { tap } from 'rxjs/operators';
 })
 export class CardContextComponent implements OnInit, AfterViewInit {
 
-  public deckCollection: AngularFirestoreCollection < MoxDeck > ;
+  public deckCollection: AngularFirestoreCollection <MoxDeck>;
   public _Deck: MoxDeck;
   get cardCount(): number {
     const t = this._Deck.cards.filter((n) => n = this.card.id );
@@ -44,7 +45,8 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   constructor(
     public router: Router,
     private afs: AngularFirestore,
-    private _dekService: MoxDeckService
+    private _dekService: MoxDeckService,
+    public toast: ToastService
   ) {}
   @Input() card;
   @Input() icon;
@@ -68,6 +70,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
         this.deckCollection.doc(this._Deck.key).update({
           cards: this._Deck.cards
         });
+        this.toast.sendMessage('Done! One copy of ' + this.card.name + ' included on ' + this._Deck.name, 'success', this._Deck.ownerId);
       } else {
         this.deckCollection = this.afs.collection('decks');
         if (!this._Deck.side) { this._Deck.side = []; }
@@ -75,6 +78,11 @@ export class CardContextComponent implements OnInit, AfterViewInit {
         this.deckCollection.doc(this._Deck.key).update({
           side: this._Deck.side
         });
+        this.toast.sendMessage('Done! One copy of '
+                                + this.card.name
+                                + ' included on '
+                                + this._Deck.name
+                                + ' side', 'success', this._Deck.ownerId);
       }
     }
   }
@@ -90,6 +98,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
         this.deckCollection.doc(this._Deck.key).update({
           cards: this._Deck.cards
         });
+        this.toast.sendMessage('Done! Four copys of ' + this.card.name + ' included on ' + this._Deck.name, 'success', this._Deck.ownerId);
       } else {
         this.deckCollection = this.afs.collection('decks');
         if (!this._Deck.side) { this._Deck.side = []; }
@@ -100,6 +109,11 @@ export class CardContextComponent implements OnInit, AfterViewInit {
         this.deckCollection.doc(this._Deck.key).update({
           side: this._Deck.side
         });
+        this.toast.sendMessage('Done! Four copys of '
+                                + this.card.name
+                                + ' included on '
+                                + this._Deck.name
+                                + ' side', 'success', this._Deck.ownerId);
       }
     }
   }
@@ -110,7 +124,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
       this.deckCollection.doc(this._Deck.key).update({
         cover: this.card.image_uris.art_crop
       });
-      window.alert('CoverSet!');
+      this.toast.sendMessage('Congrats! ' + this.card.name + ' set as DeckCover!', 'success', this._Deck.ownerId);
     }
   }
 
