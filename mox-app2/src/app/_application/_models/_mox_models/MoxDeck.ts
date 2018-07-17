@@ -1,6 +1,6 @@
 
 export class MoxDeck {
-    cards: MoxCardDeck[];
+    cards: string[];
     side: string[];
     cover: string;
     format: string;

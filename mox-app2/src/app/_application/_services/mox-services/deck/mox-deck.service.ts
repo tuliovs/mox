@@ -35,6 +35,7 @@ export class MoxDeckService {
 
   setDeck(d: MoxDeck) {
     this.deckCollection = this.afs.collection('decks');
+    d = this.deckFix(d);
     this.deckCollection.doc(d.key).set(Object.assign({}, d)).catch((error) => {
       console.error('Error adding document: ', error);
       // this.toast.sendMessage('Error adding document: ', 'danger', '');
@@ -54,9 +55,11 @@ export class MoxDeckService {
           const newDeck = new MoxDeck();
           newDeck.key = this.makeId();
           newDeck.name = 'Arena Imported Deck';
-          newDeck.cover = 'https://img.scryfall.com/cards/art_crop/en/dom/1.jpg?1524789999';
+          newDeck.cover = '';
           newDeck.legal = false;
           newDeck.ownerId = user.uid;
+          newDeck.ownerName = user.displayName;
+          newDeck.format = 'standard';
           newDeck.public = true;
           newDeck.froze = false;
           newDeck.cards = cardList;
@@ -77,6 +80,15 @@ export class MoxDeckService {
     return text;
   }
 
+  deckFix(deck: MoxDeck): MoxDeck {
+    // FIX deckList -> Sidelist
+    for (let index = 0; index < 15; index++) {
+      const ca = deck.cards.pop();
+      deck.side.push(ca);
+    }
+    // console.log('fixedDeck: ', deck);
+    return deck;
+  }
   // addOneCard(deckId: any, cardId: any, side?: boolean) {
   //   // console.log('AddOneCard');
   //   if (!side) {

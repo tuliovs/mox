@@ -58,18 +58,35 @@ export class ImportDeckContextComponent implements OnInit {
     this.importText.valueOf().split('\n').forEach(async elt => {
       if (elt && elt.length > 0) {
         const qnt = +elt.substr(0, 2);
+        const cardname = elt.substr(2, elt.indexOf('(') - 2);
         const set = elt.substr(elt.indexOf('(') + 1, 3).toLowerCase().replace('dar', 'dom');
         const collectorsNumber = +elt.substr(elt.length - 2, 3);
         this._scryService.aernaSearch(set, collectorsNumber).pipe(
           tap((card: Card) => {
             for (let index = 1; index <= qnt; index++) {
               if (this._deckList.length >= 60) {
-                this._sideList.push(card.id);
+                if (card.name.trim() === cardname.trim()) {
+                  this._sideList.push(card.id);
+                } else {
+                  this._scryService.fuzzySearch(cardname).pipe(
+                    tap((c: Card) => {
+                        this._sideList.push(c.id);
+                    })
+                  ).subscribe();
+                }
               } else {
-                this._deckList.push(card.id);
+                if (card.name.trim() === cardname.trim()) {
+                  this._deckList.push(card.id);
+                } else {
+                  this._scryService.fuzzySearch(cardname).pipe(
+                    tap((c: Card) => {
+                        this._deckList.push(c.id);
+                    })
+                  ).subscribe();
+                }
               }
             }
-            // console.log('this.deckList> ', this._deckList);
+            // TODO pelo amor de deus refatora isso pra algo minimamente entendivel, obg
           })
         ).subscribe();
       }

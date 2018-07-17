@@ -9,6 +9,7 @@ export class ScryfallSearchService {
 
   url = `https://api.scryfall.com/cards/search?order=name&q=`;
   arenaUrl = `https://api.scryfall.com/cards`;
+  fuzzyUrl = `https://api.scryfall.com/cards/named?fuzzy=`;
 
   search(param: string): Observable<List> {
     return this.http.get<List>(`${this.url}${encodeURI(param)}`);
@@ -16,5 +17,9 @@ export class ScryfallSearchService {
 
   aernaSearch(cardSet: string, collectorsNumber: any): Observable<any> {
     return this.http.get(`${this.arenaUrl}/${encodeURI(cardSet)}/${collectorsNumber}`);
+  }
+
+  fuzzySearch(param: string) {
+    return this.http.get(`${this.fuzzyUrl}${encodeURI(param)}`);
   }
 }

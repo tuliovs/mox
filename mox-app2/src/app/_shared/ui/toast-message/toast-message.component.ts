@@ -2,7 +2,7 @@ import { AuthService } from './../../../karn/_services/auth.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ToastService, Message } from '../../../_application/_services/toast/toast.service';
 import { filter, take, tap } from '../../../../../node_modules/rxjs/operators';
-import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
+import { animate, keyframes, style, transition, trigger, state, query, stagger } from '@angular/animations';
 
 export const swing = [
   style({transform: 'rotate3d(0, 0, 1, 15deg)', offset: .2}),
@@ -23,8 +23,11 @@ export const swing = [
   ]
 })
 export class ToastMessageComponent implements OnInit {
-  public messages: any[];
+  public messages: any[] = [];
   public animationState: string;
+  ribbonCounter(): number {
+    return this.messages.length;
+  }
   constructor(private toast: ToastService, public auth: AuthService) { }
 
   ngOnInit() {
@@ -34,7 +37,8 @@ export class ToastMessageComponent implements OnInit {
       tap((user) => {
         if (user) {
           this.toast.getMessages(user.uid).pipe(
-            tap( (data) => {
+            tap((data) => {
+              this.startAnimation('swing');
               this.messages = data.sort((x: Message, a: Message) => {
                 if (x.time > a.time) {
                   return 1;

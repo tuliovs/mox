@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-mox-loading-spinner',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loading-spinner.component.sass']
 })
 export class LoadingSpinnerComponent implements OnInit {
-
+  @Input() bgColor = '#132030';
   constructor() { }
 
   ngOnInit() {

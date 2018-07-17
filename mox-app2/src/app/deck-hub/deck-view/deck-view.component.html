@@ -25,10 +25,21 @@
           ></app-mox-row-card>
         </li>
       </ul>
+      <hr>
+      <ul>
+        <li *ngFor="let card of _sideList">
+          <app-mox-row-card [cardAmout]="cardSideAmount(card)" [cardId]="card"
+            (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)"
+          ></app-mox-row-card>
+        </li>
+      </ul>
     </div>
     <div [hidden]=" tab !='socialTab'">
       <form class="new-deck-form" *ngIf="tempDeck as deck">
-        <div class="deckCover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+        <div class="deckCover" *ngIf="deck.cover != ''" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+        </div>
+        <div class="deckCover" *ngIf="deck.cover == ''">
+          <i class="fas fa-frog"></i>
         </div>
         <section class="form-block">
           <label>Deck Name</label>

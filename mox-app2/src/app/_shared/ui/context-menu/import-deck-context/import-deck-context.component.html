@@ -9,7 +9,7 @@
     (swipedown)="closeContext()"
 ></div>
 <div [@importdeck-contextTrigger]="importState" class="action-menu">
-  <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
+  <app-mox-loading-spinner [bgColor]="'white'" *ngIf="showLoader"></app-mox-loading-spinner>
   <ul *ngIf="!showLoader">
     <li>
       <div>

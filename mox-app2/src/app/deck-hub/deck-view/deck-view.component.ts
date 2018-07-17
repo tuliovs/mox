@@ -35,6 +35,7 @@ export class DeckViewComponent implements OnInit {
   public _cardList: any;
   public _sideList: any;
   public _rawCardList: any;
+  public _rawSideList: any;
   public deckCollection: AngularFirestoreCollection<MoxDeck>;
 
   constructor(
@@ -59,6 +60,7 @@ export class DeckViewComponent implements OnInit {
             if (!deck.side) { deck.side = [];  }
             this.tempDeck = deck;
             this._rawCardList = deck.cards;
+            this._rawSideList = deck.side;
             this._cardList = Array.from(new Set(deck.cards));
             this._sideList = Array.from(new Set(deck.side));
             // console.log('#', this._rawCardList);
@@ -78,13 +80,25 @@ export class DeckViewComponent implements OnInit {
     return this.countOccurrences(this._rawCardList, cardId);
   }
 
+  cardSideAmount(cardId) {
+    return this.countOccurrences(this._rawSideList, cardId);
+  }
+
   cardPlus(event) {
     this.tempDeck.cards.push(event);
+    this.saveDeck();
+  }
+  cardSidePlus(event) {
+    this.tempDeck.side.push(event);
     this.saveDeck();
   }
 
   cardMinus(event) {
     this.tempDeck.cards.splice(this.tempDeck.cards.indexOf(event), 1);
+    this.saveDeck();
+  }
+  cardSideMinus(event) {
+    this.tempDeck.side.splice(this.tempDeck.side.indexOf(event), 1);
     this.saveDeck();
   }
 
