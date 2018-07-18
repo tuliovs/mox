@@ -16,7 +16,7 @@
     </div>
   </section>
   <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
-  <section class="form-result">
+  <section class="form-result" *ngIf="!showLoader">
     <div *ngIf="settings_stats && searchResult.data" class="stats">
       <p>[Total Results]: {{searchResult.total_cards}} | [Response Time]: {{resp_time}}ms</p>
     </div>

@@ -2,12 +2,20 @@ import { Router } from '@angular/router';
 import { Card } from '@application/_models/_scryfall-models/models';
 import { element } from 'protractor';
 import { Component, OnInit } from '@angular/core';
-import { animate, style, transition, trigger, state } from '@angular/animations';
+import { animate, style, transition, trigger, state, keyframes } from '@angular/animations';
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
 import { tap } from 'rxjs/operators';
 import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { ToastService } from '@application/_services/toast/toast.service';
+
+export const bounceInDown = [
+  style({transform: 'translate3d(0, -3000px, 0)', opacity: 0, offset: .0}),
+  style({transform: 'translate3d(0, 25px, 0)', opacity: 1, offset: .60}),
+  style({transform: 'translate3d(0, -10px, 0)', offset: .75}),
+  style({transform: 'translate3d(0, 5px, 0)', offset: .90}),
+  style({transform: 'translate3d(0, 0, 0)', offset: 1}),
+];
 
 @Component({
   selector: 'app-mox-import-deck-context',
@@ -16,18 +24,15 @@ import { ToastService } from '@application/_services/toast/toast.service';
   animations: [
     trigger('importdeck-contextTrigger', [
       state('closed', style({
-        transform: 'translate3d(0,100%, 0)',
+        transform: 'translate3d(-100%, 0, 0)',
         display: 'none'
       })),
-      state('opened', style({
-        transform: 'translate3d(0, 0, 0)',
-        display: 'visible'
-      })),
-      transition('closed=>opened', animate('200ms')),
-      transition('opened=>closed', animate('150ms'))
+      transition('*=>opened', animate('800ms', keyframes(bounceInDown))),
+      transition('opened=>closed', animate('200ms'))
     ])
   ]
 })
+
 export class ImportDeckContextComponent implements OnInit {
   public importState = 'closed';
   public lightboxActive = false;
@@ -67,6 +72,7 @@ export class ImportDeckContextComponent implements OnInit {
               if (this._deckList.length >= 60) {
                 if (card.name.trim() === cardname.trim()) {
                   this._sideList.push(card.id);
+                  console.log('AQUI');
                 } else {
                   this._scryService.fuzzySearch(cardname).pipe(
                     tap((c: Card) => {

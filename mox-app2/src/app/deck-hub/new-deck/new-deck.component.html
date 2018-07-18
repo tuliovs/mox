@@ -17,8 +17,8 @@
       <div class="form-group">
         <div class="toggle-switch">
           <button class="btn btn-action" (click)="newDeck.froze = !newDeck.froze">
-            <i class="fas fa-toggle-on"  *ngIf="!newDeck.froze"></i>
-            <i class="fas fa-toggle-off" *ngIf="newDeck.froze"></i>
+            <i class="fas fa-check-square"  *ngIf="!newDeck.froze"></i>
+            <i class="far fa-square" *ngIf="newDeck.froze"></i>
           </button>
           <label for="ifroze" (click)="newDeck.froze = !newDeck.froze">Froze</label>
         </div>
@@ -26,8 +26,8 @@
       <div class="form-group">
         <div class="toggle-switch">
           <button class="btn btn-action" (click)="newDeck.legal = !newDeck.legal">
-              <i class="fas fa-toggle-on"  *ngIf="!newDeck.legal"></i>
-              <i class="fas fa-toggle-off" *ngIf="newDeck.legal"></i>
+              <i class="fas fa-check-square"  *ngIf="!newDeck.legal"></i>
+              <i class="far fa-square" *ngIf="newDeck.legal"></i>
           </button>
           <label for="ilegal" (click)="newDeck.legal = !newDeck.legal">Legal</label>
         </div>

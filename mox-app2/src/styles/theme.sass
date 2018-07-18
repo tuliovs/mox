@@ -54,7 +54,7 @@ fieldset
 input
   &[type="text"]
     flex: 1 1 50%
-    width: 85%
+    width: 84%
     border: 0
     border-bottom: 1px solid color(darkBlue)
     height: 2.2em
@@ -62,8 +62,11 @@ input
     font-size: 15px
     padding-left: 2%
     color: gray
+  &[type="text"]:focus
+    background-color: color(white)
   &[type="text"]:focus:not(:read-only)
     border: solid 2px color(darkBlue)
+    background-color: color(white)
   &[type="text"]:read-only
     background-color: RGBA(175,192,220,0.15)
     color: color(darkBlue)
@@ -79,7 +82,7 @@ select
   // background-color: #F9FFFF
   border-radius: 10px
   width: 93%
-  height: 30em
+  height: 76.2%
   overflow-y: auto
   mix-blend-mode: normal
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25)
@@ -143,10 +146,6 @@ app-root:empty + .loading
   border: none
   border-radius: 5px
   box-shadow: 0 5px #9F2426
-  // border-radius: 4px
-  // border: solid 1px #20538D
-  // text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4)
-  // box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2)
 .btn-delete
   &:hover, &.hover
     background-color: color(youtube)
@@ -154,8 +153,18 @@ app-root:empty + .loading
     background-color: color(youtube)
     box-shadow: 0 2px #9F2426
     transform: translateY(5px)
-// .btn-delete
-//   &:hover, &:focus
-//     background: #9F2426
-//     border: solid 1px #2A4E77
-//     text-decoration: none
+
+.btn-save
+  color: color(white)
+  background-color: color(jeans)
+  padding: 10px 15px
+  border: none
+  border-radius: 5px
+  box-shadow: 0 5px color(darkBlue)
+.btn-save
+  &:hover, &.hover
+    background-color: color(jeans)
+  &:active, &.active
+    background-color: color(jeans)
+    box-shadow: 0 2px color(darkBlue)
+    transform: translateY(5px)

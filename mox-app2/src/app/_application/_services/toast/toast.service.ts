@@ -12,11 +12,12 @@ export class Message {
   owner: string;
   key: string;
 
-  constructor(content, style?, owner?) {
+  constructor(content, style?, owner?, silent?) {
     this.content = content;
     this.style = style || 'info';
     this.time =  new Date();
     this.owner = owner || 'userNotProvided';
+    this.dismissed = silent || false;
   }
 }
 
@@ -29,11 +30,11 @@ export class ToastService {
 
   getMessages(uid: string) {
     return this.afs.collection('messages',
-      ref => ref.where('owner', '==', uid)).valueChanges();
+      ref => ref.where('owner', '==', uid).orderBy('time')).valueChanges();
   }
 
-  sendMessage(content, style, owner) {
-    const message = new Message(content, style, owner);
+  sendMessage(content, style, owner, silent?) {
+    const message = new Message(content, style, owner, silent);
     message.key = this.makeId();
     this.afs.collection('messages').doc(message.key).set(Object.assign({}, message)).catch((error) => {
       console.error('Error adding document: ', error);

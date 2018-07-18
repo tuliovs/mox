@@ -4,7 +4,9 @@
       "collectionId": "messages",
       "fields": [
         { "fieldPath": "owner", "mode": "ASCENDING" },
-        { "fieldPath": "key", "mode": "ASCENDING" }
+        { "fieldPath": "key",   "mode": "ASCENDING" },
+        { "fieldPath": "owner", "mode": "ASCENDING" },
+        { "fieldPath": "time",  "mode": "ASCENDING" }
       ]
     }
   ]

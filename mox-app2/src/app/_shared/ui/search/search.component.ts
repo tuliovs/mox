@@ -21,10 +21,6 @@ export const bounceInDown = [
         transform: 'translate3d(-100%, 0, 0)',
         display: 'none'
       })),
-      // state('opened', style({
-      //   transform: 'translate3d(0, 0, 0)',
-      //   display: 'visible'
-      // })),
       transition('*=>opened', animate('800ms', keyframes(bounceInDown))),
       transition('opened=>closed', animate('200ms'))
     ])

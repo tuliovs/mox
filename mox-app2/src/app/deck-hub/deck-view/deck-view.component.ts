@@ -63,18 +63,18 @@ export class DeckViewComponent implements OnInit {
             this._rawSideList = deck.side;
             this._cardList = Array.from(new Set(deck.cards));
             this._sideList = Array.from(new Set(deck.side));
-            // console.log('#', this._rawCardList);
+            console.log('#', this.tempDeck);
             // console.log('SARRA', this.tempDeck);
           })
         ).subscribe();
       }
     });
   }
-  saveDeck() {
+  saveDeck(silent?: boolean) {
     // console.log('Deck:', this.tempDeck);
     this.deckCollection = this.afs.collection('decks');
     this.deckCollection.doc<MoxDeck>(this._id).update(this.tempDeck);
-    this.toast.sendMessage('Deck Saved, have a nice day', 'success', this.tempDeck.ownerId);
+    this.toast.sendMessage('Deck Saved, have a nice day', 'success', this.tempDeck.ownerId, silent);
   }
   cardAmount(cardId) {
     return this.countOccurrences(this._rawCardList, cardId);
@@ -86,20 +86,20 @@ export class DeckViewComponent implements OnInit {
 
   cardPlus(event) {
     this.tempDeck.cards.push(event);
-    this.saveDeck();
+    this.saveDeck(true);
   }
   cardSidePlus(event) {
     this.tempDeck.side.push(event);
-    this.saveDeck();
+    this.saveDeck(true);
   }
 
   cardMinus(event) {
     this.tempDeck.cards.splice(this.tempDeck.cards.indexOf(event), 1);
-    this.saveDeck();
+    this.saveDeck(true);
   }
   cardSideMinus(event) {
     this.tempDeck.side.splice(this.tempDeck.side.indexOf(event), 1);
-    this.saveDeck();
+    this.saveDeck(true);
   }
 
   delete(deck: MoxDeck) {
