@@ -58,6 +58,12 @@ export class ToastMessageComponent implements OnInit {
     ).subscribe();
   }
 
+  dismissAll() {
+    this.messages.forEach((msg: Message) => {
+      this.toast.dismissMessage(msg.key);
+    });
+  }
+
   startAnimation(_state: string) {
     if (!this.animationState) {
       this.animationState = _state;

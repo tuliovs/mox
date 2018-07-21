@@ -1,6 +1,7 @@
 <i class="fas fa-bell"
         [@notificationAnimator]="animationState"
         (@notificationAnimator.done)="resetAnimationState()"
+        (press)="dismissAll()"
         (tap)="startAnimation('swing')"></i>
 <span class="ribbon" *ngIf="messages && messages.length > 0">{{ribbonCounter()}}</span>
 <div class="wrapper" *ngIf="messages && messages.length > 0">

@@ -74,7 +74,7 @@ export class DeckViewComponent implements OnInit {
     // console.log('Deck:', this.tempDeck);
     this.deckCollection = this.afs.collection('decks');
     this.deckCollection.doc<MoxDeck>(this._id).update(this.tempDeck);
-    this.toast.sendMessage('Deck Saved, have a nice day', 'success', this.tempDeck.ownerId, silent);
+    this.toast.sendMessage('Deck Updated! Have a nice day', 'success', this.tempDeck.ownerId, silent);
   }
   cardAmount(cardId) {
     return this.countOccurrences(this._rawCardList, cardId);

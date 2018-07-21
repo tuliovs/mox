@@ -34,13 +34,15 @@ export class MoxDeckService {
   }
 
   setDeck(d: MoxDeck) {
-    this.deckCollection = this.afs.collection('decks');
-    d = this.deckFix(d);
-    this.deckCollection.doc(d.key).set(Object.assign({}, d)).catch((error) => {
-      console.error('Error adding document: ', error);
-      // this.toast.sendMessage('Error adding document: ', 'danger', '');
-    });
-    this.workingDeck = this.deckCollection.doc<MoxDeck>(d.key).valueChanges();
+    if (d) {
+      this.workingDeck = this.deckCollection.doc<MoxDeck>(d.key).valueChanges();
+      this.deckCollection = this.afs.collection('decks');
+      d = this.deckFix(d);
+      this.deckCollection.doc(d.key).set(Object.assign({}, d)).catch((error) => {
+        console.error('Error adding document: ', error);
+        // this.toast.sendMessage('Error adding document: ', 'danger', '');
+      });
+    }
   }
 
   getDeck(id: string) {
@@ -65,7 +67,19 @@ export class MoxDeckService {
           newDeck.cards = cardList;
           newDeck.side = sideList;
           newDeck.updated = [];
-          this.setDeck(newDeck);
+          console.log('Cards ', newDeck.cards.length);
+          console.log('Side ', newDeck.side.length);
+          // this.setDeck(newDeck);
+
+          // this.workingDeck.pipe(
+          //   tap((deck) => {
+          //     console.log('>> ', deck);
+          //     this.toast.sendMessage('Deck Imported!', 'sucess', deck.ownerId);
+          //     // this.router.navigate(['/deckView/' + deck.key]);
+          //   })
+          // ).subscribe();
+
+
         }
       })
     ).subscribe();
@@ -82,7 +96,7 @@ export class MoxDeckService {
 
   deckFix(deck: MoxDeck): MoxDeck {
     // FIX deckList -> Sidelist
-    for (let index = 0; index < 15; index++) {
+    while (deck.cards.length > 60) {
       const ca = deck.cards.pop();
       deck.side.push(ca);
     }

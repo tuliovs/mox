@@ -4,7 +4,7 @@ import { element } from 'protractor';
 import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger, state, keyframes } from '@angular/animations';
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
-import { tap } from 'rxjs/operators';
+import { tap, finalize } from 'rxjs/operators';
 import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { ToastService } from '@application/_services/toast/toast.service';
@@ -38,8 +38,8 @@ export class ImportDeckContextComponent implements OnInit {
   public lightboxActive = false;
   public importText: string;
   public showLoader = false;
-  public _deckList: any[] = [];
-  public _sideList: any[] = [];
+  public _deckList: string[] = [];
+  public _sideList: string[] = [];
   constructor(public _scryService: ScryfallSearchService,
               public _deckService: MoxDeckService,
               public toast: ToastService,
@@ -72,7 +72,6 @@ export class ImportDeckContextComponent implements OnInit {
               if (this._deckList.length >= 60) {
                 if (card.name.trim() === cardname.trim()) {
                   this._sideList.push(card.id);
-                  console.log('AQUI');
                 } else {
                   this._scryService.fuzzySearch(cardname).pipe(
                     tap((c: Card) => {
@@ -93,24 +92,18 @@ export class ImportDeckContextComponent implements OnInit {
               }
             }
             // TODO pelo amor de deus refatora isso pra algo minimamente entendivel, obg
-          })
-        ).subscribe();
+          }),
+          finalize(() => {
+            // if (this._deckList.length === 60 || this._deckList.length === 75) {
+              console.log('FINILIZE: ', this._deckList);
+              this._deckService.createDeckFromArena(this._deckList, this._sideList);
+              this.closeContext();
+            // } else {
+            //   console.log('?: ', this._deckList.length);
+            // }
+          }
+        )).subscribe();
       }
-      // console.log('element> ', elt + ': ' + ' | ' + qnt + ' | ' + set + ' | ' + collectorsNumber);
     });
-    setTimeout((c) => {
-      if (this._deckList.length >= 60) {
-        this._deckService.createDeckFromArena(this._deckList, this._sideList);
-        this.closeContext();
-        this.router.navigate(['/deckhub']);
-        this._deckService.workingDeck.pipe(
-          tap((deck) => {
-            console.log('>> ', deck);
-            this.toast.sendMessage('Deck Imported!', 'sucess', deck.ownerId);
-            this.router.navigate(['/deckView/' + deck.key]);
-          })
-        ).subscribe();
-      }
-    }, 3000);
   }
 }
