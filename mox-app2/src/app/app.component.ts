@@ -19,25 +19,40 @@ export const rubberBand = [
   style({transform: 'scale3d(1, 1, 1)'}),
 ];
 
+export const flipInY = [
+  style({transform: 'perspective(400px) rotate3d(0, 1, 0, 90deg)'}),
+  style({transform: 'perspective(400px) rotate3d(0, 1, 0, -20deg)'}),
+  style({transform: 'perspective(400px) rotate3d(0, 1, 0, 10deg)'}),
+  style({transform: 'perspective(400px) rotate3d(0, 1, 0, -5deg)'}),
+  style({transform: 'perspective(400px)'}),
+];
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass'],
   animations: [
-    trigger('avatarAnimator', [
-      transition('* => rubberBand', animate(1000, keyframes(rubberBand))),
+    trigger('actionIcoAnimator', [
+      state('opened', style({
+        opacity: 1
+      })),
+      state('closed', style({
+        opacity: 0
+      })),
+      transition('opened => closed', animate(1000, keyframes(flipInY))),
+      transition('closed => opened', animate(1000, keyframes(flipInY))),
     ]),
     trigger('navTrigger', [
       state('closed', style({
-        transform: 'translate3d(-100%, 0, 0)',
+        transform: 'translate3d(0,100%, 0)',
         display: 'none'
       })),
       state('opened', style({
         transform: 'translate3d(0, 0, 0)',
         display: 'visible'
       })),
-      transition('closed=>opened', animate('300ms')),
-      transition('opened=>closed', animate('300ms'))
+      transition('closed=>opened', animate('200ms')),
+      transition('opened=>closed', animate('150ms'))
     ])
   ]
 })
@@ -96,6 +111,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
+  changeState(event) {
+    this.animationState2 = event;
+    console.log(this.animationState2);
+  }
   resetAnimationState() {
     this.animationState = '';
     this.animationState2 = '';
@@ -106,6 +125,16 @@ export class AppComponent implements OnInit, AfterViewInit {
   //     this.animationState = state;
   //   }
   // }
+
+  goToUser() {
+    this.router.navigateByUrl('/user');
+  }
+  goToDeckHub() {
+    this.router.navigateByUrl('/deckhub');
+  }
+  goToSeachHub() {
+    this.router.navigateByUrl('/search');
+  }
 
   reset() {
     this.navState = '';

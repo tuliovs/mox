@@ -1,0 +1,56 @@
+<app-mox-titlebar titleHeight="3">
+  <form>
+    <input *ngIf="!settings_stats"  class="search-input" type="text" placeholder="Search" [(ngModel)]="param" value="{{param}}" name="param" required />
+    <button *ngIf="!settings_stats"  class="btn btn-search"  type="submit" (click)="searchGo()">
+      <i class="fas fa-search"></i>
+    </button>
+  </form>
+  <div *ngIf="settings_stats && searchResult.data" class="stats" (click)="settings_stats = false">
+    <p>[Total Results]: {{searchResult.total_cards}} | [Response Time]: {{resp_time}}ms</p>
+  </div>
+</app-mox-titlebar>
+<div class="search-result" *ngIf="searchResult.data && searchResult.data.length > 0">
+  <ol>
+    <li *ngFor="let item of searchResult.data">
+      <div class="img-container">
+        <a routerLink='/card/{{item.id}}'>
+          <img class="img" *ngIf="item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }" />
+          <img class="img" *ngIf="!item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }" />
+          <div class="rarityDisplay"
+          [class.common]=" item.rarity == 'common'"
+          [class.uncommon]=" item.rarity == 'uncommon'"
+          [class.rare]=" item.rarity == 'rare'"
+          [class.mythic]=" item.rarity == 'mythic'"
+          ></div>
+          <div class="colorDisplay"></div>
+        </a>
+      </div>
+      <section>
+        <h4>
+          {{item.name}}
+        </h4>
+        <p *ngIf="item.oracle_text" class="description">
+          {{(item.oracle_text.length>100)? (item.oracle_text | slice:0:100)+'...':(item.oracle_text)}}
+        </p>
+        <p *ngIf="!item.image_uris" class="description">
+          {{(item.card_faces[0].oracle_text.length>100)? (item.card_faces[0].oracle_text | slice:0:100)+'...':(item.card_faces[0].oracle_text)}}
+        </p>
+      </section>
+    </li>
+  </ol>
+</div>
+<app-mox-action-bar>
+  <button class="btn btn-action" disabled>
+    <i class="fas fa-filter"></i>
+  </button>
+  <button class="btn btn-action" disabled>
+    <i class="fas fa-sort" style="font-size: 1.4em"></i>
+  </button>
+  <div class="fixer"></div>
+  <button class="btn btn-action" disabled>
+    <i class="fas fa-envelope" style="font-size: 1.2em" ></i>
+  </button>
+  <button class="btn btn-action">
+    <i class="fas fa-ellipsis-h"></i>
+  </button>
+</app-mox-action-bar>

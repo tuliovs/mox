@@ -12,7 +12,7 @@
 .mox_font
   font-family: 'Audiowide', cursive
 a
-  color: color(white)
+  color: color(ice)
   text-decoration: none
 button
   &:focus
@@ -27,21 +27,37 @@ body
   min-width: 320px
   overflow-y: hidden
   color: color(black)
-  background-color: color(white)
+  background-color: color(gray)
 
 header
+  color: color(darkblue) !important
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1)
   display: flex
   position: fixed
-  align-items: center
   justify-content: space-between
+  flex-flow: row-reverse
   min-height: 3em
   max-height: 3em
   min-width: 100%
   max-width: 100%
   z-index: 9
+  h4
+    color: color(darkblue) !important
+    width: 70%
+  .fas
+    color: color(darkblue) !important
 
+h1
+  font-family: Audiowide
+  font-style: normal
+  font-weight: normal
+  line-height: normal
+  font-size: 20px
+  text-align: center
+  color: #F9FFFF
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
 h4
-  color: color(white)
+  color: color(ice)
   font-weight: 600
   font-size: 1.2em
 
@@ -52,24 +68,11 @@ fieldset
   text-align: left
 
 input
-  &[type="text"]
-    flex: 1 1 50%
-    width: 84%
-    border: 0
-    border-bottom: 1px solid color(darkBlue)
-    height: 2.2em
-    vertical-align: sub
-    font-size: 15px
-    padding-left: 2%
-    color: gray
-  &[type="text"]:focus
-    background-color: color(white)
   &[type="text"]:focus:not(:read-only)
-    border: solid 2px color(darkBlue)
-    background-color: color(white)
+    border: 0
   &[type="text"]:read-only
     background-color: RGBA(175,192,220,0.15)
-    color: color(darkBlue)
+    color: color(darkblue)
 select
   width: 85%
   font-size: 1em
@@ -114,12 +117,12 @@ app-root:empty + .loading
 
 
 .btn
-  color: color(conBlue)
+  color: color(darkblue)
   cursor: pointer
   display: inline-block
   -webkit-appearance: none!important
   border-radius: .125rem
-  border: 1px solid color(darkBlue)
+  border: 1px solid color(darkblue)
   text-overflow: ellipsis
   overflow: hidden
   text-align: center
@@ -131,13 +134,15 @@ app-root:empty + .loading
   margin: .25rem .5rem .25rem 0
 .btn
   &:disabled
-    color: color(conLight)
+    i
+      color: color(slate) !important
+    label
+      color: color(slate) !important
 
 .btn-action
-  color: color(white)
-  font-size: 2em
+  color: color(darkblue)
+  font-size: 1.5em
   border: 0
-  text-shadow: 2px 2px #000
 
 .btn-delete
   color: color(white)

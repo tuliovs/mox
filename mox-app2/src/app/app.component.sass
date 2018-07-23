@@ -1,5 +1,35 @@
 @import './../styles/theme.colors.scss'
 
+.action-button
+  z-index: 8
+  background-color: color(white)
+  position: fixed
+  bottom: 1%
+  left: 40%
+  width: 66px
+  height: 66px
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1)
+  border-radius: 25em
+  right: 40%
+  display: flex
+  justify-content: center
+  align-items: center
+  div
+    z-index: 21
+    background-color: color(white)
+    width: 56px
+    height: 56px
+    border-radius: 25em
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2)
+    display: flex
+    justify-content: center
+    align-items: center
+    i
+      color: color(darkblue)
+      padding: 0
+      text-align: center
+      vertical-align: middle
+
 .alert-text
   margin-top: 0rem !important
 
@@ -8,7 +38,7 @@
   font-size: 2.4em
   padding: .4em
 .header
-  background-color: color(darkBlue)
+  background-color: color(white)
   .fas
     left: 0
     position: relative
@@ -18,22 +48,65 @@
     position: fixed
     text-align: center
     left: calc(67% - 10.5em)
+    font-family: 'Audiowide', cursive
   div
     label
       vertical-align: super
       font-size: .8em
 
+.user
+  position: relative
+  align-items: center
+  width: 100%
+  display: flex
+  font-size: 15px
+  padding: .7em
+  justify-content: center
+  .class
+    position: absolute
+    width: 105px
+    height: 105px
+    background: linear-gradient(271.13deg, #302B2C 0.32%, #474040 49.73%, #302B2C 99.68%)
+    border: 1px solid rgba(0, 0, 0, 0.25)
+    box-sizing: border-box
+    border-radius: 75px
+    z-index: 11
+  .avatar
+    display: block
+    background-size: cover
+    position: relative
+    border-radius: 50px
+    height: 6.7em
+    width: 6.7em
+    box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.15)
+    border: 1px solid rgba(0, 0, 0, 0.25)
+    box-sizing: border-box
+    z-index: 12
+  i
+    font-size: 1.4em
+    align-self: flex-end
+    padding: 0
+    margin-left: -1em
+    z-index: 13
+  label
+    padding: 0
+    position: relative
+    line-height: 2.3
+    margin-left: 3em
+    color: color(white)
+    text-decoration: none
+
 .content
   padding-top: 3em
 .content-area
-  padding: 0.8em !important
+  padding: 0
 
 .sidenav
-  background-color: color(darkBlue)
-  color: color(white)
-  top: 2.4em
+  background: linear-gradient(180deg, #525462 0%, #353743 100%)
+  color: color(ice)
+  top: 0
   height: 100vh
-  min-width: 70%
+  min-width: 100%
   position: fixed
   padding: 0
   z-index: 10
@@ -44,30 +117,35 @@
   max-width: 100%
   overflow: scroll
   box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.25)
-  .sidenav-content
-    a.user
-      position: fixed
-      align-items: center
+
+.sidenav-content
+  display: inline-flex
+  flex-wrap: wrap
+  flex-direction: row
+  justify-content: center
+  .btn-icon
+    max-width: 40%
+    min-width: 40%
+    border: 0
+    margin-bottom: 2em
+    i
       width: 100%
-      display: flex
-      bottom: 10%
-      font-size: 15px
-      padding: .7em
-      .avatar
-        display: block
-        background-size: cover
-        position: absolute
-        border-radius: 50px
-        height: 2.5em
-        width: 2.5em
-      i
-        font-size: 1.1em
-      label
-        padding: 0
-        position: relative
-        line-height: 2.3
-        margin-left: 3em
-        color: color(white)
-        text-decoration: none
+      padding: .2em .4em .2em .4em
+      border: 0
+      font-size: 2.8em
+    label
+      color: color(ice)
+      text-transform: capitalize
+      font-family: 'Exo 2', sans-serif
+      font-style: normal
+      font-weight: 600
+      line-height: normal
+      font-size: 1em
+      text-align: center
 
-
+.closer
+  opacity: 0.1
+  font-size: 0.8em
+  bottom: 0
+  position: fixed
+  width: 100%

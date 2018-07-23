@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-mox-titlebar',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./titlebar.component.sass']
 })
 export class TitlebarComponent implements OnInit {
-
+  @Input() titleHeight = 2;
   constructor() { }
 
   ngOnInit() {

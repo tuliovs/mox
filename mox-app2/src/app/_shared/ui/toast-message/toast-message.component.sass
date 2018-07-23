@@ -1,15 +1,17 @@
 @import '../../../../styles/theme.colors.scss'
 
 .ribbon
-  background-color: color(notification, error)
-  color: color(white)
-  padding: 0.2em 0.6em
+  background-color: color(blue)
+  color: color(ice)
+  padding: 0.14em 0.56em
   border-radius: 2em
   position: absolute
   right: 10%
   top: 10%
+  font-family:
   font-size: .6em
   font-weight: 600
+  font-family: 'Audiowide', cursive
 
 .wrapper
   position: fixed
@@ -20,7 +22,7 @@
   text-align: center
 
 .fas
-  color: color(white)
+  color: color(ice)
   font-size: 2.4em
   padding: .4em
 
@@ -37,9 +39,10 @@ div
     font-size: .8em
 
 .alert
-  color: color(white)
+  color: color(ice)
+  border-radius: 4px
   height: 2.5em
-  width: 98%
+  width: 99%
   margin-bottom: 2%
   display: inline-flex
   justify-content: space-between
@@ -49,11 +52,12 @@ div
   font-size: 0.8em
   i
     font-size: 1.4em
+    color: color(ice) !important
 .alert-success
-  background-color: color(notification, success)
+  background-color: color(notification, success) !important
 .alert-warning
-  background-color: color(notification, warning)
+  background-color: color(notification, warning) !important
 .alert-danger
-  background-color: color(notification, error)
+  background-color: color(notification, error) !important
 .alert-info
-  background-color: color(notification, info)
+  background-color: color(notification, info) !important

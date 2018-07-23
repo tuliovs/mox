@@ -10,6 +10,7 @@ import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from 'src/app/karn/_services/auth.guard';
+import { SearchHubComponent } from './search-hub/search-hub.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'card/:id', component: MoxCardComponent },
   { path: 'deckhub', component: DeckHubComponent,  canActivate: [AuthGuard] },
+  { path: 'search', component: SearchHubComponent},
   { path: 'deck/new', component: NewDeckComponent,  canActivate: [AuthGuard] },
   { path: 'deck/:id', component: DeckViewComponent },
   { path: 'login', component: LoginComponent },

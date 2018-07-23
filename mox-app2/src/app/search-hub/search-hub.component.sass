@@ -1,0 +1,123 @@
+@import '../../styles/theme.colors'
+
+.btn-search
+  color: color(ice)
+  background-color: color(darkblue)
+  padding: .5em
+  font-size: .8em
+  box-shadow: 0px 4px 0px color(grayer)
+  border-radius: 4px
+  overflow: inherit
+
+form
+  width: 100%
+  margin: 0
+  padding: 0
+  display: flex
+  vertical-align: middle
+  align-content: center
+  align-items: center
+
+input
+  color: color(darkblue)
+  border: solid 1px color(grayer)
+  border-radius: 4px
+  padding-left: 2%
+  margin: 0 .5em
+  height: 1.88em
+  width: 100%
+input::placeholder
+  color: color(grayer)
+  font-size: 12px
+  font-family: 'Exo 2', sans-serif
+  text-transform: capitalize
+
+
+.fixer
+  width: 15%
+  display: block
+
+.stats
+  width: 100%
+  display: inline-flex
+  position: absolute
+  font-size: .81em
+  justify-content: center
+  color: color(slate)
+
+.search-result
+  display: inline-flex
+  height: 77%
+  width: 100%
+  overflow-y: overlay
+  margin: 0%
+  padding: 0
+  margin-top: 14%
+  ol
+    list-style: none
+    display: inline-flex
+    flex-wrap: wrap
+    flex-direction: row
+    justify-content: center
+    li
+      width: 98%
+      background-color: #FFF
+      border-radius: 4px
+      height: 64px
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07)
+      margin-bottom: 2%
+      display: inline-flex
+      .img-container
+        flex-direction: column
+        display: flex
+        border: 0
+        width: 16%
+        height: 91%
+        margin: 3px
+        padding: 0
+      img
+        margin: 0
+        padding: 0
+        border-radius: 4px
+        width: 3.38em
+        height: 3.38em
+        background-size: cover
+        background-position: center
+        display: flex
+        z-index: 5
+        position: relative
+      .rarityDisplay
+        width: 54px
+        margin-top: -11px
+        height: 1em
+        border-radius: 4px
+        z-index: 3
+        position: relative
+      .common
+        background: linear-gradient(271.13deg, #302B2C 0.32%, #474040 49.73%, #302B2C 99.68%)
+      .uncommon
+        background: linear-gradient(267.9deg, #5A6572 0.64%, #9E9E9E 51.82%, #5A6572 99.36%)
+      .rare
+        background: linear-gradient(272.97deg, #876A3B 0.78%, #DFBD6B 46.47%, #876A3B 99.22%)
+      .mythic
+        background: linear-gradient(270deg, #B21F0F 0%, #F38300 47.51%, #B21F0F 100%)
+      section
+        width: 100%
+        padding: 0%
+        h4
+          margin-top: 1%
+          color: color(darkBlue)
+          font-weight: 700
+          font-size: 1em
+          text-align: start
+          margin-bottom: 0.9%
+        p
+          margin-top: 0rem
+        p.description
+          width: 100%
+          font-size: 11px
+          line-height: 17px
+          margin-top: 1%
+          text-align: start
+          color: #B3B2B2
+          font-weight: 600

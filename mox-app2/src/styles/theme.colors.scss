@@ -1,3 +1,55 @@
+$deltaColors: (
+  white:      #FFFFFF,
+  ice:        #F9FFFF,
+  gray:       #F2F2F2,
+  grayer:     #E5E5E5,
+  slate:      #B3B2B2,
+  black:      #1b1c1d,
+  lightblue:  #AFC0DC,
+  blue:       #667A95,
+  jeans:      #435269,
+  darkblue:   #132030,
+  common: (
+    solid: #1A1718,
+    vert:  linear-gradient(0.08deg, #302B2C 0.2%, #474040 48.67%, #302B2C 99.8%),
+    hori:  linear-gradient(271.13deg, #302B2C 0.32%, #474040 49.73%, #302B2C 99.68%),
+  ),
+  uncommon: (
+    solid: #707883,
+    vert:  linear-gradient(0.08deg, #5A6572 0.2%, #9E9E9E 48.67%, #5A6572 99.8%),
+    hori:  linear-gradient(267.9deg, #5A6572 0.64%, #9E9E9E 51.82%, #5A6572 99.36%),
+  ),
+  rare: (
+    solid: #A58E4A,
+    vert:  linear-gradient(0.08deg, #876A3B 0.2%, #DFBD6B 48.67%, #876A3B 99.8%),
+    hori:  linear-gradient(272.97deg, #876A3B 0.78%, #DFBD6B 46.47%, #876A3B 99.22%),
+  ),
+  mythic: (
+    solid: #BF4427,
+    vert:  linear-gradient(0.08deg, #B21F0F 0.2%, #F38300 48.67%, #B21F0F 99.8%),
+    hori:  linear-gradient(270deg, #B21F0F 0%, #F38300 47.51%, #B21F0F 100%),
+  ),
+  magic: (
+    none:   #E5E5E5,
+    blue:   #A9E0FA,
+    black:  #CBC0BE,
+    gold:   #0987,
+    green:  #9BD3AD,
+    red:    #FAA990,
+    white:  #FEFBD6,
+  ),
+  gradient: (
+    context: linear-gradient(180deg, #525462 0%, #353743 100%),
+  ),
+  notification: (
+    info:     #AFC0DC,
+    base:     #5E6066,
+    success:  #66CD6F,
+    warning:  #FF9900,
+    error:    #FF454A
+  )
+);
+
 $colors: (
   white: (
     base:     #F9FFFF,
@@ -23,43 +75,14 @@ $colors: (
     error:    #FF454A
   )
 );
-// TODO Fix Themes
-$colorsDark: (
-  primary: (
-    light:    #0E81ED,
-    base:     #164384,
-    shade:    #103263,
-    dark:     #0B2242
-  ),
-  secondary: (
-    light:    #D6415B,
-    base:     #CC092F,
-    shade:    #990E26,
-    dark:     #660919
-  ),
-  white: (
-    base:     #14171A,
-    shade:    #1b1c1d,
-    dark:     #0F0F0F
-  ),
-  gray: (
-    base:     #14171A,
-    shade:    #C9C5C5,
-    dark:     #FFFFFF,
-  ),
-  black:      #FFFFFF,
-  gplus:      #DD4B39,
-  twitter:    #1DA1F2,
-  facebook:   #3B5998,
-);
 
 $errorColor: #BBFF00;
 
 @function color($name, $variant: 1, $alpha: 1) {
   $finalColor: $errorColor;
 
-  @if map-has-key($colors, $name) {
-    $finalColor: map-get($colors, $name);
+  @if map-has-key($deltaColors, $name) {
+    $finalColor: map-get($deltaColors, $name);
 
     @if type-of($variant) != number {
       @if map-has-key($finalColor, $variant) {
@@ -87,3 +110,4 @@ $errorColor: #BBFF00;
 
   @return $finalColor;
 }
+

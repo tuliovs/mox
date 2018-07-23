@@ -46,6 +46,7 @@ import { DeckViewComponent } from './deck-hub/deck-view/deck-view.component';
 import { RowCardComponent } from './deck-hub/deck-view/row-card/row-card.component';
 import { KarnInfoCardComponent } from './_shared/ui/karn-info-card/karn-info-card.component';
 import { ImportDeckContextComponent } from './_shared/ui/context-menu/import-deck-context/import-deck-context.component';
+import { SearchHubComponent } from './search-hub/search-hub.component';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -79,6 +80,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     RowCardComponent,
     KarnInfoCardComponent,
     ImportDeckContextComponent,
+    SearchHubComponent,
   ],
   imports: [
     CommonModule,

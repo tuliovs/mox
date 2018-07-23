@@ -1,32 +1,71 @@
 <div class="main-container">
   <header class="header">
-    <!-- <i (click)="viewNav = !viewNav" class="fas fa-bars"></i> -->
-    <i class="fas fa-bars"
-        [@avatarAnimator]="animationState2"
-        (@avatarAnimator.done)="resetAnimationState()"
-        (tap)="menuOpen('rubberBand');animateNav()"></i>
     <div style="align-self: center;">
       <app-mox-toast-message></app-mox-toast-message>
     </div>
+    <h4>M0X</h4>
   </header>
   <div class="content" (actionMenuActivate)="animateNav($event)">
-      <div class="content-area" (click)="navState = 'closed'" >
+      <div class="content-area">
         <router-outlet></router-outlet>
+        <div class="action-button">
+          <div>
+              <i *ngIf="!sideNavIsActive" class="fas fa-cube"
+              [@actionIcoAnimator]="animationState2"
+              (@actionIcoAnimator.done)="resetAnimationState()"
+              (tap)="menuOpen('opened');animateNav()"></i>
+
+              <i *ngIf="sideNavIsActive" (tap)="menuOpen('closed');animateNav()" class="fas fa-times-circle"></i>
+
+          </div>
+        </div>
       </div>
       <nav class="sidenav" [@navTrigger]="navState">
+        <h1>M0X</h1>
+        <div>
+          <div class="nav-link user" *ngIf="auth.user | async as user">
+            <div class="avatar" *ngIf="user.photoURL" [ngStyle]="{ 'background-image': 'url(' + user.photoURL + ')' }"></div>
+            <div class="avatar" *ngIf="!user.photoURL"><i class="fas fa-frog"></i></div>
+            <div class="class"></div>
+          </div>
+        </div>
           <section class="sidenav-content">
-            <ol>
-              <li><a routerLink="/" class="nav-link active">Home</a></li>
-              <li><a routerLink="/deckhub" class="nav-link">Decks</a></li>
-            </ol>
-
-            <a routerLink="/user" class="nav-link user"
-              *ngIf="auth.user | async as user">
-              <div class="avatar" [ngStyle]="{ 'background-image': 'url(' + user.photoURL + ')' }"></div>
-              <label>{{user.displayName}}</label>
-              <i class="fas fa-address-card"></i>
-            </a>
+              <button (click)="goToUser()" type="button" class="btn btn-icon">
+                  <i class="fas fa-id-card"></i>
+                  <label>Profile</label>
+              </button>
+              <button type="button" class="btn btn-icon" disabled>
+                  <i class="fas fa-comments"></i>
+                  <label>Messages</label>
+              </button>
+              <button type="button" class="btn btn-icon" disabled>
+                  <i class="fas fa-archive"></i>
+                  <label>CollectionHub</label>
+              </button>
+              <button (click)="goToDeckHub()" type="button" class="btn btn-icon">
+                  <i class="fas fa-book"></i>
+                  <label>DeckHub</label>
+              </button>
+              <button type="button" class="btn btn-icon" disabled>
+                  <i class="fas fa-dice"></i>
+                  <label>Utils</label>
+              </button>
+              <button type="button" class="btn btn-icon" disabled>
+                  <i class="fas fa-flask"></i>
+                  <label>Lab</label>
+              </button>
+              <button type="button" class="btn btn-icon" disabled>
+                  <i class="fas fa-cog"></i>
+                  <label>Settings</label>
+              </button>
+              <button (click)="goToSeachHub()" type="button" class="btn btn-icon">
+                  <i class="fas fa-search"></i>
+                  <label>Search</label>
+              </button>
           </section>
+          <div class="closer">
+            <i class="fas fa-times" (tap)="menuOpen('rubberBand');animateNav()"></i>
+          </div>
       </nav>
   </div>
 </div>
