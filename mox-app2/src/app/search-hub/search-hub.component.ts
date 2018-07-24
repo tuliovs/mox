@@ -14,11 +14,17 @@ export class SearchHubComponent implements OnInit {
   public settings_stats = false;
   public showLoader = false;
   public searchState = 'closed';
+  public selectedCard;
   constructor(private _searchService: ScryfallSearchService) { }
 
   ngOnInit() {
   }
 
+
+  selectCard(card: any) {
+    console.log(card);
+    this.selectedCard = card;
+  }
   searchGo() {
     console.log('param: ', this.param);
     this.showLoader = true;

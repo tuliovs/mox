@@ -16,7 +16,7 @@
         <div routerLink='/card/{{item.id}}'>
           <!-- <div class="colorDisplay"></div> -->
           <img class="img" *ngIf="item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }"
-            [class.none]  ="!item.colors[0]"
+            [class.none]  ="!item.colors"
             [class.blue]  ="item.colors[0] == 'U'"
             [class.black] ="item.colors[0] == 'B'"
             [class.gold]  ="item.colors.length > 1"
@@ -31,13 +31,13 @@
           />
 
           <img class="img" *ngIf="!item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }"
-            [class.none]  ="!item.colors[0]"
-            [class.blue]  ="item.colors[0] == 'U'"
-            [class.black] ="item.colors[0] == 'B'"
-            [class.gold]  ="item.colors.length > 1"
-            [class.green] ="item.colors[0] == 'G'"
-            [class.red]   ="item.colors[0] == 'R'"
-            [class.white] ="item.colors[0] == 'W'"
+            [class.none]  ="!item.colors && !item.card_faces[0].colors[0]"
+            [class.blue]  ="item.colors && item.colors[0] == 'U' || item.card_faces[0].colors[0] == 'U'"
+            [class.black] ="item.colors && item.colors[0] == 'B' || item.card_faces[0].colors[0] == 'B'"
+            [class.gold]  ="item.colors && item.colors.length > 1 || item.card_faces[0].length > 1"
+            [class.green] ="item.colors && item.colors[0] == 'G' || item.card_faces[0].colors[0] == 'G'"
+            [class.red]   ="item.colors && item.colors[0] == 'R' || item.card_faces[0].colors[0] == 'R'"
+            [class.white] ="item.colors && item.colors[0] == 'W' || item.card_faces[0].colors[0] == 'W'"
 
             [class.common]=" item.rarity == 'common'"
             [class.uncommon]=" item.rarity == 'uncommon'"
@@ -52,7 +52,7 @@
           ></div> -->
         </div>
       </div>
-      <section>
+      <section (click)="selectCard(item)">
         <h4>
           {{item.name}}
         </h4>
@@ -77,7 +77,8 @@
   <button class="btn btn-action" disabled>
     <i class="fas fa-envelope" style="font-size: 1.2em" ></i>
   </button>
-  <button class="btn btn-action">
+  <!-- <button class="btn btn-action" [disabled]="" >
     <i class="fas fa-ellipsis-h"></i>
-  </button>
+  </button> -->
+  <app-mox-card-context [card]="selectedCard" [icon]="'fas fa-ellipsis-h'" [disabled]="!selectedCard" ></app-mox-card-context>
 </app-mox-action-bar>

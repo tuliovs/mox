@@ -5,7 +5,9 @@ import { Card } from '../../../_models/_scryfall-models/models';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { ScryfallCardService } from '@application/_services/scryfall-services/card/scryfall-card.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class MoxCardService {
   public cardDoc: AngularFirestoreDocument<Card>;
   public cardCollection: AngularFirestoreCollection<Card>;

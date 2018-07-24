@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { List } from '../../../_models/_scryfall-models/models';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ScryfallSearchService {
   constructor(private http: HttpClient) {}
 

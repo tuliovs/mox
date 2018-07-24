@@ -50,6 +50,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   ) {}
   @Input() card;
   @Input() icon;
+  @Input() disabled;
   public componentState = 'closed';
   public lightboxActive = false;
   ngOnInit() {}

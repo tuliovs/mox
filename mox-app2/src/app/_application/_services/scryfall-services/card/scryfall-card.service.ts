@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import { Card } from '../../../_models/_scryfall-models/models';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ScryfallCardService {
   constructor(private http: HttpClient) {}
 

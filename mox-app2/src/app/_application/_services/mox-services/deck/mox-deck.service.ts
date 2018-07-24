@@ -12,7 +12,9 @@ import { Card } from '../../../_models/_scryfall-models/models';
 import { AuthService } from '@karn/_services/auth.service';
 import { ToastService } from '@application/_services/toast/toast.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class MoxDeckService {
   private deckCollection: AngularFirestoreCollection<MoxDeck>;
   private deckDocument: AngularFirestoreDocument<MoxDeck>;
