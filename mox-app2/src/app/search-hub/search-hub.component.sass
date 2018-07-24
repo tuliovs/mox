@@ -3,8 +3,8 @@
 .btn-search
   color: color(ice)
   background-color: color(darkblue)
-  padding: .5em
-  font-size: .8em
+  padding: 0.18em
+  font-size: 1.01em
   box-shadow: 0px 4px 0px color(grayer)
   border-radius: 4px
   overflow: inherit
@@ -65,42 +65,55 @@ input::placeholder
       border-radius: 4px
       height: 64px
       box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07)
-      margin-bottom: 2%
+      margin-bottom: 1%
+      margin-top: 1%
       display: inline-flex
       .img-container
         flex-direction: column
         display: flex
+        justify-content: center
         border: 0
-        width: 16%
-        height: 91%
-        margin: 3px
+        width: 22%
+        height: 100%
+        margin-left: 2.2%
         padding: 0
       img
         margin: 0
-        padding: 0
+        padding: 22px
         border-radius: 4px
-        width: 3.38em
-        height: 3.38em
+        width: 3.63em
+        height: 3.13em
         background-size: cover
         background-position: center
         display: flex
         z-index: 5
         position: relative
-      .rarityDisplay
-        width: 54px
-        margin-top: -11px
-        height: 1em
-        border-radius: 4px
-        z-index: 3
-        position: relative
+        border-top-width: 2px
+        border-top-style: solid
+        border-bottom-width: 4px
+        border-bottom-style: solid
+      .none
+        border-top-color: color(magic, none)
+      .blue
+        border-top-color: color(magic, blue)
+      .black
+        border-top-color: color(magic, black)
+      .gold
+        border-top-color: color(magic, gold) !important
+      .green
+        border-top-color: color(magic, green)
+      .red
+        border-top-color: color(magic, red)
+      .white
+        border-top-color: color(magic, white)
       .common
-        background: linear-gradient(271.13deg, #302B2C 0.32%, #474040 49.73%, #302B2C 99.68%)
+        border-bottom-color: color(common, solid)
       .uncommon
-        background: linear-gradient(267.9deg, #5A6572 0.64%, #9E9E9E 51.82%, #5A6572 99.36%)
+        border-bottom-color: color(uncommon, solid)
       .rare
-        background: linear-gradient(272.97deg, #876A3B 0.78%, #DFBD6B 46.47%, #876A3B 99.22%)
+        border-bottom-color: color(rare, solid)
       .mythic
-        background: linear-gradient(270deg, #B21F0F 0%, #F38300 47.51%, #B21F0F 100%)
+        border-bottom-color: color(mythic, solid)
       section
         width: 100%
         padding: 0%

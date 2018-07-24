@@ -10,7 +10,7 @@
         <router-outlet></router-outlet>
         <div class="action-button">
           <div>
-              <i *ngIf="!sideNavIsActive" class="fas fa-cube"
+              <i *ngIf="!sideNavIsActive" class="ss ss-dom"
               [@actionIcoAnimator]="animationState2"
               (@actionIcoAnimator.done)="resetAnimationState()"
               (tap)="menuOpen('opened');animateNav()"></i>

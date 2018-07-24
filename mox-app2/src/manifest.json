@@ -1,8 +1,8 @@
 {
   "name": "Mox",
   "short_name": "Mox",
-  "theme_color": "#132030",
-  "background_color": "#fafafa",
+  "theme_color": "#FFFFFF",
+  "background_color": "#f2f2f2",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",

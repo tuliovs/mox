@@ -1,4 +1,4 @@
-<app-mox-titlebar titleHeight="3">
+<app-mox-titlebar titleHeight="2.88">
   <form>
     <input *ngIf="!settings_stats"  class="search-input" type="text" placeholder="Search" [(ngModel)]="param" value="{{param}}" name="param" required />
     <button *ngIf="!settings_stats"  class="btn btn-search"  type="submit" (click)="searchGo()">
@@ -13,17 +13,44 @@
   <ol>
     <li *ngFor="let item of searchResult.data">
       <div class="img-container">
-        <a routerLink='/card/{{item.id}}'>
-          <img class="img" *ngIf="item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }" />
-          <img class="img" *ngIf="!item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }" />
-          <div class="rarityDisplay"
+        <div routerLink='/card/{{item.id}}'>
+          <!-- <div class="colorDisplay"></div> -->
+          <img class="img" *ngIf="item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }"
+            [class.none]  ="!item.colors[0]"
+            [class.blue]  ="item.colors[0] == 'U'"
+            [class.black] ="item.colors[0] == 'B'"
+            [class.gold]  ="item.colors.length > 1"
+            [class.green] ="item.colors[0] == 'G'"
+            [class.red]   ="item.colors[0] == 'R'"
+            [class.white] ="item.colors[0] == 'W'"
+
+            [class.common]=" item.rarity == 'common'"
+            [class.uncommon]=" item.rarity == 'uncommon'"
+            [class.rare]=" item.rarity == 'rare'"
+            [class.mythic]=" item.rarity == 'mythic'"
+          />
+
+          <img class="img" *ngIf="!item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }"
+            [class.none]  ="!item.colors[0]"
+            [class.blue]  ="item.colors[0] == 'U'"
+            [class.black] ="item.colors[0] == 'B'"
+            [class.gold]  ="item.colors.length > 1"
+            [class.green] ="item.colors[0] == 'G'"
+            [class.red]   ="item.colors[0] == 'R'"
+            [class.white] ="item.colors[0] == 'W'"
+
+            [class.common]=" item.rarity == 'common'"
+            [class.uncommon]=" item.rarity == 'uncommon'"
+            [class.rare]=" item.rarity == 'rare'"
+            [class.mythic]=" item.rarity == 'mythic'"
+          />
+          <!-- <div class="rarityDisplay"
           [class.common]=" item.rarity == 'common'"
           [class.uncommon]=" item.rarity == 'uncommon'"
           [class.rare]=" item.rarity == 'rare'"
           [class.mythic]=" item.rarity == 'mythic'"
-          ></div>
-          <div class="colorDisplay"></div>
-        </a>
+          ></div> -->
+        </div>
       </div>
       <section>
         <h4>
