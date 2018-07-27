@@ -1,3 +1,4 @@
+import { ActionStateService } from './_application/_services/action-state/action-state.service';
 import { filter, take, tap } from 'rxjs/operators';
 
 import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
@@ -57,23 +58,35 @@ export const flipInY = [
   ]
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  private title = 'Mox';
+  public title = 'Mox';
   public sideNavIsActive = false;
   public navState = 'closed';
   public _Deck: MoxDeck;
   public animationState: string;
   public animationState2: string;
-  constructor(private router: Router, private _dekService: MoxDeckService, public auth: AuthService, public msg: NotificationService) {
+  constructor(
+    private router: Router,
+    private _dekService: MoxDeckService,
+    public auth: AuthService,
+    public _msg: NotificationService,
+    public _state: ActionStateService
+  ) {
     router.events.subscribe((val) => {
       // console.log('mudança de rota', val instanceof NavigationEnd);
       if (val instanceof NavigationEnd) {
+        this.title = this.routeTitler(val);
         this.sideNavIsActive = false;
+        this._state.setState('nav');
         this.navState = 'closed';
       }
     });
   }
 
   ngOnInit() {
+    this._state.getState().subscribe(stt => {
+      this.animationState = stt;
+    });
+    this._state.setState('nav');
     this._dekService.getWorkingDeck().pipe(
       tap((deck) => {
         this._Deck = <MoxDeck>deck;
@@ -86,23 +99,36 @@ export class AppComponent implements OnInit, AfterViewInit {
       take(1))
       .subscribe(user => {
           if (user) {
-            this.msg.getPermission(user);
-            this.msg.monitorRefresh(user);
-            this.msg.receiveMessages();
+            this._msg.getPermission(user);
+            this._msg.monitorRefresh(user);
+            this._msg.receiveMessages();
           }
         }
       );
   }
 
-  animateNav(event?) {
-    this.navState = (!this.sideNavIsActive) ? 'opened' : 'closed';
-    this.sideNavIsActive = !this.sideNavIsActive;
+  routeTitler(val: NavigationEnd): string {
+    switch (val.url) {
+      case '/deckhub':
+          return 'DeckHub';
+        break;
+      case '/search':
+          return 'Search';
+        break;
+      default:
+          return 'Mox';
+        break;
+    }
   }
 
-  startAnimation(_state: string) {
-    if (!this.animationState) {
-      this.animationState = _state;
-    }
+  isState(p): boolean {
+    return (this.animationState === p);
+  }
+
+  animateNav(event?) {
+
+    this.navState = (!this.sideNavIsActive) ? 'opened' : 'closed';
+    this.sideNavIsActive = !this.sideNavIsActive;
   }
 
   menuOpen(_state: string) {
@@ -111,20 +137,17 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
+  setState(newActionState) {
+    this._state.setState(newActionState);
+  }
   changeState(event) {
     this.animationState2 = event;
-    console.log(this.animationState2);
+    // console.log(this.animationState2);
   }
+
   resetAnimationState() {
-    this.animationState = '';
     this.animationState2 = '';
   }
-  // startAnimate(state) {
-  //   console.log(state);
-  //   if (!this.animationState) {
-  //     this.animationState = state;
-  //   }
-  // }
 
   goToUser() {
     this.router.navigateByUrl('/user');

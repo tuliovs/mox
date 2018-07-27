@@ -1,5 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { ReversePipe } from './_application/_pipes/reverse.pipe';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HammerGestureConfig, BrowserModule } from '@angular/platform-browser';
@@ -14,39 +15,35 @@ import * as Hammer from 'hammerjs';
 import { } from '@angular/platform-browser';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
+import { ActionBarComponent } from './_shared/ui/action-bar/action-bar.component';
+import { ActionStateService } from '@application/_services/action-state/action-state.service';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { CardContextComponent } from './_shared/ui/context-menu/card-context/card-context.component';
+import { CommingWarningComponent } from './_shared/ui/comming-warning/comming-warning.component';
+import { DeckHubComponent } from './deck-hub/deck-hub.component';
+import { DeckViewComponent } from './deck-hub/deck-view/deck-view.component';
+import { HomeComponent } from './home/home.component';
+import { ImportDeckContextComponent } from './_shared/ui/context-menu/import-deck-context/import-deck-context.component';
+import { KarnInfoCardComponent } from './_shared/ui/karn-info-card/karn-info-card.component';
+import { LoadingSpinnerComponent } from './_shared/ui/loading-spinner/loading-spinner.component';
+import { LoginComponent } from './auth/login/login.component';
+import { MoxCardComponent } from './_shared/mox-card/mox-card.component';
 import { MoxCardService } from './_application/_services/mox-services/card/mox-card.service';
 import { MoxDeckService } from './_application/_services/mox-services/deck/mox-deck.service';
+import { NewDeckComponent } from './deck-hub/new-deck/new-deck.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { NotificationService } from './_application/_services/notification/notification.service';
-import {
-    ScryfallCardService
-} from './_application/_services/scryfall-services/card/scryfall-card.service';
-import {
-    ScryfallSearchService
-} from './_application/_services/scryfall-services/search/scryfall-search.service';
-import { ToastService } from './_application/_services/toast/toast.service';
-import { MoxCardComponent } from './_shared/mox-card/mox-card.component';
-import { ActionBarComponent } from './_shared/ui/action-bar/action-bar.component';
-import { CommingWarningComponent } from './_shared/ui/comming-warning/comming-warning.component';
-import { LoadingSpinnerComponent } from './_shared/ui/loading-spinner/loading-spinner.component';
+import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless-auth.component';
+import { RowCardComponent } from './deck-hub/deck-view/row-card/row-card.component';
+import { ScryfallCardService } from './_application/_services/scryfall-services/card/scryfall-card.service';
+import { ScryfallSearchService } from './_application/_services/scryfall-services/search/scryfall-search.service';
 import { SearchComponent } from './_shared/ui/search/search.component';
+import { SearchHubComponent } from './search-hub/search-hub.component';
 import { TitlebarComponent } from './_shared/ui/titlebar/titlebar.component';
 import { ToastMessageComponent } from './_shared/ui/toast-message/toast-message.component';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless-auth.component';
-import { DeckHubComponent } from './deck-hub/deck-hub.component';
-import { NewDeckComponent } from './deck-hub/new-deck/new-deck.component';
-import { HomeComponent } from './home/home.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { ToastService } from './_application/_services/toast/toast.service';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
-import { HttpModule } from '@angular/http';
-import { CardContextComponent } from './_shared/ui/context-menu/card-context/card-context.component';
-import { DeckViewComponent } from './deck-hub/deck-view/deck-view.component';
-import { RowCardComponent } from './deck-hub/deck-view/row-card/row-card.component';
-import { KarnInfoCardComponent } from './_shared/ui/karn-info-card/karn-info-card.component';
-import { ImportDeckContextComponent } from './_shared/ui/context-menu/import-deck-context/import-deck-context.component';
-import { SearchHubComponent } from './search-hub/search-hub.component';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -59,28 +56,28 @@ export class MyHammerConfig extends HammerGestureConfig  {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    MoxCardComponent,
-    HomeComponent,
-    NotFoundComponent,
-    DeckHubComponent,
-    NewDeckComponent,
-    LoginComponent,
-    PasswordlessAuthComponent,
-    UserProfileComponent,
-    LoadingSpinnerComponent,
-    ToastMessageComponent,
-    TitlebarComponent,
-    SearchComponent,
     ActionBarComponent,
-    CommingWarningComponent,
-    ReversePipe,
+    AppComponent,
     CardContextComponent,
+    CommingWarningComponent,
+    DeckHubComponent,
     DeckViewComponent,
-    RowCardComponent,
-    KarnInfoCardComponent,
+    HomeComponent,
     ImportDeckContextComponent,
+    KarnInfoCardComponent,
+    LoadingSpinnerComponent,
+    LoginComponent,
+    MoxCardComponent,
+    NewDeckComponent,
+    NotFoundComponent,
+    PasswordlessAuthComponent,
+    ReversePipe,
+    RowCardComponent,
+    SearchComponent,
     SearchHubComponent,
+    TitlebarComponent,
+    ToastMessageComponent,
+    UserProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -100,12 +97,13 @@ export class MyHammerConfig extends HammerGestureConfig  {
       provide:  HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig
     },
+    ActionStateService,
     MoxCardService,
     MoxDeckService,
-    ToastService,
     NotificationService,
     ScryfallCardService,
     ScryfallSearchService,
+    ToastService,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

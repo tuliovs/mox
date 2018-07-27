@@ -1,6 +1,6 @@
 <app-mox-loading-spinner *ngIf="!_card"></app-mox-loading-spinner>
 <div class="cardRow" *ngIf="_card">
-  <div class="cardCounter"><label>x{{cardAmout}}</label></div>
+  <div class="cardCounter mox_font"><label>x{{cardAmout}}</label></div>
   <div class="cardInfo" (click)="cardView = true" *ngIf="_card.image_uris" [ngStyle]="{ 'background-image': 'url(' + _card.image_uris.art_crop + ')' }">
     <div class="cardData">{{_card.rarity}}</div>
     <div class="cardData">{{_card.mana_cost}}</div>

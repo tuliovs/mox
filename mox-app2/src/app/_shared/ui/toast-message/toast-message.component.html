@@ -3,7 +3,7 @@
         (@notificationAnimator.done)="resetAnimationState()"
         (press)="dismissAll()"
         (tap)="startAnimation('swing')"></i>
-<span class="ribbon" *ngIf="messages && messages.length > 0">{{ribbonCounter()}}</span>
+<span class="ribbon mox_font" *ngIf="messages && messages.length > 0">{{ribbonCounter()}}</span>
 <div class="wrapper" *ngIf="messages && messages.length > 0">
   <aside>
     <div *ngFor="let message of messages" class="alert" [ngClass]="{'alert-info':     message.style=='info',

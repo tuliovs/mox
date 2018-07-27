@@ -14,7 +14,6 @@
     <li *ngFor="let item of searchResult.data">
       <div class="img-container">
         <div routerLink='/card/{{item.id}}'>
-          <!-- <div class="colorDisplay"></div> -->
           <img class="img" *ngIf="item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }"
             [class.none]  ="!item.colors"
             [class.blue]  ="item.colors[0] == 'U'"
@@ -44,12 +43,6 @@
             [class.rare]=" item.rarity == 'rare'"
             [class.mythic]=" item.rarity == 'mythic'"
           />
-          <!-- <div class="rarityDisplay"
-          [class.common]=" item.rarity == 'common'"
-          [class.uncommon]=" item.rarity == 'uncommon'"
-          [class.rare]=" item.rarity == 'rare'"
-          [class.mythic]=" item.rarity == 'mythic'"
-          ></div> -->
         </div>
       </div>
       <section (click)="selectCard(item)">
@@ -77,8 +70,5 @@
   <button class="btn btn-action" disabled>
     <i class="fas fa-envelope" style="font-size: 1.2em" ></i>
   </button>
-  <!-- <button class="btn btn-action" [disabled]="" >
-    <i class="fas fa-ellipsis-h"></i>
-  </button> -->
   <app-mox-card-context [card]="selectedCard" [icon]="'fas fa-ellipsis-h'" [disabled]="!selectedCard" ></app-mox-card-context>
 </app-mox-action-bar>
