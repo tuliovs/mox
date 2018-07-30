@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { tap, map, finalize } from 'rxjs/operators';
 import { MoxDeckService } from '../_application/_services/mox-services/deck/mox-deck.service';
 import { AuthService } from '../karn/_services/auth.service';
+import { ActionStateService } from '@application/_services/action-state/action-state.service';
 
 
 @Component({
@@ -17,11 +18,16 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
   public deckList: MoxDeck[];
   private internalDeck: any;
   private deckCollection: AngularFirestoreCollection;
-  showLoader = true;
-  constructor(private afs: AngularFirestore, private _moxService: MoxDeckService, public auth: AuthService, private _router: Router) {
+  constructor(
+    private afs: AngularFirestore,
+    private _moxService: MoxDeckService,
+    private _state: ActionStateService,
+    public auth: AuthService,
+    private _router: Router) {
   }
 
   ngOnInit() {
+    this._state.setState('loading');
     this.auth.user.subscribe(
       (u) => {
         if (u) {
@@ -37,7 +43,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
                     return 0;
                   }
                 } );
-                this.showLoader = false;
+                this._state.setState('nav');
                 // console.log(this.deckList);
               }
             )

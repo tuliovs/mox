@@ -1,45 +1,54 @@
-<app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
 <div *ngIf="(deckList) then deckListed else emptyList"></div>
 
 <ng-template #deckListed>
   <app-mox-titlebar>
-    <h4>DeckHub</h4>
-  </app-mox-titlebar>
-  <div class="main">
     <div class="filters">
       <label>Sort by: Alfabetical ^</label>
       <label>Showing: All Formats</label>
     </div>
+  </app-mox-titlebar>
+  <div class="main">
     <ol *ngIf="!showLoader">
       <li *ngFor="let deck of deckList" [ngClass]="{'selectedDeck': this.internalDeck === deck}" >
         <div class="cover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
         <div class="content" (click)="deckSelected(deck)">
-          <p style="vertical-align: text-top">
-            <span>[{{deck.format}}]</span> |
-            <span>
-              <i class="fas fa-lock" *ngIf="!deck.public"></i>
-              <i class="fas fa-lock-open" *ngIf="deck.public"></i>
-            </span> |
-            <span>{{deck.ownerName}}</span>
-          </p>
-          <p style="align-items: flex-end">
+          <div>
             <label>{{deck.name}}</label>
+            <span>{{deck.format}}</span>
+          </div>
+          <div class="second-level">
+            <div class="owner" >by {{deck.ownerName}}</div>
+            <div class="icons">
+              <span>
+                <i class="fas fa-lock" *ngIf="!deck.public"></i>
+                <i class="fas fa-unlock" *ngIf="deck.public"></i>
+              </span>
               <span>
                 <i class="far fa-times-circle" *ngIf="!deck.legal"></i>
                 <i class="far fa-check-circle" *ngIf="deck.legal"></i>
               </span>
-          </p>
+            </div>
+          </div>
         </div>
       </li>
     </ol>
   </div>
   <app-mox-action-bar>
-    <button (click)="newDeck()" type="button" class="btn btn-action">
-      <i class="fas fa-plus"></i>
+    <button class="btn btn-action" disabled>
+      <i class="fas fa-filter"></i>
     </button>
-    <app-mox-search></app-mox-search>
+    <button class="btn btn-action" disabled>
+      <i class="fas fa-sort" style="font-size: 1.4em"></i>
+    </button>
+    <div class="fixer"></div>
     <button (click)="viewDeck()" type="button" class="btn btn-action">
         <i class="fas fa-book-open"></i>
+    </button>
+    <!-- <button class="btn btn-action" disabled>
+      <i class="fas fa-envelope" style="font-size: 1.2em" ></i>
+    </button> -->
+    <button (click)="newDeck()" type="button" class="btn btn-action">
+      <i class="fas fa-plus"></i>
     </button>
   </app-mox-action-bar>
 </ng-template>

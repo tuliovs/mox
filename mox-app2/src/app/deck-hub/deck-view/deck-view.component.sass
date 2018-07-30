@@ -5,9 +5,6 @@ hr
   margin-top: 7%
   border: solid 1px color(darkBlue)
 
-.active
-  text-decoration: solid underline color(darkblue)
-
 .deckCover
   width: 100%
   height: 14em
@@ -55,22 +52,32 @@ hr
         label
           margin-left: 0em
           font-size: 1.1em
+
 ul
   overflow-x: hidden
   overflow-y: hidden
   margin-top: 0%
   padding-top: 2%
   background-color: color(white)
+
 ol
   padding: 0
   list-style: none
   display: inline-flex
   width: 100%
-  justify-content: space-evenly
+  justify-content: space-between
   li
+    width: 30%
+    display: inline-flex !important
+    flex-direction: column
+    justify-content: center
+    text-align: center
     cursor: pointer
-    color: color(darkblue)
+    color: #E2E2E2
     display: block
-    font-size: 1.5em
-
-
+    font-size: .81em
+    font-weight: 500
+  li.active
+    color: #667A95
+    font-size: 1.2em
+    font-weight: 600

@@ -3,7 +3,7 @@
     <div style="align-self: center;">
       <app-mox-toast-message></app-mox-toast-message>
     </div>
-    <h4 class="mox_font">{{title}}</h4>
+    <h4>{{title}}</h4>
   </header>
   <div class="content" (actionMenuActivate)="animateNav($event)">
       <div class="content-area">
@@ -37,35 +37,35 @@
           <section class="sidenav-content">
               <button (click)="goToUser()" type="button" class="btn btn-icon">
                   <i class="fas fa-id-card"></i>
-                  <label class="mox_font">Profile</label>
+                  <label>Profile</label>
               </button>
               <button type="button" class="btn btn-icon" disabled>
                   <i class="fas fa-comments"></i>
-                  <label class="mox_font">Messages</label>
+                  <label>Messages</label>
               </button>
               <button type="button" class="btn btn-icon" disabled>
                   <i class="fas fa-archive"></i>
-                  <label class="mox_font">CollectionHub</label>
+                  <label>CollectionHub</label>
               </button>
               <button (click)="goToDeckHub()" type="button" class="btn btn-icon">
                   <i class="fas fa-book"></i>
-                  <label class="mox_font">DeckHub</label>
+                  <label>DeckHub</label>
               </button>
               <button type="button" class="btn btn-icon" disabled>
                   <i class="fas fa-dice"></i>
-                  <label class="mox_font">Utils</label>
+                  <label>Utils</label>
               </button>
               <button type="button" class="btn btn-icon" disabled>
                   <i class="fas fa-flask"></i>
-                  <label class="mox_font">Lab</label>
+                  <label>Lab</label>
               </button>
               <button type="button" class="btn btn-icon" disabled>
                   <i class="fas fa-cog"></i>
-                  <label class="mox_font">Settings</label>
+                  <label>Settings</label>
               </button>
               <button (click)="goToSeachHub()" type="button" class="btn btn-icon">
                   <i class="fas fa-search"></i>
-                  <label class="mox_font">Search</label>
+                  <label>Search</label>
               </button>
           </section>
           <div class="closer">

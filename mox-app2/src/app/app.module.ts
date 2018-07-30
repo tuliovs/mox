@@ -38,12 +38,12 @@ import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless
 import { RowCardComponent } from './deck-hub/deck-view/row-card/row-card.component';
 import { ScryfallCardService } from './_application/_services/scryfall-services/card/scryfall-card.service';
 import { ScryfallSearchService } from './_application/_services/scryfall-services/search/scryfall-search.service';
-import { SearchComponent } from './_shared/ui/search/search.component';
 import { SearchHubComponent } from './search-hub/search-hub.component';
 import { TitlebarComponent } from './_shared/ui/titlebar/titlebar.component';
 import { ToastMessageComponent } from './_shared/ui/toast-message/toast-message.component';
 import { ToastService } from './_application/_services/toast/toast.service';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { DotComponent } from './_shared/ui/dot/dot.component';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -73,11 +73,11 @@ export class MyHammerConfig extends HammerGestureConfig  {
     PasswordlessAuthComponent,
     ReversePipe,
     RowCardComponent,
-    SearchComponent,
     SearchHubComponent,
     TitlebarComponent,
     ToastMessageComponent,
     UserProfileComponent,
+    DotComponent,
   ],
   imports: [
     CommonModule,

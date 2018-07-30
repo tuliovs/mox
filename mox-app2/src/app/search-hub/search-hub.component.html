@@ -11,7 +11,7 @@
 </app-mox-titlebar>
 <div class="search-result" *ngIf="searchResult.data && searchResult.data.length > 0">
   <ol>
-    <li *ngFor="let item of searchResult.data">
+    <li *ngFor="let item of searchResult.data" [ngClass]="{'selectedCard': this.selectedCard === item}">
       <div class="img-container">
         <div routerLink='/card/{{item.id}}'>
           <img class="img" *ngIf="item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }"

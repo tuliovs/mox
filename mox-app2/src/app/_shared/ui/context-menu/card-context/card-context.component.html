@@ -19,37 +19,37 @@
   <section class="content">
       <button type="button" class="btn btn-icon" disabled>
           <i class="fas fa-shopping-bag"></i>
-          <label class="mox_font">Shop</label>
-          <label class="mox_font">U${{card.usd}} | tix{{card.tix}}</label>
+          <label>Shop</label>
+          <label>U${{card.usd}} | tix{{card.tix}}</label>
       </button>
       <button type="button" class="btn btn-icon" disabled>
           <i *ngIf="!fav" class="far fa-heart"></i>
           <i *ngIf="fav" class="fas fa-heart"></i>
-          <label class="mox_font">Add to Favorites</label>
+          <label>Add to Favorites</label>
       </button>
     <button (click)="addOneCard()" type="button" class="btn btn-icon" [disabled]="!_Deck">
         <i class="fas fa-plus-circle"></i>
-        <label class="mox_font">Add One to Deck</label>
+        <label>Add One to Deck</label>
     </button>
     <button (click)="addOneCard(true)" type="button" class="btn btn-icon" [disabled]="!_Deck">
         <i class="fas fa-plus-circle"></i>
-        <label class="mox_font">Add One to Side</label>
+        <label>Add One to Side</label>
     </button>
     <button type="button" class="btn btn-icon" disabled>
         <i class="fas fa-box-open"></i>
-        <label class="mox_font">Add to One Collection</label>
+        <label>Add to One Collection</label>
     </button>
     <button (click)="setCover()" type="button" class="btn btn-icon" [disabled]="!_Deck" >
         <i class="fas fa-tags"></i>
-        <label class="mox_font">Make Deck Cover</label>
+        <label>Make Deck Cover</label>
     </button>
     <button type="button" class="btn btn-icon" disabled>
         <i class="fas fa-retweet"></i>
-        <label class="mox_font">Share</label>
+        <label>Share</label>
     </button>
     <button (click)="viewCard()" type="button" class="btn btn-icon">
         <i class="fas fa-search-plus"></i>
-        <label class="mox_font">View Card</label>
+        <label>View Card</label>
     </button>
   </section>
   <div class="closer">

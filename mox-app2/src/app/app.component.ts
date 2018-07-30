@@ -2,7 +2,7 @@ import { ActionStateService } from './_application/_services/action-state/action
 import { filter, take, tap } from 'rxjs/operators';
 
 import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
-import { AfterViewInit, Component, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { MoxDeck } from './_application/_models/_mox_models/MoxDeck';
