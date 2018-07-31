@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { tap } from 'rxjs/operators';
+import { ActionStateService } from '@application/_services/action-state/action-state.service';
 
 @Component({
   selector: 'app-mox-deck-view',
@@ -43,6 +44,7 @@ export class DeckViewComponent implements OnInit {
     private route: ActivatedRoute,
     private toast: ToastService,
     private router: Router,
+    private state: ActionStateService
   ) { }
 
   ngOnInit() {
@@ -74,7 +76,11 @@ export class DeckViewComponent implements OnInit {
     // console.log('Deck:', this.tempDeck);
     this.deckCollection = this.afs.collection('decks');
     this.deckCollection.doc<MoxDeck>(this._id).update(this.tempDeck);
-    this.toast.sendMessage('Deck Updated! Have a nice day', 'success', this.tempDeck.ownerId, silent);
+    this.state.setState('cloud');
+    setTimeout( () => {
+      this.state.setState('nav');
+    }, 200);
+    // this.toast.sendMessage('Deck Updated! Have a nice day', 'success', this.tempDeck.ownerId, silent);
   }
   cardAmount(cardId) {
     return this.countOccurrences(this._rawCardList, cardId);
