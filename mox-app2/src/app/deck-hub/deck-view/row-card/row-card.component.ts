@@ -19,8 +19,10 @@ export class RowCardComponent implements OnInit, AfterViewInit {
   public cardView = false;
   @Output() plus: EventEmitter<any> = new EventEmitter();
   @Output() minus: EventEmitter<any> = new EventEmitter();
+  @Output() select: EventEmitter<any> = new EventEmitter();
   @Input() cardId;
   @Input() cardAmout;
+  @Input() selected: boolean;
   constructor(
     public _cardService: MoxCardService,
     private afs: AngularFirestore,

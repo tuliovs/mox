@@ -79,7 +79,6 @@ input::placeholder
         padding: 0
       img
         margin: 0
-        padding: 22px
         border-radius: 4px
         width: 3.63em
         height: 3.13em
@@ -88,32 +87,47 @@ input::placeholder
         display: flex
         z-index: 5
         position: relative
-        border-top-width: 3px
-        border-top-style: solid
-        border-bottom-width: 5px
-        border-bottom-style: solid
+      .cardColor
+        width: 3.63em
+        height: 1em
+        z-index: 0
+        display: inline-flex
+        position: relative
+        margin-bottom: -12px
+        border: 0
+        border-radius: 4px
+        bottom: 0
       .none
-        border-top-color: color(magic, none)
+        background: color(magic, none)
       .blue
-        border-top-color: color(magic, blue)
+        background: color(magic, blue)
       .black
-        border-top-color: color(magic, black)
+        background: color(magic, black)
       .gold
-        border-top-color: color(magic, gold) !important
+        background: color(magic, gold) !important
       .green
-        border-top-color: color(magic, green)
+        background: color(magic, green)
       .red
-        border-top-color: color(magic, red)
+        background: color(magic, red)
       .white
-        border-top-color: color(magic, white)
+        background: color(magic, white)
+      .cardRarity
+        width: 3.63em
+        height: 1em
+        z-index: 0
+        display: inline-flex
+        position: relative
+        margin-bottom: -12px
+        border: 0
+        border-radius: 4px
       .common
-        border-bottom-color: color(common, solid)
+        background: linear-gradient(271.13deg, #302B2C 0.32%, #474040 49.73%, #302B2C 99.68%)
       .uncommon
-        border-bottom-color: color(uncommon, solid)
+        background: linear-gradient(267.9deg, #5A6572 0.64%, #9E9E9E 51.82%, #5A6572 99.36%)
       .rare
-        border-bottom-color: color(rare, solid)
+        background: linear-gradient(272.97deg, #876A3B 0.78%, #DFBD6B 46.47%, #876A3B 99.22%)
       .mythic
-        border-bottom-color: color(mythic, solid)
+        background: linear-gradient(270deg, #B21F0F 0%, #F38300 47.51%, #B21F0F 100%)
       section
         width: 100%
         padding: 0%
@@ -121,7 +135,8 @@ input::placeholder
           margin-top: 1%
           color: color(darkBlue)
           font-weight: 700
-          font-size: 1em
+          font-size: 80%
+          line-height: 1em
           text-align: start
           margin-bottom: 0.9%
         p
@@ -129,11 +144,12 @@ input::placeholder
         p.description
           width: 100%
           font-size: 11px
-          line-height: 17px
-          margin-top: 1%
+          line-height: 1em
+          margin-top: 2%
           text-align: start
           color: #B3B2B2
           font-weight: 600
 
 .selectedCard
-  border: 1px solid color(darkblue)
+  border-bottom: 1px solid color(darkblue)
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.27) !important

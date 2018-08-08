@@ -18,6 +18,22 @@ ol
     margin: 1% 1% 1% 1%
     height: 4.2em
     align-items: center
+    .zoom
+      margin-left: .1em
+      position: absolute
+      background-color: rgba(255, 255, 255, 0.5)
+      width: 5.8em
+      height: 3.8em
+      border-radius: 4px
+      z-index: 1
+      display: inline-flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      i
+        font-size: 2.5em
+        color: white
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25)
     .cover
       margin-left: .1em
       position: relative
@@ -75,4 +91,5 @@ ol
   font-weight: 600
 
 .selectedDeck
-  border: 1px solid color(darkblue)
+  border-bottom: 1px solid color(darkblue)
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.27) !important

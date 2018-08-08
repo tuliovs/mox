@@ -7,51 +7,93 @@ hr
 
 .deckCover
   width: 100%
-  height: 14em
+  height: 16em
   background-size: cover
-  border: solid 2px color(white)
-  border-radius: 15px
-  i
-    color: color(conLight)
-    font-size: 8em
-    margin: 15% 0
-
-.delete-container
-  margin-bottom: 5%
+  border-radius: 0px
 
 .summary
-  background-color: color(darkBlue)
-  color: color(white)
-  border: solid 1px color(darkBlue)
+  color: #F9FFFF
+  background-color: #f2f2f2
   position: fixed
   width: 100%
-  height: 1.5em
+  height: 1.65em
   display: flex
   font-size: .81em
   padding: 0 2%
   justify-content: space-between
+  .decksize
+    background: #AFC0DC
+    border: 1px solid rgba(102, 122, 149, 0.17)
+    margin-left: -3%
+    padding: 0 1.5%
+    border-radius: 0 3em 3em 0
+  .deckname
+    background: #AFC0DC
+    border: 1px solid rgba(102, 122, 149, 0.17)
+    margin-top: -1%
+    border-radius: 0 0 1em 1em
+    font-size: 1em
+    padding: 0 2%
+    max-height: 17px
+  .deckside
+    background: #AFC0DC
+    border: 1px solid rgba(102, 122, 149, 0.17)
+    margin-right: -3%
+    padding: 0 1.5%
+    border-radius: 3em 0 0 3em
+  i
+    margin: 0 2px
 
 .new-deck-form
-  width: 100%
-  height: 100%
-  .form-block
-    label
-      display: flex
-      margin-left: 1.5em
-    .form-group
-      .toggle-switch
-        display: inline-flex
-        vertical-align: middle
-        text-align: start
-        width: 100%
-        padding-left: 1em
-        align-items: center
-        .btn-action
-          color: color(darkBlue)
-          text-shadow: 2px 2px #FFF
-        label
-          margin-left: 0em
-          font-size: 1.1em
+  .deckData
+    color: color(darkblue)
+    position: absolute
+    width: 100%
+    display: inline-flex
+    flex-wrap: wrap
+    left: 0
+    height: 50%
+    justify-content: space-between
+    align-content: space-between
+    .deckNameContainer
+      width: 100%
+      text-align: left
+      padding: 0 2%
+      align-items: center
+      i
+        text-shadow: 0px 0px 1px white
+      input
+        background-color: transparent
+        font-size: 1.5em
+        border: 0
+        text-shadow: 0px 0px 1px white
+        color: #132030
+        font-weight: 600
+    .deckColors
+      background-color: white
+    .deckOwner
+      label
+        font-weight: 600
+        font-size: 18px
+        text-align: right
+        text-shadow: 0px 0px 1px white
+  .deckExtraData
+    display: inline-flex
+    width: 100%
+    color: color(ice)
+    .item
+      width: 34%
+      background-color: color(blue)
+      height: 3%
+      font-size: .6em
+      display: inline-flex
+      text-align: center
+      justify-content: center
+      align-items: center
+    .positive
+      background-color: color(darkblue) !important
+
+
 
 ul
   overflow-x: hidden
@@ -80,3 +122,8 @@ ol
     color: #667A95
     font-size: 1.2em
     font-weight: 600
+
+
+.fixer
+  width: 15%
+  display: block

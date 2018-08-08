@@ -28,7 +28,7 @@
     background-color: black
     color: white
     height: 100%
-    width: 20px
+    width: 25px
     text-align: center
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25)
     display: flex
@@ -64,27 +64,45 @@
         text-overflow: unset
         word-wrap: break-word
         width: 100%
-      span
-        position: absolute
-        color: #667A95
-        right: 4%
+    .typeline
+      font-size: 75%
+
   .cardActions
     padding: 0
     margin: 0
     width: 15%
     display: flex
-    flex-direction: row
-    align-items: flex-end
-    .btn
-      border: 0
-      font-size: 1.4em
-      margin: 0px
-      padding: 0
-      color: color(blue)
+    flex-direction: column
+    justify-content: space-between
+    div
+      .btn
+        border: 0
+        font-size: 1.4em
+        margin: 0px
+        padding: 0
+        color: color(blue)
+        height: 40%
+    .mana_cost
+      color: #667A95
+      width: 100%
+      height: 30%
+      text-align: right
+      font-size: 70%
 
+.lightbox
+  background-color: color(ice)
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  display: flex
+  justify-content: center
+  flex-flow: column
+  opacity: .67
+  filter: blur(5px)
 
 .cardViewer
-  background-color: color(ice)
   position: fixed
   top: 0
   left: 0
@@ -104,3 +122,8 @@
     left: 6%
     border-radius: 15px
     z-index: 12
+    box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.7)
+
+.selectedCard
+  border-bottom: 1px solid color(darkblue)
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.27) !important

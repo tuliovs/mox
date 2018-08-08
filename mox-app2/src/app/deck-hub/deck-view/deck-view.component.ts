@@ -1,9 +1,9 @@
 import { ToastService } from './../../_application/_services/toast/toast.service';
 import { Observable } from 'rxjs';
-import { MoxDeck, MoxCardDeck } from 'src/app/_application/_models/_mox_models/MoxDeck';
-import { Component, OnInit } from '@angular/core';
+import { MoxDeck } from 'src/app/_application/_models/_mox_models/MoxDeck';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { tap } from 'rxjs/operators';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 
@@ -30,6 +30,7 @@ export class DeckViewComponent implements OnInit {
   ];
 
   public _deck: Observable<MoxDeck>;
+  public _selectedCard;
   public tempDeck: MoxDeck;
   public tab = 'profileTab';
   public _id: string;
@@ -38,7 +39,8 @@ export class DeckViewComponent implements OnInit {
   public _rawCardList: any;
   public _rawSideList: any;
   public deckCollection: AngularFirestoreCollection<MoxDeck>;
-
+  public width;
+  @ViewChild('invisibleText') invTextER: ElementRef;
   constructor(
     private afs: AngularFirestore,
     private route: ActivatedRoute,
@@ -46,6 +48,17 @@ export class DeckViewComponent implements OnInit {
     private router: Router,
     private state: ActionStateService
   ) { }
+
+  resizeInput(inputText) {
+    setTimeout ( () => {
+      const minWidth = 64;
+      if (this.invTextER.nativeElement.offsetWidth > minWidth) {
+        this.width = this.invTextER.nativeElement.offsetWidth + 2;
+      } else {
+        // this.width = minWidth;
+      }
+    }, 0);
+  }
 
   ngOnInit() {
     this.route.params.subscribe( params => {
@@ -61,26 +74,27 @@ export class DeckViewComponent implements OnInit {
           tap( (deck) => {
             if (!deck.side) { deck.side = [];  }
             this.tempDeck = deck;
+            deck.cards.forEach((incard) => {
+              console.log(incard);
+            });
             this._rawCardList = deck.cards;
             this._rawSideList = deck.side;
             this._cardList = Array.from(new Set(deck.cards));
             this._sideList = Array.from(new Set(deck.side));
-            console.log('#', this.tempDeck);
-            // console.log('SARRA', this.tempDeck);
+            // console.log('#', this.tempDeck);
           })
         ).subscribe();
       }
     });
   }
   saveDeck(silent?: boolean) {
-    // console.log('Deck:', this.tempDeck);
-    this.deckCollection = this.afs.collection('decks');
-    this.deckCollection.doc<MoxDeck>(this._id).update(this.tempDeck);
     this.state.setState('cloud');
-    setTimeout( () => {
-      this.state.setState('nav');
-    }, 200);
-    // this.toast.sendMessage('Deck Updated! Have a nice day', 'success', this.tempDeck.ownerId, silent);
+    this.deckCollection = this.afs.collection('decks');
+    this.deckCollection.doc<MoxDeck>(this._id).update(this.tempDeck).then(
+      () => {
+        this.state.setState('nav');
+      }
+    );
   }
   cardAmount(cardId) {
     return this.countOccurrences(this._rawCardList, cardId);
@@ -106,6 +120,15 @@ export class DeckViewComponent implements OnInit {
   cardSideMinus(event) {
     this.tempDeck.side.splice(this.tempDeck.side.indexOf(event), 1);
     this.saveDeck(true);
+  }
+
+  selectedCard(card) {
+    if (this._selectedCard === card) {
+      this._selectedCard = null;
+    } else {
+      // this._moxService.editDeck(deck);
+      this._selectedCard = card;
+    }
   }
 
   delete(deck: MoxDeck) {

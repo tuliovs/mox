@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  VERSION: require('../../package.json').version,
   moxurl: 'http://localhost:420/',
   firebaseConfig: {
     apiKey: 'AIzaSyCPEWNi0dsB5_rkYZzFXNgNePdlgZFLiKo',

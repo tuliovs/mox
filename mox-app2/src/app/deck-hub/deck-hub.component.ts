@@ -27,7 +27,6 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this._state.setState('loading');
     this.auth.user.subscribe(
       (u) => {
         if (u) {
@@ -76,7 +75,11 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
   }
 
   deckSelected(deck: MoxDeck) {
-    this._moxService.editDeck(deck);
-    this.internalDeck = deck;
+    if (this.internalDeck === deck) {
+      this.internalDeck = null;
+    } else {
+      this._moxService.editDeck(deck);
+      this.internalDeck = deck;
+    }
   }
 }

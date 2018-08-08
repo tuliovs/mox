@@ -10,7 +10,8 @@
   <div class="main">
     <ol *ngIf="!showLoader">
       <li *ngFor="let deck of deckList" [ngClass]="{'selectedDeck': this.internalDeck === deck}" >
-        <div class="cover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
+        <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div>
+        <div class="cover"   (click)="deckSelected(deck)" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
         <div class="content" (click)="deckSelected(deck)">
           <div>
             <label>{{deck.name}}</label>
@@ -41,12 +42,9 @@
       <i class="fas fa-sort" style="font-size: 1.4em"></i>
     </button>
     <div class="fixer"></div>
-    <button (click)="viewDeck()" type="button" class="btn btn-action">
-        <i class="fas fa-book-open"></i>
-    </button>
-    <!-- <button class="btn btn-action" disabled>
+    <button class="btn btn-action" disabled>
       <i class="fas fa-envelope" style="font-size: 1.2em" ></i>
-    </button> -->
+    </button>
     <button (click)="newDeck()" type="button" class="btn btn-action">
       <i class="fas fa-plus"></i>
     </button>

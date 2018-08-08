@@ -13,23 +13,22 @@
     </div>
     <div [hidden]="tab !='profileTab'">
       <div class="summary">
-        <label>{{deck.name}}</label>
-        <label><i class="fas fa-clone"></i>[{{deck.cards.length}}]</label>
-        <label><i class="far fa-clone"></i>[{{(deck.side) ? deck.side.length : 0}}]</label>
-        <label>{{deck.format}}</label>
+        <div class="decksize"><i class="fas fa-clone"></i>{{deck.cards.length}}</div>
+        <div class="deckname">{{deck.name}}</div>
+        <div class="deckside">{{(deck.side) ? deck.side.length : 0}}<i class="far fa-clone"></i></div>
       </div>
       <ul>
-        <li *ngFor="let card of _cardList">
-          <app-mox-row-card [cardAmout]="cardAmount(card)" [cardId]="card"
-            (plus)="cardPlus($event)" (minus)="cardMinus($event)"
+        <li *ngFor="let cardId of _cardList">
+          <app-mox-row-card [cardAmout]="cardAmount(cardId)" [cardId]="cardId" (select)="selectedCard($event)"
+            (plus)="cardPlus($event)" (minus)="cardMinus($event)" [selected]="(this._selectedCard && this._selectedCard.id === cardId)"
           ></app-mox-row-card>
         </li>
       </ul>
       <hr>
       <ul>
-        <li *ngFor="let card of _sideList">
-          <app-mox-row-card [cardAmout]="cardSideAmount(card)" [cardId]="card"
-            (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)"
+        <li *ngFor="let cardId of _sideList">
+          <app-mox-row-card [cardAmout]="cardSideAmount(cardId)" [cardId]="cardId" (select)="selectedCard($event)"
+            (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)" [selected]="(this._selectedCard && this._selectedCard.id === cardId)"
           ></app-mox-row-card>
         </li>
       </ul>
@@ -37,50 +36,46 @@
     <div [hidden]=" tab !='socialTab'">
       <form class="new-deck-form" *ngIf="tempDeck as deck">
         <div class="deckCover" *ngIf="deck.cover != ''" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+          <section class="deckData">
+            <div class="deckColors">
+              <p>A</p>
+            </div>
+            <div class="deckOwner">
+              <label>by {{deck.ownerName}}</label>
+            </div>
+            <div class="deckNameContainer">
+              <i class="fas fa-pen"></i>
+              <input #inputText id="inputTextID" type="text"
+              (paste)="resizeInput(inputText.value)"
+              (cut)="resizeInput(inputText.value)"
+              (input)="resizeInput()"
+              (change)="saveDeck()"
+              [ngStyle]="{'width.px': width}"
+              [(ngModel)]="deck.name" value="{{deck.name}}" name="iname">
+            </div>
+          </section>
         </div>
+        <span #invisibleText id="invisibleTextID" [hidden]="true">{{ deck.name }}</span>
         <div class="deckCover" *ngIf="deck.cover == ''">
           <i class="fas fa-frog"></i>
         </div>
-        <section class="form-block">
-          <label>Deck Name</label>
-          <div class="form-group">
-            <input type="text" [(ngModel)]="deck.name" value="{{deck.name}}" name="iname" required>
+        <section class="deckExtraData">
+          <div class="item" [ngClass]="{'positive': deck.public }" (click)="deck.public = !deck.public;saveDeck()">
+            <i class="fas fa-lock" *ngIf="!deck.public"></i>
+            <i class="fas fa-unlock-alt" *ngIf="deck.public"></i>
           </div>
-          <label>Deck Creator</label>
-          <div class="form-group">
-            <input type="text" readonly value="{{deck.ownerName}}">
+
+          <div class="item" [ngClass]="{'positive': deck.legal}">
+            <i class="fas fa-times-circle" *ngIf="!deck.legal"></i>
+            <i class="far fa-check-circle" *ngIf="deck.legal"></i>
           </div>
-          <div class="form-group">
-            <div class="toggle-switch" (click)="deck.froze = !deck.froze">
-              <button class="btn btn-action">
-                <i class="fas fa-check-square" *ngIf="!deck.froze"></i>
-                <i class="far fa-square" *ngIf="deck.froze"></i>
-              </button>
-              <label for="ifroze">Froze</label>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="toggle-switch">
-              <button class="btn btn-action">
-                <i class="fas fa-check-square" *ngIf="!deck.legal"></i>
-                <i class="far fa-square" *ngIf="deck.legal"></i>
-              </button>
-              <label for="ilegal">Legal</label>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="iformat">Format</label>
+
+          <div class="item" [ngClass]="{'positive': deck.format }">
             <div class="select">
-              <select id="iformat" [(ngModel)]="deck.format" [ngModelOptions]="{standalone: true}" required>
+              <select id="iformat" [(ngModel)]="deck.format" (change)="saveDeck()" [ngModelOptions]="{standalone: true}" required>
                 <option *ngFor="let f of formats" [value]="f">{{f}}</option>
               </select>
             </div>
-          </div>
-          <div class="delete-container">
-              <button (click)="saveDeck()" class="btn btn-save">Update Deck <i class="fas fa-sync-alt"></i></button>
-            </div>
-          <div class="delete-container">
-            <button (press)="delete(deck)" class="btn btn-delete">Delete Deck <i class="fas fa-trash"></i></button>
           </div>
         </section>
       </form>
@@ -88,5 +83,16 @@
   </div>
 </div>
 <app-mox-action-bar (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
-  <app-mox-search></app-mox-search>
+  <button class="btn btn-action" disabled>
+    <i class="fas fa-filter"></i>
+  </button>
+  <button class="btn btn-action" disabled>
+    <i class="fas fa-sort" style="font-size: 1.4em"></i>
+  </button>
+  <div class="fixer"></div>
+  <button class="btn btn-action" disabled>
+    <i class="fas fa-envelope" style="font-size: 1.2em" ></i>
+  </button>
+  <app-mox-card-context [card]="_selectedCard" [icon]="'fas fa-ellipsis-h'" [disabled]="!_selectedCard" ></app-mox-card-context>
 </app-mox-action-bar>
+

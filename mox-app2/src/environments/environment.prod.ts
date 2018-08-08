@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  VERSION: require('../../package.json').version,
   moxurl: 'https://mox-mtg.firebaseapp.com/',
   firebaseConfig: {
     apiKey: 'AIzaSyCPEWNi0dsB5_rkYZzFXNgNePdlgZFLiKo',

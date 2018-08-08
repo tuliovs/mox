@@ -8,7 +8,7 @@
   <div class="content" (actionMenuActivate)="animateNav($event)">
       <div class="content-area">
         <router-outlet></router-outlet>
-        <div class="action-button">
+        <div class="action-button" *ngIf="!isState('hidden')">
           <div>
               <i *ngIf="isState('nav')" class="ss ss-dom"
               [@actionIcoAnimator]="animationState2"

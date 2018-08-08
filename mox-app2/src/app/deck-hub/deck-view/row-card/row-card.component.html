@@ -1,27 +1,31 @@
 <app-mox-loading-spinner *ngIf="!_card"></app-mox-loading-spinner>
-<div class="cardRow" *ngIf="_card">
+<div class="cardRow" *ngIf="_card" [ngClass]="{'selectedCard': selected}" >
   <div class="cardCounter"><label>{{cardAmout}}</label></div>
   <div  [class.common]=" _card.rarity == 'common'"
         [class.uncommon]=" _card.rarity == 'uncommon'"
         [class.rare]=" _card.rarity == 'rare'"
         [class.mythic]=" _card.rarity == 'mythic'" class="cardRarity"></div>
-  <div class="cardImg" (click)="cardView = true" *ngIf="_card.image_uris" [ngStyle]="{ 'background-image': 'url(' + _card.image_uris.art_crop + ')' }"></div>
-  <div class="cardImg" (click)="cardView = true" *ngIf="!_card.image_uris" [ngStyle]="{ 'background-image': 'url(' + _card.card_faces[0].image_uris.art_crop + ')' }"></div>
-
+  <div class="cardImg" (click)="cardView = true;select.emit(_card)" *ngIf="_card.image_uris" [ngStyle]="{ 'background-image': 'url(' + _card.image_uris.art_crop + ')' }"></div>
+  <div class="cardImg" (click)="cardView = true;select.emit(_card)" *ngIf="!_card.image_uris" [ngStyle]="{ 'background-image': 'url(' + _card.card_faces[0].image_uris.art_crop + ')' }"></div>
   <div class="dataContainer" *ngIf="!_card.card_faces">
-    <div class="cardData"><h4>{{_card.name}}</h4><span>{{_card.mana_cost}}</span></div>
-    <div class="cardData">{{_card.type_line}}</div>
+    <div class="cardData"><h4>{{_card.name}}</h4></div>
+    <div class="cardData typeline">{{_card.type_line}}</div>
   </div>
   <div class="dataContainer" *ngIf="_card.card_faces">
-    <div class="cardData"><h4>{{_card.card_faces[0].name}}</h4><span>{{_card.card_faces[0].mana_cost}}</span></div>
-    <div class="cardData">{{_card.card_faces[0].type_line}}</div>
+    <div class="cardData"><h4>{{_card.card_faces[0].name}}</h4></div>
+    <div class="cardData typeline">{{_card.card_faces[0].type_line}}</div>
   </div>
   <div class="cardActions">
-    <button (click)="minus.emit(_card.id)" class="btn"><i class="fas fa-minus-circle"></i></button>
-    <button (click)="plus.emit(_card.id)" class="btn"><i class="fas fa-plus-circle"></i></button>
+    <div class="mana_cost" *ngIf="!_card.card_faces">{{_card.mana_cost}}</div>
+    <div class="mana_cost" *ngIf="_card.card_faces">{{_card.card_faces[0].mana_cost}}</div>
+    <div>
+      <button (click)="minus.emit(_card.id)" class="btn"><i class="fas fa-minus-circle"></i></button>
+      <button (click)="plus.emit(_card.id)" class="btn"><i class="fas fa-plus-circle"></i></button>
+    </div>
   </div>
 </div>
-<div *ngIf="cardView" class="cardViewer" (click)="cardView = false" >
+<div *ngIf="cardView" class="lightbox"></div>
+<div *ngIf="cardView" class="cardViewer" (click)="cardView = false;select.emit(_card)">
   <div class="fullcard" *ngIf="_card.image_uris" [ngStyle]="{ 'background-image': 'url(' + _card.image_uris.normal + ')' }" ></div>
   <div class="fullcard" (doubletap)="side = true" *ngIf="!_card.image_uris && !side" [ngStyle]="{ 'background-image': 'url(' + _card.card_faces[0].image_uris.normal + ')' }" ></div>
   <div class="fullcard" (doubletap)="side = false" *ngIf="!_card.image_uris && side" [ngStyle]="{ 'background-image': 'url(' + _card.card_faces[1].image_uris.normal + ')' }" ></div>
