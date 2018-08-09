@@ -14,42 +14,29 @@ import { AuthService } from '@karn/_services/auth.service';
 })
 export class RowCardComponent implements OnInit, AfterViewInit {
   public cardCollection: AngularFirestoreCollection<Card>;
-  public _card: Card;
   public _user: any;
   public cardView = false;
   @Output() plus: EventEmitter<any> = new EventEmitter();
   @Output() minus: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
-  @Input() cardId;
+  @Input() card;
   @Input() cardAmout;
   @Input() selected: boolean;
   constructor(
     public _cardService: MoxCardService,
-    private afs: AngularFirestore,
     public toast: ToastService,
     public auth: AuthService
   ) { }
 
   ngOnInit() {
+    // console.log(this.card);
     this.auth.user.pipe(
       tap((user) => {
         this._user = user;
       })
     ).subscribe();
-    if (!this.cardId) {
-      this.toast.sendMessage('Not founded CardID, thats wierd...', 'danger', this._user.uid);
-      throw new Error('Not founded CardID');
-    } else {
-      this._cardService.getCard(this.cardId);
-    }
   }
 
   ngAfterViewInit() {
-    this.afs.collection('cards').doc<Card>(this.cardId).valueChanges().pipe(
-      tap((c) => {
-        this._card = c;
-        // console.log('cartinhas>', c);
-      })
-    ).subscribe();
   }
 }

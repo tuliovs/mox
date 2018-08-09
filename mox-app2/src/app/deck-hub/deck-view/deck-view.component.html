@@ -18,17 +18,17 @@
         <div class="deckside">{{(deck.side) ? deck.side.length : 0}}<i class="far fa-clone"></i></div>
       </div>
       <ul>
-        <li *ngFor="let cardId of _cardList">
-          <app-mox-row-card [cardAmout]="cardAmount(cardId)" [cardId]="cardId" (select)="selectedCard($event)"
-            (plus)="cardPlus($event)" (minus)="cardMinus($event)" [selected]="(this._selectedCard && this._selectedCard.id === cardId)"
+        <li *ngFor="let card of _cardList">
+          <app-mox-row-card [cardAmout]="cardAmount(card.id)" [card]="card" (select)="selectedCard($event)"
+            (plus)="cardPlus($event)" (minus)="cardMinus($event)" [selected]="(this._selectedCard && this._selectedCard === card.id)"
           ></app-mox-row-card>
         </li>
       </ul>
       <hr>
       <ul>
-        <li *ngFor="let cardId of _sideList">
-          <app-mox-row-card [cardAmout]="cardSideAmount(cardId)" [cardId]="cardId" (select)="selectedCard($event)"
-            (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)" [selected]="(this._selectedCard && this._selectedCard.id === cardId)"
+        <li *ngFor="let card of _sideList">
+          <app-mox-row-card [cardAmout]="cardSideAmount(card.id)" [card]="card" (select)="selectedCard($event)"
+            (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)" [selected]="(this._selectedCard && this._selectedCard === card.id)"
           ></app-mox-row-card>
         </li>
       </ul>
@@ -45,12 +45,8 @@
             </div>
             <div class="deckNameContainer">
               <i class="fas fa-pen"></i>
-              <input #inputText id="inputTextID" type="text"
-              (paste)="resizeInput(inputText.value)"
-              (cut)="resizeInput(inputText.value)"
-              (input)="resizeInput()"
+              <input id="inputTextID" type="text"
               (change)="saveDeck()"
-              [ngStyle]="{'width.px': width}"
               [(ngModel)]="deck.name" value="{{deck.name}}" name="iname">
             </div>
           </section>
@@ -86,7 +82,7 @@
   <button class="btn btn-action" disabled>
     <i class="fas fa-filter"></i>
   </button>
-  <button class="btn btn-action" disabled>
+  <button class="btn btn-action" (click)="cardSort(!_orderAsc)">
     <i class="fas fa-sort" style="font-size: 1.4em"></i>
   </button>
   <div class="fixer"></div>

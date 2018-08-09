@@ -1,11 +1,13 @@
+import { Card } from '@application/_models/_scryfall-models/models';
 import { ToastService } from './../../_application/_services/toast/toast.service';
 import { Observable } from 'rxjs';
 import { MoxDeck } from 'src/app/_application/_models/_mox_models/MoxDeck';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Pipe } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { tap } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { tap, finalize } from 'rxjs/operators';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
+import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
 
 @Component({
   selector: 'app-mox-deck-view',
@@ -33,75 +35,110 @@ export class DeckViewComponent implements OnInit {
   public _selectedCard;
   public tempDeck: MoxDeck;
   public tab = 'profileTab';
+  public _orderAsc = true;
   public _id: string;
-  public _cardList: any;
-  public _sideList: any;
-  public _rawCardList: any;
-  public _rawSideList: any;
+  public _cardList: any[] = [];
+  public _sideList: any[] = [];
   public deckCollection: AngularFirestoreCollection<MoxDeck>;
-  public width;
-  @ViewChild('invisibleText') invTextER: ElementRef;
+  public cardCollection: AngularFirestoreCollection<Card>;
+  public cardDoc: AngularFirestoreDocument<Card>;
   constructor(
     private afs: AngularFirestore,
-    private route: ActivatedRoute,
-    private toast: ToastService,
+    public _cardService: MoxCardService,
+    private _route: ActivatedRoute,
+    private _toast: ToastService,
     private router: Router,
-    private state: ActionStateService
+    private _state: ActionStateService
   ) { }
 
-  resizeInput(inputText) {
-    setTimeout ( () => {
-      const minWidth = 64;
-      if (this.invTextER.nativeElement.offsetWidth > minWidth) {
-        this.width = this.invTextER.nativeElement.offsetWidth + 2;
-      } else {
-        // this.width = minWidth;
-      }
-    }, 0);
-  }
-
   ngOnInit() {
-    this.route.params.subscribe( params => {
+    this._route.params.subscribe(params => {
       const id = params['id'];
       if (!id) {
-        this.toast.sendMessage('Not founded DeckID, maybe he got deleted?', 'danger', id);
+        this._toast.sendMessage('Not founded DeckID, maybe he got deleted?', 'danger', id);
         throw new Error('Not founded DeckID');
       } else {
         this._id = id;
         this.deckCollection = this.afs.collection('decks');
         this._deck = this.deckCollection.doc<MoxDeck>(id).valueChanges();
         this._deck.pipe(
-          tap( (deck) => {
+          tap((deck) => {
             if (!deck.side) { deck.side = [];  }
             this.tempDeck = deck;
-            deck.cards.forEach((incard) => {
-              console.log(incard);
+            Array.from(new Set(deck.cards))
+            .forEach((incard) => {
+              this._cardService.getCard(incard).pipe(
+                tap((x: Card) => {
+                  this._cardList.push(x);
+                  this._cardList = this._cardList.sort((a: Card, b: Card): number => {
+                    if ( a.cmc < b.cmc ) { return -1; }
+                    if ( a.cmc > b.cmc ) { return 1; }
+                    return 0;
+                  });
+                }),
+              ).subscribe();
             });
-            this._rawCardList = deck.cards;
-            this._rawSideList = deck.side;
-            this._cardList = Array.from(new Set(deck.cards));
-            this._sideList = Array.from(new Set(deck.side));
-            // console.log('#', this.tempDeck);
-          })
+            Array.from(new Set(deck.side))
+            .forEach((incard) => {
+              this._cardService.getCard(incard).pipe(
+                tap((x: Card) => {
+                  this._sideList.push(x);
+                  this._sideList = this._sideList.sort((a: Card, b: Card): number => {
+                    if ( a.cmc < b.cmc ) { return -1; }
+                    if ( a.cmc > b.cmc ) { return 1; }
+                    return 0;
+                  });
+                })
+              ).subscribe();
+            });
+          }),
         ).subscribe();
       }
     });
   }
+
   saveDeck(silent?: boolean) {
-    this.state.setState('cloud');
+    this._state.setState('cloud');
     this.deckCollection = this.afs.collection('decks');
     this.deckCollection.doc<MoxDeck>(this._id).update(this.tempDeck).then(
       () => {
-        this.state.setState('nav');
+        this._state.setState('nav');
       }
     );
   }
+
+  cardSort(order) {
+    this._cardList = this._cardList.sort((a: Card, b: Card): number => {
+      if (order) {
+        if ( a.cmc < b.cmc ) { return -1; }
+        if ( a.cmc > b.cmc ) { return 1; }
+        return 0;
+      } else {
+        if ( a.cmc > b.cmc ) { return -1; }
+        if ( a.cmc < b.cmc ) { return 1; }
+        return 0;
+      }
+    });
+    this._sideList = this._sideList.sort((a: Card, b: Card): number => {
+      if (order) {
+        if ( a.cmc < b.cmc ) { return -1; }
+        if ( a.cmc > b.cmc ) { return 1; }
+        return 0;
+      } else {
+        if ( a.cmc > b.cmc ) { return -1; }
+        if ( a.cmc < b.cmc ) { return 1; }
+        return 0;
+      }
+    });
+    this._orderAsc = order;
+  }
+
   cardAmount(cardId) {
-    return this.countOccurrences(this._rawCardList, cardId);
+    return this.countOccurrences(this.tempDeck.cards, cardId);
   }
 
   cardSideAmount(cardId) {
-    return this.countOccurrences(this._rawSideList, cardId);
+    return this.countOccurrences(this.tempDeck.side, cardId);
   }
 
   cardPlus(event) {
@@ -134,10 +171,10 @@ export class DeckViewComponent implements OnInit {
   delete(deck: MoxDeck) {
     if (confirm('This action can not be undone, are you sure?')) {
       this.afs.collection('decks').doc(deck.key).delete();
-      this.toast.sendMessage('Deck successfully deleted!', 'success', deck.ownerId);
+      this._toast.sendMessage('Deck successfully deleted!', 'success', deck.ownerId);
       this.router.navigate(['/deckhub']);
     } else {
-      this.toast.sendMessage('Ops! Deck not deleted!', 'warning', deck.ownerId);
+      this._toast.sendMessage('Ops! Deck not deleted!', 'warning', deck.ownerId);
     }
   }
 
@@ -191,5 +228,4 @@ export class DeckViewComponent implements OnInit {
           break;
       }
     }
-
 }

@@ -149,6 +149,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.animationState2 = '';
   }
 
+  goToHome() {
+    this.router.navigateByUrl('/home');
+  }
+
   goToUser() {
     this.router.navigateByUrl('/user');
   }

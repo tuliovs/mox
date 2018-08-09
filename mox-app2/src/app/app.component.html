@@ -28,16 +28,16 @@
       <nav class="sidenav" [@navTrigger]="navState">
         <h1 class="mox_font">M0X</h1>
         <div>
-          <div class="nav-link user" *ngIf="auth.user | async as user">
+          <div class="nav-link user" *ngIf="auth.user | async as user" (click)="goToUser()" >
             <div class="avatar" *ngIf="user.photoURL" [ngStyle]="{ 'background-image': 'url(' + user.photoURL + ')' }"></div>
             <div class="avatar" *ngIf="!user.photoURL"><i class="fas fa-frog"></i></div>
-            <div class="class"></div>
+            <div></div>
           </div>
         </div>
           <section class="sidenav-content">
-              <button (click)="goToUser()" type="button" class="btn btn-icon">
-                  <i class="fas fa-id-card"></i>
-                  <label>Profile</label>
+              <button (click)="goToHome()" type="button" class="btn btn-icon">
+                  <i class="fas fa-home"></i>
+                  <label>Home</label>
               </button>
               <button type="button" class="btn btn-icon" disabled>
                   <i class="fas fa-comments"></i>

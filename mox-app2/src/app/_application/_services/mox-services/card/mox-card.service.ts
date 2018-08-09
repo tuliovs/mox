@@ -11,28 +11,26 @@ import { ScryfallCardService } from '@application/_services/scryfall-services/ca
 export class MoxCardService {
   public cardDoc: AngularFirestoreDocument<Card>;
   public cardCollection: AngularFirestoreCollection<Card>;
-  public _card = new Observable<Card>();
   constructor (private afs: AngularFirestore, private _scryservice: ScryfallCardService) {
   }
 
-  getCard(id) {
+  getCard(id): Observable<Card> {
     this.cardCollection = this.afs.collection('cards');
     this.cardDoc = this.cardCollection.doc(id);
     this.cardDoc.ref.get().then((doc) => {
-      if (doc.exists) {
-        // console.log('%c Data do Firebase - Document data:', 'color: green', doc.data());
-        this._card = this.cardCollection.doc<Card>(id).valueChanges();
-      } else {
+      if (!doc.exists) {
         this._scryservice.get(id).subscribe(
           scrycard => {
             console.log('%c Doc not found, getting data from scryfall', 'color: purple', scrycard);
             this.cardCollection.doc(scrycard.id).set(scrycard);
-            this._card = this.cardCollection.doc<Card>(id).valueChanges();
           }
         );
       }
-  }).catch(function(error) {
+    }).catch(function(error) {
       console.log('%cError getting document:', 'color: red', error);
-  });
+    });
+
+    return this.cardCollection.doc<Card>(id).valueChanges();
   }
+
 }
