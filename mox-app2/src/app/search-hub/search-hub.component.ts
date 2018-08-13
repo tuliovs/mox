@@ -24,11 +24,14 @@ export class SearchHubComponent implements OnInit {
   ngOnInit() {
   }
 
-
   selectCard(card: any) {
-    console.log(card);
-    this.selectedCard = card;
+    if (this.selectedCard === card) {
+      this.selectedCard = null;
+    } else {
+      this.selectedCard = card;
+    }
   }
+
   searchGo() {
     // console.log('param: ', this.param);
     this._state.setState('loading');

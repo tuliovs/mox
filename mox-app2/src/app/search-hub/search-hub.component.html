@@ -12,26 +12,16 @@
 <div class="search-result" *ngIf="searchResult.data && searchResult.data.length > 0">
   <ol>
     <li *ngFor="let item of searchResult.data" [ngClass]="{'selectedCard': this.selectedCard === item}">
+      <div class="cardRarity"
+        [class.common]=" item.rarity == 'common'"
+        [class.uncommon]=" item.rarity == 'uncommon'"
+        [class.rare]=" item.rarity == 'rare'"
+        [class.mythic]=" item.rarity == 'mythic'"
+      ></div>
+      <div *ngIf="this.selectedCard === item"   (click)="cardView = true"  class="zoom"><i class="fas fa-search-plus"></i></div>
       <div class="img-container">
-        <div routerLink='/card/{{item.id}}'>
-          <div class="cardColor"
-            [class.none]  ="!item.colors && (item.card_faces && !item.card_faces[0].colors[0])"
-            [class.blue]  ="item.colors && item.colors[0] == 'U'  || item.card_faces && item.card_faces[0].colors[0] == 'U'"
-            [class.black] ="item.colors && item.colors[0] == 'B'  || item.card_faces && item.card_faces[0].colors[0] == 'B'"
-            [class.gold]  ="item.colors && item.colors.length > 1 || item.card_faces && item.card_faces[0].length > 1"
-            [class.green] ="item.colors && item.colors[0] == 'G'  || item.card_faces && item.card_faces[0].colors[0] == 'G'"
-            [class.red]   ="item.colors && item.colors[0] == 'R'  || item.card_faces && item.card_faces[0].colors[0] == 'R'"
-            [class.white] ="item.colors && item.colors[0] == 'W'  || item.card_faces && item.card_faces[0].colors[0] == 'W'"
-          ></div>
-          <div class="cardRarity"
-            [class.common]=" item.rarity == 'common'"
-            [class.uncommon]=" item.rarity == 'uncommon'"
-            [class.rare]=" item.rarity == 'rare'"
-            [class.mythic]=" item.rarity == 'mythic'"
-          ></div>
-          <img class="img" *ngIf="item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }"/>
-          <img class="img" *ngIf="!item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }"/>
-        </div>
+        <img class="img" *ngIf="item.image_uris"  (click)="cardView = true;selectCard(item)" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }"/>
+        <img class="img" *ngIf="!item.image_uris" (click)="cardView = true;selectCard(item)" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }"/>
       </div>
       <section (click)="selectCard(item)">
         <h4>
@@ -44,8 +34,23 @@
           {{(item.card_faces[0].oracle_text.length>100)? (item.card_faces[0].oracle_text | slice:0:100)+'...':(item.card_faces[0].oracle_text)}}
         </p>
       </section>
+      <div class="cardColor"
+        [class.none]  ="!item.colors && (item.card_faces && !item.card_faces[0].colors[0])"
+        [class.blue]  ="item.colors && item.colors[0] == 'U'  || item.card_faces && item.card_faces[0].colors[0] == 'U'"
+        [class.black] ="item.colors && item.colors[0] == 'B'  || item.card_faces && item.card_faces[0].colors[0] == 'B'"
+        [class.gold]  ="item.colors && item.colors.length > 1 || item.card_faces && item.card_faces[0].length > 1"
+        [class.green] ="item.colors && item.colors[0] == 'G'  || item.card_faces && item.card_faces[0].colors[0] == 'G'"
+        [class.red]   ="item.colors && item.colors[0] == 'R'  || item.card_faces && item.card_faces[0].colors[0] == 'R'"
+        [class.white] ="item.colors && item.colors[0] == 'W'  || item.card_faces && item.card_faces[0].colors[0] == 'W'"
+      ></div>
     </li>
   </ol>
+  <div *ngIf="cardView" class="lightbox" (click)="cardView = false"></div>
+  <div *ngIf="cardView" class="cardViewer">
+    <div class="fullcard" *ngIf="this.selectedCard.image_uris"  (doubletap)="cardView = false" (swipedown)="cardView = false" (swipeup)="cardView = false" (swiperight)="cardView = false" (swipeleft)="cardView = false" [ngStyle]="{ 'background-image': 'url(' + this.selectedCard.image_uris.normal + ')' }" ></div>
+    <div class="fullcard" (tap)="side = true"                   (doubletap)="cardView = false" (swipedown)="cardView = false" (swipeup)="cardView = false" (swiperight)="cardView = false" (swipeleft)="cardView = false" *ngIf="!this.selectedCard.image_uris && !side" [ngStyle]="{ 'background-image': 'url(' + this.selectedCard.card_faces[0].image_uris.normal + ')' }" ></div>
+    <div class="fullcard" (tap)="side = false"                  (doubletap)="cardView = false" (swipedown)="cardView = false" (swipeup)="cardView = false" (swiperight)="cardView = false" (swipeleft)="cardView = false" *ngIf="!this.selectedCard.image_uris && side" [ngStyle]="{ 'background-image': 'url(' + this.selectedCard.card_faces[1].image_uris.normal + ')' }" ></div>
+  </div>
 </div>
 <app-mox-action-bar>
   <button class="btn btn-action" disabled>
