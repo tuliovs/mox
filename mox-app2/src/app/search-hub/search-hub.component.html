@@ -18,8 +18,8 @@
         [class.rare]=" item.rarity == 'rare'"
         [class.mythic]=" item.rarity == 'mythic'"
       ></div>
-      <div *ngIf="this.selectedCard === item"   (click)="cardView = true"  class="zoom"><i class="fas fa-search-plus"></i></div>
       <div class="img-container">
+        <div *ngIf="this.selectedCard === item"   (click)="cardView = true"  class="zoom"><i class="fas fa-search-plus"></i></div>
         <img class="img" *ngIf="item.image_uris"  (click)="cardView = true;selectCard(item)" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }"/>
         <img class="img" *ngIf="!item.image_uris" (click)="cardView = true;selectCard(item)" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }"/>
       </div>
@@ -51,6 +51,9 @@
     <div class="fullcard" (tap)="side = true"                   (doubletap)="cardView = false" (swipedown)="cardView = false" (swipeup)="cardView = false" (swiperight)="cardView = false" (swipeleft)="cardView = false" *ngIf="!this.selectedCard.image_uris && !side" [ngStyle]="{ 'background-image': 'url(' + this.selectedCard.card_faces[0].image_uris.normal + ')' }" ></div>
     <div class="fullcard" (tap)="side = false"                  (doubletap)="cardView = false" (swipedown)="cardView = false" (swipeup)="cardView = false" (swiperight)="cardView = false" (swipeleft)="cardView = false" *ngIf="!this.selectedCard.image_uris && side" [ngStyle]="{ 'background-image': 'url(' + this.selectedCard.card_faces[1].image_uris.normal + ')' }" ></div>
   </div>
+</div>
+<div class="search-result" *ngIf="isState('error')">
+  <p>I'm sorry buddy, I couldn't find anything</p>
 </div>
 <app-mox-action-bar>
   <button class="btn btn-action" disabled>

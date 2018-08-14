@@ -18,6 +18,7 @@
               <i *ngIf="isState('closed')" (tap)="menuOpen('closed');animateNav();setState('nav')" class="fas fa-times-circle"></i>
               <i *ngIf="isState('loading')" class="fas fa-sync-alt fa-spin"></i>
               <i *ngIf="isState('config')" class="fas fa-cog fa-spin"></i>
+              <i *ngIf="isState('error')" (tap)="setState('nav')" class="fas fa-not-equal"></i>
               <span *ngIf="isState('cloud')" style="display: contents">
                 <i class="fas fa-cloud fa-stack-1x"></i>
                 <i class="fas fa-sync-alt fa-spin fa-stack-2x" style="color:white"></i>
