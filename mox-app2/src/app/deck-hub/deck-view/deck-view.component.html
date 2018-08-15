@@ -35,15 +35,15 @@
     </div>
     <div [hidden]=" tab !='socialTab'">
       <form class="new-deck-form" *ngIf="tempDeck as deck">
-        <div class="deckCover" *ngIf="deck.cover != ''" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
-          <section class="deckData">
-            <div class="deckColors">
+        <div class="deck-cover" *ngIf="deck.cover != ''" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+          <section class="deck-data">
+            <div class="deck-colors">
               <p>A</p>
             </div>
-            <div class="deckOwner">
+            <div class="deck-owner">
               <label>by {{deck.ownerName}}</label>
             </div>
-            <div class="deckNameContainer">
+            <div class="deck-name-container">
               <i class="fas fa-pen"></i>
               <input id="inputTextID" type="text"
               (change)="saveDeck()"
@@ -52,10 +52,10 @@
           </section>
         </div>
         <span #invisibleText id="invisibleTextID" [hidden]="true">{{ deck.name }}</span>
-        <div class="deckCover" *ngIf="deck.cover == ''">
+        <div class="deck-cover" *ngIf="deck.cover == ''">
           <i class="fas fa-frog"></i>
         </div>
-        <section class="deckExtraData">
+        <section class="deck-extra-data">
           <div class="item" [ngClass]="{'positive': deck.public }" (click)="deck.public = !deck.public;saveDeck()">
             <i class="fas fa-lock" *ngIf="!deck.public"></i>
             <i class="fas fa-unlock-alt" *ngIf="deck.public"></i>

@@ -1,129 +1,148 @@
-@import '../../../../styles/theme.colors.scss'
+@import '../../../../styles/theme.colors'
 
-.cardRow
+$shad-card-row: rgba(0, 0, 0, .07);
+$shad-low: rgba(0, 0, 0, .25);
+$shad-in: rgba(0, 0, 0, .15);
+
+.card-row
+  background: color(_white)
+  border-radius: 4px
+  box-shadow: 0 4px 12px $shad-card-row
   display: inline-flex
   flex-direction: row
-  width: 98%
   height: 64px
-  border-radius: 4px
-  margin: 2% 0% 0% 0%
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07)
-  background: white
+  margin: 2% 0% 0%
   padding: 2px
-  .cardRarity
-    width: 12px
+  width: 98%
+
+  .card-rarity
     border-radius: 4px
     margin-right: -6px
+    width: 12px
+
   .common
-    background: linear-gradient(0.08deg, #302B2C 0.2%, #474040 48.67%, #302B2C 99.8%)
+    background: $common-vert
+
   .uncommon
-    background: linear-gradient(0.08deg, #5A6572 0.2%, #9E9E9E 48.67%, #5A6572 99.8%)
+    background: $uncommon-vert
+
   .rare
-    background: linear-gradient(0.08deg, #876A3B 0.2%, #DFBD6B 48.67%, #876A3B 99.8%)
+    background: $rare-vert
+
   .mythic
-    background: linear-gradient(0.08deg, #B21F0F 0.2%, #F38300 48.67%, #B21F0F 99.8%)
-  .cardCounter
-    border-radius: 4px
-    margin-right: -4px
-    background-color: black
-    color: white
-    height: 100%
-    width: 25px
-    text-align: center
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25)
-    display: flex
+    background: $mythic-vert
+
+  .card-counter
     align-items: center
+    background-color: color(_black)
+    border-radius: 4px
+    box-shadow: 0 0 10px $shad-low
+    color: color(_white)
+    display: flex
     font-size: 1.1em
+    height: 100%
+    margin-right: -4px
+    text-align: center
+    width: 25px
+
     label
       margin: auto
-  .cardImg
-    width: 68px
+
+  .card-img
     background-size: cover
     border-radius: 4px
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25), inset 3px 3px 14px rgba(0, 0, 0, 0.15)
-  .dataContainer
-    width: 58%
-    text-align: initial
+    box-shadow: 0 0 4px $shad-low, inset 3px 3px 14px $shad-in
+    width: 68px
+
+  .data-container
     display: inline-flex
     flex-direction: column
-    .cardData
-      font-size: 0.6em
-      color: #B3B2B2
+    text-align: initial
+    width: 58%
+
+    .card-data
+      color: color(_slate)
+      display: inline-flex
+      font-size: .6em
       padding: 0 1%
       text-align: start
-      display: inline-flex
+
       h4
-        color: #132030
-        margin: 0px
-        height: 72%
+        color: color(_darkblue)
         display: flex
         font-size: 150%
         font-weight: 600
+        height: 72%
+        margin: 0
         text-align: start
-        vertical-align: top
         text-overflow: unset
-        word-wrap: break-word
+        vertical-align: top
         width: 100%
+        word-wrap: break-word
+
     .typeline
       font-size: 75%
 
-  .cardActions
-    padding: 0
-    margin: 0
-    width: 15%
+  .card-actions
     display: flex
     flex-direction: column
     justify-content: space-between
+    margin: 0
+    padding: 0
+    width: 15%
+
     div
       .btn
         border: 0
+        color: color(_blue)
         font-size: 1.4em
-        margin: 0px
-        padding: 0
-        color: color(blue)
         height: 40%
-    .mana_cost
-      color: #667A95
-      width: 100%
+        margin: 0
+        padding: 0
+
+    .mana-cost
+      color: color(_blue)
+      font-size: 70%
       height: 30%
       text-align: right
-      font-size: 70%
+      width: 100%
 
 .lightbox
-  background-color: color(ice)
-  position: fixed
-  top: 0
-  left: 0
-  width: 100%
-  height: 100%
+  background-color: color(_ice)
   display: flex
-  justify-content: center
-  flex-flow: column
-  opacity: .67
   filter: blur(5px)
-
-.cardViewer
+  flex-flow: column
+  height: 100%
+  justify-content: center
+  left: 0
+  opacity: .67
   position: fixed
   top: 0
-  left: 0
   width: 100%
-  height: 100%
+
+.card-viewer
   display: flex
-  justify-content: center
   flex-flow: column
+  height: 100%
+  justify-content: center
+  left: 0
+  position: fixed
+  top: 0
+  width: 100%
+
   .fullcard
-    width: 20em
-    height: 28em
     background-size: cover
-    position: fixed
+    border-radius: 15px
+    box-shadow: 0 2px 9px $shad-card-row
+    height: 28em
+    left: 6%
     margin: 0
     padding: 0
+    position: fixed
     top: 16%
-    left: 6%
-    border-radius: 15px
+    width: 20em
     z-index: 12
-    box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.7)
 
-.selectedCard
-  border-bottom: 1px solid color(darkblue)
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.27) !important
+.selected-card
+  border-bottom: 1px solid color(_darkblue)
+  box-shadow: 3px 3px 5px $shad-low

@@ -1,15 +1,16 @@
-@import '../../../../styles/theme.colors.scss'
+@import '../../../../styles/theme.colors'
 
+$shad: rgba(0, 0, 0, .25);
 .action-bar
-  background: color(white)
-  box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25)
-  position: absolute
-  width: 100%
-  height: 3em
-  left: 0
+  background: color(_white)
   bottom: 0
-  text-align: center
+  box-shadow: 4px 0 4px $shad
   display: inline-flex
+  height: 3em
   justify-content: space-evenly
+  left: 0
+  position: absolute
+  text-align: center
+  width: 100%
   z-index: 10
 

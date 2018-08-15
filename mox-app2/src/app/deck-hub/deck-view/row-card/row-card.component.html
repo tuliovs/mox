@@ -1,23 +1,23 @@
 <app-mox-loading-spinner *ngIf="!card"></app-mox-loading-spinner>
-<div class="cardRow" *ngIf="card" [ngClass]="{'selectedCard': selected}" >
-  <div class="cardCounter"><label>{{cardAmout}}</label></div>
+<div class="card-row" *ngIf="card" [ngClass]="{'selected-card': selected}" >
+  <div class="card-counter"><label>{{cardAmout}}</label></div>
   <div  [class.common]=" card.rarity == 'common'"
         [class.uncommon]=" card.rarity == 'uncommon'"
         [class.rare]=" card.rarity == 'rare'"
-        [class.mythic]=" card.rarity == 'mythic'" class="cardRarity"></div>
-  <div class="cardImg" (click)="cardView = true;select.emit(card.id)" *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }"></div>
-  <div class="cardImg" (click)="cardView = true;select.emit(card.id)" *ngIf="!card.image_uris && card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }"></div>
-  <div class="dataContainer" *ngIf="!card.card_faces">
-    <div class="cardData"><h4>{{card.name}}</h4></div>
-    <div class="cardData typeline">{{card.type_line}}</div>
+        [class.mythic]=" card.rarity == 'mythic'" class="card-rarity"></div>
+  <div class="card-img" (click)="cardView = true;select.emit(card.id)" *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }"></div>
+  <div class="card-img" (click)="cardView = true;select.emit(card.id)" *ngIf="!card.image_uris && card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }"></div>
+  <div class="data-container" *ngIf="!card.card_faces">
+    <div class="card-data"><h4>{{card.name}}</h4></div>
+    <div class="card-data typeline">{{card.type_line}}</div>
   </div>
-  <div class="dataContainer" *ngIf="card.card_faces">
-    <div class="cardData"><h4>{{card.card_faces[0].name}}</h4></div>
-    <div class="cardData typeline">{{card.card_faces[0].type_line}}</div>
+  <div class="data-container" *ngIf="card.card_faces">
+    <div class="card-data"><h4>{{card.card_faces[0].name}}</h4></div>
+    <div class="card-data typeline">{{card.card_faces[0].type_line}}</div>
   </div>
-  <div class="cardActions">
-    <div class="mana_cost" *ngIf="!card.card_faces">{{card.mana_cost}}</div>
-    <div class="mana_cost" *ngIf="card.card_faces">{{card.card_faces[0].mana_cost}}</div>
+  <div class="card-actions">
+    <div class="mana-cost" *ngIf="!card.card_faces">{{card.mana_cost}}</div>
+    <div class="mana-cost" *ngIf="card.card_faces">{{card.card_faces[0].mana_cost}}</div>
     <div>
       <button (click)="minus.emit(card.id)" class="btn"><i class="fas fa-minus-circle"></i></button>
       <button (click)="plus.emit(card.id)" class="btn"><i class="fas fa-plus-circle"></i></button>
@@ -25,7 +25,7 @@
   </div>
 </div>
 <div *ngIf="cardView" class="lightbox" (click)="cardView = false;select.emit(card.id)"></div>
-<div *ngIf="cardView" class="cardViewer">
+<div *ngIf="cardView" class="card-viewer">
   <div class="fullcard" *ngIf="card.image_uris" (doubletap)="cardView = false;select.emit(card)" (swipedown)="cardView = false;select.emit(card)" (swipeup)="cardView = false;select.emit(card)" (swiperight)="cardView = false;select.emit(card)" (swipeleft)="cardView = false;select.emit(card)" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.normal + ')' }" ></div>
   <div class="fullcard" (tap)="side = true"     (doubletap)="cardView = false;select.emit(card)" (swipedown)="cardView = false;select.emit(card)" (swipeup)="cardView = false;select.emit(card)" (swiperight)="cardView = false;select.emit(card)" (swipeleft)="cardView = false;select.emit(card)" *ngIf="!card.image_uris && !side" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.normal + ')' }" ></div>
   <div class="fullcard" (tap)="side = false"    (doubletap)="cardView = false;select.emit(card)" (swipedown)="cardView = false;select.emit(card)" (swipeup)="cardView = false;select.emit(card)" (swiperight)="cardView = false;select.emit(card)" (swipeleft)="cardView = false;select.emit(card)"  *ngIf="!card.image_uris && side" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[1].image_uris.normal + ')' }" ></div>

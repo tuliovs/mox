@@ -1,151 +1,167 @@
-@import './../styles/theme.colors.scss'
+@import './../styles/theme.colors'
+$shad-action-button: rgba(0, 0, 0, .15);
+$shad: rgba(0, 0, 0, .25);
 
 .action-button
-  z-index: 10
-  background-color: color(white)
-  position: fixed
-  bottom: 1%
-  left: 40%
-  width: 66px
-  height: 66px
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1)
-  border-radius: 25em
-  right: 40%
-  display: flex
-  justify-content: center
   align-items: center
+  background-color: color(_white)
+  border-radius: 25em
+  bottom: 1%
+  box-shadow: 0 0 20px $shad-action-button
+  display: flex
+  height: 66px
+  justify-content: center
+  left: 40%
+  position: fixed
+  right: 40%
+  width: 66px
+  z-index: 10
+
   div
-    z-index: 21
-    background-color: color(white)
-    width: 56px
-    height: 56px
-    border-radius: 25em
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2)
-    display: flex
-    justify-content: center
     align-items: center
+    background-color: color(_white)
+    border-radius: 25em
+    box-shadow: 0 0 5px $shad-action-button
+    display: flex
+    height: 56px
+    justify-content: center
+    width: 56px
+    z-index: 21
+
     i
-      color: color(darkblue)
+      color: color(_darkblue)
       padding: 0
       text-align: center
       vertical-align: middle
 
 .alert-text
-  margin-top: 0rem !important
+  margin-top: 0
 
 .fas,
 .ss
-  color: color(white)
+  color: color(_white)
   font-size: 2.4em
   padding: .4em
+
 .header
-  background-color: color(white)
+  background-color: color(_white)
+
   .fas
     left: 0
     position: relative
+
   h4
-    margin-top: 0
     align-self: center
+    left: calc(67% - 10.5em)
+    margin-top: 0
     position: fixed
     text-align: center
-    left: calc(67% - 10.5em)
+
   div
     label
-      vertical-align: super
       font-size: .8em
+      vertical-align: super
 
 .user
-  position: relative
   align-items: center
-  width: 100%
   display: flex
   font-size: 15px
-  padding: .7em
   justify-content: center
+  padding: .7em
+  position: relative
+  width: 100%
+
   .class
+    background: $bg-uclass-normal
+    border: 1px solid $shad
+    border-radius: 75px
+    box-sizing: border-box
+    height: 105px
     position: absolute
     width: 105px
-    height: 105px
-    background: linear-gradient(271.13deg, #302B2C 0.32%, #474040 49.73%, #302B2C 99.68%)
-    border: 1px solid rgba(0, 0, 0, 0.25)
-    box-sizing: border-box
-    border-radius: 75px
     z-index: 11
+
   .avatar
-    display: block
     background-size: cover
-    position: relative
+    border: 1px solid $shad
     border-radius: 50px
-    height: 6.7em
-    width: 6.7em
-    box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.15)
-    border: 1px solid rgba(0, 0, 0, 0.25)
+    box-shadow: inset -5px -5px 15px $shad-action-button
     box-sizing: border-box
-    z-index: 12
-  i
-    font-size: 1.4em
-    align-self: flex-end
-    padding: 0
-    margin-left: -1em
-    z-index: 13
-  label
-    padding: 0
+    display: block
+    height: 6.7em
     position: relative
+    width: 6.7em
+    z-index: 12
+
+  i
+    align-self: flex-end
+    font-size: 1.4em
+    margin-left: -1em
+    padding: 0
+    z-index: 13
+
+  label
+    color: color(_white)
     line-height: 2.3
     margin-left: 3em
-    color: color(white)
+    padding: 0
+    position: relative
     text-decoration: none
 
 .content
   padding-top: 3em
+
 .content-area
   padding: 0
 
 .sidenav
-  background: linear-gradient(180deg, #525462 0%, #353743 100%)
-  color: color(ice)
-  top: 0
-  height: 100vh
-  min-width: 100%
-  position: fixed
-  padding: 0 10%
-  z-index: 10
-  line-height: 40px
+  background: $bg-sidenav
+  box-shadow: 15px 15px 30px $shad
+  color: color(_ice)
   font-size: 1em
   font-weight: normal
-  text-align: center
+  height: 100vh
+  line-height: 40px
   max-width: 100%
-  box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.25)
+  min-width: 100%
+  padding: 0 10%
+  position: fixed
+  text-align: center
+  top: 0
+  z-index: 10
 
 .sidenav-content
   display: inline-flex
-  flex-wrap: wrap
   flex-direction: row
+  flex-wrap: wrap
   justify-content: center
+
   .btn-icon
-    max-width: 40%
-    min-width: 40%
     border: 0
     margin-bottom: 2em
+    max-width: 40%
+    min-width: 40%
+
     i
-      width: 100%
-      padding: .2em .4em .2em .4em
       border: 0
       font-size: 2.4em
+      padding: .2em .4em
+      width: 100%
+
     label
-      color: color(ice)
-      text-transform: capitalize
+      color: color(_ice)
+      font-family: 'Exo 2'
+      font-size: 1.1em
       font-weight: 600
       line-height: normal
-      font-size: 1.1em
       text-align: center
-      font-family: 'Exo 2'
+      text-transform: capitalize
 
 .closer
-  opacity: 0.1
-  font-size: 0.8em
   bottom: 0
+  font-size: .8em
   left: 0
+  opacity: .1
   position: fixed
   width: 100%
 
@@ -155,7 +171,7 @@
   padding-bottom: 7px !important
 
 .fa-stack-2x
-  color: white !important
+  align-self: auto !important
+  color: color(_white) !important
   font-size: .81em !important
   text-align: center !important
-  align-self: auto !important

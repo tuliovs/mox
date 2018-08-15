@@ -1,62 +1,67 @@
-@import '../../../../styles/theme.colors.scss'
+@import '../../../../styles/theme.colors'
 
 .ribbon
-  background-color: color(blue)
-  color: color(ice)
-  padding: 0.14em 0.56em
+  background-color: color(_blue)
   border-radius: 2em
-  position: absolute
-  right: 10%
-  top: 10%
+  color: color(_ice)
   font-family:
   font-size: .6em
   font-weight: 600
+  padding: .14em .56em
+  position: absolute
+  right: 10%
+  top: 10%
 
 .wrapper
-  position: fixed
-  width: 100%
-  top: 7.5%
-  left: 0
   height: 2.5em
+  left: 0
+  position: fixed
   text-align: center
+  top: 7.5%
+  width: 100%
 
 .fas
-  color: color(ice)
+  color: color(_ice)
   font-size: 2.4em
   padding: .4em
 
 .btn-close
   border: 0
-  color: white
+  color: color(_white)
   font-size: 1.3em
-  padding: 0
   margin: 0 2%
+  padding: 0
 
 div
   label
-    vertical-align: super
     font-size: .8em
+    vertical-align: super
 
 .alert
-  color: color(ice)
+  align-items: center
   border-radius: 4px
-  height: 2.5em
-  width: 99%
-  margin-bottom: 2%
+  color: color(_ice)
   display: inline-flex
+  font-size: .8em
+  height: 2.5em
   justify-content: space-between
+  margin-bottom: 2%
   text-align: initial
   vertical-align: middle
-  align-items: center
-  font-size: 0.8em
+  width: 99%
+
   i
+    color: color(_ice)
     font-size: 1.4em
-    color: color(ice) !important
+
 .alert-success
   background-color: color(notification, success) !important
+
 .alert-warning
   background-color: color(notification, warning) !important
+
 .alert-danger
   background-color: color(notification, error) !important
+
 .alert-info
   background-color: color(notification, info) !important

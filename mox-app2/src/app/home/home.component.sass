@@ -1,26 +1,28 @@
-@import './../../styles/theme.colors.scss'
+@import './../../styles/theme.colors'
 
 h4
-  color: color(white)
+  color: color(_white)
   font-weight: 600
 
 .home-buttons
   display: inline-block
   margin: 0
   padding: 0
+
   .btn
-    width: 50%
+    background-color: color(_white)
+    border-color: color(_ice)
+    border-radius: 0
     font-size: 2em
     height: 5em
     margin: 0
-    padding: 0.4em
-    border-radius: 0
-    border-color: aliceblue
-    background-color: color(white)
+    padding: .4em
+    width: 50%
+
     label
-      font-size: 12px
-      width: 100%
-      padding: 0 0.3em
       display: block
-      margin-top: 0.2em
+      font-size: 12px
+      margin-top: .2em
+      padding: 0 .3em
+      width: 100%
 

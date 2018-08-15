@@ -1,17 +1,18 @@
-@import './../../../../styles/theme.colors.scss'
+@import './../../../../styles/theme.colors'
 
 .outer
-  width: 9px
-  height: 9px
-  background-color: color(blue,0.5)
-  border-radius: 50em
-  position: relative
-  display: inline-flex
-  justify-content: center
   align-items: center
+  background-color: color(_blue, .5)
+  border-radius: 50em
+  display: inline-flex
+  height: 9px
+  justify-content: center
   margin-bottom: -5px
+  position: relative
+  width: 9px
+
   .inner
-    width: 7px
-    height: 7px
-    background-color: #667A95
+    background-color: color(_blue)
     border-radius: 25em
+    height: 7px
+    width: 7px

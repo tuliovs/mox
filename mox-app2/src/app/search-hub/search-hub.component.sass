@@ -1,212 +1,242 @@
 @import '../../styles/theme.colors'
+$shad-li: rgba(0, 0, 0, .07)
+$shad-text: rgba(0, 0, 0, .25)
+$shad-fullcard: rgba(0, 0, 0, .7)
+$shad-selected-card: rgba(0, 0, 0, .27)
+$bg-zoom: rgba(255, 255, 255, .5)
 
 .btn-search
-  color: color(ice)
-  background-color: color(darkblue)
-  padding: 0.18em
-  font-size: 1.3em
-  box-shadow: 0px 4px 0px color(grayer)
+  background-color: color(_darkblue)
   border-radius: 4px
+  box-shadow: 0 4px 0 color(_grayer)
+  color: color(_ice)
+  font-size: 1.3em
   overflow: inherit
+  padding: .18em
 
 form
-  width: 100%
-  margin: 0
-  padding: 0
-  display: flex
-  vertical-align: middle
   align-content: center
   align-items: center
+  display: flex
+  margin: 0
+  padding: 0
+  vertical-align: middle
+  width: 100%
 
 input
-  color: color(darkblue)
-  border: solid 1px color(grayer)
+  border: solid 1px color(_grayer)
   border-radius: 4px
-  padding-left: 2%
-  margin: 0 .5em
+  color: color(_darkblue)
   height: 2.2em
+  margin: 0 .5em
+  padding-left: 2%
   width: 100%
-input::placeholder
-  color: color(grayer)
-  font-size: 12px
+
+::placeholder
+  color: color(_grayer)
   font-family: 'Exo 2', sans-serif
+  font-size: 12px
   text-transform: capitalize
 
-
 .fixer
-  width: 15%
   display: block
+  width: 15%
 
 .stats
-  width: 100%
+  color: color(_slate)
   display: inline-flex
-  position: absolute
   font-size: .81em
   justify-content: center
-  color: color(slate)
+  position: absolute
+  width: 100%
 
 .search-result
   display: inline-flex
-  height: 76%
-  width: 100%
-  overflow-y: overlay
   margin: 0%
   margin-top: 14%
+  max-height: 76%
+  overflow-y: overlay
   padding: 0
+  width: 100%
+
   p
-    width: 100%
-    padding: 0 2%
-    font-weight: bold
-    text-align: center
     font-size: 1em
+    font-weight: bold
+    padding: 0 2%
+    text-align: center
+    width: 100%
+
   ol
-    list-style: none
     display: inline-flex
-    flex-wrap: wrap
     flex-direction: row
+    flex-wrap: wrap
     justify-content: center
+    list-style: none
+
     li
-      width: 98%
-      background-color: #FFF
+      background-color: color(_white)
       border-radius: 4px
+      box-shadow: 0 4px 12px $shad-li
+      display: inline-flex
       height: 64px
-      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07)
       margin-bottom: 1%
       margin-top: 1%
-      display: inline-flex
+      width: 98%
+
       .img-container
-        flex-direction: column
-        display: flex
-        justify-content: center
         border: 0
-        width: 25%
+        display: flex
+        flex-direction: column
         height: 4em
+        justify-content: center
         padding: 0
         position: relative
+        width: 25%
+
       .zoom
-        position: absolute
-        background-color: rgba(255, 255, 255, 0.5)
-        width: 68px
-        height: 3.9em
+        align-items: center
+        background-color: $bg-zoom
         border-radius: 0 4px 4px 0
-        z-index: 1
         display: inline-flex
         flex-direction: column
-        align-items: center
+        height: 3.9em
         justify-content: center
-        i
-          font-size: 2.5em
-          color: white
-          text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25)
-      img
-        margin: 0
-        border-radius: 0 4px 4px 0
+        position: absolute
         width: 68px
-        height: 4em
-        background-size: cover
+        z-index: 1
+
+        i
+          color: color(_white)
+          font-size: 2.5em
+          text-shadow: 2px 2px 10px $shad-text
+
+      img
         background-position: center
+        background-size: cover
+        border-radius: 0 4px 4px 0
         display: flex
+        height: 4em
+        margin: 0
         position: relative
-      .cardColor
-        width: 1em
-        height: 100%
-        z-index: 0
-        display: inline-flex
-        position: relative
-        margin-bottom: -12px
+        width: 68px
+
+      .card-color
         border: 0
         border-radius: 0 4px 4px 0
         bottom: 0
-      .none
-        background: color(magic, none)
-      .blue
-        background: color(magic, blue)
-      .black
-        background: color(magic, black)
-      .gold
-        background: color(magic, gold) !important
-      .green
-        background: color(magic, green)
-      .red
-        background: color(magic, red)
-      .white
-        background: color(magic, white)
-      .cardRarity
-        width: 1em
-        height: 100%
-        z-index: 0
         display: inline-flex
-        position: relative
+        height: 100%
         margin-bottom: -12px
+        position: relative
+        width: 1em
+        z-index: 0
+
+      .none
+        background: color(magic, mnone)
+
+      .blue
+        background: color(magic, mblue)
+
+      .black
+        background: color(magic, mblack)
+
+      .green
+        background: color(magic, mgreen)
+
+      .red
+        background: color(magic, mred)
+
+      .white
+        background: color(magic, mwhite)
+
+      .gold
+        background: color(magic, mgold)
+
+      .card-rarity
         border: 0
         border-radius: 4px 0 0 4px
+        display: inline-flex
+        height: 100%
+        margin-bottom: -12px
+        position: relative
+        width: 1em
+        z-index: 0
+
       .common
-        background: linear-gradient(0.08deg, #302B2C 0.2%, #474040 48.67%, #302B2C 99.8%)
+        background: $common-vert
+
       .uncommon
-        background: linear-gradient(0.08deg, #5A6572 0.2%, #9E9E9E 48.67%, #5A6572 99.8%)
+        background: $uncommon-vert
+
       .rare
-        background: linear-gradient(0.08deg, #876A3B 0.2%, #DFBD6B 48.67%, #876A3B 99.8%)
+        background: $rare-vert
+
       .mythic
-        background: linear-gradient(0.08deg, #B21F0F 0.2%, #F38300 48.67%, #B21F0F 99.8%)
+        background: $mythic-vert
+
       section
+        padding: 0% .5%
         width: 100%
-        padding: 0% 0.5%
+
         h4
-          margin-top: 1%
-          color: color(darkBlue)
-          font-weight: 700
+          color: color(_darkblue)
           font-size: 80%
+          font-weight: 700
           line-height: 1em
+          margin-bottom: .9%
+          margin-top: 1%
           text-align: start
-          margin-bottom: 0.9%
+
         p
-          margin-top: 0rem
-        p.description
-          width: 100%
+          margin-top: 0
+
+        .description
+          color: color(_slate)
           font-size: 11px
+          font-weight: 600
           line-height: 1em
           margin-top: 2%
           text-align: start
-          color: #B3B2B2
-          font-weight: 600
+          width: 100%
 
 .lightbox
-  z-index: 1
-  background-color: color(ice)
-  position: fixed
-  top: 0
-  left: 0
-  width: 100%
-  height: 100%
+  background-color: color(_ice)
   display: flex
-  justify-content: center
-  flex-flow: column
-  opacity: .67
   filter: blur(5px)
-
-.cardViewer
-  z-index: 1
+  flex-flow: column
+  height: 100%
+  justify-content: center
+  left: 0
+  opacity: .67
   position: fixed
   top: 0
-  left: 0
   width: 100%
-  height: 100%
+  z-index: 1
+
+.card-viewer
   display: flex
-  justify-content: center
   flex-flow: column
+  height: 100%
+  justify-content: center
+  left: 0
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 1
+
   .fullcard
-    width: 20em
-    height: 28em
     background-size: cover
-    position: fixed
+    border-radius: 15px
+    box-shadow: 0 2px 9px $shad-fullcard
+    height: 28em
+    left: 6%
     margin: 0
     padding: 0
+    position: fixed
     top: 16%
-    left: 6%
-    border-radius: 15px
+    width: 20em
     z-index: 12
-    box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.7)
 
-.selectedCard
-  border-bottom: 1px solid color(darkblue)
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.27) !important
+.selected-card
+  border-bottom: 1px solid color(_darkblue)
+  box-shadow: 3px 3px 5px $shad-selected-card

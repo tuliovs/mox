@@ -1,21 +1,21 @@
 
-$fontPath: '/app/assets/fonts';
+$font-path: '/app/assets/fonts';
 
-@mixin setFontface($name, $file, $weight: 400, $style: normal) {
-	$filePath: '#{$fontPath}/#{$name}/#{$file}';
+@mixin set-font-face($name, $file, $weight: 400, $style: normal) {
+  $file-path: '#{$font-path}/#{$name}/#{$file}';
 
-	@font-face {
+  @font-face {
 		font-family: $name;
 		font-style: $style;
-    font-weight: $weight;
     font-display: swap;
-		src: url('#{$filePath}.eot?') format('eot');
-		src: url('#{$filePath}.eot#iefix') format('eot'),
-			url('#{$filePath}.svg##{$file}') format('svg');
+    font-weight: $weight;
+		src: url('#{$file-path}.eot?') format('eot');
+		src: url('#{$file-path}.eot#iefix') format('eot'),
+			url('#{$file-path}.svg##{$file}') format('svg');
 	}
 };
 
-@include setFontface('Cursive', 'Audiowide', 300);
+@include set-font-face('Cursive', 'Audiowide', 300);
 // @include setFontface('Open Sans', 'OpenSans-Light', 300);
 // @include setFontface('Open Sans', 'OpenSans-LightItalic', 300, italic);
 // @include setFontface('Open Sans', 'OpenSans');

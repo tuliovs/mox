@@ -1,100 +1,108 @@
-@import '../../../../../styles/theme.colors.scss'
+@import '../../../../../styles/theme.colors'
 
 \:host
   display: flex
 
 .lightbox
   background: linear-gradient(180deg, #525462 0%, #353743 100%)
+  box-shadow: 15px 15px 30px rgba(0, 0, 0, .25)
   color: color(ice)
-  top: 0
-  left: 0
-  height: 100vh
-  min-width: 100%
-  max-width: 100%
-  position: fixed
-  padding: 0
-  z-index: 20
-  line-height: 40px
   font-size: 1.25em
   font-weight: normal
-  text-align: center
+  height: 100vh
+  left: 0
+  line-height: 40px
+  max-width: 100%
+  min-width: 100%
   overflow: scroll
-  box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.25)
+  padding: 0
+  position: fixed
+  text-align: center
+  top: 0
+  z-index: 20
 
 .btn-action
   font-size: 2em
 
 .action-menu
-  position: fixed
-  z-index: 21
-  top: 0
-  left: 10%
-  padding: 0em
-  width: 80%
-  max-width: 80%
   height: 100%
+  left: 10%
   max-height: 100%
+  max-width: 80%
   overflow-y: scroll
+  padding: 0
+  position: fixed
+  top: 0
+  width: 80%
+  z-index: 21
 
 .content
   display: inline-flex
-  flex-wrap: wrap
   flex-direction: row
+  flex-wrap: wrap
   justify-content: center
+
   .fas,
   .ss
-    color: color(white)
+    color: color(_white)
     font-size: 2.4em
     padding: .4em
+
   .btn-icon
-    max-width: 40%
-    min-width: 40%
     border: 0
     margin-bottom: 2em
+    max-width: 40%
+    min-width: 40%
+
     i
-      width: 100%
-      padding: .2em .4em .2em .4em
       border: 0
       font-size: 2.4em
+      padding: .2em .4em
+      width: 100%
+
     label
-      color: color(ice)
-      text-transform: capitalize
+      color: color(_ice)
+      display: block
       font-family: 'Exo 2', sans-serif
+      font-size: 1em
       font-style: normal
       font-weight: 600
       line-height: normal
-      font-size: 1em
       text-align: center
+      text-transform: capitalize
       width: 100%
-      display: block
 
 .card-data
   div
     .img
-      width: 6em
-      height: 6em
       background-position: center
       background-size: cover
       border: 0
+      height: 6em
+      width: 6em
+
     i
-      position: absolute
+      color: color(_white)
+      font-size: 1.3em
       margin-left: -8%
       margin-top: 26%
-      font-size: 1.3em
-      color: color(white)
-    i.fas
+      position: absolute
+
+    .fas
       color: color(notification, error)
+
   p
-    color: color(white)
+    color: color(_white)
 
 .closer
-  opacity: 0.1
-  font-size: 0.8em
   bottom: 0
+  font-size: .8em
   left: 0
+  opacity: .1
   position: fixed
   width: 100%
+
   i
-    color: white
+    color: color(_white)
     font-size: 2.4em
     padding: .4em

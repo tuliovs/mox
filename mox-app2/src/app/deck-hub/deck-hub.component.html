@@ -9,7 +9,7 @@
   </app-mox-titlebar>
   <div class="main">
     <ol *ngIf="!showLoader">
-      <li *ngFor="let deck of deckList" [ngClass]="{'selectedDeck': this.internalDeck === deck}" >
+      <li *ngFor="let deck of deckList" [ngClass]="{'selecte-deck': this.internalDeck === deck}" >
         <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div>
         <div class="cover"   (click)="deckSelected(deck)" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
         <div class="content" (click)="deckSelected(deck)">

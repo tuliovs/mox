@@ -1,119 +1,101 @@
-$deltaColors: (
-  white:      #FFFFFF,
-  ice:        #F9FFFF,
-  gray:       #F2F2F2,
-  grayer:     #E5E5E5,
-  slate:      #B3B2B2,
-  black:      #1b1c1d,
-  lightblue:  #AFC0DC,
-  blue:       #667A95,
-  jeans:      #435269,
-  darkblue:   #132030,
-  gplus:      #DD4B39,
-  twitter:    #1DA1F2,
-  facebook:   #3B5998,
-  instagram:  #C13584,
+$error-color: #bf0;
+$bg-aux1: #525462;
+$bg-aux2: #353743;
+
+
+
+$c1: #302b2c;
+$c2: #474040;
+$common-solid: #1a1718;
+$common-vert:  linear-gradient(.08deg,    $c1 .2%,  $c2 48.67%, $c1 99.8%);
+$common-hori:  linear-gradient(271.13deg, $c1 .32%, $c2 49.73%, $c1 99.68%);
+
+$u1: #5a6572;
+$u2: #9e9e9e;
+$uncommon-solid: #707883;
+$uncommon-vert:  linear-gradient(.08deg,   $u1 .2%,  $u2 48.67%, $u1 99.8%);
+$uncommon-hori:  linear-gradient(267.9deg, $u1 .64%, $u2 51.82%, $u1 99.36%);
+
+$r1: #876a3b;
+$r2: #dfbd6b;
+$rare-solid: #a58e4a;
+$rare-vert:  linear-gradient(.08deg,    $r1 .2%,  $r2 48.67%, $r1 99.8%);
+$rare-hori:  linear-gradient(272.97deg, $r1 .78%, $r2 46.47%, $r1 99.22%);
+
+$m1: #b21f0f;
+$m2: #f38300;
+$mythic-solid: #bf4427;
+$mythic-vert:  linear-gradient(.08deg, $m1 .2%, $m2 48.67%, $m1 99.8%);
+$mythic-hori:  linear-gradient(270deg, $m1  0%, $m2 47.51%, $m1 100%);
+
+$bg-sidenav: linear-gradient(180deg, $bg-aux1 0%, $bg-aux2 100%);
+$bg-uclass-normal: linear-gradient(271.13deg, $c1 .32%, $c2 49.73%, $c1 99.68%);
+
+$delta-colors: (
+  _white:     #fff,
+  _ice:       #f9ffff,
+  _gray:      #f2f2f2,
+  _grayer:    #e5e5e5,
+  _slate:     #b3b2b2,
+  _black:     #1b1c1d,
+  _lightblue: #afc0dc,
+  _blue:      #667a95,
+  _jeans:     #435269,
+  _darkblue:  #132030,
+  gplus:      #dd4b39,
+  twitter:    #1da1f2,
+  facebook:   #3b5998,
+  instagram:  #c13584,
   github:     #2b7489,
-  youtube:    #FF0000,
-  common: (
-    solid: #1A1718,
-    vert:  linear-gradient(0.08deg, #302B2C 0.2%, #474040 48.67%, #302B2C 99.8%),
-    hori:  linear-gradient(271.13deg, #302B2C 0.32%, #474040 49.73%, #302B2C 99.68%),
-  ),
-  uncommon: (
-    solid: #707883,
-    vert:  linear-gradient(0.08deg, #5A6572 0.2%, #9E9E9E 48.67%, #5A6572 99.8%),
-    hori:  linear-gradient(267.9deg, #5A6572 0.64%, #9E9E9E 51.82%, #5A6572 99.36%),
-  ),
-  rare: (
-    solid: #A58E4A,
-    vert:  linear-gradient(0.08deg, #876A3B 0.2%, #DFBD6B 48.67%, #876A3B 99.8%),
-    hori:  linear-gradient(272.97deg, #876A3B 0.78%, #DFBD6B 46.47%, #876A3B 99.22%),
-  ),
-  mythic: (
-    solid: #BF4427,
-    vert:  linear-gradient(0.08deg, #B21F0F 0.2%, #F38300 48.67%, #B21F0F 99.8%),
-    hori:  linear-gradient(270deg, #B21F0F 0%, #F38300 47.51%, #B21F0F 100%),
-  ),
+  youtube:    #f00,
   magic: (
-    none:   #BDBDBD,
-    blue:   #2D9CDB,
-    black:  #4F4F4F,
-    gold:   #F2C94C,
-    green:  #27AE60,
-    red:    #EB5757,
-    white:  #F2F2F2,
+    mnone:   #bdbdbd,
+    mblue:   #2d9cdb,
+    mblack:  #4f4f4f,
+    mgold:   #f2c94c,
+    mgreen:  #27ae60,
+    mred:    #eb5757,
+    mwhite:  #f2f2f2,
   ),
   gradient: (
     context: linear-gradient(180deg, #525462 0%, #353743 100%),
   ),
   notification: (
-    info:     #AFC0DC,
-    base:     #5E6066,
-    success:  #66CD6F,
-    warning:  #FF9900,
-    error:    #FF454A
+    info:     #afc0dc,
+    base:     #5e6066,
+    success:  #66cd6f,
+    warning:  #f90,
+    error:    #ff454a
   )
 );
-
-$colors: (
-  white: (
-    base:     #F9FFFF,
-    shade:    #F5F5F5,
-    dark:     #F0F0F0
-  ),
-  black:      #1b1c1d,
-  conLight:   #AFC0DC,
-  conBlue:    #667A95,
-  jeans:      #435269,
-  darkBlue:   #132030,
-  gplus:      #DD4B39,
-  twitter:    #1DA1F2,
-  facebook:   #3B5998,
-  instagram:  #C13584,
-  github:     #2b7489,
-  youtube:    #FF0000,
-  notification: (
-    info:     #AFC0DC,
-    base:     #5E6066,
-    success:  #66CD6F,
-    warning:  #FF9900,
-    error:    #FF454A
-  )
-);
-
-$errorColor: #BBFF00;
 
 @function color($name, $variant: 1, $alpha: 1) {
-  $finalColor: $errorColor;
+  $final-color: $error-color;
 
-  @if map-has-key($deltaColors, $name) {
-    $finalColor: map-get($deltaColors, $name);
+  @if map-has-key($delta-colors, $name) {
+    $final-color: map-get($delta-colors, $name);
 
     @if type-of($variant) != number {
-      @if map-has-key($finalColor, $variant) {
-        $finalColor: map-get($finalColor, $variant);
+      @if map-has-key($final-color, $variant) {
+        $final-color: map-get($final-color, $variant);
+      } @else {
+        $final-color: $error-color;
       }
-      @else {
-        $finalColor: $errorColor;
-      }
-    }
-    @else {
-      @if type-of($finalColor) != color {
-        $finalColor: map-get($finalColor, base);
+    } @else {
+      @if type-of($final-color) != color {
+        $final-color: map-get($final-color, base);
       }
     }
     @if type-of($variant) == number {
-      $finalColor: rgba($finalColor, $variant)
-    }
-    @else {
-      $finalColor: rgba($finalColor, $alpha)
+      $final-color: rgba($final-color, $variant);
+    } @else {
+      $final-color: rgba($final-color, $alpha);
     }
   }
-  @if type-of($finalColor) != color {
-    $finalColor: $errorColor;
+  @if type-of($final-color) != color {
+    $final-color: $error-color;
   }
 
-  @return $finalColor;
+  @return $final-color;
 }
 

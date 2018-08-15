@@ -1,45 +1,50 @@
-@import './../../../styles/theme.colors.scss'
+@import './../../../styles/theme.colors'
 
 .new-deck-form
-  background-color: white
-  width: 100%
+  background-color: color(_white)
   height: 100%
+  width: 100%
+
   .form-block
     label
       display: flex
       margin-left: 1.5em
+
     .form-group
       .toggle-switch
-        display: inline-flex
-        vertical-align: middle
-        text-align: start
-        width: 100%
-        padding-left: 1em
         align-items: center
+        display: inline-flex
+        padding-left: 1em
+        text-align: start
+        vertical-align: middle
+        width: 100%
+
         .btn-action
           color: color(conLight)
+
         label
-          margin-left: 0em
           font-size: 1.1em
+          margin-left: 0
 
 .active
-  text-decoration: solid underline color(darkblue)
+  text-decoration: solid underline color(_darkblue)
 
 ul
+  background-color: color(_white)
+  margin-top: 0%
   overflow-x: hidden
   overflow-y: hidden
-  margin-top: 0%
   padding-top: 2%
-  background-color: color(white)
 
 ol
-  padding: 0
-  list-style: none
   display: inline-flex
-  width: 100%
   justify-content: space-evenly
+  list-style: none
+  padding: 0
+  width: 100%
+
   li
+    color: color(_darkblue)
     cursor: pointer
-    color: color(darkblue)
     display: block
     font-size: 1.5em

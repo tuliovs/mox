@@ -1,25 +1,28 @@
 @import './../../../styles/theme.colors'
 
 .active
-  text-decoration: solid underline color(darkblue)
+  text-decoration: solid underline color(_darkblue)
 
+$shad: rgba(0, 0, 0, .23);
 .avatar
-  width: 7em
-  height: 7em
   background-size: cover
   border-radius: 15em
+  box-shadow: 5px 5px 40px $shad
   display: inline-block
+  height: 7em
   margin-top: 1em
-  box-shadow: 5px 5px 40px rgba(0, 0, 0, 0.23)
+  width: 7em
+
 ol
-  padding: 0
-  list-style: none
   display: inline-flex
-  width: 100%
   justify-content: space-evenly
+  list-style: none
+  padding: 0
+  width: 100%
+
   li
+    color: color(_darkblue)
     cursor: pointer
-    color: color(darkblue)
     display: block
     font-size: 1.5em
     width: 30%

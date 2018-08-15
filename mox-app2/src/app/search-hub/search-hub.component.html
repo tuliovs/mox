@@ -11,8 +11,8 @@
 </app-mox-titlebar>
 <div class="search-result" *ngIf="searchResult.data && searchResult.data.length > 0">
   <ol>
-    <li *ngFor="let item of searchResult.data" [ngClass]="{'selectedCard': this.selectedCard === item}">
-      <div class="cardRarity"
+    <li *ngFor="let item of searchResult.data" [ngClass]="{'selected-card': this.selectedCard === item}">
+      <div class="card-rarity"
         [class.common]=" item.rarity == 'common'"
         [class.uncommon]=" item.rarity == 'uncommon'"
         [class.rare]=" item.rarity == 'rare'"
@@ -34,7 +34,7 @@
           {{(item.card_faces[0].oracle_text.length>100)? (item.card_faces[0].oracle_text | slice:0:100)+'...':(item.card_faces[0].oracle_text)}}
         </p>
       </section>
-      <div class="cardColor"
+      <div class="card-color"
         [class.none]  ="!item.colors && (item.card_faces && !item.card_faces[0].colors[0])"
         [class.blue]  ="item.colors && item.colors[0] == 'U'  || item.card_faces && item.card_faces[0].colors[0] == 'U'"
         [class.black] ="item.colors && item.colors[0] == 'B'  || item.card_faces && item.card_faces[0].colors[0] == 'B'"
@@ -46,7 +46,7 @@
     </li>
   </ol>
   <div *ngIf="cardView" class="lightbox" (click)="cardView = false"></div>
-  <div *ngIf="cardView" class="cardViewer">
+  <div *ngIf="cardView" class="card-viewer">
     <div class="fullcard" *ngIf="this.selectedCard.image_uris"  (doubletap)="cardView = false" (swipedown)="cardView = false" (swipeup)="cardView = false" (swiperight)="cardView = false" (swipeleft)="cardView = false" [ngStyle]="{ 'background-image': 'url(' + this.selectedCard.image_uris.normal + ')' }" ></div>
     <div class="fullcard" (tap)="side = true"                   (doubletap)="cardView = false" (swipedown)="cardView = false" (swipeup)="cardView = false" (swiperight)="cardView = false" (swipeleft)="cardView = false" *ngIf="!this.selectedCard.image_uris && !side" [ngStyle]="{ 'background-image': 'url(' + this.selectedCard.card_faces[0].image_uris.normal + ')' }" ></div>
     <div class="fullcard" (tap)="side = false"                  (doubletap)="cardView = false" (swipedown)="cardView = false" (swipeup)="cardView = false" (swiperight)="cardView = false" (swipeleft)="cardView = false" *ngIf="!this.selectedCard.image_uris && side" [ngStyle]="{ 'background-image': 'url(' + this.selectedCard.card_faces[1].image_uris.normal + ')' }" ></div>

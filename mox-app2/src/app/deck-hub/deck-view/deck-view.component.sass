@@ -1,129 +1,144 @@
-@import './../../../styles/theme.colors.scss'
+@import './../../../styles/theme.colors'
+
+$shad: rgba(102, 122, 149, .17);
 
 hr
+  border: solid 1px color(_darkblue)
+  margin: 5% 10%
   width: 80%
-  margin-top: 7%
-  border: solid 1px color(darkBlue)
 
-.deckCover
-  width: 100%
-  height: 16em
+.deck-cover
   background-size: cover
-  border-radius: 0px
+  border-radius: 0
+  height: 16em
+  width: 100%
 
 .summary
-  color: #F9FFFF
-  background-color: #f2f2f2
-  position: fixed
-  width: 100%
-  height: 1.65em
+  background-color: color(_gray)
+  color: color(_ice)
   display: flex
   font-size: .81em
-  padding: 0 2%
+  height: 1.65em
   justify-content: space-between
+  padding: 0 2%
+  position: fixed
+  width: 100%
+
   .decksize
-    background: #AFC0DC
-    border: 1px solid rgba(102, 122, 149, 0.17)
+    background: color(_lightblue)
+    border: 1px solid $shad
+    border-radius: 0 3em 3em 0
     margin-left: -3%
     padding: 0 1.5%
-    border-radius: 0 3em 3em 0
+
   .deckname
-    background: #AFC0DC
-    border: 1px solid rgba(102, 122, 149, 0.17)
-    margin-top: -1%
+    background: color(_lightblue)
+    border: 1px solid $shad
     border-radius: 0 0 1em 1em
     font-size: 1em
-    padding: 0 2%
+    margin-top: -1%
     max-height: 17px
+    padding: 0 2%
+
   .deckside
-    background: #AFC0DC
-    border: 1px solid rgba(102, 122, 149, 0.17)
+    background: color(_lightblue)
+    border: 1px solid $shad
+    border-radius: 3em 0 0 3em
     margin-right: -3%
     padding: 0 1.5%
-    border-radius: 3em 0 0 3em
+
   i
     margin: 0 2px
 
 .new-deck-form
-  .deckData
-    color: color(darkblue)
-    position: absolute
-    width: 100%
+  .deck-data
+    align-content: space-between
+    color: color(_darkblue)
     display: inline-flex
     flex-wrap: wrap
-    left: 0
     height: 50%
     justify-content: space-between
-    align-content: space-between
-    .deckNameContainer
-      width: 100%
-      text-align: left
-      padding: 0 2%
+    left: 0
+    position: absolute
+    width: 100%
+
+    .deck-name-container
       align-items: center
+      padding: 0 2%
+      text-align: left
+      width: 100%
+
       i
-        text-shadow: 0px 0px 1px white
+        text-shadow: 0 0 1px color(_white)
+
       input
         background-color: transparent
-        font-size: 1.5em
         border: 0
-        text-shadow: 0px 0px 1px white
-        color: #132030
+        color: color(_darkblue)
+        font-size: 1.5em
         font-weight: 600
-    .deckColors
-      background-color: white
-    .deckOwner
+        text-shadow: 0 0 1px color(_white)
+
+    .deck-colors
+      background-color: color(_white)
+
+    .deck-owner
       label
-        font-weight: 600
         font-size: 18px
+        font-weight: 600
         text-align: right
-        text-shadow: 0px 0px 1px white
-  .deckExtraData
+        text-shadow: 0 0 1px color(_white)
+
+  .deck-extra-data
+    color: color(_ice)
     display: inline-flex
     width: 100%
-    color: color(ice)
+
     .item
-      width: 34%
-      background-color: color(blue)
-      height: 3%
-      font-size: .6em
-      display: inline-flex
-      text-align: center
-      justify-content: center
       align-items: center
+      background-color: color(_blue)
+      display: inline-flex
+      font-size: .6em
+      height: 3%
+      justify-content: center
+      text-align: center
+      width: 34%
+
     .positive
-      background-color: color(darkblue) !important
+      background-color: color(_darkblue)
 
 
 
 ul
+  margin-top: 0%
   overflow-x: hidden
   overflow-y: hidden
-  margin-top: 0%
   padding-top: 4%
 
+$wtf: #e2e2e2;
 ol
-  padding: 0
-  list-style: none
   display: inline-flex
-  width: 100%
   justify-content: space-between
+  list-style: none
+  padding: 0
+  width: 100%
+
   li
-    width: 30%
-    display: inline-flex !important
-    flex-direction: column
-    justify-content: center
-    text-align: center
+    color: $wtf
     cursor: pointer
-    color: #E2E2E2
-    display: block
+    display: inline-flex
+    flex-direction: column
     font-size: .81em
     font-weight: 500
-  li.active
-    color: #667A95
+    justify-content: center
+    text-align: center
+    width: 30%
+
+  .active
+    color: color(_blue)
     font-size: 1.2em
     font-weight: 600
 
-
 .fixer
-  width: 15%
   display: block
+  width: 15%

@@ -1,30 +1,36 @@
-@import '../../../styles/theme.colors.scss'
+@import '../../../styles/theme.colors'
 
 .container
-  background: color(darkBlue)
-  text-align: center
+  background: color(_darkBlue)
   display: inline-flex
   flex-flow: column
-  width: 100%
-  position: fixed
   height: 100%
   left: 0
-  top: 0
   padding: 1em
+  position: fixed
+  text-align: center
+  top: 0
+  width: 100%
+
   .logo
+    color: color(_white)
     width: 100%
-    color: color(white)
+
     h1
       font-size: 8em
+
   .buttons
     .btn
-      color: color(white) !important
       border: 0
-      width: 100%
+      color: color(_white)
       height: 3em
+      width: 100%
+
     .google
       background-color: color(gplus)
+
     .twitter
       background-color: color(twitter)
+
     .github
       background-color: color(github)

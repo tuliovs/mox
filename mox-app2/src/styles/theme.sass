@@ -1,65 +1,81 @@
-@import './theme.fonts.scss'
-@import './theme.colors.scss'
-@import './theme.keyframe.scss'
-@import './theme.grid.scss'
-@import './keyrune.scss'
+@import './theme.fonts'
+@import './theme.colors'
+@import './theme.keyframe'
+@import './theme.grid'
+@import './keyrune'
+
 
 *
-	box-sizing: border-box
+  border: 0
+  box-sizing: border-box
   margin: 0
   padding: 0
-  border: 0
 
-h1, h2, h3, h4, h5, h6
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
   font-weight: normal
 
-.mox_font
+.mox-font
   font-family: 'Audiowide', cursive, 'Exo2'
+
 a
-  color: color(ice)
+  color: color(_ice)
   text-decoration: none
+
 button
   &:focus
     outline: 0
-ol,ul
-  padding: 0
+
+ol,
+ul
   margin: 0
+  padding: 0
+
 body
+  background-color: color(_gray)
+  color: color(_black)
   font-family: 'Exo 2', sans-serif
   margin: 0
-  padding: 0
   min-width: 320px
   overflow-y: hidden
-  color: color(black)
-  background-color: color(gray)
+  padding: 0
 
+$shad-header: rgba(0, 0, 0, .1);
 header
-  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1)
+  box-shadow: 0 0 25px $shad-header
   display: flex
-  position: fixed
-  justify-content: space-between
   flex-flow: row-reverse
-  min-height: 3em
+  justify-content: space-between
   max-height: 3em
-  min-width: 100%
   max-width: 100%
+  min-height: 3em
+  min-width: 100%
+  position: fixed
   z-index: 9
-  h4
-    color: color(darkblue) !important
-    width: 70%
-  .fas
-    color: color(darkblue) !important
 
+  h4
+    color: color(_darkblue)
+    width: 70%
+
+  .fas
+    color: color(_darkblue)
+
+$shad-h: rgba(0, 0, 0, .25);
 h1
+  color: color(_ice)
+  font-size: 20px
   font-style: normal
   font-weight: normal
   line-height: normal
-  font-size: 20px
   text-align: center
-  color: color(ice)
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
+  text-shadow: 0 4px 4px $shad-h
+
 h4
-  color: color(ice)
+  color: color(_ice)
   font-size: 1.2em
 
 fieldset
@@ -71,106 +87,109 @@ fieldset
 p
   margin: 1% 0
 
-input
-  &[type="text"]:focus:not(:read-only)
-    border: 0
-  &[type="text"]:read-only
-    background-color: RGBA(175,192,220,0.15)
-    color: color(darkblue)
 select
   background-color: transparent
-  width: 100%
-  font-size: 0.91em
   border: 0
-  padding: 0
+  color: color(_white)
+  font-size: .91em
   font-variant-caps: small-caps
-  color: color(white)
-.main
-  text-align: center
+  padding: 0
   width: 100%
+
+.main
   height: 100%
-  overflow-y: auto
-  mix-blend-mode: normal
-  position: absolute
   margin-top: 2em
   max-height: 80%
+  mix-blend-mode: normal
+  overflow-y: auto
+  position: absolute
+  text-align: center
+  width: 100%
 
 .loading
-  opacity: 0
-  position: fixed
+  background: color(_darkblue)
   height: 100%
-  width: 100%
-  background: color(darkBlue)
+  opacity: 0
   padding-top: 25vh
+  position: fixed
   text-align: center
-  z-index: -1
   transition: opacity .8s ease-out
+  width: 100%
+  z-index: -1
+
+.btn
+  background-color: transparent
+  border: 1px solid color(_darkblue)
+  border-radius: .125rem
+  color: color(_darkblue)
+  cursor: pointer
+  display: inline-block
+  font-weight: 500
+  letter-spacing: .12em
+  margin: .25rem .5rem .25rem 0
+  overflow: hidden
+  text-align: center
+  text-overflow: clip
+  text-transform: uppercase
+  vertical-align: middle
+
+  &:disabled
+    i
+      color: color(_slate) !important
+
+    label
+      color: color(_slate) !important
+
+.btn-action
+  border: 0
+  color: color(_darkblue)
+  font-size: 1.5em
+
+$shad-btn-del: #9f2426;
+.btn-delete
+  background-color: color(youtube)
+  border: 0
+  border-radius: 5px
+  box-shadow: 0 5px $shad-btn-del
+  color: color(_white)
+  padding: 10px 15px
+
+  &:hover,
+  &.hover
+    background-color: color(youtube)
+
+  &:active,
+  &.active
+    background-color: color(youtube)
+    box-shadow: 0 2px $shad-btn-del
+    transform: translateY(5px)
+
+.btn-save
+  background-color: color(_jeans)
+  border: 0
+  border-radius: 5px
+  box-shadow: 0 5px color(_darkblue)
+  color: color(_white)
+  padding: 10px 15px
+
+  &:hover,
+  &.hover
+    background-color: color(_jeans)
+
+  &:active,
+  &.active
+    background-color: color(_jeans)
+    box-shadow: 0 2px color(_darkblue)
+    transform: translateY(5px)
 
 app-root:empty + .loading
   opacity: 1
   z-index: 100
+
   h1
-    color: color(white)
+    color: color(_white)
     margin-bottom: 50px
+
   label
-    color: color(white)
+    color: color(_white)
     width: 100%
-
-
-.btn
-  color: color(darkblue)
-  cursor: pointer
-  display: inline-block
-  -webkit-appearance: none!important
-  border-radius: .125rem
-  border: 1px solid color(darkblue)
-  text-overflow: ellipsis
-  overflow: hidden
-  text-align: center
-  text-transform: uppercase
-  vertical-align: middle
-  letter-spacing: .12em
-  font-weight: 500
-  background-color: transparent
-  margin: .25rem .5rem .25rem 0
-.btn
-  &:disabled
-    i
-      color: color(slate) !important
-    label
-      color: color(slate) !important
-
-.btn-action
-  color: color(darkblue)
-  font-size: 1.5em
-  border: 0
-
-.btn-delete
-  color: color(white)
-  background-color: color(youtube)
-  padding: 10px 15px
-  border: none
-  border-radius: 5px
-  box-shadow: 0 5px #9F2426
-.btn-delete
-  &:hover, &.hover
-    background-color: color(youtube)
-  &:active, &.active
-    background-color: color(youtube)
-    box-shadow: 0 2px #9F2426
-    transform: translateY(5px)
-
-.btn-save
-  color: color(white)
-  background-color: color(jeans)
-  padding: 10px 15px
-  border: none
-  border-radius: 5px
-  box-shadow: 0 5px color(darkBlue)
-.btn-save
-  &:hover, &.hover
-    background-color: color(jeans)
-  &:active, &.active
-    background-color: color(jeans)
-    box-shadow: 0 2px color(darkBlue)
-    transform: translateY(5px)
