@@ -1,3 +1,4 @@
+import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../karn/_services/auth.service';
 import { Router } from '@angular/router';
@@ -9,12 +10,15 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public auth: AuthService, public router: Router) { }
+  constructor(
+    public _auth: AuthService,
+    public _state: ActionStateService,
+    public _router: Router) { }
 
   ngOnInit() {
-    this.auth.user.subscribe((u) => {
+    this._auth.user.subscribe((u) => {
         if (u) {
-          this.router.navigate(['/']);
+          this._router.navigate(['/']);
         }
       }
     );

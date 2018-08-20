@@ -10,7 +10,7 @@
 ></div>
 <div [@card-contextTrigger]="componentState" *ngIf="card" class="action-menu">
   <div class="card-data">
-    <p>{{card.name}}</p>
+    <p class="mox-font">{{card.name}}</p>
     <div>
       <img class="img" *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }" />
       <img class="img" *ngIf="card.card_faces && card.card_faces.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }" />

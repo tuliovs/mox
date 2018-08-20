@@ -1,7 +1,7 @@
 <div *ngIf="auth.user | async; then authenticated else guest"></div>
 
 <ng-template #guest>
-  <h3>[Hellow, guest]</h3>
+  <h3 class="mox-font">[Hellow, guest]</h3>
   <p>To start something in mox.sys you have to loggin</p>
   <button routerLink="/login">
       <i class="material-icons">person</i> Loggin

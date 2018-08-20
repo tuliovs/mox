@@ -1,17 +1,17 @@
 <div class="container">
   <div class="logo">
-    <h1 class="mox_font">0</h1>
+    <h1 class="mox-font">0</h1>
     <p>Wellcome to M0X</p>
     <p>To begin you have to login with one of the methods bellow</p>
   </div>
   <div class="buttons">
-    <button (click)="auth.googleLogin()" type="button" class="btn btn-primary google">
+    <button (click)="_auth.googleLogin()" type="button" class="btn btn-primary google">
       <i class="fab fa-google-plus-g"></i> Google Connect
     </button>
-    <button (click)="auth.twitterLogin()" type="button" class="btn btn-primary twitter">
+    <button (click)="_auth.twitterLogin()" type="button" class="btn btn-primary twitter">
       <i class="fab fa-twitter"></i> Twitter Login
     </button>
-    <button (click)="auth.gitHubLogin()" type="button" class="btn btn-primary github">
+    <button (click)="_auth.gitHubLogin()" type="button" class="btn btn-primary github">
       <i class="fab fa-github"></i> GitHub Login
     </button>
   </div>
