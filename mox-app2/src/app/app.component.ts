@@ -111,13 +111,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     switch (val.url) {
       case '/deckhub':
           return 'DeckHub';
-        break;
+      case '/deck/new':
+          return 'New Deck';
       case '/search':
           return 'Search';
-        break;
       default:
           return 'Mox';
-        break;
     }
   }
 

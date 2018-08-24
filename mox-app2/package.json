@@ -1,6 +1,6 @@
 {
   "name": "mox-app2",
-  "version": "0.1.15",
+  "version": "0.1.15b",
   "scripts": {
     "ng": "ng",
     "mox": "ng serve --port 420",

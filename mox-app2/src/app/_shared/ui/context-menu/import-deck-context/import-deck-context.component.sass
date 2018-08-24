@@ -1,8 +1,8 @@
 @import '../../../../../styles/theme.colors'
 
 textarea
-  border-radius: 2px
   border: solid 1px color(_black)
+  border-radius: 2px
   margin: 2%
   min-height: 12em
   min-width: 18em
@@ -22,7 +22,7 @@ hr
   top: 0
 
   i
-    color: color(_darkBlue)
+    color: color(_darkblue)
 
 .lightbox
   -webkit-animation-timing-function: cubic-bezier(.215, .61, .355, 1)
@@ -42,7 +42,7 @@ hr
   margin: .5rem 0 0 !important
 
   label
-    color: color(_darkBlue)
+    color: color(_darkblue)
     font-weight: 600
 
   .form-group
@@ -53,7 +53,7 @@ hr
     vertical-align: middle
 
 .action-menu
-  color: color(_darkBlue)
+  color: color(_darkblue)
   height: 100%
   left: 0%
   max-height: 100%
@@ -71,31 +71,29 @@ hr
     list-style: none
     width: 88%
 
-    li
+.item
+  div
+    i
+      font-size: 4.5em
+      margin: 10% 0
 
-      div
+  span
+    color: color(_darkblue)
 
-        i
-          font-size: 4.5em
-          margin: 10% 0
+  button
+    background-color: color(_jeans)
+    border: 0
+    border-radius: 5px
+    box-shadow: 0 5px color(_darkblue)
+    color: color(_white)
+    padding: 10px 15px
 
-      span
-        color: color(_darkBlue)
+    &:hover,
+    &.hover
+      background-color: color(_jeans)
 
-      button
-        background-color: color(_jeans)
-        border: 0
-        border-radius: 5px
-        box-shadow: 0 5px color(_darkBlue)
-        color: color(_white)
-        padding: 10px 15px
-
-        &:hover,
-        &.hover
-          background-color: color(_jeans)
-
-        &:active,
-        &.active
-          background-color: color(_jeans)
-          box-shadow: 0 2px color(_darkBlue)
-          transform: translateY(5px)
+    &:active,
+    &.active
+      background-color: color(_jeans)
+      box-shadow: 0 2px color(_darkblue)
+      transform: translateY(5px)

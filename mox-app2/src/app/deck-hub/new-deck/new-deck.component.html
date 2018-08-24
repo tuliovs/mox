@@ -1,10 +1,5 @@
-<app-mox-titlebar>
-  <ol>
-    <li>New Deck</li>
-  </ol>
-</app-mox-titlebar>
 <div class="main">
-  <form class="new-deck-form">
+  <!-- <form class="new-deck-form">
     <section class="form-block">
       <label>Deck Name</label>
       <div class="form-group">
@@ -41,14 +36,18 @@
         </div>
       </div>
     </section>
-  </form>
+  </form> -->
 </div>
 <app-mox-action-bar>
   <app-mox-import-deck-context></app-mox-import-deck-context>
-  <button (click)="createDeck()" type="button" class="btn btn-action">
-    <i class="fas fa-save"></i>
+  <button type="button" class="btn btn-action">
+    <i class="fas fa-code-branch"></i>
   </button>
+  <div class="fixer"></div>
   <button (click)="cloneDeck()" type="button" class="btn btn-action">
-    <i class="fas fa-cloud-download-alt"></i>
+    <i class="fas fa-qrcode"></i>
+  </button>
+  <button type="button" class="btn btn-action">
+    <i class="fas fa-book"></i>
   </button>
 </app-mox-action-bar>

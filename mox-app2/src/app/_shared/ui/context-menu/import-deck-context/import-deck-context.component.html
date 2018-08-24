@@ -13,7 +13,7 @@
     <div>
       <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
       <ul *ngIf="!showLoader">
-        <li>
+        <li class="item">
           <div>
             <i class="fas fa-cloud-upload-alt"></i>
             <p>
@@ -21,7 +21,7 @@
             </p>
           </div>
         </li>
-        <li>
+        <li class="item">
           <label>Import from MTG Arena:</label>
           <textarea [(ngModel)]="importText" value="{{importText}}"></textarea>
           <button (press)="importDeck()" class="btn">Import</button>

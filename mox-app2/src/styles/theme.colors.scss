@@ -3,7 +3,6 @@ $bg-aux1: #525462;
 $bg-aux2: #353743;
 
 
-
 $c1: #302b2c;
 $c2: #474040;
 $common-solid: #1a1718;
@@ -57,8 +56,40 @@ $delta-colors: (
     mred:    #eb5757,
     mwhite:  #f2f2f2,
   ),
-  gradient: (
-    context: linear-gradient(180deg, #525462 0%, #353743 100%),
+  notification: (
+    info:     #afc0dc,
+    base:     #5e6066,
+    success:  #66cd6f,
+    warning:  #f90,
+    error:    #ff454a
+  )
+);
+
+$moth-colors: (
+  _white:     #fcf8ef,
+  _ice:       #ffefe2,
+  _gray:      #eae7e2,
+  _grayer:    #4f473a,
+  _slate:     #a98a7e,
+  _black:     #1d1d1f,
+  _lightblue: #362c2a,
+  _blue:      #2b2620,
+  _jeans:     #ea7c47,
+  _darkblue:  #ff662c,
+  gplus:      #dd4b39,
+  twitter:    #1da1f2,
+  facebook:   #3b5998,
+  instagram:  #c13584,
+  github:     #2b7489,
+  youtube:    #f00,
+  magic: (
+    mnone:   #bdbdbd,
+    mblue:   #2d9cdb,
+    mblack:  #4f4f4f,
+    mgold:   #f2c94c,
+    mgreen:  #27ae60,
+    mred:    #eb5757,
+    mwhite:  #f2f2f2,
   ),
   notification: (
     info:     #afc0dc,
@@ -72,8 +103,8 @@ $delta-colors: (
 @function color($name, $variant: 1, $alpha: 1) {
   $final-color: $error-color;
 
-  @if map-has-key($delta-colors, $name) {
-    $final-color: map-get($delta-colors, $name);
+  @if map-has-key($moth-colors, $name) {
+    $final-color: map-get($moth-colors, $name);
 
     @if type-of($variant) != number {
       @if map-has-key($final-color, $variant) {
