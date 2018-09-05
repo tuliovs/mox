@@ -17,7 +17,7 @@ export class ScryfallSearchService {
     return this.http.get<List>(`${this.url}${encodeURI(param)}`);
   }
 
-  aernaSearch(cardSet: string, collectorsNumber: any): Observable<any> {
+  mtgArenaSearch(cardSet: string, collectorsNumber: any): Observable<any> {
     return this.http.get(`${this.arenaUrl}/${encodeURI(cardSet)}/${collectorsNumber}`);
   }
 

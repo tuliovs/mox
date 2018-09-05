@@ -63,34 +63,38 @@ export class DeckViewComponent implements OnInit {
         this._deck = this.deckCollection.doc<MoxDeck>(id).valueChanges();
         this._deck.pipe(
           tap((deck) => {
-            if (!deck.side) { deck.side = [];  }
-            this.tempDeck = deck;
-            Array.from(new Set(deck.cards))
-            .forEach((incard) => {
-              this._cardService.getCard(incard).pipe(
-                tap((x: Card) => {
-                  this._cardList.push(x);
-                  this._cardList = this._cardList.sort((a: Card, b: Card): number => {
-                    if ( a.cmc < b.cmc ) { return -1; }
-                    if ( a.cmc > b.cmc ) { return 1; }
-                    return 0;
-                  });
-                }),
-              ).subscribe();
-            });
-            Array.from(new Set(deck.side))
-            .forEach((incard) => {
-              this._cardService.getCard(incard).pipe(
-                tap((x: Card) => {
-                  this._sideList.push(x);
-                  this._sideList = this._sideList.sort((a: Card, b: Card): number => {
-                    if ( a.cmc < b.cmc ) { return -1; }
-                    if ( a.cmc > b.cmc ) { return 1; }
-                    return 0;
-                  });
-                })
-              ).subscribe();
-            });
+            if (deck) {
+              if (!deck.side) { deck.side = [];  }
+              this.tempDeck = deck;
+              this._cardList = [];
+              this._sideList = [];
+              Array.from(new Set(deck.cards))
+              .forEach((incard) => {
+                this._cardService.getCard(incard).pipe(
+                  tap((x: Card) => {
+                    this._cardList.push(x);
+                    this._cardList = this._cardList.sort((a: Card, b: Card): number => {
+                      if ( a.cmc < b.cmc ) { return -1; }
+                      if ( a.cmc > b.cmc ) { return 1; }
+                      return 0;
+                    });
+                  }),
+                ).subscribe();
+              });
+              Array.from(new Set(deck.side))
+              .forEach((incard) => {
+                this._cardService.getCard(incard).pipe(
+                  tap((x: Card) => {
+                    this._sideList.push(x);
+                    this._sideList = this._sideList.sort((a: Card, b: Card): number => {
+                      if ( a.cmc < b.cmc ) { return -1; }
+                      if ( a.cmc > b.cmc ) { return 1; }
+                      return 0;
+                    });
+                  })
+                ).subscribe();
+              });
+            }
           }),
         ).subscribe();
       }

@@ -1,4 +1,4 @@
-<div *ngIf="auth.user | async; then authenticated else guest"></div>
+<div *ngIf="auth.getUser() | async; then authenticated else guest"></div>
 
 <ng-template #guest>
   <h3 class="mox-font">[Hellow, guest]</h3>

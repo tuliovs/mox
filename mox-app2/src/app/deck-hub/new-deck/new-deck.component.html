@@ -1,3 +1,6 @@
+<app-mox-titlebar>
+  <label>Wellcome</label>
+</app-mox-titlebar>
 <div class="main">
   <!-- <form class="new-deck-form">
     <section class="form-block">
@@ -47,7 +50,7 @@
   <button (click)="cloneDeck()" type="button" class="btn btn-action">
     <i class="fas fa-qrcode"></i>
   </button>
-  <button type="button" class="btn btn-action">
+  <button type="button" (click)="quickDeck()"  class="btn btn-action">
     <i class="fas fa-book"></i>
   </button>
 </app-mox-action-bar>

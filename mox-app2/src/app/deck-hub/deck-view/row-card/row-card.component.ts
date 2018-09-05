@@ -30,7 +30,7 @@ export class RowCardComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     // console.log(this.card);
-    this.auth.user.pipe(
+    this.auth.getUser().pipe(
       tap((user) => {
         this._user = user;
       })

@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { List } from '@application/_models/_scryfall-models/models';
 import { tap, catchError } from '../../../node_modules/rxjs/operators';
 import { throwError } from '../../../node_modules/rxjs';
+import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 
 @Component({
   selector: 'app-mox-search-hub',
@@ -21,6 +22,7 @@ export class SearchHubComponent {
   public selectedCard;
   constructor(
     private _searchService: ScryfallSearchService,
+    private _deckService: MoxDeckService,
     private _state: ActionStateService
   ) {
     this._state.getState().subscribe(stt => {
@@ -38,6 +40,10 @@ export class SearchHubComponent {
 
   isState(p): boolean {
     return (this.animationState === p);
+  }
+
+  addCard(cardId) {
+    this._deckService.addCard(cardId);
   }
 
   searchGo() {

@@ -103,8 +103,8 @@ $moth-colors: (
 @function color($name, $variant: 1, $alpha: 1) {
   $final-color: $error-color;
 
-  @if map-has-key($moth-colors, $name) {
-    $final-color: map-get($moth-colors, $name);
+  @if map-has-key($delta-colors, $name) {
+    $final-color: map-get($delta-colors, $name);
 
     @if type-of($variant) != number {
       @if map-has-key($final-color, $variant) {

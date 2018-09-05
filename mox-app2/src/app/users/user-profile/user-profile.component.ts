@@ -14,7 +14,7 @@ export class UserProfileComponent implements OnInit {
   constructor(public auth: AuthService, public toast: ToastService) { }
 
   ngOnInit() {
-    this.auth.user.pipe(
+    this.auth.getUser().pipe(
       tap((data) => {
         this._user = data;
       })

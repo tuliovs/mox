@@ -33,14 +33,14 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   public deckCollection: AngularFirestoreCollection <MoxDeck>;
   public _Deck: MoxDeck;
   get cardCount(): number {
-    const t = this._Deck.cards.filter((n) => n = this.card.id );
+    const t = this._dekService.deckProcess.processingDeck.cards.filter((n) => n = this.card.id );
     return t.length;
   }
   get sideCount(): number {
-    if (!this._Deck.side) {
-      this._Deck.side = [];
+    if (!this._dekService.deckProcess.processingDeck.side) {
+      this._dekService.deckProcess.processingDeck.side = [];
     }
-    const t = this._Deck.side.filter((n) => n = this.card.id );
+    const t = this._dekService.deckProcess.processingDeck.side.filter((n) => n = this.card.id );
     return t.length;
   }
   constructor(
@@ -50,7 +50,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
     public _state: ActionStateService,
     public _toast: ToastService
   ) {}
-  @Input() card;
+  @Input() card: Card;
   @Input() icon;
   @Input() disabled;
   public componentState = 'closed';
@@ -66,68 +66,32 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   }
 
   addOneCard(side?: boolean) {
-    if (this._Deck) {
-      if (!side) {
-        this.deckCollection = this.afs.collection('decks');
-        this._Deck.cards.push(this.card.id);
-        this.deckCollection.doc(this._Deck.key).update({
-          cards: this._Deck.cards
-        });
-        this._toast.sendMessage('Done! One copy of ' + this.card.name + ' included on ' + this._Deck.name, 'success', this._Deck.ownerId);
-      } else {
-        this.deckCollection = this.afs.collection('decks');
-        if (!this._Deck.side) { this._Deck.side = []; }
-        this._Deck.side.push(this.card.id);
-        this.deckCollection.doc(this._Deck.key).update({
-          side: this._Deck.side
-        });
-        this._toast.sendMessage('Done! One copy of '
-                                + this.card.name
-                                + ' included on '
-                                + this._Deck.name
-                                + ' side', 'success', this._Deck.ownerId);
-      }
+    if (!side) {
+      this._dekService.addCard(this.card.id);
+    } else {
+      this._dekService.addCardSide(this.card.id);
     }
   }
 
   addFourCard(side?: boolean) {
-    if (this._Deck) {
-      if (!side) {
-        this.deckCollection = this.afs.collection('decks');
-        this._Deck.cards.push(this.card.id);
-        this._Deck.cards.push(this.card.id);
-        this._Deck.cards.push(this.card.id);
-        this._Deck.cards.push(this.card.id);
-        this.deckCollection.doc(this._Deck.key).update({
-          cards: this._Deck.cards
-        });
-        this._toast.sendMessage('Done! Four copys of ' + this.card.name + ' included on ' + this._Deck.name, 'success', this._Deck.ownerId);
-      } else {
-        this.deckCollection = this.afs.collection('decks');
-        if (!this._Deck.side) { this._Deck.side = []; }
-        this._Deck.side.push(this.card.id);
-        this._Deck.side.push(this.card.id);
-        this._Deck.side.push(this.card.id);
-        this._Deck.side.push(this.card.id);
-        this.deckCollection.doc(this._Deck.key).update({
-          side: this._Deck.side
-        });
-        this._toast.sendMessage('Done! Four copys of '
-                                + this.card.name
-                                + ' included on '
-                                + this._Deck.name
-                                + ' side', 'success', this._Deck.ownerId);
-      }
-    }
+    alert('Not Implemented!');
   }
 
   setCover() {
-    if (this._Deck) {
+    if (this._dekService.deckProcess.processingDeck) {
+      this._dekService.deckProcess.active = true;
       this.deckCollection = this.afs.collection('decks');
-      this.deckCollection.doc(this._Deck.key).update({
+      this.deckCollection.doc(this._dekService.deckProcess.processingDeck.key).update({
         cover: this.card.image_uris.art_crop
-      });
-      this._toast.sendMessage('Congrats! ' + this.card.name + ' set as DeckCover!', 'success', this._Deck.ownerId);
+      }).then(
+        () => {
+          this._toast.sendMessage(
+            'Congrats! ' + this.card.name + ' set as DeckCover for ' + this._dekService.deckProcess.processingDeck.name + ' !',
+            'success',
+            this._Deck.ownerId);
+          this._dekService.deckProcess.active = false;
+        }
+      );
     }
   }
 

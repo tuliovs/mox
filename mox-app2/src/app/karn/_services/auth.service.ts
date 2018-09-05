@@ -1,7 +1,7 @@
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
@@ -20,18 +20,22 @@ interface User {
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
-  public user: Observable<User>;
+  private user =  new Observable<User>();
 
   constructor(private router: Router, private afAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.user = this.afAuth.authState.pipe(switchMap( user => {
       if (user) {
-        // console.log(user);
         return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
       } else {
         return of(null);
       }
     }));
+  }
+
+  public getUser(): Observable<User> {
+    return this.user;
   }
 
   oAuthLogin(provider) {

@@ -26,7 +26,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.auth.user.subscribe(
+    this.auth.getUser().subscribe(
       (u) => {
         if (u) {
           this.deckCollection = this.afs.collection('decks', ref => ref.where('ownerId', '==', u.uid));

@@ -94,7 +94,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
       )
     ).subscribe();
-    this.auth.user.pipe(
+    this.auth.getUser().pipe(
       filter(user => !!user),
       take(1))
       .subscribe(user => {

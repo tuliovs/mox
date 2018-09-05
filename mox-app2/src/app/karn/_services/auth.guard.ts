@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    return this.auth.user.pipe(
+    return this.auth.getUser().pipe(
       take(1),
       tap((user) => {
         // this.toast.sendMessage('Acess denied!', 'danger', user.uid);

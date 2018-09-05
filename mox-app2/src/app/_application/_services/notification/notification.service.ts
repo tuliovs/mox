@@ -20,11 +20,11 @@ export class NotificationService {
   getPermission(user) {
     this.messaging.requestPermission()
     .then(() => {
-      console.log('Notification permission granted.');
+      // console.log('Notification permission granted.');
       return this.messaging.getToken();
     })
     .then(token => {
-      console.log(token);
+      // console.log(token);
       this.saveToken(user, token);
     })
     .catch((err) => {

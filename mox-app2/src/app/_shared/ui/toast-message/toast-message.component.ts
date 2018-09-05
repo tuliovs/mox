@@ -31,7 +31,7 @@ export class ToastMessageComponent implements OnInit {
   constructor(private toast: ToastService, public auth: AuthService) { }
 
   ngOnInit() {
-    this.auth.user.pipe(
+    this.auth.getUser().pipe(
       filter(user => !!user),
       take(1),
       tap((user) => {

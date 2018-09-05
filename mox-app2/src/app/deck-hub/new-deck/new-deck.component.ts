@@ -3,6 +3,7 @@ import { MoxDeck, MoxCardDeck } from '../../_application/_models/_mox_models/Mox
 import { MoxDeckService } from '../../_application/_services/mox-services/deck/mox-deck.service';
 import { AuthService } from '../../karn/_services/auth.service';
 import { Router } from '@angular/router';
+import { ActionStateService } from '@application/_services/action-state/action-state.service';
 
 @Component({
   selector: 'app-mox-new-deck',
@@ -26,7 +27,12 @@ export class NewDeckComponent implements OnInit {
     'vintage'
   ];
 
-  constructor(private _moxService: MoxDeckService, private auth: AuthService, private router: Router) {
+  constructor(
+    private _moxService: MoxDeckService,
+    private _auth: AuthService,
+    private _state: ActionStateService,
+    private _router: Router
+  ) {
     this.newDeck = new MoxDeck();
     this.newDeck.key = this.makeId();
     this.newDeck.name = '';
@@ -40,7 +46,7 @@ export class NewDeckComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.auth.user.subscribe((u) => {
+      this._auth.getUser().subscribe((u) => {
         if (u) {
           this.newDeck.ownerId = u.uid;
           this.newDeck.ownerName = u.displayName;
@@ -51,7 +57,12 @@ export class NewDeckComponent implements OnInit {
 
   createDeck() {
     this._moxService.setDeck(this.newDeck);
-    this.router.navigate(['/deckhub']);
+    this._router.navigate(['/deckhub']);
+  }
+
+  quickDeck() {
+    this._state.setState('loading');
+    this._moxService.quickCreate();
   }
 
   cloneDeck() {
