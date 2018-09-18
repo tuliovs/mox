@@ -33,20 +33,20 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   public deckCollection: AngularFirestoreCollection <MoxDeck>;
   public _Deck: MoxDeck;
   get cardCount(): number {
-    const t = this._dekService.deckProcess.processingDeck.cards.filter((n) => n = this.card.id );
+    const t = this._deckService.deckProcess.processingDeck.cards.filter((n) => n = this.card.id );
     return t.length;
   }
   get sideCount(): number {
-    if (!this._dekService.deckProcess.processingDeck.side) {
-      this._dekService.deckProcess.processingDeck.side = [];
+    if (!this._deckService.deckProcess.processingDeck.side) {
+      this._deckService.deckProcess.processingDeck.side = [];
     }
-    const t = this._dekService.deckProcess.processingDeck.side.filter((n) => n = this.card.id );
+    const t = this._deckService.deckProcess.processingDeck.side.filter((n) => n = this.card.id );
     return t.length;
   }
   constructor(
     public _router: Router,
     private afs: AngularFirestore,
-    private _dekService: MoxDeckService,
+    private _deckService: MoxDeckService,
     public _state: ActionStateService,
     public _toast: ToastService
   ) {}
@@ -58,7 +58,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this._dekService.getWorkingDeck().pipe(
+    this._deckService.getWorkingDeck().pipe(
       tap((deck) => {
         this._Deck = deck;
       })
@@ -67,9 +67,9 @@ export class CardContextComponent implements OnInit, AfterViewInit {
 
   addOneCard(side?: boolean) {
     if (!side) {
-      this._dekService.addCard(this.card.id);
+      this._deckService.addCard(this.card.id);
     } else {
-      this._dekService.addCardSide(this.card.id);
+      this._deckService.addCardSide(this.card.id);
     }
   }
 
@@ -78,18 +78,18 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   }
 
   setCover() {
-    if (this._dekService.deckProcess.processingDeck) {
-      this._dekService.deckProcess.active = true;
+    if (this._deckService.deckProcess.processingDeck) {
+      this._deckService.deckProcess.active = true;
       this.deckCollection = this.afs.collection('decks');
-      this.deckCollection.doc(this._dekService.deckProcess.processingDeck.key).update({
+      this.deckCollection.doc(this._deckService.deckProcess.processingDeck.key).update({
         cover: this.card.image_uris.art_crop
       }).then(
         () => {
           this._toast.sendMessage(
-            'Congrats! ' + this.card.name + ' set as DeckCover for ' + this._dekService.deckProcess.processingDeck.name + ' !',
+            'Congrats! ' + this.card.name + ' set as DeckCover for ' + this._deckService.deckProcess.processingDeck.name + ' !',
             'success',
             this._Deck.ownerId);
-          this._dekService.deckProcess.active = false;
+          this._deckService.deckProcess.active = false;
         }
       );
     }

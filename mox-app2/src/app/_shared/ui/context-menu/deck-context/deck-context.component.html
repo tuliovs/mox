@@ -1,0 +1,58 @@
+<button *ngIf="icon" class="btn btn-action" (click)="activateContext()" [disabled]="disabled || !_deckService.deckProcess.processingDeck">
+  <i class="{{icon}} action"></i>
+</button>
+
+<div [@deck-contextTrigger]="componentState" class="lightbox"
+    (click)="closeContext()"
+    (swipeleft)="closeContext()"
+    (swiperight)="closeContext()"
+    (swipedown)="closeContext()"
+></div>
+<div [@deck-contextTrigger]="componentState" *ngIf="_deckService.deckProcess.processingDeck" class="action-menu">
+  <div class="card-data">
+    <p class="mox-font">{{_deckService.deckProcess.processingDeck.name}}</p>
+    <div>
+      <img class="img" *ngIf="_deckService.deckProcess.processingDeck.cover != ''" [ngStyle]="{ 'background-image': 'url(' + _deckService.deckProcess.processingDeck.cover + ')' }" />
+    </div>
+  </div>
+  <section class="content" *ngIf="auth.getUser() | async as user">
+      <button type="button" class="btn btn-icon" disabled>
+          <i class="fas fa-shopping-bag"></i>
+          <label>Shop</label>
+          <label>U$ | tix</label>
+      </button>
+      <button routerLink="/profile/{{_deckService.deckProcess.processingDeck.ownerId}}"
+        [disabled]="!_deckService.deckProcess.processingDeck.ownerId"
+        type="button" class="btn btn-icon">
+          <i class="fas fa-address-card"></i>
+          <label>Deck Creator</label>
+      </button>
+    <button type="button" class="btn btn-icon" disabled>
+        <i class="fas fa-cloud-download-alt"></i>
+        <label>Export</label>
+    </button>
+    <button type="button" class="btn btn-icon" disabled>
+        <i class="fas fa-flask"></i>
+        <label>Take to the Lab</label>
+    </button>
+    <button type="button" class="btn btn-icon" disabled>
+        <i class="fas fa-box-open"></i>
+        <label>Check in a Collection</label>
+    </button>
+    <button type="button" class="btn btn-icon" disabled>
+        <i class="fas fa-code-branch"></i>
+        <label>Fork Deck</label>
+    </button>
+    <button type="button" class="btn btn-icon" disabled>
+        <i class="fas fa-retweet"></i>
+        <label>Share</label>
+    </button>
+    <button (click)="delete()" type="button" class="btn btn-icon" [disabled]="!user.id === _deckService.deckProcess.processingDeck.owner" >
+        <i class="fas fa-trash"></i>
+        <label>Delete Deck</label>
+    </button>
+  </section>
+  <div class="closer" (click)="closeContext()">
+    <i class="fas fa-times"></i>
+  </div>
+</div>

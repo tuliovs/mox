@@ -125,7 +125,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   animateNav(event?) {
-
     this.navState = (!this.sideNavIsActive) ? 'opened' : 'closed';
     this.sideNavIsActive = !this.sideNavIsActive;
   }

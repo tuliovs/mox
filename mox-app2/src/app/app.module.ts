@@ -45,6 +45,8 @@ import { ToastMessageComponent } from './_shared/ui/toast-message/toast-message.
 import { ToastService } from './_application/_services/toast/toast.service';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { DotComponent } from './_shared/ui/dot/dot.component';
+import { DeckStatsComponent } from './deck-hub/deck-view/deck-stats/deck-stats.component';
+import { DeckContextComponent } from './_shared/ui/context-menu/deck-context/deck-context.component';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -79,6 +81,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     ToastMessageComponent,
     UserProfileComponent,
     DotComponent,
+    DeckStatsComponent,
+    DeckContextComponent,
   ],
   imports: [
     CommonModule,

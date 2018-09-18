@@ -2,10 +2,10 @@ import { Card } from '@application/_models/_scryfall-models/models';
 import { ToastService } from './../../_application/_services/toast/toast.service';
 import { Observable } from 'rxjs';
 import { MoxDeck } from 'src/app/_application/_models/_mox_models/MoxDeck';
-import { Component, OnInit, ViewChild, ElementRef, Pipe } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { tap, finalize } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
 
@@ -172,64 +172,57 @@ export class DeckViewComponent implements OnInit {
     }
   }
 
-  delete(deck: MoxDeck) {
-    if (confirm('This action can not be undone, are you sure?')) {
-      this.afs.collection('decks').doc(deck.key).delete();
-      this._toast.sendMessage('Deck successfully deleted!', 'success', deck.ownerId);
-      this.router.navigate(['/deckhub']);
-    } else {
-      this._toast.sendMessage('Ops! Deck not deleted!', 'warning', deck.ownerId);
+
+
+  countOccurrences(arr: string[], value: string) {
+    let res = 0;
+    arr.forEach(element => {
+      if (element === value) {
+        res++;
+      }
+    });
+    return res;
+  }
+
+  changetab(side) {
+    switch (side) {
+      case 'left':
+        // alert('LEFT');
+        switch (this.tab) {
+          case 'statsTab':
+              this.tab = 'socialTab';
+            break;
+          case 'socialTab':
+              this.tab = 'profileTab';
+            break;
+          case 'profileTab':
+              this.tab = 'statsTab';
+            break;
+          default:
+              alert('I`m sorry, I got lost');
+            break;
+        }
+        break;
+      case 'right':
+        // alert('RIGHT');
+        switch (this.tab) {
+          case 'statsTab':
+              this.tab = 'profileTab';
+            break;
+          case 'profileTab':
+              this.tab = 'socialTab';
+            break;
+          case 'socialTab':
+              this.tab = 'statsTab';
+            break;
+          default:
+              alert('I`m sorry, I got lost');
+            break;
+        }
+        break;
+      default:
+        break;
     }
   }
 
-  countOccurrences(arr: string[], value: string) {
-        let res = 0;
-        arr.forEach(element => {
-          if (element === value) {
-            res++;
-          }
-        });
-        return res;
-    }
-
-    changetab(side) {
-      switch (side) {
-        case 'left':
-          // alert('LEFT');
-          switch (this.tab) {
-            case 'statsTab':
-                this.tab = 'socialTab';
-              break;
-            case 'socialTab':
-                this.tab = 'profileTab';
-              break;
-            case 'profileTab':
-                this.tab = 'statsTab';
-              break;
-            default:
-                alert('I`m sorry, I got lost');
-              break;
-          }
-          break;
-        case 'right':
-          // alert('RIGHT');
-          switch (this.tab) {
-            case 'statsTab':
-                this.tab = 'profileTab';
-              break;
-            case 'profileTab':
-                this.tab = 'socialTab';
-              break;
-            case 'socialTab':
-                this.tab = 'statsTab';
-              break;
-            default:
-                alert('I`m sorry, I got lost');
-              break;
-          }
-          break;
-        default:
-          break;
-      }
-    }
 }

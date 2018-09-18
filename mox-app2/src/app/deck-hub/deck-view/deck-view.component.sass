@@ -1,6 +1,7 @@
 @import './../../../styles/theme.colors'
 
 $shad: rgba(102, 122, 149, .17);
+$shad-low: rgba(0, 0, 0, .25);
 
 hr
   border: solid 1px color(_darkblue)
@@ -139,6 +140,6 @@ ol
     font-size: 1.2em
     font-weight: 600
 
-.fixer
-  display: block
-  width: 15%
+.selected-deck
+  border-bottom: 1px solid color(_darkblue)
+  box-shadow: 3px 3px 5px $shad-low

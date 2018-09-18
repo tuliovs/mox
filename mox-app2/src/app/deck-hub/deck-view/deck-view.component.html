@@ -9,7 +9,7 @@
   </app-mox-titlebar>
   <div class="main">
     <div [hidden]="tab != 'statsTab'">
-      <app-mox-comming-warning></app-mox-comming-warning>
+      <app-mox-deck-stats [deckid]="deck.id"></app-mox-deck-stats>
     </div>
     <div [hidden]="tab !='profileTab'">
       <div class="summary">
@@ -20,7 +20,7 @@
       <ul>
         <li *ngFor="let card of _cardList">
           <app-mox-row-card [cardAmout]="cardAmount(card.id)" [card]="card" (select)="selectedCard($event)"
-            (plus)="cardPlus($event)" (minus)="cardMinus($event)" [selected]="(this._selectedCard && this._selectedCard === card.id)"
+            (plus)="cardPlus($event)" (minus)="cardMinus($event)" [selected]="(this._selectedCard && this._selectedCard === card)"
           ></app-mox-row-card>
         </li>
       </ul>
@@ -28,7 +28,7 @@
       <ul>
         <li *ngFor="let card of _sideList">
           <app-mox-row-card [cardAmout]="cardSideAmount(card.id)" [card]="card" (select)="selectedCard($event)"
-            (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)" [selected]="(this._selectedCard && this._selectedCard === card.id)"
+            (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)" [selected]="(this._selectedCard && this._selectedCard === card)"
           ></app-mox-row-card>
         </li>
       </ul>
@@ -89,6 +89,7 @@
   <button class="btn btn-action" disabled>
     <i class="fas fa-envelope" style="font-size: 1.2em" ></i>
   </button>
-  <app-mox-card-context [card]="_selectedCard" [icon]="'fas fa-ellipsis-h'" [disabled]="!_selectedCard" ></app-mox-card-context>
+  <app-mox-card-context [card]="_selectedCard"  [icon]="'fas fa-ellipsis-h'" *ngIf="_selectedCard" ></app-mox-card-context>
+  <app-mox-deck-context [deck]="tempDeck"       [icon]="'fas fa-ellipsis-v'" *ngIf="!_selectedCard"></app-mox-deck-context>
 </app-mox-action-bar>
 

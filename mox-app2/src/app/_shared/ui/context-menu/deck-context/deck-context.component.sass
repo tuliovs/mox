@@ -1,0 +1,110 @@
+@import '../../../../../styles/theme.colors'
+
+\:host
+  display: flex
+
+.btn-action
+  font-size: 1.65em
+  height: 100%
+  margin-top: 0
+
+.lightbox
+  background: linear-gradient(180deg, #525462 0%, #353743 100%)
+  box-shadow: 15px 15px 30px rgba(0, 0, 0, .25)
+  color: color(ice)
+  font-size: 1.25em
+  font-weight: normal
+  height: 100vh
+  left: 0
+  line-height: 40px
+  max-width: 100%
+  min-width: 100%
+  overflow: scroll
+  padding: 0
+  position: fixed
+  text-align: center
+  top: 0
+  z-index: 20
+
+.action-menu
+  height: 100%
+  left: 10%
+  max-height: 100%
+  max-width: 80%
+  overflow-y: scroll
+  padding: 0
+  position: fixed
+  top: 0
+  width: 80%
+  z-index: 21
+
+.content
+  display: inline-flex
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: center
+
+  .fas,
+  .ss
+    color: color(_white)
+    font-size: 2.4em
+    padding: .4em
+
+  .btn-icon
+    border: 0
+    margin-bottom: 2em
+    max-width: 40%
+    min-width: 40%
+
+    i
+      border: 0
+      font-size: 2.4em
+      padding: .2em .4em
+      width: 100%
+
+    label
+      color: color(_ice)
+      display: block
+      font-family: 'Exo 2', sans-serif
+      font-size: 1em
+      font-style: normal
+      font-weight: 600
+      line-height: normal
+      text-align: center
+      text-transform: capitalize
+      width: 100%
+
+.card-data
+  div
+    .img
+      background-position: center
+      background-size: cover
+      border: 0
+      height: 6em
+      width: 6em
+
+    i
+      color: color(_white)
+      font-size: 1.3em
+      margin-left: -8%
+      margin-top: 26%
+      position: absolute
+
+    .fas
+      color: color(notification, error)
+
+  p
+    color: color(_white)
+
+.closer
+  bottom: 0
+  font-size: .8em
+  left: 0
+  opacity: .1
+  position: fixed
+  width: 100%
+
+  i
+    color: color(_white)
+    font-size: 2.4em
+    padding: .4em
