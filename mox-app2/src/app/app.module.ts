@@ -7,8 +7,9 @@ import { HammerGestureConfig, BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { environment } from '../environments/environment';
 import { KarnModule } from './karn/karn.module';
 
@@ -95,6 +96,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
+    AngularFireMessagingModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [

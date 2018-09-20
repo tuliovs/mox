@@ -1,13 +1,11 @@
 import { Card } from './../../../_models/_scryfall-models/models';
 import { ActionStateService } from './../../action-state/action-state.service';
 import { Router } from '@angular/router';
-import {
-    AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument
-} from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { MoxDeck } from '../../../_models/_mox_models/MoxDeck';
+import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
 import { AuthService } from '@karn/_services/auth.service';
 import { ToastService } from '@application/_services/toast/toast.service';
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
@@ -16,7 +14,10 @@ class DeckProcess {
   public active = false;
   public totalcards = 0;
   public status: string;
-  public processingDeck: MoxDeck;
+  public _deck: MoxDeck;
+  public _cardList = [];
+  public _sideList = [];
+  public _deckStats: any;
   public errorList: string[] = [];
 }
 
@@ -47,6 +48,46 @@ export class MoxDeckService {
     return this.creatingDeck;
   }
 
+  public processStats() {
+    if (this.deckProcess.active) {
+      if (!this.deckProcess._deckStats) { this.deckProcess._deckStats = {}; }
+
+      if (this.processPrice()) {
+        this._state.setState('nav');
+      } else {
+        this._state.setState('error');
+      }
+    } else {
+      console.error('No deck to process');
+      //  this._toast.sendMessage('Error adding document: ', 'danger',  ownerId);
+    }
+  }
+
+  private processPrice(): boolean {
+    this.deckProcess._deckStats.totalPrice = 0;
+    try {
+      this.deckProcess.status = 'Processing Price';
+      this.deckProcess._cardList.forEach((c: Card) => {
+        if (c.usd) {
+          this.deckProcess._deckStats.totalPrice += (this.countOccurrences(this.deckProcess._deck.cards, c.id) * parseFloat(c.usd));
+        }
+      });
+      this.deckProcess._sideList.forEach((c: Card) => {
+        if (c.usd) {
+          this.deckProcess._deckStats.totalPrice += (this.countOccurrences(this.deckProcess._deck.side, c.id) * parseFloat(c.usd));
+        }
+      });
+
+      this.deckProcess._deckStats.totalPrice = this.deckProcess._deckStats.totalPrice.toFixed(2);
+      return true;
+
+    } catch (error) {
+      this.deckProcess.status = 'Error';
+      this.deckProcess.errorList.push(error);
+      return false;
+    }
+  }
+
   public quickCreate() {
     this._auth.getUser().pipe(
       tap((user) => {
@@ -71,7 +112,7 @@ export class MoxDeckService {
             this._toast.sendMessage('Deck Created!', 'success', d.ownerId);
             this.workingDeck.lift(this.deckCollection.doc<MoxDeck>(d.key).valueChanges);
             this.deckProcess.active = true;
-            this.deckProcess.processingDeck = d;
+            this.deckProcess._deck = d;
           });
         } else {
           console.error('User not found!: ', user);
@@ -88,11 +129,10 @@ export class MoxDeckService {
       tap(
         (deck) => {
           this.deckProcess.active = true;
-          this.deckProcess.processingDeck = deck;
+          this.deckProcess._deck = deck;
         }
       )
     ).subscribe();
-    // this.deckCollection.doc<MoxDeck>(d.key).valueChanges().lift(this.workingDeck.asObservable);
   }
 
   setDeck(d: MoxDeck) {
@@ -134,9 +174,9 @@ export class MoxDeckService {
             cards: tempDeck.cards
           }).then(() => {
             this._toast.sendMessage(
-              'Done! Add to your: ' + this.deckProcess.processingDeck.name + ' decklist.',
+              'Done! Add to your: ' + this.deckProcess._deck.name + ' decklist.',
               'success',
-              this.deckProcess.processingDeck.ownerId);
+              this.deckProcess._deck.ownerId);
           });
         })
       )
@@ -144,14 +184,14 @@ export class MoxDeckService {
 
     } else {
       this.deckProcess.active = true;
-      this.deckProcess.processingDeck.cards.push(cardId);
-      this.deckCollection.doc(this.deckProcess.processingDeck.key).update({
-        cards: this.deckProcess.processingDeck.cards
+      this.deckProcess._deck.cards.push(cardId);
+      this.deckCollection.doc(this.deckProcess._deck.key).update({
+        cards: this.deckProcess._deck.cards
       }).then(() => {
         this._toast.sendMessage(
-          'Done! Add to your: ' + this.deckProcess.processingDeck.name + ' decklist.',
+          'Done! Add to your: ' + this.deckProcess._deck.name + ' decklist.',
           'success',
-          this.deckProcess.processingDeck.ownerId);
+          this.deckProcess._deck.ownerId);
       });
     }
   }
@@ -167,23 +207,23 @@ export class MoxDeckService {
             side: tempDeck.side
           }).then(() => {
             this._toast.sendMessage(
-              'Done! Add to your: ' + this.deckProcess.processingDeck.name + ' side.',
+              'Done! Add to your: ' + this.deckProcess._deck.name + ' side.',
               'success',
-              this.deckProcess.processingDeck.ownerId);
+              this.deckProcess._deck.ownerId);
           });
         })
       )
       .subscribe();
 
     } else {
-      this.deckProcess.processingDeck.side.push(cardId);
-      this.deckCollection.doc(this.deckProcess.processingDeck.key).update({
-        side: this.deckProcess.processingDeck.side
+      this.deckProcess._deck.side.push(cardId);
+      this.deckCollection.doc(this.deckProcess._deck.key).update({
+        side: this.deckProcess._deck.side
       }).then(() => {
         this._toast.sendMessage(
-          'Done! Add to your: ' + this.deckProcess.processingDeck.name + ' side.',
+          'Done! Add to your: ' + this.deckProcess._deck.name + ' side.',
           'success',
-          this.deckProcess.processingDeck.ownerId);
+          this.deckProcess._deck.ownerId);
       });
     }
   }
@@ -203,7 +243,7 @@ export class MoxDeckService {
         this._scryService.mtgArenaSearch(set, collectorsNumber).pipe(
           tap((card: Card) => {
             for (let index = 1; index <= qnt; index++) {
-              if (this.deckProcess.processingDeck.cards.length >= 60) {
+              if (this.deckProcess._deck.cards.length >= 60) {
                 if (card.name.trim() === cardname.trim()) {
                   this.addCard(card.id);
                 } else {
@@ -238,6 +278,16 @@ export class MoxDeckService {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
+  }
+
+  public countOccurrences(arr: string[], value: string) {
+    let res = 0;
+    arr.forEach(el => {
+      if (el === value) {
+        res++;
+      }
+    });
+    return res;
   }
 
   deckFix(deck: MoxDeck): MoxDeck {

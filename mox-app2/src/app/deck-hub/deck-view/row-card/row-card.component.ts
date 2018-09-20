@@ -1,7 +1,6 @@
 import { Card } from '@application/_models/_scryfall-models/models';
 import { Component, OnInit, Input, Output, AfterViewInit, EventEmitter } from '@angular/core';
-import { MoxCardComponent } from '@shared/mox-card/mox-card.component';
-import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
 import { tap } from 'rxjs/operators';
 import { ToastService } from '@application/_services/toast/toast.service';
@@ -19,7 +18,7 @@ export class RowCardComponent implements OnInit, AfterViewInit {
   @Output() plus: EventEmitter<any> = new EventEmitter();
   @Output() minus: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
-  @Input() card;
+  @Input() card: Card;
   @Input() cardAmout;
   @Input() selected: boolean;
   constructor(

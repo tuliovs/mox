@@ -5,8 +5,17 @@
         [class.uncommon]=" card.rarity == 'uncommon'"
         [class.rare]=" card.rarity == 'rare'"
         [class.mythic]=" card.rarity == 'mythic'" class="card-rarity"></div>
-  <div class="card-img" (click)="cardView = true;select.emit(card)" *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }"></div>
-  <div class="card-img" (click)="cardView = true;select.emit(card)" *ngIf="!card.image_uris && card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }"></div>
+
+  <div class="card-img"
+    (click)="cardView = true;select.emit(card)"
+    *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }">
+  <label class="mox-font">${{card.usd}}</label></div>
+
+  <div class="card-img"
+      (click)="cardView = true;select.emit(card)"
+      *ngIf="!card.image_uris && card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }">
+  <label class="mox-font">${{card.usd}}</label></div>
+
   <div class="data-container" *ngIf="!card.card_faces" (click)="select.emit(card)" >
     <div class="card-data"><h4>{{card.name}}</h4></div>
     <div class="card-data typeline">{{card.type_line}}</div>

@@ -30,6 +30,22 @@ $mythic-hori:  linear-gradient(270deg, $m1  0%, $m2 47.51%, $m1 100%);
 $bg-sidenav: linear-gradient(180deg, $bg-aux1 0%, $bg-aux2 100%);
 $bg-uclass-normal: linear-gradient(271.13deg, $c1 .32%, $c2 49.73%, $c1 99.68%);
 
+$mox-theme: (
+  primary:   #132030,
+  secondary: #435269,
+  steel:     #667a95,
+  ascent:    #afc0dc,
+  light:     #f9ffff,
+);
+
+$moth-theme: (
+  primary:   #883818,
+  secondary: #595554,
+  steel:     #99999a,
+  ascent:    #77594d,
+  light:     #f16b28,
+);
+
 $delta-colors: (
   _white:     #fff,
   _ice:       #f9ffff,

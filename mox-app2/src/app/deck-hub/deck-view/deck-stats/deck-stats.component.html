@@ -1,3 +1,27 @@
-<p>
-  deck-stats works!
-</p>
+
+
+
+<div *ngIf="!_deckService.deckProcess._deckStats">
+  <p>
+    <i class="far fa-chart-bar" style="font-size:8em"></i>
+  </p>
+  <h2>Hello friend!</h2>
+  <p>
+    I don't have any data of this deck yet, so if you may find this option on deck menu and I will process this data for you.
+  </p>
+  <div class="error-list" *ngIf="_deckService.deckProcess.status === 'Error'">
+    <h4>I'm sorry, I got a problem. You should report this.</h4>
+    <p *ngFor="let error of _deckService.deckProcess.errorList">
+      {{error}}
+    </p>
+  </div>
+</div>
+
+<div class="deck-data" *ngIf="_deckService.deckProcess._deckStats">
+  <h2>Deck Data</h2>
+  <fieldset>
+    <p>
+      <label>Deck Price: </label>US$ {{_deckService.deckProcess._deckStats.totalPrice}}
+    </p>
+  </fieldset>
+</div>

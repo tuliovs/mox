@@ -1,8 +1,9 @@
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-import * as firebase from 'firebase/app';
-import { Observable, of, Subject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { auth } from 'firebase';
+
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -44,7 +45,7 @@ export class AuthService {
         this.afs.collection('users').doc(credetial.user.uid).snapshotChanges().subscribe(
           (doc) => {
             if  (doc.payload.exists) {
-              // this.updateUserData(credetial.user);
+              this.updateUserData(credetial.user);
             } else {
               this.setUserData(credetial.user);
             }
@@ -55,18 +56,15 @@ export class AuthService {
   }
 
   googleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider);
+    return this.oAuthLogin(new auth.GoogleAuthProvider());
   }
 
   twitterLogin() {
-    const provider = new firebase.auth.TwitterAuthProvider();
-    return this.oAuthLogin(provider);
+    return this.oAuthLogin(new auth.TwitterAuthProvider());
   }
 
   gitHubLogin() {
-    const provider = new firebase.auth.GithubAuthProvider();
-    return this.oAuthLogin(provider);
+    return this.oAuthLogin(new auth.GithubAuthProvider());
   }
 
   updateUserData(user) {
@@ -78,7 +76,7 @@ export class AuthService {
       nickName: user.nickName,
       photoURL: user.photoURL,
     };
-    return userRef.update(user);
+    return userRef.update(data);
   }
 
   setUserData(user) {

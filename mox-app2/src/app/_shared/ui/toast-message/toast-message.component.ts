@@ -1,8 +1,8 @@
-import { AuthService } from './../../../karn/_services/auth.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { ToastService, Message } from '../../../_application/_services/toast/toast.service';
-import { filter, take, tap } from '../../../../../node_modules/rxjs/operators';
-import { animate, keyframes, style, transition, trigger, state, query, stagger } from '@angular/animations';
+import { AuthService } from '@karn/_services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { ToastService, Message } from '@application/_services/toast/toast.service';
+import { filter, take, tap } from 'rxjs/operators';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 
 export const swing = [
   style({transform: 'rotate3d(0, 0, 1, 15deg)', offset: .2}),

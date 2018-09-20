@@ -1,53 +1,47 @@
-import { AngularFirestore } from 'angularfire2/firestore';
-import * as firebase from 'firebase';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireMessaging } from '@angular/fire/messaging';
 import { Subject } from 'rxjs';
 
 import { Injectable } from '@angular/core';
-
-import { AuthService } from '../../../karn/_services/auth.service';
+import { AuthService } from '@karn/_services/auth.service';
+import { mergeMapTo } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-
-  private messaging = firebase.messaging();
   private messageSource = new Subject();
   currentMessage = this.messageSource.asObservable();
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore,
+    private afMessaging: AngularFireMessaging) { }
 
   getPermission(user) {
-    this.messaging.requestPermission()
-    .then(() => {
-      // console.log('Notification permission granted.');
-      return this.messaging.getToken();
-    })
-    .then(token => {
-      // console.log(token);
-      this.saveToken(user, token);
-    })
-    .catch((err) => {
-      console.log('Unable to get permission to notify.', err);
-    });
+    // this.afMessaging.requestPermission
+    // .pipe(mergeMapTo(this.afMessaging.tokenChanges))
+    // .subscribe(
+    //   (token) => { this.saveToken(user, token); },
+    //   (error) => { console.log('Unable to get permission to notify.', error); },
+    // );
   }
 
   monitorRefresh(user) {
-    this.messaging.onTokenRefresh(() => {
-      this.messaging.getToken()
-      .then(refreshedToken => {
-        console.log('Token refreshed.');
-        this.saveToken(user, refreshedToken);
-      })
-      .catch( err => console.log(err, 'Unable to retrieve new token') );
-    });
+    // this.afMessaging.tokenChanges
+    // .subscribe(
+    //   (refreshedToken) => {
+    //     console.log('Token refreshed.');
+    //     this.saveToken(user, refreshedToken);
+    //   }
+    // );
   }
 
   receiveMessages() {
-    this.messaging.onMessage(payload => {
-      console.log('Message received. ', payload);
-      this.messageSource.next(payload);
-    });
+    // this.afMessaging.messages
+    //   .subscribe((message) => { this.messageSource.next(message); });
+    // this.messaging.onMessage(payload => {
+    //   console.log('Message received. ', payload);
+    //   this.messageSource.next(payload);
+    // });
   }
 
   private saveToken(user, token): void {

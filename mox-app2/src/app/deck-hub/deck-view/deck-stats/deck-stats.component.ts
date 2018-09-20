@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 
 @Component({
   selector: 'app-mox-deck-stats',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeckStatsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public _deckService: MoxDeckService
+  ) { }
 
   ngOnInit() {
   }

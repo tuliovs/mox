@@ -12,7 +12,7 @@
     <hr>
     <div>
       <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
-      <progress *ngIf="showLoader && _deckService.deckProcess.processingDeck" value="(_deckService.deckProcess.processingDeck.cards.length + _deckService.deckProcess.processingDeck.side.length)" max="_deckService.deckProcess.totalcards"></progress>
+      <progress *ngIf="showLoader && _deckService.deckProcess._deck" value="(_deckService.deckProcess._deck.cards.length + _deckService.deckProcess._deck.side.length)" max="_deckService.deckProcess.totalcards"></progress>
       <ul *ngIf="!showLoader">
         <li class="item">
           <div>

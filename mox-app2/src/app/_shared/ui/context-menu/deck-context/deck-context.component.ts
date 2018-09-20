@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { ToastService } from './../../../../_application/_services/toast/toast.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { ToastService } from '@application/_services/toast/toast.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { animate, style, transition, trigger, state } from '@angular/animations';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
@@ -32,7 +32,7 @@ export class DeckContextComponent implements OnInit {
     public _router: Router,
     public auth: AuthService,
     private afs: AngularFirestore,
-    private _deckService: MoxDeckService,
+    public _deckService: MoxDeckService,
     public _state: ActionStateService,
     public _toast: ToastService
   ) { }
@@ -43,6 +43,12 @@ export class DeckContextComponent implements OnInit {
   public lightboxActive = false;
 
   ngOnInit() {
+  }
+
+  processData() {
+    this.closeContext();
+    this._state.setState('loading');
+    this._deckService.processStats();
   }
 
   delete() {
@@ -61,7 +67,7 @@ export class DeckContextComponent implements OnInit {
     this.lightboxActive = true;
     this.componentState = 'opened';
     this._state.setState('hidden');
-    console.log('#', this._deckService.deckProcess.processingDeck);
+    // console.log('#', this._deckService.deckProcess._deck);
   }
 
   closeContext() {

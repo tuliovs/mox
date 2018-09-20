@@ -3,6 +3,9 @@
 $shad: rgba(102, 122, 149, .17);
 $shad-low: rgba(0, 0, 0, .25);
 
+.main
+  margin-top: 1.84em
+
 hr
   border: solid 1px color(_darkblue)
   margin: 5% 10%
@@ -15,38 +18,28 @@ hr
   width: 100%
 
 .summary
-  background-color: color(_gray)
+  background: color(_lightblue)
+  border: 1px solid $shad
+  box-shadow: 0 0 4px $shad-low
   color: color(_ice)
   display: flex
   font-size: .81em
   height: 1.65em
   justify-content: space-between
-  padding: 0 2%
+  padding: 0
   position: fixed
   width: 100%
 
-  .decksize
-    background: color(_lightblue)
-    border: 1px solid $shad
-    border-radius: 0 3em 3em 0
-    margin-left: -3%
-    padding: 0 1.5%
+  div
+    align-items: center
+    display: inline-flex
+    font-size: 12px
+    height: 90%
+    padding: 0 .5%
 
   .deckname
-    background: color(_lightblue)
-    border: 1px solid $shad
-    border-radius: 0 0 1em 1em
-    font-size: 1em
-    margin-top: -1%
-    max-height: 17px
-    padding: 0 2%
-
-  .deckside
-    background: color(_lightblue)
-    border: 1px solid $shad
-    border-radius: 3em 0 0 3em
-    margin-right: -3%
-    padding: 0 1.5%
+    font-size: 14px
+    padding: 0 1%
 
   i
     margin: 0 2px
@@ -65,11 +58,12 @@ hr
 
     .deck-name-container
       align-items: center
-      padding: 0 2%
+      padding: 0 1%
       text-align: left
       width: 100%
 
       i
+        font-size: 13px
         text-shadow: 0 0 1px color(_white)
 
       input
@@ -114,7 +108,7 @@ ul
   margin-top: 0%
   overflow-x: hidden
   overflow-y: hidden
-  padding-top: 4%
+  padding-top: 5%
 
 $wtf: #e2e2e2;
 ol

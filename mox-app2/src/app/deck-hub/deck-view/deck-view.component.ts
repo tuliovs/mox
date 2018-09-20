@@ -1,13 +1,14 @@
 import { Card } from '@application/_models/_scryfall-models/models';
-import { ToastService } from './../../_application/_services/toast/toast.service';
+import { ToastService } from '@application/_services/toast/toast.service';
 import { Observable } from 'rxjs';
-import { MoxDeck } from 'src/app/_application/_models/_mox_models/MoxDeck';
+import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { tap } from 'rxjs/operators';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
+import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 
 @Component({
   selector: 'app-mox-deck-view',
@@ -35,16 +36,15 @@ export class DeckViewComponent implements OnInit {
   public _selectedCard;
   public tempDeck: MoxDeck;
   public tab = 'profileTab';
-  public _orderAsc = true;
+  public _orderAsc = false;
   public _id: string;
-  public _cardList: any[] = [];
-  public _sideList: any[] = [];
   public deckCollection: AngularFirestoreCollection<MoxDeck>;
   public cardCollection: AngularFirestoreCollection<Card>;
   public cardDoc: AngularFirestoreDocument<Card>;
   constructor(
     private afs: AngularFirestore,
     public _cardService: MoxCardService,
+    private _deckService: MoxDeckService,
     private _route: ActivatedRoute,
     private _toast: ToastService,
     private router: Router,
@@ -66,18 +66,14 @@ export class DeckViewComponent implements OnInit {
             if (deck) {
               if (!deck.side) { deck.side = [];  }
               this.tempDeck = deck;
-              this._cardList = [];
-              this._sideList = [];
+              this._deckService.editDeck(deck);
+              this._deckService.deckProcess._cardList = [];
+              this._deckService.deckProcess._sideList = [];
               Array.from(new Set(deck.cards))
               .forEach((incard) => {
                 this._cardService.getCard(incard).pipe(
                   tap((x: Card) => {
-                    this._cardList.push(x);
-                    this._cardList = this._cardList.sort((a: Card, b: Card): number => {
-                      if ( a.cmc < b.cmc ) { return -1; }
-                      if ( a.cmc > b.cmc ) { return 1; }
-                      return 0;
-                    });
+                    this._deckService.deckProcess._cardList.push(x);
                   }),
                 ).subscribe();
               });
@@ -85,12 +81,7 @@ export class DeckViewComponent implements OnInit {
               .forEach((incard) => {
                 this._cardService.getCard(incard).pipe(
                   tap((x: Card) => {
-                    this._sideList.push(x);
-                    this._sideList = this._sideList.sort((a: Card, b: Card): number => {
-                      if ( a.cmc < b.cmc ) { return -1; }
-                      if ( a.cmc > b.cmc ) { return 1; }
-                      return 0;
-                    });
+                    this._deckService.deckProcess._sideList.push(x);
                   })
                 ).subscribe();
               });
@@ -112,7 +103,7 @@ export class DeckViewComponent implements OnInit {
   }
 
   cardSort(order) {
-    this._cardList = this._cardList.sort((a: Card, b: Card): number => {
+    this._deckService.deckProcess._cardList = this._deckService.deckProcess._cardList.sort((a: Card, b: Card): number => {
       if (order) {
         if ( a.cmc < b.cmc ) { return -1; }
         if ( a.cmc > b.cmc ) { return 1; }
@@ -123,7 +114,7 @@ export class DeckViewComponent implements OnInit {
         return 0;
       }
     });
-    this._sideList = this._sideList.sort((a: Card, b: Card): number => {
+    this._deckService.deckProcess._sideList = this._deckService.deckProcess._sideList.sort((a: Card, b: Card): number => {
       if (order) {
         if ( a.cmc < b.cmc ) { return -1; }
         if ( a.cmc > b.cmc ) { return 1; }
@@ -138,11 +129,11 @@ export class DeckViewComponent implements OnInit {
   }
 
   cardAmount(cardId) {
-    return this.countOccurrences(this.tempDeck.cards, cardId);
+    return this._deckService.countOccurrences(this.tempDeck.cards, cardId);
   }
 
   cardSideAmount(cardId) {
-    return this.countOccurrences(this.tempDeck.side, cardId);
+    return this._deckService.countOccurrences(this.tempDeck.side, cardId);
   }
 
   cardPlus(event) {
@@ -153,7 +144,6 @@ export class DeckViewComponent implements OnInit {
     this.tempDeck.side.push(event);
     this.saveDeck(true);
   }
-
   cardMinus(event) {
     this.tempDeck.cards.splice(this.tempDeck.cards.indexOf(event), 1);
     this.saveDeck(true);
@@ -170,18 +160,6 @@ export class DeckViewComponent implements OnInit {
       // this._moxService.editDeck(deck);
       this._selectedCard = card;
     }
-  }
-
-
-
-  countOccurrences(arr: string[], value: string) {
-    let res = 0;
-    arr.forEach(element => {
-      if (element === value) {
-        res++;
-      }
-    });
-    return res;
   }
 
   changetab(side) {

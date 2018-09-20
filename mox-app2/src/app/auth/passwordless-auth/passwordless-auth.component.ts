@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '@envoirment/environment';
 
 @Component({
   selector: 'app-mox-passwordless-auth',

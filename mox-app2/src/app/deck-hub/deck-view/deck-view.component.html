@@ -13,12 +13,16 @@
     </div>
     <div [hidden]="tab !='profileTab'">
       <div class="summary">
-        <div class="decksize"><i class="fas fa-clone"></i>{{deck.cards.length}}</div>
+        <div class="decksize mox-font">
+          <i class="fas fa-clone"></i>{{deck.cards.length}}
+          /
+          <i class="far fa-clone"></i>{{(deck.side) ? deck.side.length : 0}}
+        </div>
         <div class="deckname">{{deck.name}}</div>
-        <div class="deckside">{{(deck.side) ? deck.side.length : 0}}<i class="far fa-clone"></i></div>
+        <div class="decktype">{{deck.format}}</div>
       </div>
       <ul>
-        <li *ngFor="let card of _cardList">
+        <li *ngFor="let card of _deckService.deckProcess._cardList">
           <app-mox-row-card [cardAmout]="cardAmount(card.id)" [card]="card" (select)="selectedCard($event)"
             (plus)="cardPlus($event)" (minus)="cardMinus($event)" [selected]="(this._selectedCard && this._selectedCard === card)"
           ></app-mox-row-card>
@@ -26,7 +30,7 @@
       </ul>
       <hr>
       <ul>
-        <li *ngFor="let card of _sideList">
+        <li *ngFor="let card of _deckService.deckProcess._sideList">
           <app-mox-row-card [cardAmout]="cardSideAmount(card.id)" [card]="card" (select)="selectedCard($event)"
             (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)" [selected]="(this._selectedCard && this._selectedCard === card)"
           ></app-mox-row-card>
@@ -87,7 +91,7 @@
   </button>
   <div class="fixer"></div>
   <button class="btn btn-action" disabled>
-    <i class="fas fa-envelope" style="font-size: 1.2em" ></i>
+    <i class="fas fa-comments" style="font-size: 1.2em" ></i>
   </button>
   <app-mox-card-context [card]="_selectedCard"  [icon]="'fas fa-ellipsis-h'" *ngIf="_selectedCard" ></app-mox-card-context>
   <app-mox-deck-context [deck]="tempDeck"       [icon]="'fas fa-ellipsis-v'" *ngIf="!_selectedCard"></app-mox-deck-context>

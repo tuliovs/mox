@@ -1,6 +1,6 @@
 import { tap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../karn/_services/auth.service';
+import { AuthService } from '@karn/_services/auth.service';
 import { ToastService } from '@application/_services/toast/toast.service';
 
 @Component({

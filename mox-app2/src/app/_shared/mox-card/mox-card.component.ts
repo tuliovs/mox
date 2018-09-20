@@ -1,18 +1,13 @@
-import { MoxCardService } from './../../_application/_services/mox-services/card/mox-card.service';
-import {
-    AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument
-} from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { tap } from 'rxjs/operators';
 
-import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { CardMapper } from '../../_application/_mappers/scryfall-mappers/card/cardMapper';
-import { Card } from '../../_application/_models/_scryfall-models/models';
-import {
-    ScryfallCardService
-} from '../../_application/_services/scryfall-services/card/scryfall-card.service';
+import { CardMapper } from '@application/_mappers/scryfall-mappers/card/cardMapper';
+import { Card } from '@application/_models/_scryfall-models/models';
+import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
+import { ScryfallCardService } from '@application/_services/scryfall-services/card/scryfall-card.service';
 
 @Component({
   selector: 'app-mox-card',

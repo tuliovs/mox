@@ -29,7 +29,7 @@
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/global-sw.js')
       .then((registration) => {
-        console.log('SW Registered');
+        // console.log('SW Registered');
       })
       .catch((err) => {
         console.log('SW Error: ', err);

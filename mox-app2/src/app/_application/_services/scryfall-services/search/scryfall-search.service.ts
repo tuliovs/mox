@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { List } from '../../../_models/_scryfall-models/models';
+import { List } from '@application/_models/_scryfall-models/models';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MoxDeck, MoxCardDeck } from '../../_application/_models/_mox_models/MoxDeck';
-import { MoxDeckService } from '../../_application/_services/mox-services/deck/mox-deck.service';
-import { AuthService } from '../../karn/_services/auth.service';
+import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
+import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
+import { AuthService } from '@karn/_services/auth.service';
 import { Router } from '@angular/router';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 

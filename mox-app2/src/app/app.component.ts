@@ -1,11 +1,10 @@
 import { ActionStateService } from './_application/_services/action-state/action-state.service';
-import { filter, take, tap } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 
 import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { MoxDeck } from './_application/_models/_mox_models/MoxDeck';
 import { MoxDeckService } from './_application/_services/mox-services/deck/mox-deck.service';
 import { NotificationService } from './_application/_services/notification/notification.service';
 import { AuthService } from './karn/_services/auth.service';
@@ -57,11 +56,10 @@ export const flipInY = [
     ])
   ]
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   public title = 'Mox';
   public sideNavIsActive = false;
   public navState = 'closed';
-  public _Deck: MoxDeck;
   public animationState: string;
   public animationState2: string;
   constructor(
@@ -87,13 +85,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.animationState = stt;
     });
     this._state.setState('nav');
-    this._dekService.getWorkingDeck().pipe(
-      tap((deck) => {
-        this._Deck = <MoxDeck>deck;
-        console.log(this._Deck);
-        }
-      )
-    ).subscribe();
     this.auth.getUser().pipe(
       filter(user => !!user),
       take(1))
@@ -165,6 +156,4 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.navState = '';
   }
 
-  ngAfterViewInit() {
-  }
 }

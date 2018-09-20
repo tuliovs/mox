@@ -1,6 +1,5 @@
 import { Router } from '@angular/router';
 import { Card } from '@application/_models/_scryfall-models/models';
-import { element } from 'protractor';
 import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger, state, keyframes } from '@angular/animations';
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';

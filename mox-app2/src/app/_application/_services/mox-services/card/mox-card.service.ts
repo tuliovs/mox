@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Card } from '../../../_models/_scryfall-models/models';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Card } from '@application/_models/_scryfall-models/models';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { ScryfallCardService } from '@application/_services/scryfall-services/card/scryfall-card.service';
 
 @Injectable({

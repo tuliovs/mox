@@ -1,13 +1,13 @@
-import { ToastService } from '@application/_services/toast/toast.service';
 import { Input, Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger, state } from '@angular/animations';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
+import { ToastService } from '@application/_services/toast/toast.service';
 import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
 import { Card } from '@application/_models/_scryfall-models/models';
 import { tap } from 'rxjs/operators';
-import { ActionStateService } from '@application/_services/action-state/action-state.service';
 
 @Component({
   selector: 'app-mox-card-context',
@@ -33,14 +33,14 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   public deckCollection: AngularFirestoreCollection <MoxDeck>;
   public _Deck: MoxDeck;
   get cardCount(): number {
-    const t = this._deckService.deckProcess.processingDeck.cards.filter((n) => n = this.card.id );
+    const t = this._deckService.deckProcess._deck.cards.filter((n) => n = this.card.id );
     return t.length;
   }
   get sideCount(): number {
-    if (!this._deckService.deckProcess.processingDeck.side) {
-      this._deckService.deckProcess.processingDeck.side = [];
+    if (!this._deckService.deckProcess._deck.side) {
+      this._deckService.deckProcess._deck.side = [];
     }
-    const t = this._deckService.deckProcess.processingDeck.side.filter((n) => n = this.card.id );
+    const t = this._deckService.deckProcess._deck.side.filter((n) => n = this.card.id );
     return t.length;
   }
   constructor(
@@ -78,15 +78,15 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   }
 
   setCover() {
-    if (this._deckService.deckProcess.processingDeck) {
+    if (this._deckService.deckProcess._deck) {
       this._deckService.deckProcess.active = true;
       this.deckCollection = this.afs.collection('decks');
-      this.deckCollection.doc(this._deckService.deckProcess.processingDeck.key).update({
+      this.deckCollection.doc(this._deckService.deckProcess._deck.key).update({
         cover: this.card.image_uris.art_crop
       }).then(
         () => {
           this._toast.sendMessage(
-            'Congrats! ' + this.card.name + ' set as DeckCover for ' + this._deckService.deckProcess.processingDeck.name + ' !',
+            'Congrats! ' + this.card.name + ' set as DeckCover for ' + this._deckService.deckProcess._deck.name + ' !',
             'success',
             this._Deck.ownerId);
           this._deckService.deckProcess.active = false;

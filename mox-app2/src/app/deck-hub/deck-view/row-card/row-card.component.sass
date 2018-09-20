@@ -52,7 +52,16 @@ $shad-in: rgba(0, 0, 0, .15);
     background-size: cover
     border-radius: 4px
     box-shadow: 0 0 4px $shad-low, inset 3px 3px 14px $shad-in
+    display: inline-flex
+    flex-direction: column-reverse
     width: 68px
+
+    label
+      color: color(_white)
+      font-size: 13px
+      justify-content: center
+      text-align: center
+      text-shadow: 0 0 1px color(_darkblue)
 
   .data-container
     display: inline-flex
@@ -98,7 +107,11 @@ $shad-in: rgba(0, 0, 0, .15);
         font-size: 1.4em
         height: 40%
         margin: 0
+        min-width: .35em
         padding: 0
+
+      i
+        text-shadow: 0 2px 0 color(_grayer)
 
     .mana-cost
       color: color(_blue)
