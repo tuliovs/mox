@@ -51,6 +51,9 @@
         <i class="fas fa-search-plus"></i>
         <label>View Card</label>
     </button>
+    <div class="editing-deck" *ngIf="_deckService.deckProcess._deck">
+      <label>Editing Deck: {{_deckService.deckProcess._deck.name}}</label>
+    </div>
   </section>
   <div class="closer" (click)="closeContext()">
     <i class="fas fa-times"></i>

@@ -9,12 +9,12 @@
   <div class="card-img"
     (click)="cardView = true;select.emit(card)"
     *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }">
-  <label class="mox-font">${{card.usd}}</label></div>
+  <label *ngIf="card.usd" class="mox-font">${{card.usd}}</label></div>
 
   <div class="card-img"
       (click)="cardView = true;select.emit(card)"
       *ngIf="!card.image_uris && card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }">
-  <label class="mox-font">${{card.usd}}</label></div>
+  <label *ngIf="card.usd" class="mox-font">${{card.usd}}</label></div>
 
   <div class="data-container" *ngIf="!card.card_faces" (click)="select.emit(card)" >
     <div class="card-data"><h4>{{card.name}}</h4></div>
@@ -25,7 +25,13 @@
     <div class="card-data typeline">{{card.card_faces[0].type_line}}</div>
   </div>
   <div class="card-actions">
-    <div class="mana-cost" *ngIf="!card.card_faces">{{card.mana_cost}}</div>
+    <div class="mana-cost" *ngIf="!card.card_faces">
+      <i *ngFor="let ico of card.mana_cost.split('}')"
+        [className]="'ms ms-' + ico.replace('{', '').toLowerCase()"
+        [class.ms-cost]=" ico != ''"
+        [class.shadow]=" ico != ''"
+      ></i>
+    </div>
     <div class="mana-cost" *ngIf="card.card_faces">{{card.card_faces[0].mana_cost}}</div>
     <div>
       <button (click)="minus.emit(card.id)" class="btn"><i class="fas fa-minus-circle"></i></button>

@@ -20,11 +20,11 @@
         <!-- <img class="img" *ngIf="item.image_uris"  (click)="cardView = true;selectCard(item)" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }"/>
         <img class="img" *ngIf="!item.image_uris" (click)="cardView = true;selectCard(item)" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }"/> -->
         <div class="img" (click)="cardView = true;selectCard(item)" *ngIf="item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }">
-          <label class="mox-font">${{item.usd}}</label></div>
+          <label *ngIf="item.usd" class="mox-font">${{item.usd}}</label></div>
 
         <div class="img" (click)="cardView = true;selectCard(item)" *ngIf="!item.image_uris && item.card_faces"
           [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }">
-          <label class="mox-font">${{item.usd}}</label></div>
+          <label *ngIf="item.usd" class="mox-font">${{item.usd}}</label></div>
       </div>
       <section (click)="selectCard(item)">
         <h4>
@@ -34,11 +34,11 @@
           {{(item.oracle_text.length>100)? (item.oracle_text | slice:0:100)+'...':(item.oracle_text)}}
         </p>
         <p *ngIf="item.card_faces && item.card_faces[0].oracle_text" class="description">
-          {{(item.card_faces[0].oracle_text.length>100)? (item.card_faces[0].oracle_text |
-          slice:0:100)+'...':(item.card_faces[0].oracle_text)}}
+          {{(item.card_faces[0].oracle_text.length>40)? (item.card_faces[0].oracle_text |
+          slice:0:40)+'...':(item.card_faces[0].oracle_text)}}
           //
-          {{(item.card_faces[1].oracle_text.length>100)? (item.card_faces[1].oracle_text |
-          slice:0:100)+'...':(item.card_faces[1].oracle_text)}}
+          {{(item.card_faces[1].oracle_text.length>40)? (item.card_faces[1].oracle_text |
+          slice:0:40)+'...':(item.card_faces[1].oracle_text)}}
         </p>
       </section>
       <div class="card-color" [class.none]="!item.colors && (item.card_faces && !item.card_faces[0].colors[0])"

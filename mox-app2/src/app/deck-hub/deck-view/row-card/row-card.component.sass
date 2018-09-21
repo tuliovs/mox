@@ -1,8 +1,12 @@
 @import '../../../../styles/theme.colors'
 
 $shad-card-row: rgba(0, 0, 0, .07);
+$shad-dark: rgba(0, 0, 0, .5);
 $shad-low: rgba(0, 0, 0, .25);
 $shad-in: rgba(0, 0, 0, .15);
+
+.shadow
+  box-shadow: 0 0 2px #111, 0 .06em 1px #111
 
 .card-row
   background: color(_white)
@@ -61,7 +65,7 @@ $shad-in: rgba(0, 0, 0, .15);
       font-size: 13px
       justify-content: center
       text-align: center
-      text-shadow: 0 0 1px color(_darkblue)
+      text-shadow: 1px 2px 1px color(_darkblue)
 
   .data-container
     display: inline-flex
@@ -110,12 +114,11 @@ $shad-in: rgba(0, 0, 0, .15);
         min-width: .35em
         padding: 0
 
-      i
-        text-shadow: 0 2px 0 color(_grayer)
+        i
+          text-shadow: 0 2px 0 color(_grayer)
 
     .mana-cost
-      color: color(_blue)
-      font-size: 70%
+      font-size: 65%
       height: 30%
       text-align: right
       width: 100%
@@ -158,4 +161,5 @@ $shad-in: rgba(0, 0, 0, .15);
 
 .selected-card
   border-bottom: 1px solid color(_darkblue)
-  box-shadow: 3px 3px 5px $shad-low
+  box-shadow: 3px 3px 5px $shad-dark !important
+

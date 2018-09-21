@@ -10,7 +10,7 @@
         <router-outlet></router-outlet>
         <div class="action-button" *ngIf="!isState('hidden')">
           <div>
-              <i *ngIf="isState('nav')" class="ss ss-dom"
+              <i *ngIf="isState('nav')" class="ss ss-ddj"
               [@actionIcoAnimator]="animationState2"
               (@actionIcoAnimator.done)="resetAnimationState()"
               (tap)="menuOpen('opened');animateNav();setState('closed')"></i>

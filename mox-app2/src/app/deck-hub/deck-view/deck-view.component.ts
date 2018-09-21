@@ -73,7 +73,13 @@ export class DeckViewComponent implements OnInit {
               .forEach((incard) => {
                 this._cardService.getCard(incard).pipe(
                   tap((x: Card) => {
+                    this._state.setState('loading');
                     this._deckService.deckProcess._cardList.push(x);
+                    if (Array.from(new Set(deck.cards)).length === this._deckService.deckProcess._cardList.length) {
+                      this.cardSort(false);
+                      this._state.setState('nav');
+                      // console.log('Sort');
+                    }
                   }),
                 ).subscribe();
               });
@@ -81,7 +87,13 @@ export class DeckViewComponent implements OnInit {
               .forEach((incard) => {
                 this._cardService.getCard(incard).pipe(
                   tap((x: Card) => {
+                    this._state.setState('loading');
                     this._deckService.deckProcess._sideList.push(x);
+                    if (Array.from(new Set(deck.side)).length === this._deckService.deckProcess._sideList.length) {
+                      this.cardSort(false);
+                      this._state.setState('nav');
+                      // console.log('Sort');
+                    }
                   })
                 ).subscribe();
               });
