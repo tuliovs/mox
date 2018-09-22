@@ -71,6 +71,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
     } else {
       this._deckService.addCardSide(this.card.id);
     }
+    this.closeContext();
   }
 
   addFourCard(side?: boolean) {
@@ -93,6 +94,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
         }
       );
     }
+    this.closeContext();
   }
 
   activateContext() {

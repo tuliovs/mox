@@ -1,15 +1,15 @@
-import { Card } from './../../../_models/_scryfall-models/models';
-import { ActionStateService } from './../../action-state/action-state.service';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { Card } from '@application/_models/_scryfall-models/models';
 import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
 import { AuthService } from '@karn/_services/auth.service';
 import { ToastService } from '@application/_services/toast/toast.service';
+import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
-import { resolve } from 'url';
+import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
 
 class DeckProcess {
   public active = false;
@@ -35,9 +35,10 @@ export class MoxDeckService {
     private afs: AngularFirestore,
     private _auth: AuthService,
     private _state: ActionStateService,
-    public _toast: ToastService,
     private _scryService: ScryfallSearchService,
-    public _router: Router
+    public _toast: ToastService,
+    public _router: Router,
+    public _cardService: MoxCardService
     ) {
   }
 
@@ -165,6 +166,8 @@ export class MoxDeckService {
       if (this.deckProcess._deckStats && this.deckProcess._deckStats.key !== d.key) {
         this.deckProcess._deckStats = null;
       }
+      this.getCardData();
+      this.getDeckStats();
     }
   }
 
@@ -182,19 +185,73 @@ export class MoxDeckService {
     }
   }
 
-  getDeck(id: string) {
+  getDeck(deckId: string): Observable<MoxDeck> {
     this.deckCollection = this.afs.collection('decks');
-    return this.deckCollection.doc(id);
+    return this.deckCollection.doc<MoxDeck>(deckId).valueChanges();
   }
 
-  updateDeck(d: MoxDeck) {
-    console.log('UPDATE: ', d);
-    this._state.setState('loading');
-    d.updated.push(new Date());
-    this.afs.collection('dekcs').doc(d.key).update(Object.assign({}, d))
-    .then(() => {
-        this._state.setState('nav');
-    });
+  getCardData() {
+    this.deckCollection = this.afs.collection('decks');
+    this.deckCollection.doc<MoxDeck>(this.deckProcess._deck.key).valueChanges()
+    .pipe(
+      tap((deck) => {
+        if (deck) {
+          if (!deck.side) { deck.side = [];  }
+          this.editDeck(deck);
+          this.getDeckStats();
+          // this.deckProcess._cardList = [];
+          // this.deckProcess._sideList = [];
+          // this.deckProcess._deckStats = null;
+          Array.from(new Set(deck.cards))
+          .forEach((incard) => {
+            this._cardService.getCard(incard).pipe(
+              tap((x: Card) => {
+                this._state.setState('cloud');
+                this.deckProcess._cardList.push(x);
+                if (Array.from(new Set(deck.cards)).length === this.deckProcess._cardList.length) {
+                  this.cardSort(false);
+                  this._state.setState('nav');
+                  // console.log('Sort');
+                }
+              }),
+            ).subscribe();
+          });
+          Array.from(new Set(deck.side))
+          .forEach((incard) => {
+            this._cardService.getCard(incard).pipe(
+              tap((x: Card) => {
+                this._state.setState('cloud');
+                this.deckProcess._sideList.push(x);
+                if (Array.from(new Set(deck.side)).length === this.deckProcess._sideList.length) {
+                  this.cardSort(false);
+                  this._state.setState('nav');
+                  // console.log('Sort');
+                }
+              })
+            ).subscribe();
+          });
+        }
+      }),
+    ).subscribe();
+  }
+
+  updateDeck() {
+    if (this.deckProcess.active && this.deckProcess._deck) {
+      this._state.setState('cloud');
+      this.deckProcess.status = 'Saving';
+      this.afs.collection('decks')
+      .doc<MoxDeck>(this.deckProcess._deck.key)
+      .update(this.deckProcess._deck)
+      .then(() => { this._state.setState('nav'); })
+      .catch((err) => {
+        this.deckProcess.errorList.push(err);
+        this._state.setState('error');
+      });
+    } else {
+      this.deckProcess.status = 'Error';
+      this.deckProcess.active = false;
+      this._state.setState('error');
+    }
   }
 
   deleteDeck(deck: MoxDeck) {
@@ -209,6 +266,20 @@ export class MoxDeckService {
     this._toast.sendMessage('Deck successfully deleted!', 'success', deck.ownerId);
   }
 
+  getDeckStats() {
+    if (this.deckProcess.active && this.deckProcess._deck) {
+      this.afs.collection('deck-stats')
+      .doc(this.deckProcess._deck.key).valueChanges()
+      .pipe(
+        tap((deckStats) => {
+          console.log('getting stats: ', deckStats);
+          this.deckProcess._deckStats = deckStats;
+        })
+      ).subscribe();
+    } else {
+      console.error('No deck in process');
+    }
+  }
   saveDeckStats(obj) {
     if (obj) {
       this._state.setState('cloud');
@@ -238,6 +309,11 @@ export class MoxDeckService {
               'Done! Add to your: ' + this.deckProcess._deck.name + ' decklist.',
               'success',
               this.deckProcess._deck.ownerId);
+          }).catch((err) => {
+            this._toast.sendMessage(
+              'Error! ' + err,
+              'error',
+              this.deckProcess._deck.ownerId);
           });
         })
       )
@@ -246,12 +322,19 @@ export class MoxDeckService {
     } else {
       this.deckProcess.active = true;
       this.deckProcess._deck.cards.push(cardId);
+      this.deckCollection = this.afs.collection('decks');
       this.deckCollection.doc(this.deckProcess._deck.key).update({
         cards: this.deckProcess._deck.cards
-      }).then(() => {
+      }).then((a) => {
+        console.log('res: ', a);
         this._toast.sendMessage(
           'Done! Add to your: ' + this.deckProcess._deck.name + ' decklist.',
           'success',
+          this.deckProcess._deck.ownerId);
+      }).catch((err) => {
+        this._toast.sendMessage(
+          'Error! ' + err,
+          'error',
           this.deckProcess._deck.ownerId);
       });
     }
@@ -271,6 +354,11 @@ export class MoxDeckService {
               'Done! Add to your: ' + this.deckProcess._deck.name + ' side.',
               'success',
               this.deckProcess._deck.ownerId);
+          }).catch((err) => {
+            this._toast.sendMessage(
+              'Error! ' + err,
+              'error',
+              this.deckProcess._deck.ownerId);
           });
         })
       )
@@ -278,12 +366,18 @@ export class MoxDeckService {
 
     } else {
       this.deckProcess._deck.side.push(cardId);
+      this.deckCollection = this.afs.collection('decks');
       this.deckCollection.doc(this.deckProcess._deck.key).update({
         side: this.deckProcess._deck.side
       }).then(() => {
         this._toast.sendMessage(
           'Done! Add to your: ' + this.deckProcess._deck.name + ' side.',
           'success',
+          this.deckProcess._deck.ownerId);
+      }).catch((err) => {
+        this._toast.sendMessage(
+          'Error! ' + err,
+          'error',
           this.deckProcess._deck.ownerId);
       });
     }
@@ -371,6 +465,32 @@ export class MoxDeckService {
       });
       // rej(new Error('Something is Wrong!'));
     });
+  }
+
+  public cardSort(order) {
+    this.deckProcess._cardList = this.deckProcess._cardList.sort((a: Card, b: Card): number => {
+      if (order) {
+        if ( a.cmc < b.cmc ) { return -1; }
+        if ( a.cmc > b.cmc ) { return 1; }
+        return 0;
+      } else {
+        if ( a.cmc > b.cmc ) { return -1; }
+        if ( a.cmc < b.cmc ) { return 1; }
+        return 0;
+      }
+    });
+    this.deckProcess._sideList = this.deckProcess._sideList.sort((a: Card, b: Card): number => {
+      if (order) {
+        if ( a.cmc < b.cmc ) { return -1; }
+        if ( a.cmc > b.cmc ) { return 1; }
+        return 0;
+      } else {
+        if ( a.cmc > b.cmc ) { return -1; }
+        if ( a.cmc < b.cmc ) { return 1; }
+        return 0;
+      }
+    });
+    return order;
   }
 
   private makeId() {

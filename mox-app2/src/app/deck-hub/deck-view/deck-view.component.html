@@ -66,7 +66,7 @@
       </div>
     </div>
     <div [hidden]=" tab !='socialTab'">
-      <form class="new-deck-form" *ngIf="tempDeck as deck">
+      <form class="new-deck-form" *ngIf="deck">
         <div class="deck-cover" *ngIf="deck.cover != ''" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
           <section class="deck-data">
             <div class="deck-colors">
@@ -123,6 +123,6 @@
     <i class="fas fa-comments" style="font-size: 1.2em" ></i>
   </button>
   <app-mox-card-context [card]="_selectedCard"  [icon]="'fas fa-ellipsis-h'" *ngIf="_selectedCard" ></app-mox-card-context>
-  <app-mox-deck-context [deck]="tempDeck"       [icon]="'fas fa-ellipsis-v'" *ngIf="!_selectedCard"></app-mox-deck-context>
+  <app-mox-deck-context *ngIf="!_selectedCard" [deck]="_deck | async" [icon]="'fas fa-ellipsis-v'"></app-mox-deck-context>
 </app-mox-action-bar>
 
