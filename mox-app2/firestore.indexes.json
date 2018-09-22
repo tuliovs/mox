@@ -2,11 +2,52 @@
   "indexes": [
     {
       "collectionId": "messages",
+      "state": "READY",
       "fields": [
-        { "fieldPath": "owner", "mode": "ASCENDING" },
-        { "fieldPath": "key",   "mode": "ASCENDING" },
-        { "fieldPath": "owner", "mode": "ASCENDING" },
-        { "fieldPath": "time",  "mode": "ASCENDING" }
+        {
+          "fieldPath": "owner",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "key",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionId": "messages",
+      "state": "READY",
+      "fields": [
+        {
+          "fieldPath": "owner",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "time",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionId": "messages",
+      "state": "READY",
+      "fields": [
+        {
+          "fieldPath": "owner",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "key",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "owner",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "time",
+          "mode": "ASCENDING"
+        }
       ]
     }
   ]
