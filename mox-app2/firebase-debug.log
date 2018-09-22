@@ -1,0 +1,131 @@
+[debug] [2018-09-22T03:19:04.758Z] ----------------------------------------------------------------------
+[debug] [2018-09-22T03:19:04.761Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\tulio\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy -p dist/mox-app2
+[debug] [2018-09-22T03:19:04.761Z] CLI Version:   3.19.1
+[debug] [2018-09-22T03:19:04.761Z] Platform:      win32
+[debug] [2018-09-22T03:19:04.761Z] Node Version:  v10.5.0
+[debug] [2018-09-22T03:19:04.766Z] Time:          Sat Sep 22 2018 00:19:04 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:19:04.766Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-09-22T03:19:04.792Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-09-22T03:19:04.793Z] > authorizing via signed-in user
+[debug] [2018-09-22T03:19:04.797Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-09-22T03:19:04.797Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/aCNYLf4ihXJShz7j5hxr4OKRHWBgoRmVpVoQ2-JbqLc',
+  client_id:
+   '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope:
+   'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Sat Sep 22 2018 00:19:04 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:19:05.031Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-22T03:19:05.036Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/mox-mtg  
+  
+ Sat Sep 22 2018 00:19:05 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:19:06.237Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-22T03:19:06.238Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/mox-mtg/tokens  
+  
+ Sat Sep 22 2018 00:19:06 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:19:06.943Z] <<< HTTP RESPONSE 200
+[warn] !  functions: package.json indicates an outdated version of firebase-functions.
+ Please upgrade using npm install --save firebase-functions@latest in your functions directory.
+[info] 
+[info] === Deploying to 'mox-mtg'...
+[info] 
+[info] i  deploying database, storage, firestore, functions, hosting
+[info] i  database: checking rules syntax...
+[debug] [2018-09-22T03:19:15.546Z] >>> HTTP REQUEST PUT https://mox-mtg.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+} 
+ Sat Sep 22 2018 00:19:15 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:19:16.395Z] <<< HTTP RESPONSE 423
+[debug] [2018-09-22T03:19:16.395Z] <<< HTTP RESPONSE BODY {
+  "error" : "The Firebase database 'mox-mtg' has been disabled by a database owner."
+}
+
+[error] 
+[error] Error: Unexpected error while deploying database rules.
+[debug] [2018-09-22T03:20:18.388Z] ----------------------------------------------------------------------
+[debug] [2018-09-22T03:20:18.392Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\tulio\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy -p dist/mox-app2
+[debug] [2018-09-22T03:20:18.393Z] CLI Version:   3.19.1
+[debug] [2018-09-22T03:20:18.393Z] Platform:      win32
+[debug] [2018-09-22T03:20:18.393Z] Node Version:  v10.5.0
+[debug] [2018-09-22T03:20:18.394Z] Time:          Sat Sep 22 2018 00:20:18 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:20:18.394Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-09-22T03:20:18.408Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-09-22T03:20:18.409Z] > authorizing via signed-in user
+[debug] [2018-09-22T03:20:18.412Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/mox-mtg  
+  
+ Sat Sep 22 2018 00:20:18 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:20:19.255Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-22T03:20:19.256Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/mox-mtg/tokens  
+  
+ Sat Sep 22 2018 00:20:19 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:20:19.872Z] <<< HTTP RESPONSE 200
+[warn] !  functions: package.json indicates an outdated version of firebase-functions.
+ Please upgrade using npm install --save firebase-functions@latest in your functions directory.
+[info] 
+[info] === Deploying to 'mox-mtg'...
+[info] 
+[info] i  deploying database, storage, firestore, functions, hosting
+[info] i  database: checking rules syntax...
+[debug] [2018-09-22T03:20:24.057Z] >>> HTTP REQUEST PUT https://mox-mtg.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+} 
+ Sat Sep 22 2018 00:20:24 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:20:24.774Z] <<< HTTP RESPONSE 423
+[debug] [2018-09-22T03:20:24.774Z] <<< HTTP RESPONSE BODY {
+  "error" : "The Firebase database 'mox-mtg' has been disabled by a database owner."
+}
+
+[error] 
+[error] Error: Unexpected error while deploying database rules.
+[debug] [2018-09-22T03:23:44.811Z] ----------------------------------------------------------------------
+[debug] [2018-09-22T03:23:44.814Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\tulio\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy -p dist/mox-app2
+[debug] [2018-09-22T03:23:44.814Z] CLI Version:   3.19.1
+[debug] [2018-09-22T03:23:44.815Z] Platform:      win32
+[debug] [2018-09-22T03:23:44.815Z] Node Version:  v10.5.0
+[debug] [2018-09-22T03:23:44.816Z] Time:          Sat Sep 22 2018 00:23:44 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:23:44.816Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-09-22T03:23:44.830Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-09-22T03:23:44.831Z] > authorizing via signed-in user
+[debug] [2018-09-22T03:23:44.834Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/mox-mtg  
+  
+ Sat Sep 22 2018 00:23:44 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:23:45.585Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-22T03:23:45.586Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/mox-mtg/tokens  
+  
+ Sat Sep 22 2018 00:23:45 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:23:46.266Z] <<< HTTP RESPONSE 200
+[warn] !  functions: package.json indicates an outdated version of firebase-functions.
+ Please upgrade using npm install --save firebase-functions@latest in your functions directory.
+[info] 
+[info] === Deploying to 'mox-mtg'...
+[info] 
+[info] i  deploying database, storage, firestore, functions, hosting
+[info] i  database: checking rules syntax...
+[debug] [2018-09-22T03:23:49.953Z] >>> HTTP REQUEST PUT https://mox-mtg.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+} 
+ Sat Sep 22 2018 00:23:49 GMT-0300 (GMT-03:00)
+[debug] [2018-09-22T03:23:50.633Z] <<< HTTP RESPONSE 423
+[debug] [2018-09-22T03:23:50.633Z] <<< HTTP RESPONSE BODY {
+  "error" : "The Firebase database 'mox-mtg' has been disabled by a database owner."
+}
+
+[error] 
+[error] Error: Unexpected error while deploying database rules.

@@ -13,6 +13,7 @@ export const environment = {
     projectId: 'mox-mtg',
     storageBucket: 'mox-mtg.appspot.com',
     messagingSenderId: '483320339910'
+
   }
 };
 
