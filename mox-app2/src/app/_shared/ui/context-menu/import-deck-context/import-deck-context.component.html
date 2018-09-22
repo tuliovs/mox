@@ -12,20 +12,29 @@
     <hr>
     <div>
       <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
-      <progress *ngIf="showLoader && _deckService.deckProcess._deck" value="(_deckService.deckProcess._deck.cards.length + _deckService.deckProcess._deck.side.length)" max="_deckService.deckProcess.totalcards"></progress>
+
+      <div *ngIf="showLoader && _deckService.deckProcess._deck">
+          <p>Importing: {{_deckService.deckProcess._deck.name}}</p>
+          <p>by {{_deckService.deckProcess._deck.ownerName}}</p>
+          <p>Cards: {{_deckService.deckProcess._deck.cards.length}}</p>
+          <p>Status: {{_deckService.deckProcess.status}}</p>
+      </div>
+
       <ul *ngIf="!showLoader">
         <li class="item">
           <div>
             <i class="fas fa-cloud-upload-alt"></i>
             <p>
-              Hello! This is Karn import interface. Here you can Import decks from MTG Arena Text Format!
+              Hello! This is Karn import interface. Here you can Import decks from many formats!
             </p>
           </div>
         </li>
         <li class="item">
-          <label>Import from MTG Arena:</label>
+          <label>Text area:</label>
           <textarea [(ngModel)]="importText" value="{{importText}}"></textarea>
-          <button (press)="importDeck()" class="btn">Import</button>
+          <button (press)="importDeckTxt()" class="btn"><i class="ss ss-pleaf"></i> Text Format</button>
+          <button (press)="importDeckArena()" class="btn"><i class="ss ss-parl3"></i> MTGArena Format</button>
+          <button disabled class="btn"><i class="ss ss-dpa"></i> MTGO Format</button>
         </li>
       </ul>
     </div>

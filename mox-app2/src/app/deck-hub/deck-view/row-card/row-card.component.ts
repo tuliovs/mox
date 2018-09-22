@@ -14,10 +14,10 @@ import { AuthService } from '@karn/_services/auth.service';
 export class RowCardComponent implements OnInit, AfterViewInit {
   public cardCollection: AngularFirestoreCollection<Card>;
   public _user: any;
-  public cardView = false;
   @Output() plus: EventEmitter<any> = new EventEmitter();
   @Output() minus: EventEmitter<any> = new EventEmitter();
   @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() cardView: EventEmitter<any> = new EventEmitter();
   @Input() card: Card;
   @Input() cardAmout;
   @Input() selected: boolean;

@@ -7,12 +7,12 @@
         [class.mythic]=" card.rarity == 'mythic'" class="card-rarity"></div>
 
   <div class="card-img"
-    (click)="cardView = true;select.emit(card)"
+    (click)="cardView.emit(true);select.emit(card)"
     *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }">
   <label *ngIf="card.usd" class="mox-font">${{card.usd}}</label></div>
 
   <div class="card-img"
-      (click)="cardView = true;select.emit(card)"
+      (click)="cardView.emit(true);select.emit(card)"
       *ngIf="!card.image_uris && card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }">
   <label *ngIf="card.usd" class="mox-font">${{card.usd}}</label></div>
 
@@ -32,16 +32,15 @@
         [class.shadow]=" ico != ''"
       ></i>
     </div>
-    <div class="mana-cost" *ngIf="card.card_faces">{{card.card_faces[0].mana_cost}}</div>
+    <div class="mana-cost" *ngIf="card.card_faces">
+        <i *ngFor="let ico of card.card_faces[0].mana_cost.split('}')"
+        [className]="'ms ms-' + ico.replace('{', '').toLowerCase()"
+        [class.ms-cost]=" ico != ''"
+        [class.shadow]=" ico != ''"
+      ></i></div>
     <div>
       <button (click)="minus.emit(card.id)" class="btn"><i class="fas fa-minus-circle"></i></button>
       <button (click)="plus.emit(card.id)" class="btn"><i class="fas fa-plus-circle"></i></button>
     </div>
   </div>
-</div>
-<div *ngIf="cardView" class="lightbox" (click)="cardView = false;select.emit(card)"></div>
-<div *ngIf="cardView" class="card-viewer">
-  <div class="fullcard" *ngIf="card.image_uris" (doubletap)="cardView = false;select.emit(card)" (swipedown)="cardView = false;select.emit(card)" (swipeup)="cardView = false;select.emit(card)" (swiperight)="cardView = false;select.emit(card)" (swipeleft)="cardView = false;select.emit(card)" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.normal + ')' }" ></div>
-  <div class="fullcard" (tap)="side = true"     (doubletap)="cardView = false;select.emit(card)" (swipedown)="cardView = false;select.emit(card)" (swipeup)="cardView = false;select.emit(card)" (swiperight)="cardView = false;select.emit(card)" (swipeleft)="cardView = false;select.emit(card)" *ngIf="!card.image_uris && !side" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.normal + ')' }" ></div>
-  <div class="fullcard" (tap)="side = false"    (doubletap)="cardView = false;select.emit(card)" (swipedown)="cardView = false;select.emit(card)" (swipeup)="cardView = false;select.emit(card)" (swiperight)="cardView = false;select.emit(card)" (swipeleft)="cardView = false;select.emit(card)"  *ngIf="!card.image_uris && side" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[1].image_uris.normal + ')' }" ></div>
 </div>

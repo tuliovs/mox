@@ -13,6 +13,9 @@
     <p class="mox-font">{{_deckService.deckProcess._deck.name}}</p>
     <div>
       <img class="img" *ngIf="_deckService.deckProcess._deck.cover != ''" [ngStyle]="{ 'background-image': 'url(' + _deckService.deckProcess._deck.cover + ')' }" />
+      <div class="no-img" *ngIf="!_deckService.deckProcess._deck.cover && _deckService.deckProcess._deck.cover === ''">
+        <i class="fas fa-camera-retro"></i>
+      </div>
     </div>
   </div>
   <section class="content" *ngIf="auth.getUser() | async as user">

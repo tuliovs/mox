@@ -9,8 +9,13 @@
       <div class="content-area">
         <router-outlet></router-outlet>
         <div class="action-button" *ngIf="!isState('hidden')">
-          <div>
-              <i *ngIf="isState('nav')" class="ss ss-ddj"
+          <div *ngIf="auth.getUser() | async as user">
+              <i *ngIf="isState('nav') && user.actionIco" [className]="'ss ss-' + user.actionIco"
+              [@actionIcoAnimator]="animationState2"
+              (@actionIcoAnimator.done)="resetAnimationState()"
+              (tap)="menuOpen('opened');animateNav();setState('closed')"></i>
+
+              <i *ngIf="isState('nav') && !user.actionIco" [className]="'ss ss-pmtg1'"
               [@actionIcoAnimator]="animationState2"
               (@actionIcoAnimator.done)="resetAnimationState()"
               (tap)="menuOpen('opened');animateNav();setState('closed')"></i>

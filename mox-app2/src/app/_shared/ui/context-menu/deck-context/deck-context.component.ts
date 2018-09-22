@@ -53,12 +53,10 @@ export class DeckContextComponent implements OnInit {
 
   delete() {
     if (confirm('This action can not be undone, are you sure?')) {
-      this.afs.collection('decks').doc(this.deck.key).delete();
-      this._toast.sendMessage('Deck successfully deleted!', 'success', this.deck.ownerId);
+      this._deckService.deleteDeck(this.deck);
+      this.deck = null;
       this.closeContext();
       this._router.navigate(['/deckhub']);
-    } else {
-      this._toast.sendMessage('Ops! Deck not deleted!', 'warning', this.deck.ownerId);
     }
   }
 

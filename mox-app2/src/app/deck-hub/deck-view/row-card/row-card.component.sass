@@ -1,10 +1,5 @@
 @import '../../../../styles/theme.colors'
 
-$shad-card-row: rgba(0, 0, 0, .07);
-$shad-dark: rgba(0, 0, 0, .5);
-$shad-low: rgba(0, 0, 0, .25);
-$shad-in: rgba(0, 0, 0, .15);
-
 .shadow
   box-shadow: 0 0 2px #111, 0 .06em 1px #111
 
@@ -122,42 +117,6 @@ $shad-in: rgba(0, 0, 0, .15);
       height: 30%
       text-align: right
       width: 100%
-
-.lightbox
-  background-color: color(_ice)
-  display: flex
-  filter: blur(5px)
-  flex-flow: column
-  height: 100%
-  justify-content: center
-  left: 0
-  opacity: .67
-  position: fixed
-  top: 0
-  width: 100%
-
-.card-viewer
-  display: flex
-  flex-flow: column
-  height: 100%
-  justify-content: center
-  left: 0
-  position: fixed
-  top: 0
-  width: 100%
-
-  .fullcard
-    background-size: cover
-    border-radius: 15px
-    box-shadow: 0 2px 9px $shad-card-row
-    height: 28em
-    left: 6%
-    margin: 0
-    padding: 0
-    position: fixed
-    top: 16%
-    width: 20em
-    z-index: 12
 
 .selected-card
   border-bottom: 1px solid color(_darkblue)

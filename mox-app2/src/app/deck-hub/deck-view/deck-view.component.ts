@@ -38,7 +38,9 @@ export class DeckViewComponent implements OnInit {
   public tab = 'profileTab';
   public _orderAsc = false;
   public _id: string;
+  public cardView = false;
   public deckCollection: AngularFirestoreCollection<MoxDeck>;
+  public deckStatsCollection: AngularFirestoreCollection<any>;
   public cardCollection: AngularFirestoreCollection<Card>;
   public cardDoc: AngularFirestoreDocument<Card>;
   constructor(
@@ -60,6 +62,7 @@ export class DeckViewComponent implements OnInit {
       } else {
         this._id = id;
         this.deckCollection = this.afs.collection('decks');
+        this.deckStatsCollection = this.afs.collection('deck-stats');
         this._deck = this.deckCollection.doc<MoxDeck>(id).valueChanges();
         this._deck.pipe(
           tap((deck) => {
@@ -69,6 +72,13 @@ export class DeckViewComponent implements OnInit {
               this._deckService.editDeck(deck);
               this._deckService.deckProcess._cardList = [];
               this._deckService.deckProcess._sideList = [];
+              this._deckService.deckProcess._deckStats = null;
+              this.deckStatsCollection.doc(deck.key).valueChanges()
+              .pipe(
+                tap((deckStats) => {
+                  this._deckService.deckProcess._deckStats = deckStats;
+                })
+              ).subscribe();
               Array.from(new Set(deck.cards))
               .forEach((incard) => {
                 this._cardService.getCard(incard).pipe(
@@ -165,13 +175,17 @@ export class DeckViewComponent implements OnInit {
     this.saveDeck(true);
   }
 
-  selectedCard(card) {
+  selectedCard(card: Card) {
     if (this._selectedCard === card) {
       this._selectedCard = null;
     } else {
       // this._moxService.editDeck(deck);
       this._selectedCard = card;
     }
+  }
+
+  activateCardView(v) {
+    this.cardView = v;
   }
 
   changetab(side) {

@@ -1,13 +1,11 @@
-
-
-
 <div *ngIf="!_deckService.deckProcess._deckStats">
   <p>
     <i class="far fa-chart-bar" style="font-size:8em"></i>
   </p>
   <h2>Hello friend!</h2>
   <p>
-    I don't have any data of this deck yet, so if you may find this option on deck menu and I will process this data for you.
+    I don't have any data of this deck yet, so if you may find this option on deck menu and I will process this data
+    for you.
   </p>
   <div class="error-list" *ngIf="_deckService.deckProcess.status === 'Error'">
     <h4>I'm sorry, I got a problem. You should report this.</h4>
@@ -21,7 +19,22 @@
   <h2>Deck Data</h2>
   <fieldset>
     <p>
-      <label>Deck Price: </label>US$ {{_deckService.deckProcess._deckStats.totalPrice}}
+      <label class="mox-font">Name: </label>{{_deckService.deckProcess._deck.name}}
+    </p>
+    <p>
+      <label class="mox-font">Owner: </label>{{_deckService.deckProcess._deck.ownerName}}
+    </p>
+    <p>
+      <label class="mox-font">Public: </label>{{_deckService.deckProcess._deck.public ? 'Yes' : 'No'}}
+    </p>
+    <p>
+      <label class="mox-font">Format: </label>{{_deckService.deckProcess._deck.format}}
+    </p>
+    <p>
+      <label class="mox-font">Legal: </label>{{_deckService.deckProcess._deck.legal ? 'Legal' : 'Ilegal'}}
+    </p>
+    <p>
+      <label class="mox-font">Total Price: </label>US$ {{_deckService.deckProcess._deckStats.totalPrice}}
     </p>
   </fieldset>
 </div>

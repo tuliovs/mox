@@ -9,6 +9,7 @@ import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
 import { AuthService } from '@karn/_services/auth.service';
 import { ToastService } from '@application/_services/toast/toast.service';
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
+import { resolve } from 'url';
 
 class DeckProcess {
   public active = false;
@@ -50,10 +51,15 @@ export class MoxDeckService {
 
   public processStats() {
     if (this.deckProcess.active) {
-      if (!this.deckProcess._deckStats) { this.deckProcess._deckStats = {}; }
+      if (!this.deckProcess._deckStats) {
+        this.deckProcess._deckStats = {};
+        this.deckProcess._deckStats.key = this.deckProcess._deck.key;
+      }
 
-      if (this.processPrice()) {
-        this._state.setState('nav');
+      if ( this.processPrice()
+        && this.processLegalities()) {
+          this.saveDeckStats(this.deckProcess._deckStats);
+          this._state.setState('nav');
       } else {
         this._state.setState('error');
       }
@@ -88,51 +94,78 @@ export class MoxDeckService {
     }
   }
 
-  public quickCreate() {
-    this._auth.getUser().pipe(
-      tap((user) => {
-        if (user) {
-          const d = new MoxDeck();
-          d.key = this.makeId();
-          d.name = 'QuickDeck';
-          d.cover = '';
-          d.legal = false;
-          d.ownerId = user.uid;
-          d.ownerName = user.displayName;
-          d.public = true;
-          d.froze = false;
-          d.cards = [];
-          d.side = [];
-          d.updated = [];
-          this.deckCollection = this.afs.collection('decks');
-          this.deckCollection.doc(d.key).set(Object.assign({}, d)).catch((error) => {
-            console.error('Error adding document: ', error);
-            this._toast.sendMessage('Error adding document: ', 'danger', d.ownerId);
-          }).then(() => {
-            this._toast.sendMessage('Deck Created!', 'success', d.ownerId);
-            this.workingDeck.lift(this.deckCollection.doc<MoxDeck>(d.key).valueChanges);
-            this.deckProcess.active = true;
-            this.deckProcess._deck = d;
-          });
-        } else {
-          console.error('User not found!: ', user);
-          return null;
+  private processLegalities(): boolean {
+    try {
+      this.deckProcess.status = 'Processing Legalities';
+      this.deckProcess._deck.legal = true;
+      const f = this.deckProcess._deck.format;
+      this.deckProcess._cardList.forEach((c: Card) => {
+        if (c.legalities && c.legalities[f].valueOf() !== 'legal') {
+          this.deckProcess._deck.legal = false;
         }
-      })
-    ).subscribe();
+      });
+      this.deckProcess._sideList.forEach((c: Card) => {
+        if (c.usd) {
+          this.deckProcess._deck.legal = false;
+        }
+      });
+      return true;
+    } catch (error) {
+      this.deckProcess.status = 'Error';
+      this.deckProcess.errorList.push(error);
+      return false;
+    }
+  }
+
+  public quickCreate(name?) {
+    return new Promise((res, rej) => {
+      this._auth.getUser().pipe(
+        tap((user) => {
+          if (user) {
+            const d = new MoxDeck();
+            d.key = this.makeId();
+            d.name = (name) ? name : 'QuickDeck';
+            d.cover = '';
+            d.legal = false;
+            d.ownerId = user.uid;
+            d.ownerName = user.displayName;
+            d.public = true;
+            d.froze = false;
+            d.cards = [];
+            d.side = [];
+            d.updated = [];
+            this.deckCollection = this.afs.collection('decks');
+            this.deckCollection.doc(d.key).set(Object.assign({}, d)).catch((error) => {
+              console.error('Error adding document: ', error);
+              this._toast.sendMessage('Error adding document: ', 'danger', d.ownerId);
+              rej(new Error('Error creating a new deck'));
+            }).then(() => {
+              this._toast.sendMessage('Deck Created!', 'success', d.ownerId);
+              res(d);
+            });
+          } else {
+            console.error('User not found!: ', user);
+            rej(new Error('Error creating a new deck'));
+          }
+        })
+      ).subscribe();
+    });
   }
 
   editDeck(d: MoxDeck) {
-    this.deckCollection = this.afs.collection('decks');
-    this.workingDeck.lift(this.deckCollection.doc<MoxDeck>(d.key).valueChanges);
-    this.deckCollection.doc<MoxDeck>(d.key).valueChanges().pipe(
-      tap(
-        (deck) => {
-          this.deckProcess.active = true;
-          this.deckProcess._deck = deck;
-        }
-      )
-    ).subscribe();
+    if (this.deckProcess.active && d.key === this.deckProcess._deck.key) {
+      return;
+    } else {
+      this.deckProcess.active = true;
+      this.deckProcess._deck = d;
+      this.deckProcess._cardList = [];
+      this.deckProcess._sideList = [];
+      this.deckProcess.errorList = [];
+      this.deckProcess.totalcards = (d.cards.length + d.side.length);
+      if (this.deckProcess._deckStats && this.deckProcess._deckStats.key !== d.key) {
+        this.deckProcess._deckStats = null;
+      }
+    }
   }
 
   setDeck(d: MoxDeck) {
@@ -157,10 +190,38 @@ export class MoxDeckService {
   updateDeck(d: MoxDeck) {
     console.log('UPDATE: ', d);
     this._state.setState('loading');
+    d.updated.push(new Date());
     this.afs.collection('dekcs').doc(d.key).update(Object.assign({}, d))
     .then(() => {
         this._state.setState('nav');
     });
+  }
+
+  deleteDeck(deck: MoxDeck) {
+    this.deckProcess.active = false;
+    this.deckProcess.status = 'inactive';
+    this.deckProcess._deck = null;
+    this.deckProcess._deckStats = null;
+    this.deckProcess._cardList = null;
+    this.deckProcess._sideList = null;
+    this.afs.collection('decks').doc(deck.key).delete();
+    this.afs.collection('decks-stats').doc(deck.key).delete();
+    this._toast.sendMessage('Deck successfully deleted!', 'success', deck.ownerId);
+  }
+
+  saveDeckStats(obj) {
+    if (obj) {
+      this._state.setState('cloud');
+      this.deckCollection = this.afs.collection('decks-stats');
+      this.deckCollection.doc(obj.key).set(Object.assign({}, obj)).catch((error) => {
+        console.error('Error adding document: ', error);
+        this.deckProcess.status = 'Error';
+        this._state.setState('error');
+        this.deckProcess.errorList.push(error);
+      }).then(() => {
+        this._state.setState('nav');
+      });
+    }
   }
 
   addCard(cardId: string, deckId?: string) {
@@ -234,12 +295,12 @@ export class MoxDeckService {
     this.deckProcess.status = 'start';
     cardList.valueOf().split('\n').forEach(async elt => {
       if (elt && elt.length > 0) {
-        this.deckProcess.status = 'getting cards';
         const qnt = +elt.substr(0, 2);
-        this.deckProcess.totalcards = this.deckProcess.totalcards + qnt;
         const cardname = elt.substr(2, elt.indexOf('(') - 2);
         const set = elt.substr(elt.indexOf('(') + 1, 3).toLowerCase().replace('dar', 'dom');
         const collectorsNumber = +elt.substr(elt.length - 2, 3);
+        this.deckProcess.status = 'getting cards';
+        this.deckProcess.totalcards = this.deckProcess.totalcards + qnt;
         this._scryService.mtgArenaSearch(set, collectorsNumber).pipe(
           tap((card: Card) => {
             for (let index = 1; index <= qnt; index++) {
@@ -268,6 +329,47 @@ export class MoxDeckService {
           })
         ).subscribe();
       }
+    });
+  }
+
+  importTxt(deck: MoxDeck, cardList: any) {
+    return new Promise((res, rej) => {
+      this.deckProcess.active = true;
+      this.editDeck(deck);
+      this.deckProcess.totalcards = 0;
+      this.deckProcess.status = 'start';
+      cardList.valueOf().split('\n').forEach(async elt => {
+        if (elt && elt.length > 0) {
+          const qnt = +elt.substr(0, 2);
+          const cardname = elt.substr(2, elt.length);
+          console.log('Qntd: ', qnt);
+          console.log('Name: ', cardname);
+          this.deckProcess.status = 'Getting cards';
+          this.deckProcess.totalcards = this.deckProcess.totalcards + qnt;
+          for (let index = 1; index <= qnt; index++) {
+            if (this.deckProcess._deck.cards.length >= 60) {
+              this._scryService.fuzzySearch(cardname).pipe(
+                tap((c: Card) => {
+                  this.addCard(c.id);
+                  if (this.deckProcess.totalcards === (this.deckProcess._deck.cards.length + this.deckProcess._deck.side.length)) {
+                    res(true);
+                  }
+                })
+              ).subscribe();
+            } else {
+              this._scryService.fuzzySearch(cardname).pipe(
+                tap((c: Card) => {
+                  this.addCard(c.id);
+                  if (this.deckProcess.totalcards === (this.deckProcess._deck.cards.length + this.deckProcess._deck.side.length)) {
+                    res(true);
+                  }
+                })
+              ).subscribe();
+            }
+          }
+        }
+      });
+      // rej(new Error('Something is Wrong!'));
     });
   }
 

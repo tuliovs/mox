@@ -61,13 +61,33 @@ export class ImportDeckContextComponent implements OnInit {
     this.lightboxActive = false;
     this.importState = 'closed';
   }
-  importDeck() {
+
+  importDeckArena() {
     this.showLoader = true;
-    if (this.importText.length > 0) {
+    if (this.importText && this.importText.length > 0) {
       this._deckService.quickCreate();
       this._deckService.createDeckFromArena(this.importText);
     } else {
+      alert('I`m sorry! I could not found any text to import.');
       console.error('No text founded');
+      this.showLoader = false;
+    }
+  }
+
+  importDeckTxt() {
+    this.showLoader = true;
+    if (this.importText && this.importText.length > 0) {
+      this._deckService.quickCreate('Imported Deck - Txt').then(
+        (deck: MoxDeck) => {
+          this._deckService.importTxt(deck, this.importText).then((status) => {
+            console.log('COMPLETE: ', status + ' - ' + deck);
+          });
+        }
+      );
+    } else {
+      alert('I`m sorry! I could not found any text to import.');
+      console.error('No text founded');
+      this.showLoader = false;
     }
   }
 }
