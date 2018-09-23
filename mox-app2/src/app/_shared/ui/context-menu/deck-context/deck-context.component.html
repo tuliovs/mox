@@ -18,11 +18,12 @@
       </div>
     </div>
   </div>
-  <section class="content" *ngIf="auth.getUser() | async as user">
+  <section class="content" *ngIf="_auth.getUser() | async as user">
       <button type="button" class="btn btn-icon" disabled>
           <i class="fas fa-shopping-bag"></i>
           <label>Shop</label>
-          <label>U$ | tix</label>
+          <label *ngIf="!_deckService.deckProcess._deckStats" >U$ --</label>
+          <label *ngIf="_deckService.deckProcess._deckStats" >U$ {{_deckService.deckProcess._deckStats.totalPrice}}</label>
       </button>
       <button routerLink="/profile/{{_deckService.deckProcess._deck.ownerId}}"
         disabled
@@ -34,7 +35,7 @@
         <i class="fas fa-cloud-download-alt"></i>
         <label>Export</label>
     </button>
-    <button (click)="processData()" type="button" class="btn btn-icon">
+    <button (click)="processData()" type="button" class="btn btn-icon" [disabled]="user.uid !== _deckService.deckProcess._deck.ownerId">
         <i class="fas fa-sync-alt"></i>
         <label>Process Data</label>
     </button>
@@ -46,11 +47,11 @@
         <i class="fas fa-code-branch"></i>
         <label>Fork Deck</label>
     </button>
-    <button type="button" class="btn btn-icon" disabled>
+    <button (click)="share()" type="button" class="btn btn-icon">
         <i class="fas fa-retweet"></i>
         <label>Share</label>
     </button>
-    <button (click)="delete()" type="button" class="btn btn-icon" [disabled]="!user.id === _deckService.deckProcess._deck.owner" >
+    <button (click)="delete()" type="button" class="btn btn-icon" [disabled]="user.uid !== _deckService.deckProcess._deck.ownerId">
         <i class="fas fa-trash"></i>
         <label>Delete Deck</label>
     </button>

@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { ToastService } from '@application/_services/toast/toast.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { animate, style, transition, trigger, state } from '@angular/animations';
@@ -30,8 +29,7 @@ export class DeckContextComponent implements OnInit {
 
   constructor(
     public _router: Router,
-    public auth: AuthService,
-    private afs: AngularFirestore,
+    public _auth: AuthService,
     public _deckService: MoxDeckService,
     public _state: ActionStateService,
     public _toast: ToastService
@@ -49,6 +47,10 @@ export class DeckContextComponent implements OnInit {
     this.closeContext();
     this._state.setState('loading');
     this._deckService.processStats();
+  }
+
+  share() {
+
   }
 
   delete() {

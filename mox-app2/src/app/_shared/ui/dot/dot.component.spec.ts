@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DotComponent } from './dot.component';
+import { DotComponent } from '@shared/ui/dot/dot.component';
 
 describe('DotComponent', () => {
   let component: DotComponent;

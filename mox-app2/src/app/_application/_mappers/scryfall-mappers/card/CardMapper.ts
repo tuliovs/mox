@@ -1,5 +1,5 @@
-import { Mapper } from '../../_abstractions/Mapper';
-import { Card } from '../../../_models/_scryfall-models/models';
+import { Mapper } from '@application/_mappers/_abstractions/Mapper';
+import { Card } from '@application/_models/_scryfall-models/models';
 
 export class CardMapper extends Mapper<Card> {
 

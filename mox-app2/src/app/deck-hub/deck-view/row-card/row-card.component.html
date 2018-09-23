@@ -18,29 +18,33 @@
 
   <div class="data-container" *ngIf="!card.card_faces" (click)="select.emit(card)" >
     <div class="card-data"><h4>{{card.name}}</h4></div>
-    <div class="card-data typeline">{{card.type_line}}</div>
+    <div class="card-data typeline">
+        {{(card.type_line.length>32)? (card.type_line | slice:0:30)+'...':(card.type_line)}}
+    </div>
   </div>
   <div class="data-container" *ngIf="card.card_faces" (click)="select.emit(card)">
     <div class="card-data"><h4>{{card.card_faces[0].name}}</h4></div>
-    <div class="card-data typeline">{{card.card_faces[0].type_line}}</div>
+    <div class="card-data typeline">
+      {{(card.card_faces[0].type_line.length>32)? (card.card_faces[0].type_line | slice:0:30)+'...':(card.card_faces[0].type_line)}}
+    </div>
   </div>
   <div class="card-actions">
     <div class="mana-cost" *ngIf="!card.card_faces">
       <i *ngFor="let ico of card.mana_cost.split('}')"
-        [className]="'ms ms-' + ico.replace('{', '').toLowerCase()"
+        [className]="'ms ms-' + ico.replace('{', '').replace('/', '').toLowerCase()"
         [class.ms-cost]=" ico != ''"
         [class.shadow]=" ico != ''"
       ></i>
     </div>
     <div class="mana-cost" *ngIf="card.card_faces">
         <i *ngFor="let ico of card.card_faces[0].mana_cost.split('}')"
-        [className]="'ms ms-' + ico.replace('{', '').toLowerCase()"
+        [className]="'ms ms-' + ico.replace('{', '').replace('/', '').toLowerCase()"
         [class.ms-cost]=" ico != ''"
         [class.shadow]=" ico != ''"
       ></i></div>
-    <div>
-      <button (click)="minus.emit(card.id)" class="btn"><i class="fas fa-minus-circle"></i></button>
-      <button (click)="plus.emit(card.id)" class="btn"><i class="fas fa-plus-circle"></i></button>
+    <div *ngIf="_user">
+      <button *ngIf="_user.uid === _deckService.deckProcess._deck.ownerId" (click)="minus.emit(card.id)" class="btn"><i class="fas fa-minus-circle"></i></button>
+      <button *ngIf="_user.uid === _deckService.deckProcess._deck.ownerId" (click)="plus.emit(card.id)" class="btn"><i class="fas fa-plus-circle"></i></button>
     </div>
   </div>
 </div>

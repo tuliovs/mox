@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TitlebarComponent } from './titlebar.component';
+import { TitlebarComponent } from '@shared/ui/titlebar/titlebar.component';
 
 describe('TitlebarComponent', () => {
   let component: TitlebarComponent;

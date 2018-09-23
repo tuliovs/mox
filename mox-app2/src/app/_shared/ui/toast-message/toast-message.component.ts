@@ -24,6 +24,7 @@ export const swing = [
 })
 export class ToastMessageComponent implements OnInit {
   public messages: any[] = [];
+  public active: false;
   public animationState: string;
   ribbonCounter(): number {
     return this.messages.length;

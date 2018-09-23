@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeckContextComponent } from './deck-context.component';
+import { DeckContextComponent } from '@shared/ui/context-menu/deck-context/deck-context.component';
 
 describe('DeckContextComponent', () => {
   let component: DeckContextComponent;

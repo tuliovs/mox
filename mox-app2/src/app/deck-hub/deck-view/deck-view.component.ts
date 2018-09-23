@@ -3,12 +3,11 @@ import { ToastService } from '@application/_services/toast/toast.service';
 import { Observable } from 'rxjs';
 import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
-import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
-import { tap } from '../../../../node_modules/rxjs/operators';
+import { tap } from 'rxjs/operators';
+import { AuthService } from '@karn/_services/auth.service';
 
 @Component({
   selector: 'app-mox-deck-view',
@@ -37,15 +36,11 @@ export class DeckViewComponent implements OnInit {
   public tab = 'profileTab';
   public _orderAsc = false;
   public cardView = false;
-  public deckCollection: AngularFirestoreCollection<MoxDeck>;
-  public deckStatsCollection: AngularFirestoreCollection<any>;
-  public cardCollection: AngularFirestoreCollection<Card>;
-  public cardDoc: AngularFirestoreDocument<Card>;
   constructor(
+    public  _auth: AuthService,
     private _deckService: MoxDeckService,
     private _route: ActivatedRoute,
     private _toast: ToastService,
-    private router: Router,
     private _state: ActionStateService
   ) { }
 
@@ -80,6 +75,13 @@ export class DeckViewComponent implements OnInit {
 
   cardSideAmount(cardId) {
     return this._deckService.countOccurrences(this._deckService.deckProcess._deck.side, cardId);
+  }
+
+  togglePublicDeck(uid) {
+    if (uid === this._deckService.deckProcess._deck.ownerId) {
+      this._deckService.deckProcess._deck.public = !this._deckService.deckProcess._deck.public;
+      this.saveDeck();
+    }
   }
 
   cardPlus(event) {

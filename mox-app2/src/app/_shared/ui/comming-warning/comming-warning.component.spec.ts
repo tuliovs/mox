@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommingWarningComponent } from './comming-warning.component';
+import { CommingWarningComponent } from '@shared/ui/comming-warning/comming-warning.component';
 
 describe('CommingWarningComponent', () => {
   let component: CommingWarningComponent;

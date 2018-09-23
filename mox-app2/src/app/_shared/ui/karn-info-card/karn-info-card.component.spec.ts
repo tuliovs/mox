@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KarnInfoCardComponent } from './karn-info-card.component';
+import { KarnInfoCardComponent } from '@shared/ui/karn-info-card/karn-info-card.component';
 
 describe('KarnInfoCardComponent', () => {
   let component: KarnInfoCardComponent;

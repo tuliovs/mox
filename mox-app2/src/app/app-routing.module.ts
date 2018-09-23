@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { MoxCardComponent } from './_shared/mox-card/mox-card.component';
+import { MoxCardComponent } from '@shared/mox-card/mox-card.component';
 import { DeckHubComponent } from './deck-hub/deck-hub.component';
 import { NewDeckComponent } from './deck-hub/new-deck/new-deck.component';
 import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless-auth.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { LoginComponent } from './auth/login/login.component';
-import { AuthGuard } from 'src/app/karn/_services/auth.guard';
+import { AuthGuard } from '@karn/_services/auth.guard';
 import { SearchHubComponent } from './search-hub/search-hub.component';
 
 

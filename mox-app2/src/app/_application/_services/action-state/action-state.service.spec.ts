@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ActionStateService } from './action-state.service';
+import { ActionStateService } from '@application/_services/action-state/action-state.service';
 
 describe('ActionstateService', () => {
   beforeEach(() => {

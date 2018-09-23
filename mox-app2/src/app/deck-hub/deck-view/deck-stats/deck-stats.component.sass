@@ -1,5 +1,34 @@
 @import '../../../../styles/theme.colors'
 
+$shad: rgba(102, 122, 149, .17);
+
+.summary
+  background: color(_lightblue)
+  border: 1px solid $shad
+  box-shadow: 0 0 4px $shad-low
+  color: color(_ice)
+  display: flex
+  font-size: .81em
+  height: 1.65em
+  justify-content: space-between
+  padding: 0
+  position: fixed
+  width: 100%
+
+  div
+    align-items: center
+    display: inline-flex
+    font-size: 12px
+    height: 90%
+    padding: 0 .5%
+
+  .deckname
+    font-size: 14px
+    padding: 0 1%
+
+  i
+    margin: 0 2px
+
 .error-list
   color: color(notification, error)
   font-size: 14px
@@ -7,6 +36,9 @@
 
 .deck-data
   text-align: left
+
+  fieldset
+    padding-top: 7%
 
   h2
     color: color(_darkblue)

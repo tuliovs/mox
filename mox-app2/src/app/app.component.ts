@@ -1,13 +1,13 @@
-import { ActionStateService } from './_application/_services/action-state/action-state.service';
+import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { filter, take } from 'rxjs/operators';
 
 import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { MoxDeckService } from './_application/_services/mox-services/deck/mox-deck.service';
-import { NotificationService } from './_application/_services/notification/notification.service';
-import { AuthService } from './karn/_services/auth.service';
+import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
+import { NotificationService } from '@application/_services/notification/notification.service';
+import { AuthService } from '@karn/_services/auth.service';
 
 export const rubberBand = [
   style({transform: 'scale3d(1, 1, 1)'}),

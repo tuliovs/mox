@@ -8,6 +8,7 @@ import { ToastService } from '@application/_services/toast/toast.service';
 import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
 import { Card } from '@application/_models/_scryfall-models/models';
 import { tap } from 'rxjs/operators';
+import { AuthService } from '@karn/_services/auth.service';
 
 @Component({
   selector: 'app-mox-card-context',
@@ -45,8 +46,9 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   }
   constructor(
     public _router: Router,
-    private afs: AngularFirestore,
-    private _deckService: MoxDeckService,
+    public afs: AngularFirestore,
+    public _auth: AuthService,
+    public _deckService: MoxDeckService,
     public _state: ActionStateService,
     public _toast: ToastService
   ) {}
@@ -89,7 +91,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
           this._toast.sendMessage(
             'Congrats! ' + this.card.name + ' set as DeckCover for ' + this._deckService.deckProcess._deck.name + ' !',
             'success',
-            this._Deck.ownerId);
+            this._deckService.deckProcess._deck.ownerId);
           this._deckService.deckProcess.active = false;
         }
       );

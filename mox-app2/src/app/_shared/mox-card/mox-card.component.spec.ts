@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MoxCardComponent } from './mox-card.component';
+import { MoxCardComponent } from '@shared/mox-card/mox-card.component';
 
 describe('MoxCardComponent', () => {
   let component: MoxCardComponent;

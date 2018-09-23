@@ -1,4 +1,4 @@
-import { KarnModule } from './karn.module';
+import { KarnModule } from '@karn/karn.module';
 
 describe('KarnModule', () => {
   let karnModule: KarnModule;

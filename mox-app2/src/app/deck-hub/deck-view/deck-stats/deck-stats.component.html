@@ -16,7 +16,10 @@
 </div>
 
 <div class="deck-data" *ngIf="_deckService.deckProcess._deckStats">
-  <h2>Deck Data</h2>
+  <div class="summary">
+    <div class="decksize mox-font">Deck Data</div>
+    <div class="decktype">Last Processed: {{_deckService.deckProcess._deckStats.processDate | date:'medium' }}</div>
+  </div>
   <fieldset>
     <p>
       <label class="mox-font">Name: </label>{{_deckService.deckProcess._deck.name}}
@@ -36,5 +39,16 @@
     <p>
       <label class="mox-font">Total Price: </label>US$ {{_deckService.deckProcess._deckStats.totalPrice}}
     </p>
+    <hr *ngIf="_deckService.deckProcess._deckStats.typeLineCounter" />
+    <div *ngIf="_deckService.deckProcess._deckStats.typeLineCounter as ttl">
+      <h3>Card Types Variety</h3>
+        <p><label class="mox-font">Lands: </label>{{ttl.d_totalLands}}</p>
+        <p><label class="mox-font">Creatures: </label>{{ttl.d_totalCreatures}}</p>
+        <p><label class="mox-font">Instants: </label>{{ttl.d_totalInstants}}</p>
+        <p><label class="mox-font">Sorcery: </label>{{ttl.d_totalSorcery}}</p>
+        <p><label class="mox-font">Artifacts: </label>{{ttl.d_totalArtifacts}}</p>
+        <p><label class="mox-font">Enchantments: </label>{{ttl.d_totalEnchantments}}</p>
+        <p><label class="mox-font">Planeswalkers: </label>{{ttl.d_totalPlaneswalkers}}</p>
+    </div>
   </fieldset>
 </div>

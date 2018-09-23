@@ -2,7 +2,7 @@ import { ToastService } from '@application/_services/toast/toast.service';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from '@karn/_services/auth.service';
 import { take, map, tap } from 'rxjs/operators';
 import { logging } from 'protractor';
 import { Router } from '@angular/router';

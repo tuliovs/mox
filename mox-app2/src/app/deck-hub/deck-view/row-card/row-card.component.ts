@@ -5,6 +5,7 @@ import { MoxCardService } from '@application/_services/mox-services/card/mox-car
 import { tap } from 'rxjs/operators';
 import { ToastService } from '@application/_services/toast/toast.service';
 import { AuthService } from '@karn/_services/auth.service';
+import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 
 @Component({
   selector: 'app-mox-row-card',
@@ -22,14 +23,15 @@ export class RowCardComponent implements OnInit, AfterViewInit {
   @Input() cardAmout;
   @Input() selected: boolean;
   constructor(
+    public _auth: AuthService,
+    public _deckService: MoxDeckService,
     public _cardService: MoxCardService,
-    public toast: ToastService,
-    public auth: AuthService
+    public _toast: ToastService,
   ) { }
 
   ngOnInit() {
     // console.log(this.card);
-    this.auth.getUser().pipe(
+    this._auth.getUser().pipe(
       tap((user) => {
         this._user = user;
       })

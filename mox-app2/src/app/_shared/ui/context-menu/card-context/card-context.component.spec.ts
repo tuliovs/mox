@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CardContextComponent } from './card-context.component';
+import { CardContextComponent } from '@shared/ui/context-menu/card-context/card-context.component';
 
 describe('CardContextComponent', () => {
   let component: CardContextComponent;

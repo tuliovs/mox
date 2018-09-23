@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import { ReversePipe } from './_application/_pipes/reverse.pipe';
+import { ReversePipe } from '@application/_pipes/reverse.pipe';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HammerGestureConfig, BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -10,44 +10,45 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
-import { environment } from '../environments/environment';
-import { KarnModule } from './karn/karn.module';
+import { environment } from '@envoirment/environment';
+import { KarnModule } from '@karn/karn.module';
 
 import * as Hammer from 'hammerjs';
 import { } from '@angular/platform-browser';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
-import { ActionBarComponent } from './_shared/ui/action-bar/action-bar.component';
+import { ActionBarComponent } from '@shared/ui/action-bar/action-bar.component';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
+import { LocalstorageService } from '@application/_services/localstorage/localstorage.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { CardContextComponent } from './_shared/ui/context-menu/card-context/card-context.component';
-import { CommingWarningComponent } from './_shared/ui/comming-warning/comming-warning.component';
+import { CardContextComponent } from '@shared/ui/context-menu/card-context/card-context.component';
+import { CommingWarningComponent } from '@shared/ui/comming-warning/comming-warning.component';
 import { DeckHubComponent } from './deck-hub/deck-hub.component';
 import { DeckViewComponent } from './deck-hub/deck-view/deck-view.component';
 import { HomeComponent } from './home/home.component';
-import { ImportDeckContextComponent } from './_shared/ui/context-menu/import-deck-context/import-deck-context.component';
-import { KarnInfoCardComponent } from './_shared/ui/karn-info-card/karn-info-card.component';
-import { LoadingSpinnerComponent } from './_shared/ui/loading-spinner/loading-spinner.component';
+import { ImportDeckContextComponent } from '@shared/ui/context-menu/import-deck-context/import-deck-context.component';
+import { KarnInfoCardComponent } from '@shared/ui/karn-info-card/karn-info-card.component';
+import { LoadingSpinnerComponent } from '@shared/ui/loading-spinner/loading-spinner.component';
 import { LoginComponent } from './auth/login/login.component';
-import { MoxCardComponent } from './_shared/mox-card/mox-card.component';
-import { MoxCardService } from './_application/_services/mox-services/card/mox-card.service';
-import { MoxDeckService } from './_application/_services/mox-services/deck/mox-deck.service';
+import { MoxCardComponent } from '@shared/mox-card/mox-card.component';
+import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
+import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { NewDeckComponent } from './deck-hub/new-deck/new-deck.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { NotificationService } from './_application/_services/notification/notification.service';
+import { NotificationService } from '@application/_services/notification/notification.service';
 import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless-auth.component';
 import { RowCardComponent } from './deck-hub/deck-view/row-card/row-card.component';
-import { ScryfallCardService } from './_application/_services/scryfall-services/card/scryfall-card.service';
-import { ScryfallSearchService } from './_application/_services/scryfall-services/search/scryfall-search.service';
+import { ScryfallCardService } from '@application/_services/scryfall-services/card/scryfall-card.service';
+import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
 import { SearchHubComponent } from './search-hub/search-hub.component';
-import { TitlebarComponent } from './_shared/ui/titlebar/titlebar.component';
-import { ToastMessageComponent } from './_shared/ui/toast-message/toast-message.component';
-import { ToastService } from './_application/_services/toast/toast.service';
+import { TitlebarComponent } from '@shared/ui/titlebar/titlebar.component';
+import { ToastMessageComponent } from '@shared/ui/toast-message/toast-message.component';
+import { ToastService } from '@application/_services/toast/toast.service';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
-import { DotComponent } from './_shared/ui/dot/dot.component';
+import { DotComponent } from '@shared/ui/dot/dot.component';
 import { DeckStatsComponent } from './deck-hub/deck-view/deck-stats/deck-stats.component';
-import { DeckContextComponent } from './_shared/ui/context-menu/deck-context/deck-context.component';
+import { DeckContextComponent } from '@shared/ui/context-menu/deck-context/deck-context.component';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -110,6 +111,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     NotificationService,
     ScryfallCardService,
     ScryfallSearchService,
+    LocalstorageService,
     ToastService,
   ],
   schemas: [

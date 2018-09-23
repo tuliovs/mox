@@ -1,4 +1,4 @@
-import { IMapper } from '../_interfaces/IMapper';
+import { IMapper } from '@application/_mappers/_interfaces/IMapper';
 
 export class Mapper<T> implements IMapper<T> {
 
