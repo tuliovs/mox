@@ -1,5 +1,6 @@
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { filter, take } from 'rxjs/operators';
+import { MetaService } from 'ng2-meta';
 
 import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
@@ -65,6 +66,7 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private _dekService: MoxDeckService,
+    private metaService: MetaService,
     public auth: AuthService,
     public _msg: NotificationService,
     public _state: ActionStateService

@@ -11,7 +11,7 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from '@karn/_services/auth.guard';
 import { SearchHubComponent } from './search-hub/search-hub.component';
-
+import { MetaGuard } from 'ng2-meta';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -20,7 +20,12 @@ const routes: Routes = [
   { path: 'deckhub', component: DeckHubComponent,  canActivate: [AuthGuard] },
   { path: 'search', component: SearchHubComponent},
   { path: 'deck/new', component: NewDeckComponent,  canActivate: [AuthGuard] },
-  { path: 'deck/:id', component: DeckViewComponent },
+  { path: 'deck/:id', component: DeckViewComponent, canActivate: [MetaGuard],
+    data: { meta: {
+    title: 'Mox Home page',
+    description: 'Mox is a portable, light, cloud and fast mtg tool.',
+    'og:image': 'https://img.scryfall.com/cards/art_crop/en/vma/4.jpg?1517813031'
+  } } },
   { path: 'login', component: LoginComponent },
   { path: 'user', component: UserProfileComponent,  canActivate: [AuthGuard]},
   { path: 'nopass', component: PasswordlessAuthComponent},

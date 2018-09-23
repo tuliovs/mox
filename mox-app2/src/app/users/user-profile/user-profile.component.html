@@ -34,6 +34,16 @@
     </div>
   </div>
   <app-mox-action-bar (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
+    <button class="btn btn-action" disabled>
+      <i class="fas fa-book"></i>
+    </button>
+    <button class="btn btn-action" disabled>
+      <i class="fas fa-sort"></i>
+    </button>
+    <div class="fixer"></div>
+    <button class="btn btn-action" disabled>
+      <i class="fas fa-envelope"></i>
+    </button>
     <button (click)="auth.signOut()" type="button" class="btn btn-action">
       <i class="fas fa-sign-in-alt"></i>
     </button>

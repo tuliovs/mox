@@ -8,6 +8,7 @@ import { ActionStateService } from '@application/_services/action-state/action-s
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '@karn/_services/auth.service';
+import { MetaService } from 'ng2-meta';
 
 @Component({
   selector: 'app-mox-deck-view',
@@ -41,6 +42,7 @@ export class DeckViewComponent implements OnInit {
     private _deckService: MoxDeckService,
     private _route: ActivatedRoute,
     private _toast: ToastService,
+    private _metaService: MetaService,
     private _state: ActionStateService
   ) { }
 
@@ -54,6 +56,8 @@ export class DeckViewComponent implements OnInit {
         this._deck = this._deckService.getDeck(deckId);
         this._deck.pipe(
           tap((dck) => {
+            this._metaService.setTitle('[Mox]DeckData - ' + dck.name);
+            this._metaService.setTag('og:image', dck.cover);
             this._deckService.editDeck(dck);
           }
         )).subscribe();

@@ -12,6 +12,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { environment } from '@envoirment/environment';
 import { KarnModule } from '@karn/karn.module';
+import { MetaModule } from 'ng2-meta';
 
 import * as Hammer from 'hammerjs';
 import { } from '@angular/platform-browser';
@@ -95,6 +96,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     HttpModule,
     HttpClientModule,
     AppRoutingModule,
+    MetaModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
     AngularFireMessagingModule,

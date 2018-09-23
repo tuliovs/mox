@@ -60,9 +60,12 @@ export class DeckContextComponent implements OnInit {
       url: 'https://mox-mtg.firebaseapp.com/deck/' + this._deckService.deckProcess._deck.key
     }).then( (response) => {
       console.log(response);
+      this.closeContext();
+      this._state.setState('nav');
     })
     .catch( (error) => {
       console.log(error);
+      alert('Error! ' + error);
     });
   }
 
