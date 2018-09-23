@@ -5,6 +5,7 @@ import { animate, style, transition, trigger, state } from '@angular/animations'
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { AuthService } from '@karn/_services/auth.service';
+import { NgNavigatorShareService } from 'ng-navigator-share';
 
 @Component({
   selector: 'app-mox-deck-context',
@@ -31,9 +32,12 @@ export class DeckContextComponent implements OnInit {
     public _router: Router,
     public _auth: AuthService,
     public _deckService: MoxDeckService,
+    private ngNavigatorShareService: NgNavigatorShareService,
     public _state: ActionStateService,
     public _toast: ToastService
-  ) { }
+  ) {
+    this.ngNavigatorShareService = ngNavigatorShareService;
+  }
   @Input() deck: any;
   @Input() icon;
   @Input() disabled;
@@ -50,7 +54,16 @@ export class DeckContextComponent implements OnInit {
   }
 
   share() {
-
+    this.ngNavigatorShareService.share({
+      title: 'Mox',
+      text: '[Mox]DeckList - ' + this._deckService.deckProcess._deck.name,
+      url: 'https://mox-mtg.firebaseapp.com/deck/' + this._deckService.deckProcess._deck.key
+    }).then( (response) => {
+      console.log(response);
+    })
+    .catch( (error) => {
+      console.log(error);
+    });
   }
 
   delete() {
