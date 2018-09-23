@@ -15,7 +15,7 @@
               (@actionIcoAnimator.done)="resetAnimationState()"
               (tap)="menuOpen('opened');animateNav();setState('closed')"></i>
 
-              <i *ngIf="isState('nav') && !user.actionIco" [className]="'ss ss-pmtg1'"
+              <i *ngIf="!user || (isState('nav') && !user.actionIco)" [className]="'ss ss-pmtg1'"
               [@actionIcoAnimator]="animationState2"
               (@actionIcoAnimator.done)="resetAnimationState()"
               (tap)="menuOpen('opened');animateNav();setState('closed')"></i>
