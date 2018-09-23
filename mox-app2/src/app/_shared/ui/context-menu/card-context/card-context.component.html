@@ -27,11 +27,11 @@
           <i *ngIf="fav" class="fas fa-heart"></i>
           <label>Add to Favorites</label>
       </button>
-    <button (click)="addOneCard()" type="button" class="btn btn-icon" [disabled]="!_deckService.deckProcess._deck && _deckService.deckProcess._deck.ownerId !== user.uid">
+    <button (click)="addOneCard()" type="button" class="btn btn-icon" [disabled]="!_deckService.deckProcess._deck || (_deckService.deckProcess._deck && _deckService.deckProcess._deck.ownerId !== user.uid)">
         <i class="fas fa-plus-circle"></i>
         <label>Add One to Deck</label>
     </button>
-    <button (click)="addOneCard(true)" type="button" class="btn btn-icon" [disabled]="!_deckService.deckProcess._deck && _deckService.deckProcess._deck.ownerId !== user.uid">
+    <button (click)="addOneCard(true)" type="button" class="btn btn-icon" [disabled]="!_deckService.deckProcess._deck || (_deckService.deckProcess._deck && _deckService.deckProcess._deck.ownerId !== user.uid)">
         <i class="fas fa-plus-circle"></i>
         <label>Add One to Side</label>
     </button>
@@ -39,7 +39,7 @@
         <i class="fas fa-box-open"></i>
         <label>Add to One Collection</label>
     </button>
-    <button (click)="setCover()" type="button" class="btn btn-icon" [disabled]="!_deckService.deckProcess._deck && _deckService.deckProcess._deck.ownerId !== user.uid" >
+    <button (click)="setCover()" type="button" class="btn btn-icon" [disabled]="!_deckService.deckProcess._deck || (_deckService.deckProcess._deck && _deckService.deckProcess._deck.ownerId !== user.uid)" >
         <i class="fas fa-tags"></i>
         <label>Make Deck Cover</label>
     </button>
