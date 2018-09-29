@@ -93,6 +93,8 @@ export class CardContextComponent implements OnInit, AfterViewInit {
             'success',
             this._deckService.deckProcess._deck.ownerId);
           this._deckService.deckProcess.active = false;
+          this.closeContext();
+          this._state.returnState();
         }
       );
     }
@@ -108,7 +110,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   closeContext() {
     this.lightboxActive = false;
     this.componentState = 'closed';
-    this._state.setState('nav');
+    this._state.returnState();
   }
 
   viewCard() {

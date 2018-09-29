@@ -61,7 +61,7 @@ export class DeckContextComponent implements OnInit {
     }).then( (response) => {
       console.log(response);
       this.closeContext();
-      this._state.setState('nav');
+      this._state.returnState();
     })
     .catch( (error) => {
       console.log(error);
@@ -89,6 +89,6 @@ export class DeckContextComponent implements OnInit {
   closeContext() {
     this.lightboxActive = false;
     this.componentState = 'closed';
-    this._state.setState('nav');
+    this._state.returnState();
   }
 }

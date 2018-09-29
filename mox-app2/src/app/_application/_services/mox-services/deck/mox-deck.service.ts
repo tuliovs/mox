@@ -72,7 +72,7 @@ export class MoxDeckService {
         () => {
           this.deckProcess._deckStats.processDate = new Date();
           this.saveDeckStats(this.deckProcess._deckStats);
-          this._state.setState('nav');
+          this._state.returnState();
         }
       ).catch(
         (err) => {
@@ -205,7 +205,7 @@ export class MoxDeckService {
                   }).then(() => {
                     this._toast.sendMessage('Deck Created!', 'success', d.ownerId);
                     this.deckProcess.status = 'ready';
-                    this._state.setState('nav');
+                    this._state.returnState();
                     res(d);
                   });
                 } else {
@@ -240,12 +240,15 @@ export class MoxDeckService {
   setDeck(d: MoxDeck) {
     if (d) {
       d = this.deckFix(d);
+      this._state.setState('loading');
       this.deckCollection = this.afs.collection('decks');
       this.deckCollection.doc(d.key).set(Object.assign({}, d)).catch((error) => {
         console.error('Error adding document: ', error);
+        this._state.setState('error');
         this._toast.sendMessage('Error adding document: ', 'danger', d.ownerId);
       }).then(() => {
         this._toast.sendMessage('Deck Created!', 'success', d.ownerId);
+        this._state.returnState();
         // this._router.navigateByUrl('/deckhub');
       });
     }
@@ -269,7 +272,7 @@ export class MoxDeckService {
             if (isOwner) { this._localstorageService.updateCardStorage(x.id, x); }
             this.deckProcess._cardList.push(x);
             if (Array.from(new Set(deck.cards)).length === this.deckProcess._cardList.length) {
-              this._state.setState('nav');
+              this._state.returnState();
               // console.log('Sort');
             }
           }),
@@ -283,12 +286,20 @@ export class MoxDeckService {
             if (isOwner) { this._localstorageService.updateCardStorage(x.id, x); }
             this.deckProcess._sideList.push(x);
             if (Array.from(new Set(deck.side)).length === this.deckProcess._sideList.length) {
-              this._state.setState('nav');
+              this._state.returnState();
               // console.log('Sort');
             }
           })
         ).subscribe();
       });
+    }
+  }
+
+  viewDeck() {
+    if (this.deckProcess._deck) {
+      this._router.navigateByUrl('/deck/' + this.deckProcess._deck.key);
+    } else {
+      console.error('NO DECK');
     }
   }
 
@@ -301,7 +312,7 @@ export class MoxDeckService {
       .update(this.deckProcess._deck)
       .then(() => {
         this.deckProcess.status = 'ready';
-        this._state.setState('nav');
+        this._state.returnState();
       })
       .catch((err) => {
         this.deckProcess.errorList.push(err);
@@ -322,10 +333,12 @@ export class MoxDeckService {
     this.deckProcess._deckStats = null;
     this.deckProcess._cardList = null;
     this.deckProcess._sideList = null;
+    this._state.setState('cloud');
     this.afs.collection('decks').doc(deck.key).delete().then(
       () => {
         this.afs.collection('decks-stats').doc(deck.key).delete().then(
           () => {
+            this._state.returnState();
             this._toast.sendMessage('Deck successfully deleted!', 'success', deck.ownerId);
           }
         ).catch(
@@ -378,6 +391,7 @@ export class MoxDeckService {
 
   addCard(cardId: string, deckId?: string) {
     if (deckId) {
+      this._state.setState('cloud');
       this.deckCollection = this.afs.collection('decks');
       this.deckCollection.doc(deckId).valueChanges()
       .pipe(
@@ -386,11 +400,13 @@ export class MoxDeckService {
           this.deckCollection.doc(tempDeck.key).update({
             cards: tempDeck.cards
           }).then(() => {
+            this._state.returnState();
             this._toast.sendMessage(
               'Done! Add to your: ' + this.deckProcess._deck.name + ' decklist.',
               'success',
               this.deckProcess._deck.ownerId);
           }).catch((err) => {
+            this._state.setState('error');
             this._toast.sendMessage(
               'Error! ' + err,
               'error',
@@ -422,6 +438,7 @@ export class MoxDeckService {
 
   addCardSide(cardId: string, deckId?: string) {
     if (deckId) {
+      this._state.setState('cloud');
       this.deckCollection = this.afs.collection('decks');
       this.deckCollection.doc(deckId).valueChanges()
       .pipe(
@@ -430,11 +447,13 @@ export class MoxDeckService {
           this.deckCollection.doc(tempDeck.key).update({
             side: tempDeck.side
           }).then(() => {
+            this._state.returnState();
             this._toast.sendMessage(
               'Done! Add to your: ' + this.deckProcess._deck.name + ' side.',
               'success',
               this.deckProcess._deck.ownerId);
           }).catch((err) => {
+            this._state.setState('error');
             this._toast.sendMessage(
               'Error! ' + err,
               'error',

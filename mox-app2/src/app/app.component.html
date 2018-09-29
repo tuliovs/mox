@@ -20,6 +20,7 @@
           <i *ngIf="isState('closed')" (tap)="menuOpen('closed');animateNav();setState('nav')" class="fas fa-times-circle"></i>
           <i *ngIf="isState('loading')" class="fas fa-sync-alt fa-spin"></i>
           <i *ngIf="isState('config')" class="fas fa-cog fa-spin"></i>
+          <i *ngIf="isState('view')" (tap)="view();animateNav()" class="fas fa-search-plus"></i>
           <i *ngIf="isState('error')" (tap)="setState('nav')" class="fas fa-not-equal"></i>
           <span *ngIf="isState('cloud')" style="display: contents" (tap)="navigator.vibrate([30, 30])">
             <i class="fas fa-cloud fa-stack-1x"></i>
@@ -68,7 +69,7 @@
         </button>
         <button (click)="goToSeachHub()" type="button" class="btn btn-icon">
           <i class="fas fa-search"></i>
-          <label>Search</label>
+          <label>Card Search</label>
         </button>
       </section>
       <div class="closer">

@@ -92,20 +92,15 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
   filteredDeckList() {
     return (this.formatSelected) ? this.deckList.filter(x => x.format === this.formatSelected) : this.deckList;
   }
-  viewDeck(deck?) {
-    if (deck) {
-      this._router.navigateByUrl('/deck/' + deck.key);
-    } else {
-      this._router.navigateByUrl('/deck/' + this.internalDeck.key);
-    }
-  }
 
   deckSelected(deck: MoxDeck) {
     if (this.internalDeck === deck) {
       this.internalDeck = null;
+      this._state.setState('nav');
     } else {
       this._deckService.editDeck(deck);
       this.internalDeck = deck;
+      this._state.setState('view');
     }
   }
 }

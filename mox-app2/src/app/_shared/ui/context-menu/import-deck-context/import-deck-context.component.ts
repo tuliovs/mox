@@ -59,7 +59,7 @@ export class ImportDeckContextComponent implements OnInit {
   }
 
   closeContext() {
-    this._state.setState('nav');
+    this._state.returnState();
     this.lightboxActive = false;
     this.importState = 'closed';
   }
@@ -85,7 +85,7 @@ export class ImportDeckContextComponent implements OnInit {
         async (deck: MoxDeck) => {
           await this._deckService.importTxt(deck, this.importText).then((status) => {
             console.log('COMPLETE: ', status + ' - ' + deck);
-            this._state.setState('nav');
+            this._state.returnState();
           });
         }
       );

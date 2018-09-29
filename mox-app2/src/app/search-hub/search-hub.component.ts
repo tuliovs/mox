@@ -57,7 +57,7 @@ export class SearchHubComponent {
           this.searchResult = list;
           this.resp_time = Date.now() - this.resp_time;
           this.showError = false;
-          this._state.setState('nav');
+          this._state.returnState();
           console.log('>> ', this.searchResult);
         }),
         catchError((err) => {

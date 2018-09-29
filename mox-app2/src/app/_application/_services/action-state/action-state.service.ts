@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -7,7 +7,8 @@ import { Injectable } from '@angular/core';
 
 export class ActionStateService {
 
-  public _actionState = new Subject<any>();
+  public _actionState = new BehaviorSubject('nav');
+  public _lastState: string;
   constructor() {
   }
 
@@ -16,6 +17,26 @@ export class ActionStateService {
   }
 
   setState(newState: string) {
-    this._actionState.next(newState);
+    const actual = this._actionState.getValue();
+    const last = this._lastState;
+    if (!last && !actual) {
+      this._actionState.next(newState);
+      return;
+    } else if (!last && actual) {
+      this._lastState = actual;
+      this._actionState.next(newState);
+      return;
+    } else if (last && actual && actual === newState) {
+      return;
+    } else if (last && actual && actual !== newState) {
+      this._lastState = actual;
+      this._actionState.next(newState);
+    } else {
+      console.error('ERROR: STATE: ', {actual, last, newState});
+    }
+  }
+
+  returnState() {
+    (this._lastState) ? this.setState(this._lastState) : this.setState('nav');
   }
 }

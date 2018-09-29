@@ -9,6 +9,7 @@ export class DividerComponent implements OnInit {
 
   constructor() { }
   @Input() color: string;
+  @Input() format: string;
   ngOnInit() {
   }
 

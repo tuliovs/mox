@@ -31,7 +31,7 @@
           ></app-mox-row-card>
         </li>
       </ul>
-      <app-mox-divider *ngIf="deck.side && deck.side.length > 0" [color]="'000000'"></app-mox-divider>
+      <app-mox-divider *ngIf="deck.side && deck.side.length > 0" [format]="deck.format" [color]="'000000'"></app-mox-divider>
       <ul *ngIf="user.uid === deck.ownerId || deck.public">
         <li *ngFor="let card of _deckService.deckProcess._sideList">
           <app-mox-row-card *ngIf="card" [cardAmout]="cardSideAmount(card.id)" [card]="card" [selected]="(this._selectedCard && this._selectedCard === card)"

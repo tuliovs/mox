@@ -129,6 +129,10 @@ export class AppComponent implements OnInit {
     }
   }
 
+  view() {
+    this._dekService.viewDeck();
+  }
+
   setState(newActionState) {
     this._state.setState(newActionState);
   }

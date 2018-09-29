@@ -11,9 +11,9 @@
     <span *ngIf="!showLoader && deckList.length == 0" >Empty decklist</span>
     <ol *ngIf="!showLoader">
       <li *ngFor="let deck of filteredDeckList()" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
-        <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div>
-        <div class="cover"   (click)="deckSelected(deck)" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
-        <div class="content" (click)="deckSelected(deck)">
+        <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
+        <div class="cover"   (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
+        <div class="content" (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()">
           <div>
             <label>{{deck.name}}</label>
             <span>{{deck.format}}</span>
@@ -35,7 +35,21 @@
       </li>
     </ol>
   </div>
-  <app-mox-action-bar>
+  <app-mox-action-bar *ngIf="internalDeck">
+    <button class="btn btn-action" routerLink="/search">
+      <i class="fas fa-plus-square" style="font-size: 1.2em" ></i>
+    </button>
+    <button class="btn btn-action" disabled>
+      <i class="fas fa-filter"></i>
+    </button>
+    <div class="fixer"></div>
+    <button class="btn btn-action" disabled>
+      <i class="fas fa-user" style="font-size: 1.4em"></i>
+    </button>
+    <app-mox-deck-context [deck]="internalDeck" [icon]="'fas fa-ellipsis-v'" *ngIf="internalDeck"></app-mox-deck-context>
+  </app-mox-action-bar>
+
+  <app-mox-action-bar *ngIf="!internalDeck">
     <button class="btn btn-action" disabled>
       <i class="fas fa-book-open" style="font-size: 1.2em" ></i>
     </button>
@@ -46,8 +60,7 @@
     <button class="btn btn-action" disabled>
       <i class="fas fa-sort" style="font-size: 1.4em"></i>
     </button>
-    <app-mox-deck-context [deck]="internalDeck" [icon]="'fas fa-ellipsis-v'" *ngIf="internalDeck"></app-mox-deck-context>
-    <button (click)="newDeck()" type="button" *ngIf="!internalDeck" class="btn btn-action">
+    <button (click)="newDeck()" type="button" class="btn btn-action">
       <i class="fas fa-plus"></i>
     </button>
   </app-mox-action-bar>
