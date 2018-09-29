@@ -65,7 +65,13 @@
         <div class="deck-cover" *ngIf="deck.cover != ''" socialshare-media="deck.cover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
           <section class="deck-data">
             <div class="deck-colors">
-              <p>[deck-color-identity]</p>
+              <p *ngIf="deck.colorIdentity">
+                  <i *ngFor="let ico of deck.colorIdentity"
+                  [className]="'ms ms-' + ico.toLowerCase()"
+                  [class.ms-cost]=" ico != ''"
+                  [class.shadow]=" ico != ''"
+                ></i>
+              </p>
             </div>
             <div class="deck-owner">
               <label class="mox-font">by {{deck.ownerName}}</label>

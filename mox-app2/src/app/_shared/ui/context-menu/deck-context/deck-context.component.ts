@@ -49,7 +49,6 @@ export class DeckContextComponent implements OnInit {
 
   processData() {
     this.closeContext();
-    this._state.setState('loading');
     this._deckService.processStats();
   }
 

@@ -37,6 +37,6 @@ export class ActionStateService {
   }
 
   returnState() {
-    (this._lastState) ? this.setState(this._lastState) : this.setState('nav');
+    (!this._lastState || this._lastState === 'hidden') ? this.setState('nav') : this.setState(this._lastState);
   }
 }

@@ -1,17 +1,18 @@
 
 export class MoxDeck {
-    cards: string[];
-    side: string[];
-    cover: string;
-    format: string;
-    froze: boolean;
-    key: string;
-    legal: boolean;
-    name: string;
-    ownerId: string;
-    ownerName: string;
-    public: boolean;
-    updated: any[];
+  cards: string[];
+  colorIdentity: string[];
+  cover: string;
+  format: string;
+  froze: boolean;
+  key: string;
+  legal: boolean;
+  name: string;
+  ownerId: string;
+  ownerName: string;
+  public: boolean;
+  side: string[];
+  updated: any[];
 }
 
 export class MoxCardDeck {

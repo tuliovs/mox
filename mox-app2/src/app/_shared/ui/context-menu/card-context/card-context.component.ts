@@ -67,6 +67,14 @@ export class CardContextComponent implements OnInit, AfterViewInit {
     ).subscribe();
   }
 
+  getCardImgUriCrop() {
+    if (this.card && this.card.image_uris) {
+      return this.card.image_uris.art_crop;
+    } else {
+      return this.card.card_faces[0].image_uris.art_crop;
+    }
+  }
+
   addOneCard(side?: boolean) {
     if (!side) {
       this._deckService.addCard(this.card.id);
@@ -85,7 +93,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
       this._deckService.deckProcess.active = true;
       this.deckCollection = this.afs.collection('decks');
       this.deckCollection.doc(this._deckService.deckProcess._deck.key).update({
-        cover: this.card.image_uris.art_crop
+        cover: this.getCardImgUriCrop()
       }).then(
         () => {
           this._toast.sendMessage(

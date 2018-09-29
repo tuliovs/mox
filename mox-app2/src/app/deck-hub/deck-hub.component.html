@@ -12,7 +12,15 @@
     <ol *ngIf="!showLoader">
       <li *ngFor="let deck of filteredDeckList()" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
         <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
-        <div class="cover"   (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
+        <div class="cover"   (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+          <p class="color-identity" *ngIf="deck.colorIdentity">
+              <i *ngFor="let ico of deck.colorIdentity"
+              [className]="'ms ms-' + ico.toLowerCase()"
+              [class.ms-cost]=" ico != ''"
+              [class.shadow]=" ico != ''"
+            ></i>
+          </p>
+        </div>
         <div class="content" (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()">
           <div>
             <label>{{deck.name}}</label>

@@ -11,6 +11,7 @@ import { ActionStateService } from '@application/_services/action-state/action-s
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
 import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
 import { LocalstorageService } from '@application/_services/localstorage/localstorage.service';
+import { promises } from 'fs';
 
 class DeckProcess {
   public active = false;
@@ -64,15 +65,18 @@ export class MoxDeckService {
         this.deckProcess._deckStats = {};
         this.deckProcess._deckStats.key = this.deckProcess._deck.key;
       }
+      this._state.setState('loading');
       Promise.all([
         this.processPrice(),
         this.processLegalities(),
         this.processCardTypesQtds(),
+        this.processColorIdentity(),
       ]).then(
         () => {
           this.deckProcess._deckStats.processDate = new Date();
           this.saveDeckStats(this.deckProcess._deckStats);
-          this._state.returnState();
+          this.updateDeck();
+          // console.log('[STATS]: ', this.deckProcess._deckStats);
         }
       ).catch(
         (err) => {
@@ -88,7 +92,7 @@ export class MoxDeckService {
   }
 
   private processPrice() {
-    return new Promise((res, rej) => {
+    return new Promise((resolve, reject) => {
       this.deckProcess._deckStats.totalPrice = 0;
       try {
         this.deckProcess.status = 'Processing Price';
@@ -103,18 +107,18 @@ export class MoxDeckService {
           }
         });
         this.deckProcess._deckStats.totalPrice = this.deckProcess._deckStats.totalPrice.toFixed(2);
-        res(true);
+        resolve(true);
       } catch (err) {
         this.deckProcess.status = 'Error';
         console.error(err);
         this.deckProcess.errorList.push(err);
-        rej(new Error('Error processing processPrice'));
+        reject(new Error('Error processing processPrice'));
       }
     });
   }
 
   private processCardTypesQtds() {
-    return new Promise((res, rej) => {
+    return new Promise((resolve, reject) => {
       try {
         this.deckProcess.status = 'Processing Card Types';
         const typeLineCounter = {
@@ -130,18 +134,18 @@ export class MoxDeckService {
         this.deckProcess._deckStats.typeLineCounter = typeLineCounter;
         // console.log(typeLineCounter);
         // console.log('Cards: ', this.deckProcess._cardList);
-        res(true);
+        resolve(true);
       } catch (err) {
         this.deckProcess.status = 'Error';
         console.error(err);
         this.deckProcess.errorList.push(err);
-        rej(new Error('Error processing TypesQtds'));
+        reject(new Error('Error processing TypesQtds'));
       }
     });
   }
 
   private processLegalities() {
-    return new Promise((res, rej) => {
+    return new Promise((resolve, reject) => {
       try {
         if (this.deckProcess._deck.format) {
           this.deckProcess.status = 'Processing Legalities';
@@ -159,61 +163,73 @@ export class MoxDeckService {
               this.deckProcess.errorList.push('Error of legalities of card[SideList]: ' + c.name);
             }
           });
-          res(true);
+          resolve(true);
         } else {
-          res(new Error('Error processing Legalities'));
+          reject(new Error('Error processing Legalities'));
         }
       } catch (err) {
         this.deckProcess.status = 'Error';
         console.error(err);
         this.deckProcess.errorList.push(err);
-        rej(new Error('Error processing Legalities'));
+        reject(new Error('Error processing Legalities'));
+      }
+    });
+  }
+
+  private processColorIdentity() {
+    return new Promise((resolve, reject) => {
+      try {
+        if (this.deckProcess._deck && this.deckProcess._cardList.length > 0) {
+          const colorIdentity = [];
+          this.deckProcess._cardList.forEach((c: Card) => {
+            if (c.color_identity) {
+              c.color_identity.forEach((value) => {
+                if (colorIdentity.indexOf(value) === -1) { colorIdentity.push(value); }
+              });
+            } else {
+              console.error('No Identity: ', c);
+            }
+          });
+          this.deckProcess._deckStats.colorIdentity = colorIdentity;
+          this.deckProcess._deck.colorIdentity = colorIdentity;
+          resolve(true);
+        } else {
+          reject('No deck');
+          this.deckProcess.status = 'Error';
+          console.error('No deck');
+          this.deckProcess.errorList.push('No Deck');
+        }
+      } catch (err) {
+        this.deckProcess.status = 'Error';
+        console.error(err);
+        this.deckProcess.errorList.push(err);
+        reject(err);
       }
     });
   }
 
   public quickCreate(name?) {
-    return new Promise((res, rej) => {
-      this._state.getState().pipe(
-        tap((state) => {
-          if (state !== 'nav' && this.deckProcess.status !== 'ready' ) {
-            return;
+    return new Promise<MoxDeck>((resolve, reject) => {
+      this._auth.getUser().pipe(
+        tap((user) => {
+          if (user) {
+            this._state.setState('loading');
+            const d = new MoxDeck();
+            d.key = this.makeId();
+            d.name = (name) ? name : 'QuickDeck';
+            d.cover = '';
+            d.legal = false;
+            d.ownerId = user.uid;
+            d.ownerName = user.displayName;
+            d.public = true;
+            d.froze = false;
+            d.cards = [];
+            d.side = [];
+            d.updated = [];
+            resolve(d);
           } else {
-            this._auth.getUser().pipe(
-              tap((user) => {
-                if (user) {
-                  this._state.setState('loading');
-                  const d = new MoxDeck();
-                  d.key = this.makeId();
-                  d.name = (name) ? name : 'QuickDeck';
-                  d.cover = '';
-                  d.legal = false;
-                  d.ownerId = user.uid;
-                  d.ownerName = user.displayName;
-                  d.public = true;
-                  d.froze = false;
-                  d.cards = [];
-                  d.side = [];
-                  d.updated = [];
-                  this.deckCollection = this.afs.collection('decks');
-                  this.deckCollection.doc(d.key).set(Object.assign({}, d)).catch((error) => {
-                    console.error('Error adding document: ', error);
-                    this._toast.sendMessage('Error adding document: ', 'danger', d.ownerId);
-                    this.deckProcess.status = 'error';
-                    this._state.setState('error');
-                    rej(new Error('Error creating a new deck'));
-                  }).then(() => {
-                    this._toast.sendMessage('Deck Created!', 'success', d.ownerId);
-                    this.deckProcess.status = 'ready';
-                    this._state.returnState();
-                    res(d);
-                  });
-                } else {
-                  console.error('User not found!: ', user);
-                  rej(new Error('Error creating a new deck'));
-                }
-              })
-            ).subscribe();
+            console.error('User not found!: ', user);
+            reject(new Error('Error creating a new deck'));
           }
         })
       ).subscribe();
@@ -309,13 +325,14 @@ export class MoxDeckService {
       this.deckProcess.status = 'saving';
       this.afs.collection('decks')
       .doc<MoxDeck>(this.deckProcess._deck.key)
-      .update(this.deckProcess._deck)
+      .update(Object.assign({}, this.deckProcess._deck))
       .then(() => {
         this.deckProcess.status = 'ready';
-        this._state.returnState();
+        this._state.setState('nav');
       })
       .catch((err) => {
         this.deckProcess.errorList.push(err);
+        console.error(err);
         this._state.setState('error');
       });
     } else {
@@ -613,7 +630,7 @@ export class MoxDeckService {
     }).length;
   }
 
-  public countOccurrences(arr: string[], value: string) {
+  countOccurrences(arr: string[], value: string) {
     let res = 0;
     arr.forEach(el => {
       if (el === value) {
