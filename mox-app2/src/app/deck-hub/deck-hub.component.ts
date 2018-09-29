@@ -14,27 +14,48 @@ import { MoxDeckService } from '@application/_services/mox-services/deck/mox-dec
 })
 export class DeckHubComponent implements OnInit, AfterViewInit {
   public deckList: MoxDeck[];
+  public formats = [
+    'all',
+    'standard',
+    'modern',
+    'legacy',
+    'commander',
+    'pauper',
+    'vintage',
+    'brawl',
+    '1v1',
+    'duek',
+    'penny',
+    'frontier',
+    'future'
+  ];
   private internalDeck: any;
+  private formatSelected: string;
   private deckCollection: AngularFirestoreCollection;
   constructor(
-    private afs: AngularFirestore,
+    private _afs: AngularFirestore,
     private _deckService: MoxDeckService,
     private _state: ActionStateService,
-    public auth: AuthService,
+    public _auth: AuthService,
     private _router: Router) {
   }
 
   ngOnInit() {
-    this.auth.getUser().subscribe(
+    this._auth.getUser().subscribe(
       (u) => {
         if (u) {
-          this.deckCollection = this.afs.collection('decks', ref => ref.where('ownerId', '==', u.uid));
+          this._afs.collection('users').doc(u.uid).valueChanges().pipe(
+            tap((moxUserData: any) => {
+              if (moxUserData.favoriteFormat) { this.formatSelected = moxUserData.favoriteFormat; }
+            })
+          ).subscribe();
+          this.deckCollection = this._afs.collection('decks', ref => ref.where('ownerId', '==', u.uid));
           this.deckCollection.valueChanges().pipe(
             tap((docL) => {
                 this.deckList = <MoxDeck[]>docL.sort((a, b) => {
-                  if (a.name < a.name) {
+                  if (a.name < b.name) {
                     return -1;
-                  } else if (a.name > a.name) {
+                  } else if (a.name > b.name) {
                     return 1;
                   } else {
                     return 0;
@@ -64,6 +85,13 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     this._router.navigateByUrl('/deck/new');
   }
 
+  setFormat(f) {
+    (f === 'all') ? this.formatSelected = null : this.formatSelected = f;
+  }
+
+  filteredDeckList() {
+    return (this.formatSelected) ? this.deckList.filter(x => x.format === this.formatSelected) : this.deckList;
+  }
   viewDeck(deck?) {
     if (deck) {
       this._router.navigateByUrl('/deck/' + deck.key);

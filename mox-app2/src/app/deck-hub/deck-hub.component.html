@@ -2,14 +2,15 @@
 
 <ng-template #deckListed>
   <app-mox-titlebar>
-    <div class="filters mox-font">
-      <label>Sort by: Alfabetical ^</label>
-      <label>Showing: All Formats</label>
-    </div>
+    <ul class="tabs mox-font">
+      <li *ngFor="let f of formats" (click)="setFormat(f)" [ngClass]="{'active': this.formatSelected === f}">{{f}}</li>
+    </ul>
+    <i class="fas fa-caret-right"></i>
   </app-mox-titlebar>
   <div class="main">
+    <span *ngIf="!showLoader && deckList.length == 0" >Empty decklist</span>
     <ol *ngIf="!showLoader">
-      <li *ngFor="let deck of deckList" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
+      <li *ngFor="let deck of filteredDeckList()" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
         <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div>
         <div class="cover"   (click)="deckSelected(deck)" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
         <div class="content" (click)="deckSelected(deck)">
@@ -36,16 +37,15 @@
   </div>
   <app-mox-action-bar>
     <button class="btn btn-action" disabled>
-      <i class="fas fa-filter"></i>
+      <i class="fas fa-book-open" style="font-size: 1.2em" ></i>
     </button>
     <button class="btn btn-action" disabled>
-      <i class="fas fa-sort" style="font-size: 1.4em"></i>
+      <i class="fas fa-filter"></i>
     </button>
     <div class="fixer"></div>
     <button class="btn btn-action" disabled>
-      <i class="fas fa-search" style="font-size: 1.2em" ></i>
+      <i class="fas fa-sort" style="font-size: 1.4em"></i>
     </button>
-
     <app-mox-deck-context [deck]="internalDeck" [icon]="'fas fa-ellipsis-v'" *ngIf="internalDeck"></app-mox-deck-context>
     <button (click)="newDeck()" type="button" *ngIf="!internalDeck" class="btn btn-action">
       <i class="fas fa-plus"></i>
@@ -55,7 +55,7 @@
 
 <ng-template #emptyList>
   <div class="container">
-    <p>Empty Deck List</p>
+    <app-mox-loading-spinner></app-mox-loading-spinner>
   </div>
 </ng-template>
 

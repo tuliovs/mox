@@ -26,12 +26,12 @@
       </div>
       <ul *ngIf="user.uid === deck.ownerId || deck.public">
         <li *ngFor="let card of _deckService.deckProcess._cardList">
-          <app-mox-row-card *ngIf="card" [cardAmout]="cardAmount(card.id)" [card]="card" [selected]="(this._selectedCard && this._selectedCard === card)"
+          <app-mox-row-card *ngIf="card" [cardAmout]="cardAmount(card.id)" [card]="card" [deckFormat]="deck.format" [selected]="(this._selectedCard && this._selectedCard === card)"
             (plus)="cardPlus($event)" (minus)="cardMinus($event)" (select)="selectedCard($event)" (cardView)="activateCardView($event)"
           ></app-mox-row-card>
         </li>
       </ul>
-      <hr *ngIf="!deck.side && !deck.side.length > 0">
+      <app-mox-divider *ngIf="deck.side && deck.side.length > 0" [color]="'000000'"></app-mox-divider>
       <ul *ngIf="user.uid === deck.ownerId || deck.public">
         <li *ngFor="let card of _deckService.deckProcess._sideList">
           <app-mox-row-card *ngIf="card" [cardAmout]="cardSideAmount(card.id)" [card]="card" [selected]="(this._selectedCard && this._selectedCard === card)"
@@ -41,31 +41,23 @@
       </ul>
       <div *ngIf="cardView" class="lightbox" (click)="cardView = false;selectedCard(_selectedCard)"></div>
       <div *ngIf="cardView && _selectedCard" class="card-viewer">
-        <div class="fullcard" *ngIf="_selectedCard.image_uris"
-          (doubletap) ="cardView = false;selectedCard(_selectedCard)"
-          (swipedown) ="cardView = false;selectedCard(_selectedCard)"
-          (swipeup)   ="cardView = false;selectedCard(_selectedCard)"
-          (swiperight)="cardView = false;selectedCard(_selectedCard)"
-          (swipeleft) ="cardView = false;selectedCard(_selectedCard)"
-          [ngStyle]="{ 'background-image': 'url(' + _selectedCard.image_uris.normal + ')' }" ></div>
-
-        <div class="fullcard" *ngIf="!_selectedCard.image_uris && !side"
+        <div class="fullcard" *ngIf="!side"
           (tap)="side = true"
           (doubletap) ="cardView = false;selectedCard(_selectedCard)"
           (swipedown) ="cardView = false;selectedCard(_selectedCard)"
           (swipeup)   ="cardView = false;selectedCard(_selectedCard)"
           (swiperight)="cardView = false;selectedCard(_selectedCard)"
           (swipeleft) ="cardView = false;selectedCard(_selectedCard)"
-          [ngStyle]="{ 'background-image': 'url(' + _selectedCard.card_faces[0].image_uris.normal + ')' }" ></div>
+          [ngStyle]="{ 'background-image': 'url(' + getCardImgUri() + ')' }" ></div>
 
-        <div class="fullcard" *ngIf="!_selectedCard.image_uris && side"
+        <div class="fullcard" *ngIf="side"
           (tap)="side = false"
           (doubletap) ="cardView = false;selectedCard(_selectedCard)"
           (swipedown) ="cardView = false;selectedCard(_selectedCard)"
           (swipeup)   ="cardView = false;selectedCard(_selectedCard)"
           (swiperight)="cardView = false;selectedCard(_selectedCard)"
           (swipeleft) ="cardView = false;selectedCard(_selectedCard)"
-          [ngStyle]="{ 'background-image': 'url(' + _selectedCard.card_faces[1].image_uris.normal + ')' }"></div>
+          [ngStyle]="{ 'background-image': 'url(' + getCardBackImgUri() + ')' }"></div>
       </div>
     </div>
     <div [hidden]=" tab !='socialTab'">
@@ -120,16 +112,16 @@
 </div>
 <app-mox-action-bar (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
   <button class="btn btn-action" disabled>
+    <i class="fas fa-comments" style="font-size: 1.2em" ></i>
+  </button>
+  <button class="btn btn-action" disabled>
     <i class="fas fa-filter"></i>
   </button>
+  <div class="fixer"></div>
   <button class="btn btn-action" (click)="cardSort(!_orderAsc)">
     <i class="fas fa-sort" style="font-size: 1.4em"></i>
   </button>
-  <div class="fixer"></div>
-  <button class="btn btn-action" disabled>
-    <i class="fas fa-comments" style="font-size: 1.2em" ></i>
-  </button>
   <app-mox-card-context [card]="_selectedCard"  [icon]="'fas fa-ellipsis-h'" *ngIf="_selectedCard" ></app-mox-card-context>
-  <app-mox-deck-context *ngIf="!_selectedCard" [deck]="_deck | async" [icon]="'fas fa-ellipsis-v'"></app-mox-deck-context>
+  <app-mox-deck-context *ngIf="!_selectedCard" [deck]="_deck | async" [icon]="'fas fa-cog'"></app-mox-deck-context>
 </app-mox-action-bar>
 

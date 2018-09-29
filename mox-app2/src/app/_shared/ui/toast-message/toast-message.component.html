@@ -2,8 +2,10 @@
         [@notificationAnimator]="animationState"
         (@notificationAnimator.done)="resetAnimationState()"
         (press)="dismissAll()"
+        (swipeleft)="dismissAll()"
+        (swiperight)="dismissAll()"
         (click)="active = !active"
-        (tap)="startAnimation('swing')"></i>
+        (tap)="startAnimation('swing');navigator.vibrate([50]);"></i>
 <span class="ribbon mox_font" *ngIf="messages && messages.length > 0">{{ribbonCounter()}}</span>
 <div class="wrapper" *ngIf="messages && messages.length > 0 && active">
   <aside>

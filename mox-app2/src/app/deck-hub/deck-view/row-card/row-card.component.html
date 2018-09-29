@@ -1,5 +1,5 @@
 <app-mox-loading-spinner *ngIf="!card"></app-mox-loading-spinner>
-<div class="card-row" *ngIf="card" [ngClass]="{'selected-card': selected}">
+<div class="card-row" *ngIf="card" [ngClass]="{'selected-card': selected, 'ilegal-card': isFormatLegal()}">
   <div class="card-counter"><label>{{cardAmout}}</label></div>
   <div  [class.common]=" card.rarity == 'common'"
         [class.uncommon]=" card.rarity == 'uncommon'"
@@ -7,12 +7,12 @@
         [class.mythic]=" card.rarity == 'mythic'" class="card-rarity"></div>
 
   <div class="card-img"
-    (click)="cardView.emit(true);select.emit(card)"
+    (click)="cardView.emit(card)"
     *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }">
   <label *ngIf="card.usd" class="mox-font">${{card.usd}}</label></div>
 
   <div class="card-img"
-      (click)="cardView.emit(true);select.emit(card)"
+      (click)="cardView.emit(card)"
       *ngIf="!card.image_uris && card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }">
   <label *ngIf="card.usd" class="mox-font">${{card.usd}}</label></div>
 
@@ -43,8 +43,8 @@
         [class.shadow]=" ico != ''"
       ></i></div>
     <div *ngIf="_user">
-      <button *ngIf="_user.uid === _deckService.deckProcess._deck.ownerId" (click)="minus.emit(card.id)" class="btn"><i class="fas fa-minus-circle"></i></button>
-      <button *ngIf="_user.uid === _deckService.deckProcess._deck.ownerId" (click)="plus.emit(card.id)" class="btn"><i class="fas fa-plus-circle"></i></button>
+      <button *ngIf="_user.uid === _deckService.deckProcess._deck.ownerId" (click)="minus.emit(card.id);navigator.vibrate([30]);" class="btn"><i class="fas fa-minus-circle"></i></button>
+      <button *ngIf="_user.uid === _deckService.deckProcess._deck.ownerId" (click)="plus.emit(card.id);navigator.vibrate([30]);" class="btn"><i class="fas fa-plus-circle"></i></button>
     </div>
   </div>
 </div>

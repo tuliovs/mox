@@ -5,7 +5,7 @@
 <div [@importdeck-contextTrigger]="importState" class="lightbox"></div>
 <div [@importdeck-contextTrigger]="importState" class="action-menu">
   <section class="form-block">
-    <button (click)="closeContext()" type="button" class="btn btn-icon btn-close">
+    <button (click)="closeContext()" type="button" class="btn btn-icon btn-close" [disabled]="showLoader" >
       <i class="fas fa-arrow-left"></i>
     </button>
     <label class="mox-font" >Deck Import</label>

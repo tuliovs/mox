@@ -26,6 +26,7 @@ export class ToastMessageComponent implements OnInit {
   public messages: any[] = [];
   public active = false;
   public animationState: string;
+  public navigator = navigator;
   ribbonCounter(): number {
     return this.messages.length;
   }

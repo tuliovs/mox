@@ -50,6 +50,7 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
 import { DotComponent } from '@shared/ui/dot/dot.component';
 import { DeckStatsComponent } from './deck-hub/deck-view/deck-stats/deck-stats.component';
 import { DeckContextComponent } from '@shared/ui/context-menu/deck-context/deck-context.component';
+import { DividerComponent } from './_shared/ui/divider/divider.component';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -86,6 +87,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     DotComponent,
     DeckStatsComponent,
     DeckContextComponent,
+    DividerComponent,
   ],
   imports: [
     CommonModule,

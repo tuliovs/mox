@@ -22,6 +22,7 @@ export class RowCardComponent implements OnInit, AfterViewInit {
   @Input() card: Card;
   @Input() cardAmout;
   @Input() selected: boolean;
+  @Input() deckFormat: string;
   constructor(
     public _auth: AuthService,
     public _deckService: MoxDeckService,
@@ -36,6 +37,13 @@ export class RowCardComponent implements OnInit, AfterViewInit {
         this._user = user;
       })
     ).subscribe();
+  }
+
+  isFormatLegal(): boolean {
+    // console.log(this.card.legalities[this.deckFormat]);
+    return ( this.card.legalities
+          && this.card.legalities[this.deckFormat]
+          && this.card.legalities[this.deckFormat].toString().trim().toLowerCase() === 'not_legal');
   }
 
   ngAfterViewInit() {

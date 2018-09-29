@@ -174,33 +174,46 @@ export class MoxDeckService {
 
   public quickCreate(name?) {
     return new Promise((res, rej) => {
-      this._auth.getUser().pipe(
-        tap((user) => {
-          if (user) {
-            const d = new MoxDeck();
-            d.key = this.makeId();
-            d.name = (name) ? name : 'QuickDeck';
-            d.cover = '';
-            d.legal = false;
-            d.ownerId = user.uid;
-            d.ownerName = user.displayName;
-            d.public = true;
-            d.froze = false;
-            d.cards = [];
-            d.side = [];
-            d.updated = [];
-            this.deckCollection = this.afs.collection('decks');
-            this.deckCollection.doc(d.key).set(Object.assign({}, d)).catch((error) => {
-              console.error('Error adding document: ', error);
-              this._toast.sendMessage('Error adding document: ', 'danger', d.ownerId);
-              rej(new Error('Error creating a new deck'));
-            }).then(() => {
-              this._toast.sendMessage('Deck Created!', 'success', d.ownerId);
-              res(d);
-            });
+      this._state.getState().pipe(
+        tap((state) => {
+          if (state !== 'nav' && this.deckProcess.status !== 'ready' ) {
+            return;
           } else {
-            console.error('User not found!: ', user);
-            rej(new Error('Error creating a new deck'));
+            this._auth.getUser().pipe(
+              tap((user) => {
+                if (user) {
+                  this._state.setState('loading');
+                  const d = new MoxDeck();
+                  d.key = this.makeId();
+                  d.name = (name) ? name : 'QuickDeck';
+                  d.cover = '';
+                  d.legal = false;
+                  d.ownerId = user.uid;
+                  d.ownerName = user.displayName;
+                  d.public = true;
+                  d.froze = false;
+                  d.cards = [];
+                  d.side = [];
+                  d.updated = [];
+                  this.deckCollection = this.afs.collection('decks');
+                  this.deckCollection.doc(d.key).set(Object.assign({}, d)).catch((error) => {
+                    console.error('Error adding document: ', error);
+                    this._toast.sendMessage('Error adding document: ', 'danger', d.ownerId);
+                    this.deckProcess.status = 'error';
+                    this._state.setState('error');
+                    rej(new Error('Error creating a new deck'));
+                  }).then(() => {
+                    this._toast.sendMessage('Deck Created!', 'success', d.ownerId);
+                    this.deckProcess.status = 'ready';
+                    this._state.setState('nav');
+                    res(d);
+                  });
+                } else {
+                  console.error('User not found!: ', user);
+                  rej(new Error('Error creating a new deck'));
+                }
+              })
+            ).subscribe();
           }
         })
       ).subscribe();
@@ -248,18 +261,14 @@ export class MoxDeckService {
     const isOwner = this._user && (this.deckProcess._deck.ownerId === this._user.uid);
     if (deck) {
       if (!deck.side) { deck.side = [];  }
-      // this.deckProcess._cardList = [];
-      // this.deckProcess._sideList = [];
-      // this.deckProcess._deckStats = null;
       Array.from(new Set(deck.cards))
       .forEach((incard) => {
         this._cardService.getCard(incard).pipe(
           tap((x: Card) => {
-            this._state.setState('cloud');
+            this._state.setState('loading');
             if (isOwner) { this._localstorageService.updateCardStorage(x.id, x); }
             this.deckProcess._cardList.push(x);
             if (Array.from(new Set(deck.cards)).length === this.deckProcess._cardList.length) {
-              this.cardSort(false);
               this._state.setState('nav');
               // console.log('Sort');
             }
@@ -270,11 +279,10 @@ export class MoxDeckService {
       .forEach((incard) => {
         this._cardService.getCard(incard).pipe(
           tap((x: Card) => {
-            this._state.setState('cloud');
+            this._state.setState('loading');
             if (isOwner) { this._localstorageService.updateCardStorage(x.id, x); }
             this.deckProcess._sideList.push(x);
             if (Array.from(new Set(deck.side)).length === this.deckProcess._sideList.length) {
-              this.cardSort(false);
               this._state.setState('nav');
               // console.log('Sort');
             }
@@ -287,11 +295,14 @@ export class MoxDeckService {
   updateDeck() {
     if (this.deckProcess.active && this.deckProcess._deck) {
       this._state.setState('cloud');
-      this.deckProcess.status = 'Saving';
+      this.deckProcess.status = 'saving';
       this.afs.collection('decks')
       .doc<MoxDeck>(this.deckProcess._deck.key)
       .update(this.deckProcess._deck)
-      .then(() => { this._state.setState('nav'); })
+      .then(() => {
+        this.deckProcess.status = 'ready';
+        this._state.setState('nav');
+      })
       .catch((err) => {
         this.deckProcess.errorList.push(err);
         this._state.setState('error');
@@ -498,23 +509,23 @@ export class MoxDeckService {
   importTxt(deck: MoxDeck, cardList: any) {
     return new Promise((res, rej) => {
       this.deckProcess.active = true;
+      this.deckProcess.status = 'importing';
       this.editDeck(deck);
       this.deckProcess.totalcards = 0;
-      this.deckProcess.status = 'start';
       cardList.valueOf().split('\n').forEach(async elt => {
         if (elt && elt.length > 0) {
           const qnt = +elt.substr(0, 2);
           const cardname = elt.substr(2, elt.length);
-          console.log('Qntd: ', qnt);
-          console.log('Name: ', cardname);
-          this.deckProcess.status = 'Getting cards';
+          // console.log('Qntd: ', qnt);
+          // console.log('Name: ', cardname);
           this.deckProcess.totalcards = this.deckProcess.totalcards + qnt;
           for (let index = 1; index <= qnt; index++) {
             if (this.deckProcess._deck.cards.length >= 60) {
               this._scryService.fuzzySearch(cardname).pipe(
                 tap((c: Card) => {
-                  this.addCard(c.id);
+                  this.deckProcess._deck.cards.push(c.id);
                   if (this.deckProcess.totalcards === (this.deckProcess._deck.cards.length + this.deckProcess._deck.side.length)) {
+                    this.updateDeck();
                     res(true);
                   }
                 })
@@ -522,8 +533,9 @@ export class MoxDeckService {
             } else {
               this._scryService.fuzzySearch(cardname).pipe(
                 tap((c: Card) => {
-                  this.addCard(c.id);
+                  this.deckProcess._deck.cards.push(c.id);
                   if (this.deckProcess.totalcards === (this.deckProcess._deck.cards.length + this.deckProcess._deck.side.length)) {
+                    this.updateDeck();
                     res(true);
                   }
                 })

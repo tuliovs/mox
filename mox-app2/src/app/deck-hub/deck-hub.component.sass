@@ -103,14 +103,25 @@ ol
           font-size: 1.3em
           width: 15%
 
-.filters
-  color: color(_darkblue)
-  display: flex
-  font-size: .85em
-  font-weight: 600
-  height: 100%
-  justify-content: space-evenly
-  width: 100%
+.tabs
+  display: inline-flex
+  flex-direction: row
+  overflow-x: scroll
+  overflow-y: hidden
+  white-space: nowrap
+
+  li
+    border-bottom: 1.5px color(_blue)
+    color: color(_black)
+    display: inline-block
+    padding: 0 1%
+    text-transform: capitalize
+    width: 100%
+
+    &.active
+      background-color: color(_blue)
+      border-radius: 8px 0
+      color: color(_white)
 
 .selected-deck
   border-bottom: 1px solid color(_darkblue)

@@ -40,6 +40,7 @@ export class ImportDeckContextComponent implements OnInit {
   public showLoader = false;
   public _deckList: string[] = [];
   public _sideList: string[] = [];
+  public _actualState: string;
   constructor(public _scryService: ScryfallSearchService,
               public _deckService: MoxDeckService,
               public _router: Router,
@@ -51,6 +52,7 @@ export class ImportDeckContextComponent implements OnInit {
   }
 
   activateContext() {
+    navigator.vibrate([30]);
     this._state.setState('hidden');
     this.lightboxActive = true;
     this.importState = 'opened';
@@ -63,6 +65,7 @@ export class ImportDeckContextComponent implements OnInit {
   }
 
   importDeckArena() {
+    navigator.vibrate([30]);
     this.showLoader = true;
     if (this.importText && this.importText.length > 0) {
       this._deckService.quickCreate();
@@ -74,13 +77,15 @@ export class ImportDeckContextComponent implements OnInit {
     }
   }
 
-  importDeckTxt() {
-    this.showLoader = true;
+  async importDeckTxt() {
+    navigator.vibrate([30]);
     if (this.importText && this.importText.length > 0) {
-      this._deckService.quickCreate('Imported Deck - Txt').then(
-        (deck: MoxDeck) => {
-          this._deckService.importTxt(deck, this.importText).then((status) => {
+      this.showLoader = true;
+      await this._deckService.quickCreate('Imported Deck - Txt').then(
+        async (deck: MoxDeck) => {
+          await this._deckService.importTxt(deck, this.importText).then((status) => {
             console.log('COMPLETE: ', status + ' - ' + deck);
+            this._state.setState('nav');
           });
         }
       );

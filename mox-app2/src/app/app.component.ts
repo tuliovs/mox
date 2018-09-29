@@ -63,10 +63,11 @@ export class AppComponent implements OnInit {
   public navState = 'closed';
   public animationState: string;
   public animationState2: string;
+  public navigator = navigator;
   constructor(
     private router: Router,
     private _dekService: MoxDeckService,
-    private metaService: MetaService,
+    private _metaService: MetaService,
     public auth: AuthService,
     public _msg: NotificationService,
     public _state: ActionStateService
@@ -141,6 +142,7 @@ export class AppComponent implements OnInit {
   }
 
   goToHome() {
+    navigator.vibrate([40]);
     this.router.navigateByUrl('/home');
   }
 
@@ -148,14 +150,12 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl('/user');
   }
   goToDeckHub() {
+    navigator.vibrate([40]);
     this.router.navigateByUrl('/deckhub');
   }
   goToSeachHub() {
+    navigator.vibrate([40]);
     this.router.navigateByUrl('/search');
-  }
-
-  reset() {
-    this.navState = '';
   }
 
 }

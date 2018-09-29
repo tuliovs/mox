@@ -37,6 +37,7 @@ export class DeckViewComponent implements OnInit {
   public tab = 'profileTab';
   public _orderAsc = false;
   public cardView = false;
+  public side = false;
   constructor(
     public  _auth: AuthService,
     private _deckService: MoxDeckService,
@@ -107,20 +108,42 @@ export class DeckViewComponent implements OnInit {
     this.saveDeck();
   }
 
+  getCardImgUri() {
+    if (this._selectedCard && this._selectedCard.image_uris) {
+      return this._selectedCard.image_uris.normal;
+    } else {
+      return this._selectedCard.card_faces[0].image_uris.normal;
+    }
+  }
+
+  getCardBackImgUri() {
+    if (this._selectedCard && this._selectedCard.image_uris) {
+      return './../../../assets/card_back.jpg';
+    } else {
+      return this._selectedCard.card_faces[1].image_uris.normal;
+    }
+  }
+
   selectedCard(card: Card) {
+    console.log(card);
     if (this._selectedCard === card) {
       this._selectedCard = null;
+      this.side = false;
     } else {
       // this._moxService.editDeck(deck);
       this._selectedCard = card;
     }
   }
 
-  activateCardView(v) {
-    this.cardView = v;
+  activateCardView(v: Card) {
+    if (this._selectedCard === null) {
+      this.selectedCard(v);
+    }
+    this.cardView = true;
   }
 
   changetab(side) {
+    this.selectedCard = null;
     switch (side) {
       case 'left':
         // alert('LEFT');
