@@ -93,20 +93,15 @@ export class MoxDeckService {
 
   private processPrice() {
     return new Promise((resolve, reject) => {
-      this.deckProcess._deckStats.totalPrice = 0;
       try {
         this.deckProcess.status = 'Processing Price';
-        this.deckProcess._cardList.forEach((c: Card) => {
-          if (c.usd) {
-            this.deckProcess._deckStats.totalPrice += (this.countOccurrences(this.deckProcess._deck.cards, c.id) * parseFloat(c.usd));
-          }
-        });
-        this.deckProcess._sideList.forEach((c: Card) => {
-          if (c.usd) {
-            this.deckProcess._deckStats.totalPrice += (this.countOccurrences(this.deckProcess._deck.side, c.id) * parseFloat(c.usd));
-          }
-        });
-        this.deckProcess._deckStats.totalPrice = this.deckProcess._deckStats.totalPrice.toFixed(2);
+        const t = this.deckProcess._cardList
+          .reduce((acc: number, cur) => acc + (this.countOccurrences(this.deckProcess._deck.cards, cur.id) * Number(cur.usd)), 0);
+
+        const s = this.deckProcess._sideList
+          .reduce((acc: number, cur) => acc + (this.countOccurrences(this.deckProcess._deck.cards, cur.id) * Number(cur.usd)), 0);
+
+        this.deckProcess._deckStats.totalPrice = (t + s).toFixed(2);
         resolve(true);
       } catch (err) {
         this.deckProcess.status = 'Error';
@@ -288,7 +283,7 @@ export class MoxDeckService {
             if (isOwner) { this._localstorageService.updateCardStorage(x.id, x); }
             this.deckProcess._cardList.push(x);
             if (Array.from(new Set(deck.cards)).length === this.deckProcess._cardList.length) {
-              this._state.returnState();
+              this._state.setState('nav');
               // console.log('Sort');
             }
           }),
@@ -302,7 +297,7 @@ export class MoxDeckService {
             if (isOwner) { this._localstorageService.updateCardStorage(x.id, x); }
             this.deckProcess._sideList.push(x);
             if (Array.from(new Set(deck.side)).length === this.deckProcess._sideList.length) {
-              this._state.returnState();
+              this._state.setState('nav');
               // console.log('Sort');
             }
           })
@@ -584,30 +579,68 @@ export class MoxDeckService {
     });
   }
 
-  public cardSort(order) {
-    this.deckProcess._cardList = this.deckProcess._cardList.sort((a: Card, b: Card): number => {
-      if (order) {
-        if ( a.cmc < b.cmc ) { return -1; }
-        if ( a.cmc > b.cmc ) { return 1; }
-        return 0;
-      } else {
-        if ( a.cmc > b.cmc ) { return -1; }
-        if ( a.cmc < b.cmc ) { return 1; }
-        return 0;
-      }
+  public sortAlphaUp () {
+    this.deckProcess._cardList = this.deckProcess._cardList.sort((a: Card, b: Card) => {
+      if ( a.name < b.name ) { return -1; }
+      if ( a.name > b.name ) { return 1; }
+      return 0;
     });
-    this.deckProcess._sideList = this.deckProcess._sideList.sort((a: Card, b: Card): number => {
-      if (order) {
-        if ( a.cmc < b.cmc ) { return -1; }
-        if ( a.cmc > b.cmc ) { return 1; }
-        return 0;
-      } else {
-        if ( a.cmc > b.cmc ) { return -1; }
-        if ( a.cmc < b.cmc ) { return 1; }
-        return 0;
-      }
+  }
+
+  public sortAlphaDown () {
+    this.deckProcess._cardList = this.deckProcess._cardList.sort((a: Card, b: Card) => {
+      if ( a.name > b.name ) { return -1; }
+      if ( a.name < b.name ) { return 1; }
+      return 0;
     });
-    return order;
+  }
+
+  public sortCmcUp () {
+    this.deckProcess._cardList = this.deckProcess._cardList.sort((a: Card, b: Card) => {
+      if ( Number(a.cmc) < Number(b.cmc) ) { return -1; }
+      if ( Number(a.cmc) > Number(b.cmc) ) { return 1; }
+      return 0;
+    });
+  }
+
+  public sortCmcDown () {
+    this.deckProcess._cardList = this.deckProcess._cardList.sort((a: Card, b: Card) => {
+      if ( Number(a.cmc) > Number(b.cmc) ) { return -1; }
+      if ( Number(a.cmc) < Number(b.cmc) ) { return 1; }
+      return 0;
+    });
+  }
+
+  public sortPriceUp () {
+    this.deckProcess._cardList = this.deckProcess._cardList.sort((a: Card, b: Card) => {
+      if ( Number(a.usd) < Number(b.usd) ) { return -1; }
+      if ( Number(a.usd) > Number(b.usd) ) { return 1; }
+      return 0;
+    });
+  }
+
+  public sortPriceDown () {
+    this.deckProcess._cardList = this.deckProcess._cardList.sort((a: Card, b: Card) => {
+      if ( Number(a.usd) > Number(b.usd) ) { return -1; }
+      if ( Number(a.usd) < Number(b.usd) ) { return 1; }
+      return 0;
+    });
+  }
+
+  public sortTypeUp () {
+    this.deckProcess._cardList = this.deckProcess._cardList.sort((a: Card, b: Card) => {
+      if ( a.type_line < b.type_line ) { return -1; }
+      if ( a.type_line > b.type_line ) { return 1; }
+      return 0;
+    });
+  }
+
+  public sortTypeDown () {
+    this.deckProcess._cardList = this.deckProcess._cardList.sort((a: Card, b: Card) => {
+      if ( a.type_line > b.type_line ) { return -1; }
+      if ( a.type_line < b.type_line ) { return 1; }
+      return 0;
+    });
   }
 
   private makeId() {

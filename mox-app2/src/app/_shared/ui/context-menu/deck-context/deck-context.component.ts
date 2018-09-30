@@ -48,6 +48,7 @@ export class DeckContextComponent implements OnInit {
   }
 
   processData() {
+    navigator.vibrate([30]);
     this.closeContext();
     this._deckService.processStats();
   }
@@ -78,6 +79,7 @@ export class DeckContextComponent implements OnInit {
   }
 
   activateContext() {
+    navigator.vibrate([30]);
     this._deckService.editDeck(this.deck);
     this.lightboxActive = true;
     this.componentState = 'opened';

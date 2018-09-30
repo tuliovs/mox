@@ -38,6 +38,8 @@ export class DeckViewComponent implements OnInit {
   public _orderAsc = false;
   public cardView = false;
   public side = false;
+  public _cardFilter;
+  public _cardSort;
   constructor(
     public  _auth: AuthService,
     private _deckService: MoxDeckService,
@@ -70,8 +72,49 @@ export class DeckViewComponent implements OnInit {
     this._deckService.updateDeck();
   }
 
-  cardSort(order) {
-    this._orderAsc = this._deckService.cardSort(order);
+  filteredDeckList() {
+    // tslint:disable-next-line:max-line-length
+    return this._deckService.deckProcess._cardList;
+  }
+
+  sortChoosen(sort: string) {
+    switch (sort) {
+      case 'alphaU':
+          this._deckService.sortAlphaUp();
+          this._cardSort = 'Alpha Up';
+        break;
+      case 'alphaD':
+          this._deckService.sortAlphaDown();
+          this._cardSort = 'Alpha Down';
+        break;
+      case 'cmcU':
+          this._deckService.sortCmcUp();
+          this._cardSort = 'Cmc Up';
+        break;
+      case 'cmcD':
+          this._deckService.sortCmcDown();
+          this._cardSort = 'Cmc Down';
+        break;
+      case 'priceU':
+          this._deckService.sortPriceUp();
+          this._cardSort = 'Price Up';
+        break;
+      case 'priceD':
+          this._deckService.sortPriceDown();
+          this._cardSort = 'Price Down';
+        break;
+      case 'typeU':
+          this._deckService.sortTypeUp();
+          this._cardSort = 'Type Up';
+        break;
+      case 'typeD':
+          this._deckService.sortTypeDown();
+          this._cardSort = 'Type Down';
+        break;
+      default:
+          this._cardSort = null;
+        break;
+    }
   }
 
   cardAmount(cardId) {
@@ -83,6 +126,7 @@ export class DeckViewComponent implements OnInit {
   }
 
   togglePublicDeck(uid) {
+    navigator.vibrate([30]);
     if (uid === this._deckService.deckProcess._deck.ownerId) {
       this._deckService.deckProcess._deck.public = !this._deckService.deckProcess._deck.public;
       this.saveDeck();
@@ -90,14 +134,17 @@ export class DeckViewComponent implements OnInit {
   }
 
   cardPlus(event) {
+    navigator.vibrate([30]);
     this._deckService.deckProcess._deck.cards.push(event);
     this.saveDeck();
   }
   cardSidePlus(event) {
+    navigator.vibrate([30]);
     this._deckService.deckProcess._deck.side.push(event);
     this.saveDeck();
   }
   cardMinus(event) {
+    navigator.vibrate([30]);
     this._deckService.deckProcess._deck.cards
       .splice(this._deckService.deckProcess._deck.cards.indexOf(event), 1);
     this.saveDeck();
@@ -131,6 +178,7 @@ export class DeckViewComponent implements OnInit {
       this.side = false;
     } else {
       // this._moxService.editDeck(deck);
+      navigator.vibrate([30]);
       this._selectedCard = card;
     }
   }

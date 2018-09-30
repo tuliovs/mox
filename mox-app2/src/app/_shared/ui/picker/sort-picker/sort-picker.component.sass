@@ -1,0 +1,98 @@
+@import './../../../../../styles/theme.colors'
+\:host
+  display: flex
+
+$light-white: rgba(255, 255, 255, .7);
+$shad: 15px 15px 30px rgba(0, 0, 0, .25);
+
+.btn-action
+  font-size: 1.65em
+  height: 100%
+  margin-top: 0
+
+.lightbox
+  background: $light-white
+  box-shadow: $shad
+  color: color(_ice)
+  font-size: 1.25em
+  font-weight: normal
+  height: 100vh
+  left: 0
+  line-height: 40px
+  max-width: 100%
+  min-width: 100%
+  overflow: scroll
+  padding: 0
+  position: absolute
+  text-align: center
+  top: -985%
+
+.action-menu
+  height: 84vh
+  left: 10%
+  max-width: 80%
+  overflow-y: scroll
+  padding: 0
+  position: absolute
+  top: -985%
+  width: 80%
+  z-index: 21
+
+  .options
+    display: inline-flex
+    flex-direction: column
+    height: 76vh
+    justify-content: space-evenly
+    width: 100%
+
+  div
+    display: inline-flex
+    flex-direction: row
+
+    button
+      align-items: center
+      background-color: color(_darkblue)
+      box-shadow: 0 4px 0 color(_grayer)
+      color: color(_white)
+      display: inline-flex
+      flex-flow: row
+      justify-content: space-between
+      padding: 3% 6%
+      text-transform: capitalize
+      width: 50%
+
+    & .left
+      border-radius: 100px 0 0 100px
+      border-right: solid 1px color(_white)
+      padding-right: 2%
+      text-align: right
+
+    & .right
+      border-left: solid 1px color(_white)
+      border-radius: 0 100px 100px 0
+      padding-left: 2%
+      text-align: left
+
+    & .selected
+      background-color: color(_white)
+      border: solid 2px color(_darkblue)
+      color: color(_darkblue)
+      font-weight: 600
+
+.closer
+  background-color: color(_darkblue)
+  bottom: 0
+  font-size: .8em
+  justify-content: center
+  left: 0
+  margin: 0% -12%
+  opacity: .95
+  position: fixed
+  width: 125%
+
+  i
+    color: color(_white)
+    font-size: 2.1em
+    padding: .4em
+
+

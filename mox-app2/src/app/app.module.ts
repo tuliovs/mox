@@ -51,6 +51,8 @@ import { DotComponent } from '@shared/ui/dot/dot.component';
 import { DeckStatsComponent } from './deck-hub/deck-view/deck-stats/deck-stats.component';
 import { DeckContextComponent } from '@shared/ui/context-menu/deck-context/deck-context.component';
 import { DividerComponent } from './_shared/ui/divider/divider.component';
+import { FilterPickerComponent } from './_shared/ui/picker/filter-picker/filter-picker.component';
+import { SortPickerComponent } from './_shared/ui/picker/sort-picker/sort-picker.component';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -88,6 +90,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     DeckStatsComponent,
     DeckContextComponent,
     DividerComponent,
+    FilterPickerComponent,
+    SortPickerComponent,
   ],
   imports: [
     CommonModule,

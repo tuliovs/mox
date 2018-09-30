@@ -116,17 +116,22 @@
     </div>
   </div>
 </div>
+<div class="data-handlers">
+  <div *ngIf="_cardFilter" class="data filters">
+    <span >no-filters</span>
+  </div>
+  <div *ngIf="!_cardFilter"></div>
+  <div class="data sorts">
+    <span *ngIf="_cardSort">Order by: {{_cardSort}}</span>
+  </div>
+</div>
 <app-mox-action-bar (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
   <button class="btn btn-action" disabled>
     <i class="fas fa-comments" style="font-size: 1.2em" ></i>
   </button>
-  <button class="btn btn-action" disabled>
-    <i class="fas fa-filter"></i>
-  </button>
+  <app-mox-filter-picker></app-mox-filter-picker>
   <div class="fixer"></div>
-  <button class="btn btn-action" (click)="cardSort(!_orderAsc)">
-    <i class="fas fa-sort" style="font-size: 1.4em"></i>
-  </button>
+  <app-mox-sort-picker [selected]="_cardSort" (sortChoosen)="sortChoosen($event)"></app-mox-sort-picker>
   <app-mox-card-context [card]="_selectedCard"  [icon]="'fas fa-ellipsis-h'" *ngIf="_selectedCard" ></app-mox-card-context>
   <app-mox-deck-context *ngIf="!_selectedCard" [deck]="_deck | async" [icon]="'fas fa-cog'"></app-mox-deck-context>
 </app-mox-action-bar>

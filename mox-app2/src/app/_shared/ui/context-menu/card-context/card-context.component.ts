@@ -81,6 +81,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
     } else {
       this._deckService.addCardSide(this.card.id);
     }
+    navigator.vibrate([30]);
     this.closeContext();
   }
 
@@ -90,6 +91,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
 
   setCover() {
     if (this._deckService.deckProcess._deck) {
+      navigator.vibrate([30]);
       this._deckService.deckProcess.active = true;
       this.deckCollection = this.afs.collection('decks');
       this.deckCollection.doc(this._deckService.deckProcess._deck.key).update({
@@ -110,6 +112,7 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   }
 
   activateContext() {
+    navigator.vibrate([30]);
     this.lightboxActive = true;
     this.componentState = 'opened';
     this._state.setState('hidden');

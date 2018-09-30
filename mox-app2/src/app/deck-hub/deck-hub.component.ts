@@ -95,9 +95,11 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
 
   deckSelected(deck: MoxDeck) {
     if (this.internalDeck === deck) {
+      navigator.vibrate([30, 30]);
       this.internalDeck = null;
       this._state.setState('nav');
     } else {
+      navigator.vibrate([30]);
       this._deckService.editDeck(deck);
       this.internalDeck = deck;
       this._state.setState('view');

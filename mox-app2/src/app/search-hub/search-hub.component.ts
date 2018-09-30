@@ -34,6 +34,7 @@ export class SearchHubComponent {
     if (this.selectedCard === card) {
       this.selectedCard = null;
     } else {
+      navigator.vibrate([30]);
       this.selectedCard = card;
     }
   }
@@ -43,11 +44,13 @@ export class SearchHubComponent {
   }
 
   addCard(cardId) {
+    navigator.vibrate([30]);
     this._deckService.addCard(cardId);
   }
 
   searchGo() {
     // console.log('param: ', this.param);
+    navigator.vibrate([30]);
     this._state.setState('loading');
     this.settings_stats = true;
     this.resp_time = Date.now();
@@ -66,6 +69,7 @@ export class SearchHubComponent {
             this.showError = true;
             this.searchResult.data = null;
             this.settings_stats = false;
+            navigator.vibrate([30, 30]);
             this._state.setState('error');
           }
           return throwError(err);
