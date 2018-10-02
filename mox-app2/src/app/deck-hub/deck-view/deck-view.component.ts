@@ -32,6 +32,7 @@ export class DeckViewComponent implements OnInit {
     'vintage'
   ];
 
+  public navigator = navigator;
   public _deck: Observable<MoxDeck>;
   public _selectedCard;
   public tab = 'profileTab';
@@ -62,6 +63,9 @@ export class DeckViewComponent implements OnInit {
             this._metaService.setTitle('[Mox]DeckData - ' + dck.name);
             this._metaService.setTag('og:image', dck.cover);
             this._deckService.editDeck(dck);
+            if (this._cardSort) {
+              this.sortChoosen(this._cardSort);
+            }
           }
         )).subscribe();
       }
@@ -78,38 +82,31 @@ export class DeckViewComponent implements OnInit {
   }
 
   sortChoosen(sort: string) {
+    this._cardSort = sort;
     switch (sort) {
-      case 'alphaU':
+      case 'alpha-up':
           this._deckService.sortAlphaUp();
-          this._cardSort = 'Alpha Up';
         break;
-      case 'alphaD':
+      case 'alpha-down':
           this._deckService.sortAlphaDown();
-          this._cardSort = 'Alpha Down';
         break;
-      case 'cmcU':
+      case 'cmc-up':
           this._deckService.sortCmcUp();
-          this._cardSort = 'Cmc Up';
         break;
-      case 'cmcD':
+      case 'cmc-down':
           this._deckService.sortCmcDown();
-          this._cardSort = 'Cmc Down';
         break;
-      case 'priceU':
+      case 'price-up':
           this._deckService.sortPriceUp();
-          this._cardSort = 'Price Up';
         break;
-      case 'priceD':
+      case 'price-down':
           this._deckService.sortPriceDown();
-          this._cardSort = 'Price Down';
         break;
-      case 'typeU':
+      case 'type-up':
           this._deckService.sortTypeUp();
-          this._cardSort = 'Type Up';
         break;
-      case 'typeD':
+      case 'type-down':
           this._deckService.sortTypeDown();
-          this._cardSort = 'Type Down';
         break;
       default:
           this._cardSort = null;

@@ -40,42 +40,42 @@ export class SortPickerComponent implements OnInit {
 
   alphaU() {
     navigator.vibrate([30]);
-    this.sortChoosen.emit('alphaU');
+    this.sortChoosen.emit('alpha-up');
     this.closeContext();
   }
   alphaD() {
     navigator.vibrate([30]);
-    this.sortChoosen.emit('alphaD');
+    this.sortChoosen.emit('alpha-down');
     this.closeContext();
   }
   cmcU() {
     navigator.vibrate([30]);
-    this.sortChoosen.emit('cmcU');
+    this.sortChoosen.emit('cmc-up');
     this.closeContext();
   }
   cmcD() {
     navigator.vibrate([30]);
-    this.sortChoosen.emit('cmcD');
+    this.sortChoosen.emit('cmc-down');
     this.closeContext();
   }
   priceU() {
     navigator.vibrate([30]);
-    this.sortChoosen.emit('priceU');
+    this.sortChoosen.emit('price-up');
     this.closeContext();
   }
   priceD() {
     navigator.vibrate([30]);
-    this.sortChoosen.emit('priceD');
+    this.sortChoosen.emit('price-down');
     this.closeContext();
   }
   typeU() {
     navigator.vibrate([30]);
-    this.sortChoosen.emit('typeU');
+    this.sortChoosen.emit('type-up');
     this.closeContext();
   }
   typeD() {
     navigator.vibrate([30]);
-    this.sortChoosen.emit('typeD');
+    this.sortChoosen.emit('type-down');
     this.closeContext();
   }
 

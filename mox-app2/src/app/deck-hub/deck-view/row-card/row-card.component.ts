@@ -13,6 +13,7 @@ import { MoxDeckService } from '@application/_services/mox-services/deck/mox-dec
   styleUrls: ['./row-card.component.sass']
 })
 export class RowCardComponent implements OnInit, AfterViewInit {
+  public navigator = navigator;
   public cardCollection: AngularFirestoreCollection<Card>;
   public _user: any;
   @Output() plus: EventEmitter<any> = new EventEmitter();
