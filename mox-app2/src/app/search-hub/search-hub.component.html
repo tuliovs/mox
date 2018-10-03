@@ -2,7 +2,7 @@
   <form>
     <input *ngIf="!settings_stats" class="search-input" type="text" placeholder="Search" [(ngModel)]="param" value="{{param}}"
       name="param" required />
-    <button *ngIf="!settings_stats" class="btn btn-search" type="submit" (click)="searchGo()">
+    <button *ngIf="!settings_stats" class="btn btn-search" type="submit" (click)="searchGo(param)">
       <i class="fas fa-search"></i>
     </button>
   </form>
@@ -10,6 +10,15 @@
     <p>[Total Results]: {{searchResult.total_cards}} | [Response Time]: {{resp_time}}ms</p>
   </div>
 </app-mox-titlebar>
+<div class="favorites" *ngIf="(!searchResult.data || searchResult.data.length == 0) && favoriteList">
+  <ul>
+    <li *ngFor="let cardId of favoriteList">
+      <label *ngIf="_cardService.getCard(cardId) | async as card" (click)="quickSearch(card.name)">
+        {{card.name}}
+      </label>
+    </li>
+  </ul>
+</div>
 <div class="search-result" *ngIf="searchResult.data && searchResult.data.length > 0">
   <ol>
     <li *ngFor="let item of searchResult.data" [ngClass]="{'selected-card': this.selectedCard === item}">
@@ -66,15 +75,15 @@
   <p>I'm sorry buddy, I couldn't find anything</p>
 </div>
 <app-mox-action-bar>
+  <button class="btn btn-action" (click)="clear()" [disabled]="(!searchResult.data || searchResult.data.length == 0)" >
+    <i class="fas fa-undo-alt"></i>
+  </button>
   <button class="btn btn-action" disabled>
     <i class="fas fa-filter"></i>
   </button>
-  <button class="btn btn-action" disabled>
-    <i class="fas fa-sort" style="font-size: 1.4em"></i>
-  </button>
   <div class="fixer"></div>
   <button class="btn btn-action" disabled>
-    <i class="fas fa-envelope" style="font-size: 1.2em"></i>
+    <i class="fas fa-sort" style="font-size: 1.4em"></i>
   </button>
   <app-mox-card-context [card]="selectedCard" [icon]="'fas fa-ellipsis-h'" [disabled]="!selectedCard"></app-mox-card-context>
 </app-mox-action-bar>

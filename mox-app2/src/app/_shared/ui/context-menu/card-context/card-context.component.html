@@ -21,10 +21,10 @@
           <label>Shop</label>
           <label>U${{card.usd}} | tix{{card.tix}}</label>
       </button>
-      <button type="button" class="btn btn-icon" disabled>
-          <i *ngIf="!fav" class="far fa-heart"></i>
-          <i *ngIf="fav" class="fas fa-heart"></i>
-          <label>Add to Favorites</label>
+      <button *ngIf="_favService._userFavorites" type="button" (click)="favoriteCard(card)" class="btn btn-icon">
+          <i *ngIf="!isFavorite()" class="far fa-heart"></i>
+          <i *ngIf="isFavorite()" class="fas fa-heart"></i>
+          <label>{{isFavorite() ? 'Love ♥' : 'Add to Favorites'}}</label>
       </button>
     <button (click)="addOneCard()" type="button" class="btn btn-icon" [disabled]="!_deckService.deckProcess._deck || (_deckService.deckProcess._deck && _deckService.deckProcess._deck.ownerId !== user.uid)">
         <i class="fas fa-plus-circle"></i>

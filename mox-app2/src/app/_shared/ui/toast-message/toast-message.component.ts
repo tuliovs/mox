@@ -30,15 +30,22 @@ export class ToastMessageComponent implements OnInit {
   ribbonCounter(): number {
     return this.messages.length;
   }
-  constructor(private toast: ToastService, public auth: AuthService) { }
+  constructor(private _toast: ToastService, public auth: AuthService) { }
 
   ngOnInit() {
+    window['isUpdateAvailable']
+    .then(isAvailable => {
+      if (isAvailable) {
+        this._toast.sendMessage('Hurray! Mox has a updated version!', 'info', isAvailable);
+      }
+    });
+
     this.auth.getUser().pipe(
       filter(user => !!user),
       take(1),
       tap((user) => {
         if (user) {
-          this.toast.getMessages(user.uid).pipe(
+          this._toast.getMessages(user.uid).pipe(
             tap((data) => {
               this.startAnimation('swing');
               this.messages = data.sort((x: Message, a: Message) => {
@@ -62,7 +69,7 @@ export class ToastMessageComponent implements OnInit {
 
   dismissAll() {
     this.messages.forEach((msg: Message) => {
-      this.toast.dismissMessage(msg.key);
+      this._toast.dismissMessage(msg.key);
     });
   }
 
@@ -77,6 +84,6 @@ export class ToastMessageComponent implements OnInit {
   }
 
   dismiss(itemKey) {
-    this.toast.dismissMessage(itemKey);
+    this._toast.dismissMessage(itemKey);
   }
 }

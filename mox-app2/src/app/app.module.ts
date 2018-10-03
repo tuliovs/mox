@@ -53,6 +53,7 @@ import { DeckContextComponent } from '@shared/ui/context-menu/deck-context/deck-
 import { DividerComponent } from './_shared/ui/divider/divider.component';
 import { FilterPickerComponent } from './_shared/ui/picker/filter-picker/filter-picker.component';
 import { SortPickerComponent } from './_shared/ui/picker/sort-picker/sort-picker.component';
+import { MoxFavoriteService } from '@application/_services/mox-services/favorite/mox-favorite.service';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -115,6 +116,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     },
     ActionStateService,
     MoxCardService,
+    MoxFavoriteService,
     MoxDeckService,
     NotificationService,
     ScryfallCardService,

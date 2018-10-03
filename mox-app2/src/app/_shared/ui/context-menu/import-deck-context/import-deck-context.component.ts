@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger, state, keyframes } from '@angular/animations';
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
 import { tap, finalize } from 'rxjs/operators';
-import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
+import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { ToastService } from '@application/_services/toast/toast.service';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';

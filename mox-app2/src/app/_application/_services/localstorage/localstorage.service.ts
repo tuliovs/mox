@@ -5,8 +5,17 @@ import { Injectable } from '@angular/core';
 })
 export class LocalstorageService {
   public cardStorage = new Map();
+  public favsStorage = new Map();
   constructor() {
     this.cardStorage = new Map (JSON.parse(localStorage.getItem('cardStorage')));
+    this.favsStorage = new Map (JSON.parse(localStorage.getItem('favsStorage')));
+  }
+
+  updateFavStorage(cardList) {
+    if (cardList) {
+      this.favsStorage.set('cards', cardList);
+      this.setStorage('favsStorage', JSON.stringify(Array.from(this.favsStorage.entries())));
+    }
   }
 
   updateCardStorage(id, card) {
@@ -15,19 +24,19 @@ export class LocalstorageService {
         this.cardStorage = new Map();
       }
       this.cardStorage.set(id, card);
-      this.set('cardStorage', JSON.stringify(Array.from(this.cardStorage.entries())));
+      this.setStorage('cardStorage', JSON.stringify(Array.from(this.cardStorage.entries())));
     }
   }
 
-  set(item: string, value) {
+  setStorage(item: string, value) {
     localStorage.setItem(item, value);
   }
 
-  get(item: string) {
-      return localStorage.getItem(item);
+  getStorage(item: string) {
+    return localStorage.getItem(item);
   }
 
-  remove(item: string) {
-      return localStorage.removeItem(item);
+  removeStorage(item: string) {
+    return localStorage.removeItem(item);
   }
 }

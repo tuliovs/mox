@@ -1,3 +1,4 @@
+import { FavoriteCards } from '@application/_models/_mox-models/Favorites';
 import { Input, Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger, state } from '@angular/animations';
@@ -5,10 +6,12 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { ToastService } from '@application/_services/toast/toast.service';
-import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
+import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { Card } from '@application/_models/_scryfall-models/models';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '@karn/_services/auth.service';
+import { MoxFavoriteService } from '@application/_services/mox-services/favorite/mox-favorite.service';
+import { LocalstorageService } from '@application/_services/localstorage/localstorage.service';
 
 @Component({
   selector: 'app-mox-card-context',
@@ -47,6 +50,8 @@ export class CardContextComponent implements OnInit, AfterViewInit {
   constructor(
     public _router: Router,
     public afs: AngularFirestore,
+    public _favService: MoxFavoriteService,
+    public _localstorageService: LocalstorageService,
     public _auth: AuthService,
     public _deckService: MoxDeckService,
     public _state: ActionStateService,
@@ -87,6 +92,21 @@ export class CardContextComponent implements OnInit, AfterViewInit {
 
   addFourCard(side?: boolean) {
     alert('Not Implemented!');
+  }
+
+  favoriteCard(card: Card) {
+    navigator.vibrate([30]);
+    this._favService.favoriteCard(card).then(
+      () => {
+        // console.log('!SUCESS!');
+      }
+    ).catch((err) => {
+      console.error(err);
+    });
+  }
+
+  isFavorite() {
+    return this._favService.isFav(this.card.id);
   }
 
   setCover() {

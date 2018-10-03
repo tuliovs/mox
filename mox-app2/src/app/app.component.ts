@@ -1,5 +1,5 @@
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
-import { filter, take } from 'rxjs/operators';
+import { filter, take, tap } from 'rxjs/operators';
 import { MetaService } from 'ng2-meta';
 
 import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
@@ -9,6 +9,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { NotificationService } from '@application/_services/notification/notification.service';
 import { AuthService } from '@karn/_services/auth.service';
+import { MoxFavoriteService } from '@application/_services/mox-services/favorite/mox-favorite.service';
+import { LocalstorageService } from '@application/_services/localstorage/localstorage.service';
 
 export const rubberBand = [
   style({transform: 'scale3d(1, 1, 1)'}),
@@ -69,6 +71,8 @@ export class AppComponent implements OnInit {
     private _dekService: MoxDeckService,
     private _metaService: MetaService,
     public auth: AuthService,
+    public _favoriteService: MoxFavoriteService,
+    public _localStorage: LocalstorageService,
     public _msg: NotificationService,
     public _state: ActionStateService
   ) {
@@ -93,6 +97,11 @@ export class AppComponent implements OnInit {
       take(1))
       .subscribe(user => {
           if (user) {
+            this._favoriteService._userFavorites.pipe(
+              tap((favs) => {
+                this._localStorage.updateFavStorage(favs);
+              })
+            ).subscribe();
             this._msg.getPermission(user);
             this._msg.monitorRefresh(user);
             this._msg.receiveMessages();

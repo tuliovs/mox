@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
+import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '@karn/_services/auth.service';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';

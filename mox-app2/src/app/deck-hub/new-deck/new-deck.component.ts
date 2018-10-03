@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
-import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
+import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 
 @Component({
   selector: 'app-mox-new-deck',

@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Card } from '@application/_models/_scryfall-models/models';
-import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
+import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { AuthService } from '@karn/_services/auth.service';
 import { ToastService } from '@application/_services/toast/toast.service';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';

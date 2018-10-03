@@ -1,7 +1,7 @@
 import { Card } from '@application/_models/_scryfall-models/models';
 import { ToastService } from '@application/_services/toast/toast.service';
 import { Observable } from 'rxjs';
-import { MoxDeck } from '@application/_models/_mox_models/MoxDeck';
+import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
@@ -169,7 +169,7 @@ export class DeckViewComponent implements OnInit {
   }
 
   selectedCard(card: Card) {
-    console.log(card);
+    // console.log(card);
     if (this._selectedCard === card) {
       this._selectedCard = null;
       this.side = false;
@@ -181,10 +181,13 @@ export class DeckViewComponent implements OnInit {
   }
 
   activateCardView(v: Card) {
-    if (this._selectedCard === null) {
+    if (this._selectedCard === v) {
+      this._selectedCard = null;
+      this.cardView = false;
+    } else {
       this.selectedCard(v);
+      this.cardView = true;
     }
-    this.cardView = true;
   }
 
   changetab(side) {

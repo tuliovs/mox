@@ -18,7 +18,22 @@
     "resources": {
       "files": [
         "/assets/**"
-      ]
+      ],
+      "urls": [
+        {"url": "https://fonts.googleapis.com/css?family=Exo+2:400,600,700|Quantico:400,700"}
+]
     }
-  }]
+  }],
+  "dataGroups": [
+    {
+      "name": "scryfall-img-api",
+      "urls": ["https://img.scryfall.com/cards/"],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 50,
+        "maxAge": "200h",
+        "timeout": "20s"
+      }
+    }
+  ]
 }
