@@ -43,5 +43,33 @@ export class MoxCardService {
     });
   }
 
+  // getFreshCard(id): Observable<Card> {
+  //   console.log(id);
+  //   const card = this._afs.collection('cards').doc(id);
+  //   card.ref.get().then((doc) => {
+  //     if (!doc.exists) {
+  //       this._scryfallService.get(id).subscribe(
+  //         scrycard => {
+  //           console.log('%c Doc not found, getting data from scryfall', 'color: purple', scrycard);
+  //           this.cardCollection.doc(scrycard.id).set(scrycard)
+  //           .then(() => {
+  //             return this.cardCollection.doc<Card>(id).valueChanges();
+  //           })
+  //           .catch(
+  //             (err) => {
+  //               console.error(err);
+  //             }
+  //           );
+  //         }
+  //       );
+  //     } else {
+  //       return this.cardCollection.doc<Card>(id).valueChanges();
+  //     }
+  //   }).catch(function(err) {
+  //     console.log('%cError getting document:', 'color: red', err);
+  //   });
+  //   return of(null);
+  // }
+
 
 }

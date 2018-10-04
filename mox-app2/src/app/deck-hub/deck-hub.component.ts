@@ -105,4 +105,27 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
       this._state.setState('view');
     }
   }
+
+  changeFormat(side) {
+    if (!this.formatSelected || this.formatSelected == null ) {
+      this.formatSelected = 'standard';
+      return;
+    }
+    switch (side) {
+      case 'right':
+        if (this.formats.indexOf(this.formatSelected) + 1 === this.formats.length) {
+          this.formatSelected = null;
+        } else {
+          this.formatSelected = this.formats[this.formats.indexOf(this.formatSelected) + 1].valueOf();
+        }
+        break;
+      case 'left':
+        if (this.formats.indexOf(this.formatSelected) - 1 < 0) {
+          this.formatSelected = null;
+        } else {
+          this.formatSelected = this.formats[this.formats.indexOf(this.formatSelected) - 1].valueOf();
+        }
+        break;
+    }
+  }
 }

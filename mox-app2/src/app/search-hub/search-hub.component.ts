@@ -17,7 +17,7 @@ import { MoxCardService } from '@application/_services/mox-services/card/mox-car
 export class SearchHubComponent {
   public param: string;
   public searchResult: List = new List();
-  public favoriteList;
+  public favoriteList: any[];
   public animationState: string;
   public resp_time = 0;
   public settings_stats = false;

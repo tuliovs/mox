@@ -10,12 +10,13 @@
     <p>[Total Results]: {{searchResult.total_cards}} | [Response Time]: {{resp_time}}ms</p>
   </div>
 </app-mox-titlebar>
-<div class="favorites" *ngIf="(!searchResult.data || searchResult.data.length == 0) && favoriteList">
+<div class="favorites" *ngIf="!searchResult.data && favoriteList && favoriteList.length > 0">
   <ul>
-    <li *ngFor="let cardId of favoriteList">
-      <label *ngIf="_cardService.getCard(cardId) | async as card" (click)="quickSearch(card.name)">
+    <li *ngFor="let Id of favoriteList">
+      <app-mox-favorite-tag *ngIf="Id" [favoriteCardId]="Id" (tag)="quickSearch($event)" ></app-mox-favorite-tag>
+      <!-- <label *ngIf="_cardService.getFreshCard(cardId) | async as card" (click)="quickSearch(card.name)">
         {{card.name}}
-      </label>
+      </label> -->
     </li>
   </ul>
 </div>

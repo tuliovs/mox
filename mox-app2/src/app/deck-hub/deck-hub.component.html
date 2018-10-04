@@ -57,7 +57,7 @@
     <app-mox-deck-context [deck]="internalDeck" [icon]="'fas fa-ellipsis-v'" *ngIf="internalDeck"></app-mox-deck-context>
   </app-mox-action-bar>
 
-  <app-mox-action-bar *ngIf="!internalDeck">
+  <app-mox-action-bar *ngIf="!internalDeck" (swipeleft)="changeFormat('left')" (swiperight)="changeFormat('right')">
     <button class="btn btn-action" disabled>
       <i class="fas fa-book-open" style="font-size: 1.2em" ></i>
     </button>
