@@ -149,6 +149,10 @@ export class AppComponent implements OnInit {
     this.animationState2 = event;
     // console.log(this.animationState2);
   }
+  abortState() {
+    this._state.setState('nav');
+    navigator.vibrate([30, 30]);
+  }
 
   resetAnimationState() {
     this.animationState2 = '';

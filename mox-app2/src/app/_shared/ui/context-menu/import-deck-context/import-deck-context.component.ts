@@ -64,12 +64,23 @@ export class ImportDeckContextComponent implements OnInit {
     this.importState = 'closed';
   }
 
-  importDeckArena() {
+  async importDeckArena() {
     navigator.vibrate([30]);
-    this.showLoader = true;
     if (this.importText && this.importText.length > 0) {
-      this._deckService.quickCreate();
-      this._deckService.createDeckFromArena(this.importText);
+      this.showLoader = true;
+      await this._deckService.quickCreate('Imported Deck - Arena').then(
+        async (deck: MoxDeck) => {
+          await this._deckService.importArena(deck, this.importText)
+          .then((dk: MoxDeck) => {
+            this._deckService.editDeck(deck);
+            this._state.returnState();
+            this.closeContext();
+            this._router.navigate(['deck/' + dk.key]);
+          }).catch((err) => {
+            console.error(err);
+          });
+        }
+      );
     } else {
       alert('I`m sorry! I could not found any text to import.');
       console.error('No text founded');
@@ -83,9 +94,13 @@ export class ImportDeckContextComponent implements OnInit {
       this.showLoader = true;
       await this._deckService.quickCreate('Imported Deck - Txt').then(
         async (deck: MoxDeck) => {
-          await this._deckService.importTxt(deck, this.importText).then((status) => {
-            console.log('COMPLETE: ', status + ' - ' + deck);
+          await this._deckService.importTxt(deck, this.importText)
+          .then((dk: MoxDeck) => {
             this._state.returnState();
+            this.closeContext();
+            this._router.navigate(['deck/' + dk.key]);
+          }).catch((err) => {
+            console.error(err);
           });
         }
       );

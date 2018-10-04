@@ -43,7 +43,7 @@
         <i class="fas fa-box-open"></i>
         <label>Check in a Collection</label>
     </button>
-    <button type="button" class="btn btn-icon" disabled>
+    <button type="button" class="btn btn-icon" (click)="forkDeck()" [disabled]="user.uid == _deckService.deckProcess._deck.ownerId">
         <i class="fas fa-code-branch"></i>
         <label>Fork Deck</label>
     </button>

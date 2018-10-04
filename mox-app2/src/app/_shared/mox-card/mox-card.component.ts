@@ -30,18 +30,26 @@ export class MoxCardComponent implements OnInit, AfterViewInit {
           throw new Error('Id não fornecido ou inválido');
         } else {
           this.id = id;
-          this._cardService.getCard(id);
+          this._cardService.getCard(id).then(
+            (obs) => {
+              obs.pipe(
+                tap((card) => {
+                  this.card = card;
+                })
+              );
+            }
+          );
         }
       }
     );
   }
 
   ngAfterViewInit() {
-    this.afs.collection('cards').doc<Card>(this.id).valueChanges().pipe(
-      tap((c) => {
-        this.card = c;
-      })
-    ).subscribe();
+    // this.afs.collection('cards').doc<Card>(this.id).valueChanges().pipe(
+    //   tap((c) => {
+    //     this.card = c;
+    //   })
+    // ).subscribe();
   }
 
 }

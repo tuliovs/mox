@@ -18,26 +18,30 @@ export class MoxCardService {
     ) {
   }
 
-  getCard(id): Observable<Card> {
-    if (this._localstorageService.cardStorage && this._localstorageService.cardStorage.has(id)) {
-      return of<Card>(this._localstorageService.cardStorage.get(id));
-    } else {
-      this.cardCollection = this._afs.collection('cards');
-      this.cardDoc = this.cardCollection.doc(id);
-      this.cardDoc.ref.get().then((doc) => {
-        if (!doc.exists) {
-          this._scryfallService.get(id).subscribe(
-            scrycard => {
-              console.log('%c Doc not found, getting data from scryfall', 'color: purple', scrycard);
-              this.cardCollection.doc(scrycard.id).set(scrycard);
-            }
-          );
-        }
-      }).catch(function(error) {
-        console.log('%cError getting document:', 'color: red', error);
-      });
-      return this.cardCollection.doc<Card>(id).valueChanges();
-    }
+  getCard(id) {
+    return new Promise<Observable<Card>>((resolve, reject) => {
+      if (this._localstorageService.cardStorage && this._localstorageService.cardStorage.has(id)) {
+        resolve (of<Card>(this._localstorageService.cardStorage.get(id)));
+      } else {
+        this.cardCollection = this._afs.collection('cards');
+        this.cardDoc = this.cardCollection.doc(id);
+        this.cardDoc.ref.get().then((doc) => {
+          if (!doc.exists) {
+            this._scryfallService.get(id).subscribe(
+              scrycard => {
+                console.log('%c Doc not found, getting data from scryfall', 'color: purple', scrycard);
+                this.cardCollection.doc(scrycard.id).set(scrycard);
+              }
+            );
+          }
+        }).catch(function(err) {
+          console.log('%cError getting document:', 'color: red', err);
+          reject (err);
+        });
+        resolve (this.cardCollection.doc<Card>(id).valueChanges());
+      }
+    });
   }
+
 
 }

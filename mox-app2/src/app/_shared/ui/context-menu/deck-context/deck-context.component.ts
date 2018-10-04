@@ -6,6 +6,7 @@ import { ActionStateService } from '@application/_services/action-state/action-s
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { AuthService } from '@karn/_services/auth.service';
 import { NgNavigatorShareService } from 'ng-navigator-share';
+import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 
 @Component({
   selector: 'app-mox-deck-context',
@@ -67,6 +68,21 @@ export class DeckContextComponent implements OnInit {
       console.log(error);
       alert('Error! ' + error);
     });
+  }
+
+  forkDeck() {
+    if (confirm('Hi dear friend! This action make a copy of this deck for you! Is that what you want?')) {
+      this.closeContext();
+      this._deckService.forkDeck().then(
+        (deck: MoxDeck) => {
+          this._router.navigate(['deck/' + deck.key]);
+        }
+      ).catch(
+        (err) => {
+          console.error('Error! ' + err);
+        }
+      );
+    }
   }
 
   delete() {

@@ -1,6 +1,7 @@
 
 export class MoxDeck {
   cards: string[];
+  creatorId?: string;
   colorIdentity: string[];
   cover: string;
   format: string;
@@ -10,6 +11,7 @@ export class MoxDeck {
   name: string;
   ownerId: string;
   ownerName: string;
+  originayKey?: string;
   public: boolean;
   side: string[];
   updated: any[];
