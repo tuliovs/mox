@@ -9,12 +9,17 @@ import { List } from '@application/_models/_scryfall-models/models';
 export class ScryfallSearchService {
   constructor(private http: HttpClient) {}
 
-  url = `https://api.scryfall.com/cards/search?order=name&q=`;
+  url      = `https://api.scryfall.com/cards/search?order=name&q=`;
   arenaUrl = `https://api.scryfall.com/cards`;
   fuzzyUrl = `https://api.scryfall.com/cards/named?fuzzy=`;
+  mtgoUrl  = `https://api.scryfall.com/cards/mtgo/`;
 
   search(param: string): Observable<List> {
     return this.http.get<List>(`${this.url}${encodeURI(param)}`);
+  }
+
+  getCardByMtgoId(mtgoId) {
+    return this.http.get(`${this.mtgoUrl}${encodeURI(mtgoId)}`);
   }
 
   mtgArenaSearch(cardSet: string, collectorsNumber: any): Observable<any> {

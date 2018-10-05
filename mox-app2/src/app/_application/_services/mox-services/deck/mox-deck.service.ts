@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Card } from '@application/_models/_scryfall-models/models';
 import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
@@ -11,7 +11,7 @@ import { ActionStateService } from '@application/_services/action-state/action-s
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
 import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
 import { LocalstorageService } from '@application/_services/localstorage/localstorage.service';
-import { promises } from 'fs';
+import { xml2json } from 'xml-js';
 
 class DeckProcess {
   public active = false;
@@ -296,7 +296,7 @@ export class MoxDeckService {
           this._toast.sendMessage('Error adding document: ' + err, 'danger', d.ownerId);
           reject (err);
         }).then(() => {
-          console.log('#Deck: ', d);
+          // console.log('#Deck: ', d);
           resolve(d);
         });
       } else {
@@ -538,11 +538,80 @@ export class MoxDeckService {
     }
   }
 
+  importMTGO(deck: MoxDeck, cardList: any) {
+    return new Promise((result, reject) => {
+      this.deckProcess.active = true;
+      this.deckProcess.status = 'importing from arena';
+      this.deckProcess.totalcards = 0;
+      const rsa = xml2json( cardList, { compact: false, spaces: 4 } );
+      const a = JSON.parse(rsa);
+      a.elements[0].elements.forEach(element => {
+        if (element.name === 'Cards') {
+          const element_card = element.attributes;
+          this.deckProcess.totalcards = this.deckProcess.totalcards + Number(element_card.Quantity);
+          this._scryService.getCardByMtgoId(element_card.CatID).pipe(
+            tap((card: Card) => {
+              if (card.name.includes(element_card.Name)) {
+                if (deck.cards.length > 5 && deck.cards.length < 12) { deck.cover = card.image_uris.art_crop; }
+                for (let index = 1; index <= element_card.Quantity; index++) {
+                  if (element_card.Sideboard.toString().toLowerCase() === 'false') {
+                    deck.cards.push(card.id);
+                  } else {
+                    deck.side.push(card.id);
+                  }
+                }
+                if (this.deckProcess.totalcards === (deck.cards.length + deck.side.length)) {
+                  this.setDeck(deck)
+                  .then(() => {
+                    result(deck);
+                  })
+                  .catch(() => {
+                    reject('error');
+                  });
+                }
+              } else {
+                console.error({card : card, element: element_card });
+              }
+            }),
+            catchError((err, caught) => {
+              if (err.status === 404) {
+                this._scryService.fuzzySearch(element_card.Name).pipe(
+                  tap((card: Card) => {
+                    if (deck.cards.length > 5 && deck.cards.length < 12) { deck.cover = card.image_uris.art_crop; }
+                    for (let index = 1; index <= element_card.Quantity; index++) {
+                      if (element_card.Sideboard.toString().toLowerCase() === 'false') {
+                        deck.cards.push(card.id);
+                      } else {
+                        deck.side.push(card.id);
+                      }
+                    }
+                    if (this.deckProcess.totalcards === (deck.cards.length + deck.side.length)) {
+                      this.setDeck(deck)
+                      .then(() => {
+                        result(deck);
+                      })
+                      .catch(() => {
+                        reject('error');
+                      });
+                    }
+                  })
+                ).subscribe();
+              } else {
+                console.error({err: err, caught: caught });
+                this._state.setState('error');
+                return of(null);
+              }
+            })
+          ).subscribe();
+        }
+      });
+    });
+  }
+
   importArena(deck: MoxDeck, cardList: any) {
     return new Promise((res, rej) => {
       this.deckProcess.active = true;
       this.deckProcess.status = 'importing from arena';
-      // this.editDeck(deck);
       this.deckProcess.totalcards = 0;
       cardList.valueOf().split('\n').forEach(async elt => {
         if (elt && elt.length > 0) {
@@ -593,14 +662,11 @@ export class MoxDeckService {
     return new Promise((res, rej) => {
       this.deckProcess.active = true;
       this.deckProcess.status = 'importing';
-      // this.editDeck(deck);
       this.deckProcess.totalcards = 0;
       cardList.valueOf().split('\n').forEach(async elt => {
         if (elt && elt.length > 0) {
           const qnt = +elt.substr(0, 2);
           const cardname = elt.substr(2, elt.length);
-          // console.log('Qntd: ', qnt);
-          // console.log('Name: ', cardname);
           this.deckProcess.totalcards = this.deckProcess.totalcards + qnt;
           for (let index = 1; index <= qnt; index++) {
             this._scryService.fuzzySearch(cardname).pipe(
@@ -621,7 +687,6 @@ export class MoxDeckService {
           }
         }
       });
-      // rej(new Error('Something is Wrong!'));
     });
   }
 

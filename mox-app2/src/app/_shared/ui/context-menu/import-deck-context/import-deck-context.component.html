@@ -14,10 +14,10 @@
       <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
 
       <div *ngIf="showLoader && _deckService.deckProcess._deck">
-          <p>Importing: {{_deckService.deckProcess._deck.name}}</p>
-          <p>by {{_deckService.deckProcess._deck.ownerName}}</p>
-          <p>Cards: {{_deckService.deckProcess._deck.cards.length}}</p>
-          <p>Status: {{_deckService.deckProcess.status}}</p>
+        <p>Importing: {{_deckService.deckProcess._deck.name}}</p>
+        <p>by {{_deckService.deckProcess._deck.ownerName}}</p>
+        <p>Cards: {{_deckService.deckProcess._deck.cards.length}}</p>
+        <p>Status: {{_deckService.deckProcess.status}}</p>
       </div>
 
       <ul *ngIf="!showLoader">
@@ -34,7 +34,13 @@
           <textarea [(ngModel)]="importText" value="{{importText}}"></textarea>
           <button (press)="importDeckTxt()" class="btn"><i class="ss ss-pleaf"></i> Text Format</button>
           <button (press)="importDeckArena()" class="btn"><i class="ss ss-parl3"></i> MTGArena Format</button>
-          <button disabled class="btn"><i class="ss ss-dpa"></i> MTGO Format</button>
+          <button class="btn" (click)="inputMtgo.click()"><i class="ss ss-dpa"></i> MTGO Format</button>
+          <div class="mtgo-input">
+            <i class="ss ss-dpa"></i> MTGO Format
+            <input type="file" #inputMtgo (change)="onFilePicked($event)" />
+          </div>
+
+          <!-- <button (filePick)="onFilePicked($event)" class="btn" accept="*" ngxFilePicker><i class="ss ss-dpa"></i> MTGO Format</button> -->
         </li>
       </ul>
     </div>

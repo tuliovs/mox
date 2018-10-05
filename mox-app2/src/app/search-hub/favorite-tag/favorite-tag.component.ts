@@ -11,7 +11,7 @@ import { tap } from 'rxjs/operators';
 export class FavoriteTagComponent implements OnInit {
   @Input() favoriteCardId;
   @Output() tag: EventEmitter<any> = new EventEmitter();
-  private _card: Card;
+  public _card: Card;
   constructor(
     private _cardService: MoxCardService
   ) { }

@@ -1,9 +1,7 @@
 import { Router } from '@angular/router';
-import { Card } from '@application/_models/_scryfall-models/models';
 import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger, state, keyframes } from '@angular/animations';
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
-import { tap, finalize } from 'rxjs/operators';
 import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { ToastService } from '@application/_services/toast/toast.service';
@@ -62,6 +60,47 @@ export class ImportDeckContextComponent implements OnInit {
     this._state.returnState();
     this.lightboxActive = false;
     this.importState = 'closed';
+  }
+
+  async onFilePicked(event) {
+    const reader = new FileReader();
+    reader.readAsText(event.srcElement.files[0]);
+    if (event.srcElement.files[0].name.includes('.dek')) {
+      const me = this;
+      reader.onload = async function () {
+      const xmlDoc = reader.result.toString();
+      if (xmlDoc) {
+        me.showLoader = true;
+        const deckName = event.srcElement.files[0].name.substring(0, event.srcElement.files[0].name.indexOf('.dek'));
+        await me._deckService.quickCreate(deckName).then(
+          async (queickDeck: MoxDeck) => {
+            await me._deckService.importMTGO(queickDeck, xmlDoc)
+            .then((importedDeck: MoxDeck) => {
+              me._deckService.editDeck(importedDeck);
+              setTimeout(
+                () => {
+                  me._state.returnState();
+                  me.closeContext();
+                  me._router.navigate(['deck/' + importedDeck.key]);
+              }, 2500);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+          }
+        ).catch((err) => {
+          console.error(err);
+        });
+      } else {
+        alert('I`m sorry! I could not found any text to import.');
+        console.error('No text founded');
+        me.showLoader = false;
+      }
+    };
+    } else {
+      console.error('File not supported!');
+      alert('File not supported!');
+    }
   }
 
   async importDeckArena() {
