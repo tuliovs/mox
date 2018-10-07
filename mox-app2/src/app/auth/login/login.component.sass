@@ -1,7 +1,7 @@
 @import '../../../styles/theme.colors'
 
 .container
-  background: color(_darkblue)
+  background: color(_white)
   display: inline-flex
   flex-flow: column
   height: 100%
@@ -13,13 +13,21 @@
   width: 100%
 
   .logo
-    color: color(_white)
+    color: color(_darkblue)
     width: 100%
 
     h1
+      color: color(_darkblue)
       font-size: 8em
 
+    img
+      margin: 5%
+      width: 10em
+
   .buttons
+    display: inline-flex
+    flex-direction: column
+
     .btn
       border: 0
       color: color(_white)
@@ -34,3 +42,22 @@
 
     .github
       background-color: color(github)
+
+  .disclaimer
+    align-items: center
+    display: inline-flex
+    flex-direction: column
+    height: 30vh
+    justify-content: space-between
+    text-align: center
+
+  .mox-disc
+    color: color(_black)
+    font-weight: 600
+
+  .mtg-disc
+    color: color(_slate)
+
+  .mtg-logo
+    color: color(_darkblue)
+    font-size: 1.6em

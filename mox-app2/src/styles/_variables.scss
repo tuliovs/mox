@@ -1,7 +1,7 @@
 // _variables.scss
 
 // #.
-$keyrune_version: '3.2.2' !default;
+$keyrune_version: '3.3.1' !default;
 $keyrune_font_path:  '../assets/fonts' !default;
 
 // #. Keyrune Font ==============================
@@ -84,6 +84,10 @@ $mtg_setlist: (
   ("Core background", 'bcore', "\e612"),
   ("Magic Origins", 'ori', "\e697"),
   ("Magic 2019", 'm19', "\e941"),
+  ("Alpha (MODO)", '1e', "\e947"),
+  ("Beta (MODO)", '2e', "\e948"),
+  ("Unlimited (MODO)", '2u', "\e949"),
+  ("Revised (MODO)", '3e', "\e94a"),
   // # Expansion Sets
   // Artifact block
   ("Arabian Nights", 'arn', "\e613"),
@@ -194,6 +198,9 @@ $mtg_setlist: (
   ("Rivals of Ixalan", "rix", "\e92f"),
   // Dominaria block
   ("Dominaria", "dom", "\e93f"),
+  // Guilds of Ravnica block
+  ("Guilds of Ravnica", "grn", "\e94b"),
+  ("Guild Kits", "gk1", "\e94b"),
   // # Commander Sets
   ("Vanguard", 'van', "\e655"),
   ("Planechase 2009", 'hop', "\e656"),
@@ -215,6 +222,7 @@ $mtg_setlist: (
   ("Commander 2017", 'c17', "\e934"),
   ("Commander Anthology 2", 'cm2', "\e940"),
   ("Battlebond", 'bbd', "\e942"),
+  ("Commander 2018", 'c18', "\e946"),
   // # Reprint Sets
   ("Chronicles", 'chr', "\e65e"),
   ("Anthologies", 'ath', "\e65f"),
@@ -282,6 +290,19 @@ $mtg_setlist: (
   ("Jace", 'ss1', "\e944"),
   // # Global Series
   ("Jiang Yanggu & Mu Yanling", 'gs1', "\e945"),
+  // # Guild Kits
+  ("Azorius", 'azorius', "\e94e"),
+  ("Boros", 'boros', "\e94f"),
+  ("Dimir", 'dimir', "\e950"),
+  ("Golgari", 'golgari', "\e951"),
+  ("Gruul", 'gruul', "\e952"),
+  ("Izzet", 'izzet', "\e953"),
+  ("Orzhov", 'orzhov', "\e954"),
+  ("Rakdos", 'rakdos', "\e955"),
+  ("Selesnya", 'selesnya', "\e956"),
+  ("Simic", 'simic', "\e957"),
+  // # Other Supplemental Products
+  ("Game Night", 'gnt', "\e94d"),
   // # Promotional
   ("Guru", 'pgru', "\e683"),
   ("Magic symbol", 'pmtg1', "\e684"),
@@ -310,8 +331,10 @@ $mtg_setlist: (
   ("Sega Dreamcast", 'psega', "\e93b"),
   ("The Sorcerer's Apprentice", 'ptsa', "\e93c"),
   ("Arena (MTGO)", 'parl3', "\e943"),
+  ("2016 Heroes of the Realm", 'htr', "\e687"),
+  ("Mythic Edition", 'med', "\e94c"),
   // # Online Only
-  ("Masters Edition", 'med', "\e68d"),
+  ("Masters Edition", 'me1', "\e68d"),
   ("Masters Edition II", 'me2', "\e68e"),
   ("Masters Edition III", 'me3', "\e68f"),
   ("Masters Edition IV", 'me4', "\e690"),

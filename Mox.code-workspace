@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "mox-app2"
+		}
+	],
+	"settings": {
+		"typescript.tsdk": "node_modules\\typescript\\lib",
+		"breadcrumbs.enabled": true
+	}
+}

@@ -4,12 +4,23 @@
 @import './theme.grid'
 @import './keyrune'
 
+@keyframes fadeIn
+  from
+    opacity: 0
+
+  to
+    opacity: 1
+
+
+.fadeIn
+  animation-name: fadeIn
 
 *
   border: 0
   box-sizing: border-box
   margin: 0
   padding: 0
+  transition: fadeIn
 
 h1,
 h2,
