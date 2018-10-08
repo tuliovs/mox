@@ -1,4 +1,3 @@
-import { FavoriteCards } from '@application/_models/_mox-models/Favorites';
 import { Input, Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger, state } from '@angular/animations';

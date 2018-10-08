@@ -1,16 +1,52 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { animate, style, keyframes, transition, trigger, state } from '@angular/animations';
 import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '@karn/_services/auth.service';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 
+export const fadeOutLeft = [
+  style({opacity: 1, offset: 0.0}),
+  style({'transform': 'translate3d(-100, 0, 0)', opacity: 0, offset: 1})
+];
+
+export const fadeOutRight = [
+  style({opacity: 1, offset: 0}),
+  style({'transform': 'translate3d(100%, 0, 0)', opacity: 0, offset: 1})
+];
+
+export const fadeInLeft = [
+  style({'transform': 'translate3d(-100%, 0, 0)', opacity: 0, offset: 0.0}),
+  style({'transform': 'translate3d(0, 0, 0)', opacity: 1, offset: 1})
+];
+
+export const fadeInRight = [
+  style({'transform': 'translate3d(100%, 0, 0)', opacity: 0, offset: 0.0}),
+  style({'transform': 'translate3d(0, 0, 0)', opacity: 1, offset: 1})
+];
+
+
 @Component({
   selector: 'app-mox-deck-hub',
   templateUrl: './deck-hub.component.html',
-  styleUrls: ['./deck-hub.component.sass']
+  styleUrls: ['./deck-hub.component.sass'],
+  animations: [
+    trigger('listAnimator', [
+      transition('* => exitLeft', animate(1250, keyframes(fadeOutLeft))),
+    ]),
+    trigger('listAnimator', [
+      transition('* => exitRight', animate(1250, keyframes(fadeOutRight))),
+    ]),
+    trigger('listAnimator', [
+      transition('* => entersLeft', animate(1250, keyframes(fadeInLeft))),
+    ]),
+    trigger('listAnimator', [
+      transition('* => entersRight', animate(1250, keyframes(fadeInRight))),
+    ]),
+  ]
 })
 export class DeckHubComponent implements OnInit, AfterViewInit {
   public deckList: MoxDeck[];
@@ -32,6 +68,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
   private internalDeck: any;
   private formatSelected: string;
   private deckCollection: AngularFirestoreCollection;
+  public listAnimator: string;
   constructor(
     private _afs: AngularFirestore,
     private _deckService: MoxDeckService,
@@ -106,6 +143,16 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     }
   }
 
+  startAnimation(_state: string) {
+    if (!this.listAnimator) {
+      this.listAnimator = _state;
+    }
+  }
+
+  resetAnimationState() {
+    this.listAnimator = '';
+  }
+
   changeFormat(side) {
     if (!this.formatSelected || this.formatSelected == null ) {
       this.formatSelected = 'standard';
@@ -113,6 +160,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     }
     switch (side) {
       case 'right':
+        this.startAnimation('exitRight');
         if (this.formats.indexOf(this.formatSelected) + 1 === this.formats.length) {
           this.formatSelected = null;
         } else {
@@ -120,6 +168,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
         }
         break;
       case 'left':
+      this.startAnimation('exitLeft');
         if (this.formats.indexOf(this.formatSelected) - 1 < 0) {
           this.formatSelected = null;
         } else {
