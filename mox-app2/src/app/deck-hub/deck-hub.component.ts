@@ -8,24 +8,24 @@ import { AuthService } from '@karn/_services/auth.service';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 
-export const fadeOutLeft = [
-  style({opacity: 1, offset: 0.0}),
-  style({'transform': 'translate3d(-100, 0, 0)', opacity: 0, offset: 1})
+export const slideOutLeft = [
+  style({'transform': 'translate3d(0, 0, 0)'}),
+  style({'transform': 'translate3d(-100%, 0, 0)', 'visibility': 'hidden'})
 ];
 
-export const fadeOutRight = [
-  style({opacity: 1, offset: 0}),
-  style({'transform': 'translate3d(100%, 0, 0)', opacity: 0, offset: 1})
+export const slideOutRight = [
+  style({'transform': 'translate3d(0, 0, 0)'}),
+  style({'transform': 'translate3d(100%, 0, 0)', 'visibility': 'hidden'})
 ];
 
-export const fadeInLeft = [
-  style({'transform': 'translate3d(-100%, 0, 0)', opacity: 0, offset: 0.0}),
-  style({'transform': 'translate3d(0, 0, 0)', opacity: 1, offset: 1})
+export const slideInLeft = [
+  style({'transform': 'translate3d(-100%, 0, 0)', 'visibility': 'visible'}),
+  style({'transform': 'translate3d(0, 0, 0)'})
 ];
 
-export const fadeInRight = [
-  style({'transform': 'translate3d(100%, 0, 0)', opacity: 0, offset: 0.0}),
-  style({'transform': 'translate3d(0, 0, 0)', opacity: 1, offset: 1})
+export const slideInRight  = [
+  style({'transform': 'translate3d(100%, 0, 0)', 'visibility': 'visible'}),
+  style({'transform': 'translate3d(0, 0, 0)'})
 ];
 
 
@@ -35,19 +35,20 @@ export const fadeInRight = [
   styleUrls: ['./deck-hub.component.sass'],
   animations: [
     trigger('listAnimator', [
-      transition('* => exitLeft', animate(1250, keyframes(fadeOutLeft))),
+      transition('* => exitLeft', animate(1250, keyframes(slideOutLeft))),
     ]),
     trigger('listAnimator', [
-      transition('* => exitRight', animate(1250, keyframes(fadeOutRight))),
+      transition('* => exitRight', animate(1250, keyframes(slideOutRight))),
     ]),
     trigger('listAnimator', [
-      transition('* => entersLeft', animate(1250, keyframes(fadeInLeft))),
+      transition('* => entersLeft', animate(1250, keyframes(slideInLeft))),
     ]),
     trigger('listAnimator', [
-      transition('* => entersRight', animate(1250, keyframes(fadeInRight))),
+      transition('* => entersRight', animate(1250, keyframes(slideInRight))),
     ]),
   ]
 })
+
 export class DeckHubComponent implements OnInit, AfterViewInit {
   public deckList: MoxDeck[];
   public formats = [
@@ -74,8 +75,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     private _deckService: MoxDeckService,
     private _state: ActionStateService,
     public _auth: AuthService,
-    private _router: Router) {
-  }
+    private _router: Router) {  }
 
   ngOnInit() {
     this._auth.getUser().subscribe(
@@ -99,7 +99,6 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
                   }
                 } );
                 this._state.setState('nav');
-                // console.log(this.deckList);
               }
             )
           ).subscribe();
@@ -112,8 +111,6 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     this._deckService.getWorkingDeck().pipe(
       tap((workingDeck) => {
         this.internalDeck = workingDeck;
-        // console.log('this', this.internalDeck);
-        // console.log('that', workingDeck);
       })
     ).subscribe();
   }
@@ -160,7 +157,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     }
     switch (side) {
       case 'right':
-        this.startAnimation('exitRight');
+        this.startAnimation('entersLeft');
         if (this.formats.indexOf(this.formatSelected) + 1 === this.formats.length) {
           this.formatSelected = null;
         } else {
@@ -168,7 +165,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
         }
         break;
       case 'left':
-      this.startAnimation('exitLeft');
+      this.startAnimation('entersRight');
         if (this.formats.indexOf(this.formatSelected) - 1 < 0) {
           this.formatSelected = null;
         } else {

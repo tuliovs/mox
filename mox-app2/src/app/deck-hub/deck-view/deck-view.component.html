@@ -125,14 +125,46 @@
     <span *ngIf="_cardSort">Order by: {{_cardSort}}</span>
   </div>
 </div>
-<app-mox-action-bar (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
-  <button class="btn btn-action" disabled>
-    <i class="fas fa-comments" style="font-size: 1.2em" ></i>
+
+<app-mox-action-bar [hidden]=" tab !='statsTab'"> 
+  <button disabled class="btn btn-action">
+    <i class="fas fa-trash"></i>
+  </button>
+  <button disabled class="btn btn-action">
+    <i class="fas fa-flask"></i>
+  </button>
+  <div class="fixer"></div>
+  <button disabled class="btn btn-action">
+    <i class="fas fa-qrcode"></i>
+  </button>
+  <button (click)="_deckService.processStats()" class="btn btn-action">
+    <i class="fas fa-cogs"></i>
+  </button>        
+</app-mox-action-bar>
+
+<app-mox-action-bar [hidden]=" tab !='profileTab'"> 
+  <button (click)="activateCardView()" [disabled]="!(this._selectedCard)" class="btn btn-action">
+    <i  class="fas fa-search-plus"></i>
   </button>
   <app-mox-filter-picker></app-mox-filter-picker>
   <div class="fixer"></div>
   <app-mox-sort-picker [selected]="_cardSort" (sortChoosen)="sortChoosen($event)"></app-mox-sort-picker>
-  <app-mox-card-context [card]="_selectedCard"  [icon]="'fas fa-ellipsis-h'" *ngIf="_selectedCard" ></app-mox-card-context>
-  <app-mox-deck-context *ngIf="!_selectedCard" [deck]="_deck | async" [icon]="'fas fa-cog'"></app-mox-deck-context>
+  <app-mox-deck-context *ngIf="!_selectedCard" [deck]="_deck | async" [icon]="'fas fa-bars'"></app-mox-deck-context>  
+  <app-mox-card-context *ngIf="_selectedCard"  [card]="_selectedCard"  [icon]="'fas fa-ellipsis-h'"></app-mox-card-context>
 </app-mox-action-bar>
 
+<app-mox-action-bar [hidden]=" tab !='socialTab'"> 
+  <button disabled class="btn btn-action">
+    <i class="fas fa-address-card"></i>
+  </button>
+  <button disabled class="btn btn-action">
+    <i class="fas fa-folder"></i>
+  </button>
+  <div class="fixer"></div>
+  <button disabled class="btn btn-action">
+    <i class="fas fa-comments"></i>
+  </button>
+  <button disabled class="btn btn-action">
+    <i class="far fa-heart"></i>
+  </button>        
+</app-mox-action-bar>

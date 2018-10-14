@@ -8,6 +8,7 @@ import { CardMapper } from '@application/_mappers/scryfall-mappers/card/cardMapp
 import { Card } from '@application/_models/_scryfall-models/models';
 import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
 import { ScryfallCardService } from '@application/_services/scryfall-services/card/scryfall-card.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-mox-card',
@@ -16,7 +17,7 @@ import { ScryfallCardService } from '@application/_services/scryfall-services/ca
 })
 export class MoxCardComponent implements OnInit, AfterViewInit {
   public card: Card;
-  private id: any;
+  public obserCard = of(null);
   constructor(
     private _cardService: MoxCardService,
     private afs: AngularFirestore,
@@ -29,14 +30,18 @@ export class MoxCardComponent implements OnInit, AfterViewInit {
         if (!id) {
           throw new Error('Id não fornecido ou inválido');
         } else {
-          this.id = id;
           this._cardService.getCard(id).then(
             (obs) => {
-              obs.pipe(
+              this.obserCard = obs;
+              this.obserCard.pipe(
                 tap((card) => {
                   this.card = card;
                 })
-              );
+              ).subscribe();
+            }
+          ).catch(
+            (err) => {
+              console.error(err);
             }
           );
         }
@@ -45,11 +50,6 @@ export class MoxCardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.afs.collection('cards').doc<Card>(this.id).valueChanges().pipe(
-    //   tap((c) => {
-    //     this.card = c;
-    //   })
-    // ).subscribe();
   }
 
 }

@@ -34,6 +34,10 @@ $bg-zoom: rgba(255, 255, 255, .5)
   overflow: inherit
   padding: .18em
 
+  &:disabled
+    background-color: color(_gray)
+    border: color(_gray)
+
 form
   align-content: center
   align-items: center
@@ -119,7 +123,7 @@ input
         border-radius: 0 4px 4px 0
         display: inline-flex
         flex-direction: column
-        height: 3.9em
+        height: 3.7em
         justify-content: center
         position: absolute
         width: 68px
@@ -127,7 +131,7 @@ input
 
         i
           color: color(_white)
-          font-size: 2.5em
+          font-size: 1.75em
           text-shadow: 2px 2px 10px $shad-text
 
       .img

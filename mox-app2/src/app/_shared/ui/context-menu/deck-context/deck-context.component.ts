@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { ToastService } from '@application/_services/toast/toast.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { animate, style, transition, trigger, state } from '@angular/animations';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
@@ -27,7 +27,7 @@ import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
     ])
   ]
 })
-export class DeckContextComponent implements OnInit {
+export class DeckContextComponent implements OnInit, OnChanges {
 
   constructor(
     public _router: Router,
@@ -42,10 +42,12 @@ export class DeckContextComponent implements OnInit {
   @Input() deck: any;
   @Input() icon;
   @Input() disabled;
+  @Input() active;
   public componentState = 'closed';
   public lightboxActive = false;
 
   ngOnInit() {
+
   }
 
   processData() {
@@ -94,18 +96,28 @@ export class DeckContextComponent implements OnInit {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.active && changes.active.firstChange === false && changes.active.currentValue === true) {
+      console.log(changes);
+      navigator.vibrate([30]);
+      this.lightboxActive = true;
+      this.componentState = 'opened';
+      this._state.setState('hidden');
+    }
+  }
+
   activateContext() {
     navigator.vibrate([30]);
     this._deckService.editDeck(this.deck);
     this.lightboxActive = true;
-    this.componentState = 'opened';
     this._state.setState('hidden');
+    this.componentState = 'opened';
     // console.log('#', this._deckService.deckProcess._deck);
   }
 
   closeContext() {
     this.lightboxActive = false;
     this.componentState = 'closed';
-    this._state.returnState();
+    this._state.setState('nav');
   }
 }

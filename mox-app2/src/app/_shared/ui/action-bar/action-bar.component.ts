@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { ActionBarConfig } from '@application/_models/_mox-models/Config';
 
 @Component({
   selector: 'app-mox-action-bar',
@@ -8,6 +9,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class ActionBarComponent implements OnInit {
 
   constructor() { }
+  @Input() config?: ActionBarConfig;
   @Output() actionMenuActivate: EventEmitter<any> = new EventEmitter<any>();
   // @Output() swipeUp?: EventEmitter = new EventEmitter();
   // @Output() swipeRight?: EventEmitter = new EventEmitter();

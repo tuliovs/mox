@@ -3,12 +3,12 @@ import { ToastService } from '@application/_services/toast/toast.service';
 import { Observable } from 'rxjs';
 import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ActionStateService } from '@application/_services/action-state/action-state.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '@karn/_services/auth.service';
 import { MetaService } from 'ng2-meta';
+import { ActionBarConfig, ActionButton } from '@application/_models/_mox-models/Config';
 
 @Component({
   selector: 'app-mox-deck-view',
@@ -34,21 +34,40 @@ export class DeckViewComponent implements OnInit {
 
   public navigator = navigator;
   public _deck: Observable<MoxDeck>;
-  public _selectedCard;
+  public _selectedCard: Card;
   public tab = 'profileTab';
   public _orderAsc = false;
   public cardView = false;
   public side = false;
   public _cardFilter;
   public _cardSort;
+  public actionConfigSocial = new ActionBarConfig();
+  public actionConfigStats = new ActionBarConfig();
   constructor(
     public  _auth: AuthService,
     private _deckService: MoxDeckService,
     private _route: ActivatedRoute,
+    private _router: Router,
     private _toast: ToastService,
-    private _metaService: MetaService,
-    private _state: ActionStateService
-  ) { }
+    private _metaService: MetaService
+  ) {
+      this.actionConfigSocial.actions = new Array<ActionButton>();
+      this.actionConfigStats.actions = new Array<ActionButton>();
+      // actionSettings
+      let act;
+      // social
+      act = this.actionConfigSocial.actions;
+        act[0] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
+        act[1] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
+        act[2] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
+        act[3] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
+      // stats
+      act = this.actionConfigStats.actions;
+        act[0] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
+        act[1] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
+        act[2] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
+        act[3] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
+  }
 
   ngOnInit() {
     this._route.params.subscribe(params => {
@@ -80,6 +99,11 @@ export class DeckViewComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     return this._deckService.deckProcess._cardList;
   }
+
+  navigateToNewDeck() {
+    console.log('DUDE THIS WORKS');
+  }
+
 
   sortChoosen(sort: string) {
     this._cardSort = sort;
@@ -168,6 +192,10 @@ export class DeckViewComponent implements OnInit {
     }
   }
 
+  isCardSelected(): boolean {
+    return (this._selectedCard !== null);
+  }
+
   selectedCard(card: Card) {
     // console.log(card);
     if (this._selectedCard === card) {
@@ -180,14 +208,14 @@ export class DeckViewComponent implements OnInit {
     }
   }
 
-  activateCardView(v: Card) {
-    if (this._selectedCard === v) {
-      this._selectedCard = null;
-      this.cardView = false;
-    } else {
-      this.selectedCard(v);
+  activateCardView() {
+    // if (this._selectedCard === v) {
+    //   this._selectedCard = null;
+    //   this.cardView = false;
+    // } else {
+      // this.selectedCard(v);
       this.cardView = true;
-    }
+    // }
   }
 
   changetab(side) {

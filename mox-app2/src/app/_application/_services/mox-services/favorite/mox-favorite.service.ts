@@ -46,8 +46,8 @@ export class MoxFavoriteService {
       if (storage.favsStorage.has('cards')) {
         const favList = <FavoriteCards>storage.favsStorage.get('cards');
         const actualFav = favList.actualFavs;
-        if (actualFav.indexOf(card.id, 0) > 0) {
-          actualFav.splice(actualFav.indexOf(card.id), 1);
+        if (actualFav.includes(card.id)) {
+          actualFav.splice(actualFav.indexOf(card.id));
           storage.updateFavStorage(favList);
           res = false;
         } else {
@@ -77,26 +77,6 @@ export class MoxFavoriteService {
     });
   }
 
-  // public getMyCardFavs(userId): Observable<FavoriteCards> {
-  //   this._afs.collection('favorite-cards').doc(userId).ref.get().then(
-  //     (doc) => {
-  //       if (doc.exists) {
-  //         console.log('Doc exists!');
-  //         return this._afs.collection('favorite-cards').doc<FavoriteCards>(userId).valueChanges();
-  //       } else {
-  //         console.log('Doc dont exists!');
-  //         this.setUserFavs(userId).then((favList) => {
-  //           this._userFavorites = favList;
-  //           return of(this._userFavorites);
-  //         }).catch((err) => {
-  //           console.error(err);
-  //         });
-  //       }
-  //     }
-  //   );
-  //   return;
-  // }
-
   public isFav(cardId) {
     if (!this._userFavorites) {
       return false;
@@ -119,18 +99,5 @@ export class MoxFavoriteService {
     }
   }
 
-  // private setUserFavs(userId) {
-  //   return new Promise<FavoriteCards>( async (resolve, rej) => {
-  //     this._userFavorites = new FavoriteCards();
-  //     this._afs.collection('favorite-cards').doc(this._user.uid)
-  //     .set(this._userFavorites).catch((err) => {
-  //       console.error(err);
-  //       rej(err);
-  //     }).then(() => {
-  //       console.log('pock!');
-  //       resolve(this._userFavorites);
-  //     });
-  //   });
-  // }
 }
 

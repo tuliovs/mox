@@ -2,7 +2,7 @@
   <form>
     <input *ngIf="!settings_stats" class="search-input" type="text" placeholder="Search" [(ngModel)]="param" value="{{param}}"
       name="param" required />
-    <button *ngIf="!settings_stats" class="btn btn-search" type="submit" (click)="searchGo(param)">
+    <button *ngIf="!settings_stats" class="btn btn-search" type="submit" (click)="searchGo(param)" [disabled]="(!param) || (param.length < 3)" >
       <i class="fas fa-search"></i>
     </button>
   </form>

@@ -67,9 +67,13 @@ export class SearchHubComponent {
   clear() {
     this.searchResult = new List();
     this.settings_stats = false;
+    const favs = <FavoriteCards>this._localstorageService.favsStorage.get('cards');
+    if (favs) {
+      this.favoriteList =  favs.actualFavs;
+    }
   }
 
-  searchGo(param) {
+  searchGo(param: string) {
     // console.log('param: ', this.param);
     navigator.vibrate([30]);
     this._state.setState('loading');

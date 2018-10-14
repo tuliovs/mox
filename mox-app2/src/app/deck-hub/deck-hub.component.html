@@ -47,28 +47,28 @@
   </div>
   <app-mox-action-bar *ngIf="internalDeck">
     <button class="btn btn-action" routerLink="/search">
-      <i class="fas fa-plus-square" style="font-size: 1.2em" ></i>
+      <i class="fas fa-plus-square"></i>
     </button>
     <button class="btn btn-action" disabled>
-      <i class="fas fa-filter"></i>
+      <i class="far fa-heart"></i>
     </button>
     <div class="fixer"></div>
     <button class="btn btn-action" disabled>
-      <i class="fas fa-user" style="font-size: 1.4em"></i>
+      <i class="fas fa-folder"></i>
     </button>
-    <app-mox-deck-context [deck]="internalDeck" [icon]="'fas fa-ellipsis-v'" *ngIf="internalDeck"></app-mox-deck-context>
+    <app-mox-deck-context [deck]="internalDeck" [icon]="'fas fa-ellipsis-h'" *ngIf="internalDeck"></app-mox-deck-context>
   </app-mox-action-bar>
 
   <app-mox-action-bar *ngIf="!internalDeck" (swipeleft)="changeFormat('left')" (swiperight)="changeFormat('right')">
     <button class="btn btn-action" disabled>
-      <i class="fas fa-book-open" style="font-size: 1.2em" ></i>
+      <i class="fas fa-search"></i>
     </button>
     <button class="btn btn-action" disabled>
       <i class="fas fa-filter"></i>
     </button>
     <div class="fixer"></div>
     <button class="btn btn-action" disabled>
-      <i class="fas fa-sort" style="font-size: 1.4em"></i>
+      <i class="fas fa-sort"></i>
     </button>
     <button (click)="newDeck()" type="button" class="btn btn-action">
       <i class="fas fa-plus"></i>

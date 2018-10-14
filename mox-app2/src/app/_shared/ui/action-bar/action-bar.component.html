@@ -1,4 +1,4 @@
-<div class="action-bar"
+<div *ngIf="!config" class="action-bar"
   (swipeleft)="actionSwipeLeft()"
   (swiperight)="actionSwipeRight()"
   (swipeup)="actionSwipeUp()"
@@ -7,4 +7,28 @@
   <ng-content>
 
   </ng-content>
+</div>
+
+<div *ngIf="config"
+  (swipeleft)="actionSwipeLeft()"
+  (swiperight)="actionSwipeRight()"
+  (swipeup)="actionSwipeUp()"
+  (swipedown)="actionSwipeDown()"
+>
+  <div *ngIf="config.actions as actBtns" class="action-bar">
+    <button *ngIf="actBtns[0]" (click)="actBtns[0].action()" [disabled]="actBtns[0].disabled" class="btn btn-action">
+      <i  [className]="'fas ' + actBtns[0].icon" class="fas" [ngClass]="fa-book-open"></i>
+    </button>
+    <button *ngIf="actBtns[1]" (click)="actBtns[1].action()" [disabled]="actBtns[1].disabled" class="btn btn-action">
+      <i  [className]="'fas ' + actBtns[1].icon" class="fas" [ngClass]="fa-book-open"></i>
+    </button>
+    <div class="fixer"></div>
+    <button *ngIf="actBtns[2]" (click)="actBtns[2].action()" [disabled]="actBtns[2].disabled" class="btn btn-action">
+      <i  [className]="'fas ' + actBtns[2].icon" class="fas" [ngClass]="fa-book-open"></i>
+    </button>
+    <button *ngIf="actBtns[3]" (click)="actBtns[3].action()" [disabled]="actBtns[3].disabled" class="btn btn-action">
+      <i *ngIf="actBtns[3].icon == 'fa-book'" class="ms ms-u ms-cost shadow"></i>
+      <i  [className]="'fas ' + actBtns[3].icon" class="fas" [ngClass]="fa-book-open"></i>
+    </button>
+  </div>
 </div>

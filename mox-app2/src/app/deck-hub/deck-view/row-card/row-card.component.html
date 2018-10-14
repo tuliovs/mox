@@ -9,6 +9,7 @@
   <div class="card-img"
     (click)="cardView.emit(card)"
     *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }">
+  <div *ngIf="selected" (click)="cardView.emit(card)" class="zoom"><i class="fas fa-search-plus"></i></div>
   <label *ngIf="card.usd" class="mox-font">${{card.usd}}</label></div>
 
   <div class="card-img"

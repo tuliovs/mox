@@ -32,7 +32,7 @@
     <nav class="sidenav" [@navTrigger]="navState">
       <h1 class="mox-font">M0X</h1>
       <div>
-        <div class="nav-link user" *ngIf="auth.getUser() | async as user" (click)="goToUser()">
+        <div class="nav-link user" *ngIf="auth.getUser() | async as user" (press)="goToUser()">
           <div class="avatar" *ngIf="user.photoURL" [ngStyle]="{ 'background-image': 'url(' + user.photoURL + ')' }"></div>
           <div class="avatar" *ngIf="!user.photoURL"><i class="fas fa-frog"></i></div>
           <div></div>
