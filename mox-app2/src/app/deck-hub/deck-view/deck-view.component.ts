@@ -35,7 +35,7 @@ export class DeckViewComponent implements OnInit {
   public navigator = navigator;
   public _deck: Observable<MoxDeck>;
   public _selectedCard: Card;
-  public tab = 'profileTab';
+  public tab = 'deckList';
   public _orderAsc = false;
   public cardView = false;
   public side = false;
@@ -45,7 +45,7 @@ export class DeckViewComponent implements OnInit {
   public actionConfigStats = new ActionBarConfig();
   constructor(
     public  _auth: AuthService,
-    private _deckService: MoxDeckService,
+    public _deckService: MoxDeckService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _toast: ToastService,
@@ -167,12 +167,18 @@ export class DeckViewComponent implements OnInit {
   cardMinus(event) {
     navigator.vibrate([30]);
     this._deckService.deckProcess._deck.cards
-      .splice(this._deckService.deckProcess._deck.cards.indexOf(event), 1);
+      .splice(this._deckService.deckProcess._deck.cards.indexOf(event));
+    if (!this._deckService.deckProcess._deck.cards.includes(event)) {
+      this._selectedCard = null;
+    }
     this.saveDeck();
   }
   cardSideMinus(event) {
     this._deckService.deckProcess._deck.side
-      .splice(this._deckService.deckProcess._deck.side.indexOf(event), 1);
+      .splice(this._deckService.deckProcess._deck.side.indexOf(event));
+    if (!this._deckService.deckProcess._deck.side.includes(event)) {
+      this._selectedCard = null;
+    }
     this.saveDeck();
   }
 
@@ -228,9 +234,9 @@ export class DeckViewComponent implements OnInit {
               this.tab = 'socialTab';
             break;
           case 'socialTab':
-              this.tab = 'profileTab';
+              this.tab = 'deckList';
             break;
-          case 'profileTab':
+          case 'deckList':
               this.tab = 'statsTab';
             break;
           default:
@@ -242,9 +248,9 @@ export class DeckViewComponent implements OnInit {
         // alert('RIGHT');
         switch (this.tab) {
           case 'statsTab':
-              this.tab = 'profileTab';
+              this.tab = 'deckList';
             break;
-          case 'profileTab':
+          case 'deckList':
               this.tab = 'socialTab';
             break;
           case 'socialTab':

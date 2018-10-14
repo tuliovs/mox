@@ -47,6 +47,38 @@ export class RowCardComponent implements OnInit, AfterViewInit {
           && this.card.legalities[this.deckFormat].toString().trim().toLowerCase() === 'not_legal');
   }
 
+  getName() {
+    if (this.card.card_faces) {
+      return this.card.card_faces[0].name;
+    } else {
+      return this.card.name;
+    }
+  }
+
+  getCardImgUri() {
+    if (this.card && this.card.image_uris) {
+      return this.card.image_uris.art_crop;
+    } else {
+      return this.card.card_faces[0].image_uris.art_crop;
+    }
+  }
+
+  getManaCosts() {
+    if (this.card.card_faces) {
+      return this.card.card_faces[0].mana_cost;
+    } else {
+      return this.card.mana_cost;
+    }
+  }
+
+  getTypeLine() {
+    if (this.card.card_faces) {
+      return this.card.card_faces[0].type_line;
+    } else {
+      return this.card.type_line;
+    }
+  }
+
   ngAfterViewInit() {
   }
 }

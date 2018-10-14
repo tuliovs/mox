@@ -2,7 +2,7 @@
 <div *ngIf="_deck | async as deck">
   <app-mox-titlebar titleHeight="1.72">
     <ol (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
-      <li (click)="tab = 'profileTab'" [ngClass]="{'active': tab == 'profileTab'}">DeckList <app-mox-dot *ngIf="tab == 'profileTab'"></app-mox-dot></li>
+      <li (click)="tab = 'deckList'" [ngClass]="{'active': tab == 'deckList'}">DeckList <app-mox-dot *ngIf="tab == 'deckList'"></app-mox-dot></li>
       <li (click)="tab = 'socialTab'"  [ngClass]="{'active': tab == 'socialTab'}">Social <app-mox-dot *ngIf="tab == 'socialTab'"></app-mox-dot></li>
       <li (click)="tab = 'statsTab'"   [ngClass]="{'active': tab == 'statsTab'}">Stats <app-mox-dot *ngIf="tab == 'statsTab'"></app-mox-dot></li>
     </ol>
@@ -11,7 +11,7 @@
     <div [hidden]="tab != 'statsTab'">
       <app-mox-deck-stats [deckid]="deck.id"></app-mox-deck-stats>
     </div>
-    <div [hidden]="tab !='profileTab'">
+    <div [hidden]="tab !='deckList'">
       <div class="summary" *ngIf="user.uid === deck.ownerId || deck.public">
         <div class="decksize mox-font">
           <i class="fas fa-clone"></i>{{deck.cards.length}}
@@ -39,7 +39,7 @@
           ></app-mox-row-card>
         </li>
       </ul>
-      <div *ngIf="cardView" class="lightbox" (click)="cardView = false;selectedCard(_selectedCard)"></div>
+      <div *ngIf="cardView" class="lightbox" (click)="cardView = false"></div>
       <div *ngIf="cardView && _selectedCard" class="card-viewer">
         <div class="fullcard" *ngIf="!side"
           (tap)="side = true"
@@ -142,7 +142,7 @@
   </button>        
 </app-mox-action-bar>
 
-<app-mox-action-bar [hidden]=" tab !='profileTab'"> 
+<app-mox-action-bar [hidden]=" tab !='deckList'"> 
   <button (click)="activateCardView()" [disabled]="!(this._selectedCard)" class="btn btn-action">
     <i  class="fas fa-search-plus"></i>
   </button>

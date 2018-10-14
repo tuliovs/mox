@@ -76,8 +76,8 @@
   <p>I'm sorry buddy, I couldn't find anything</p>
 </div>
 <app-mox-action-bar>
-  <button class="btn btn-action" (click)="clear()" [disabled]="(!searchResult.data || searchResult.data.length == 0)" >
-    <i class="fas fa-undo-alt"></i>
+  <button (click)="cardView = true" [disabled]="!selectedCard" class="btn btn-action">
+    <i  class="fas fa-search-plus"></i>
   </button>
   <button class="btn btn-action" disabled>
     <i class="fas fa-filter"></i>
@@ -86,5 +86,8 @@
   <button class="btn btn-action" disabled>
     <i class="fas fa-sort" style="font-size: 1.4em"></i>
   </button>
-  <app-mox-card-context [card]="selectedCard" [icon]="'fas fa-ellipsis-h'" [disabled]="!selectedCard"></app-mox-card-context>
+  <app-mox-card-context [card]="selectedCard" [icon]="'fas fa-ellipsis-h'" *ngIf="selectedCard"></app-mox-card-context>
+  <button class="btn btn-action" (click)="clear()" *ngIf="!selectedCard" [disabled]="(!searchResult.data || searchResult.data.length == 0)">
+    <i class="fas fa-undo-alt"></i>
+  </button>
 </app-mox-action-bar>

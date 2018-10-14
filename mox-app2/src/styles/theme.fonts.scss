@@ -15,7 +15,7 @@ $font-path: '/app/assets/fonts';
 	}
 };
 
-@include set-font-face('Cursive', 'Audiowide', 300);
+// @include set-font-face('Cursive', 'Audiowide', 300);
 // @include setFontface('Open Sans', 'OpenSans-Light', 300);
 // @include setFontface('Open Sans', 'OpenSans-LightItalic', 300, italic);
 // @include setFontface('Open Sans', 'OpenSans');
@@ -29,4 +29,4 @@ $font-path: '/app/assets/fonts';
 
 // @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
 // @import url('https://fonts.googleapis.com/css?family=Audiowide|Exo+2:300,400,600,700');
-@import url('https://fonts.googleapis.com/css?family=Exo+2:400,600,700|Quantico:400,700');
+@import url('https://fonts.googleapis.com/css?family=Exo+2:300,400,600,700|Mitr:300,400,600,700');

@@ -6,43 +6,24 @@
         [class.rare]=" card.rarity == 'rare'"
         [class.mythic]=" card.rarity == 'mythic'" class="card-rarity"></div>
 
-  <div class="card-img"
-    (click)="cardView.emit(card)"
-    *ngIf="card.image_uris" [ngStyle]="{ 'background-image': 'url(' + card.image_uris.art_crop + ')' }">
-  <div *ngIf="selected" (click)="cardView.emit(card)" class="zoom"><i class="fas fa-search-plus"></i></div>
+  <div class="card-img" (click)="select.emit(card);cardView.emit(card)" [ngStyle]="{ 'background-image': 'url(' + getCardImgUri() + ')' }">
+  <div class="zoom" *ngIf="selected" (click)="cardView.emit(card)"><i class="fas fa-search-plus"></i></div>
   <label *ngIf="card.usd" class="mox-font">${{card.usd}}</label></div>
-
-  <div class="card-img"
-      (click)="cardView.emit(card)"
-      *ngIf="!card.image_uris && card.card_faces" [ngStyle]="{ 'background-image': 'url(' + card.card_faces[0].image_uris.art_crop + ')' }">
-  <label *ngIf="card.usd" class="mox-font">${{card.usd}}</label></div>
-
-  <div class="data-container" *ngIf="!card.card_faces" (click)="select.emit(card)" >
-    <div class="card-data"><h4>{{card.name}}</h4></div>
+  
+  <div class="data-container" (click)="select.emit(card)" >
+    <div class="card-data"><h4>{{getName()}}</h4></div>
     <div class="card-data typeline">
-        {{(card.type_line.length>32)? (card.type_line | slice:0:30)+'...':(card.type_line)}}
-    </div>
-  </div>
-  <div class="data-container" *ngIf="card.card_faces" (click)="select.emit(card)">
-    <div class="card-data"><h4>{{card.card_faces[0].name}}</h4></div>
-    <div class="card-data typeline">
-      {{(card.card_faces[0].type_line.length>32)? (card.card_faces[0].type_line | slice:0:30)+'...':(card.card_faces[0].type_line)}}
+        {{(getTypeLine().length>32)? (getTypeLine() | slice:0:30)+'...':(getTypeLine())}}
     </div>
   </div>
   <div class="card-actions">
-    <div class="mana-cost" *ngIf="!card.card_faces">
-      <i *ngFor="let ico of card.mana_cost.split('}')"
+    <div class="mana-cost">
+      <i *ngFor="let ico of getManaCosts().split('}')"
         [className]="'ms ms-' + ico.replace('{', '').replace('/', '').toLowerCase()"
         [class.ms-cost]=" ico != ''"
         [class.shadow]=" ico != ''"
       ></i>
     </div>
-    <div class="mana-cost" *ngIf="card.card_faces">
-        <i *ngFor="let ico of card.card_faces[0].mana_cost.split('}')"
-        [className]="'ms ms-' + ico.replace('{', '').replace('/', '').toLowerCase()"
-        [class.ms-cost]=" ico != ''"
-        [class.shadow]=" ico != ''"
-      ></i></div>
     <div *ngIf="_user">
       <button *ngIf="_user.uid === _deckService.deckProcess._deck.ownerId" (click)="minus.emit(card.id);navigator.vibrate([30]);" class="btn"><i class="fas fa-minus-circle"></i></button>
       <button *ngIf="_user.uid === _deckService.deckProcess._deck.ownerId" (click)="plus.emit(card.id);navigator.vibrate([30]);" class="btn"><i class="fas fa-plus-circle"></i></button>

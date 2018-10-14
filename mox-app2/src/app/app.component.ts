@@ -119,7 +119,7 @@ export class AppComponent implements OnInit {
       case '/search':
           return 'Search';
       default:
-          return 'Mox';
+          return 'M0X';
     }
   }
 

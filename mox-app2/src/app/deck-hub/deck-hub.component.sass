@@ -108,25 +108,43 @@ ol
           font-size: 1.3em
           width: 15%
 
-.tabs
+// .tabs
+//   display: inline-flex
+//   flex-direction: row
+//   overflow-x: scroll
+//   overflow-y: hidden
+//   white-space: nowrap
+
+//   li
+//     border-bottom: 1.5px color(_blue)
+//     color: color(_black)
+//     display: inline-block
+//     padding: 0 1%
+//     text-transform: capitalize
+//     width: 100%
+
+//     &.active
+//       background-color: color(_blue)
+//       border-radius: 8px 0
+//       color: color(_white)
+
+.deck-format
   display: inline-flex
   flex-direction: row
+  justify-content: space-between
   overflow-x: scroll
   overflow-y: hidden
   white-space: nowrap
+  width: 100%
 
-  li
+  label
+    background-color: color(_blue)
     border-bottom: 1.5px color(_blue)
-    color: color(_black)
+    border-radius: 4px
+    color: color(_white)
     display: inline-block
-    padding: 0 1%
+    padding: 0 1.8%
     text-transform: capitalize
-    width: 100%
-
-    &.active
-      background-color: color(_blue)
-      border-radius: 8px 0
-      color: color(_white)
 
 .selected-deck
   border-bottom: 1px solid color(_darkblue)
