@@ -22,6 +22,7 @@ export class SearchHubComponent {
   public resp_time = 0;
   public settings_stats = false;
   public showError = false;
+  public cardView = false;
   public searchState = 'closed';
   public selectedCard;
   constructor(
