@@ -166,17 +166,17 @@ export class DeckViewComponent implements OnInit {
   }
   cardMinus(event) {
     navigator.vibrate([30]);
-    this._deckService.deckProcess._deck.cards
-      .splice(this._deckService.deckProcess._deck.cards.indexOf(event));
-    if (!this._deckService.deckProcess._deck.cards.includes(event)) {
+    const deck = this._deckService.deckProcess._deck;
+    deck.cards.splice(deck.cards.indexOf(event), 1);
+    if (!deck.cards.includes(event)) {
       this._selectedCard = null;
     }
     this.saveDeck();
   }
   cardSideMinus(event) {
-    this._deckService.deckProcess._deck.side
-      .splice(this._deckService.deckProcess._deck.side.indexOf(event));
-    if (!this._deckService.deckProcess._deck.side.includes(event)) {
+    const deck = this._deckService.deckProcess._deck;
+    deck.side.splice(deck.side.indexOf(event), 1);
+    if (!deck.side.includes(event)) {
       this._selectedCard = null;
     }
     this.saveDeck();

@@ -5,6 +5,7 @@ export class MoxDeck {
   colorIdentity: string[];
   cover: string;
   format: string;
+  folder?: string;
   froze: boolean;
   key: string;
   legal: boolean;

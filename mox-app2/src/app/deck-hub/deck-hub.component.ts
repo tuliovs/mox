@@ -68,8 +68,10 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
   ];
   private internalDeck: any;
   private formatSelected: string;
+  public folderVisible: boolean[] = [];
   private deckCollection: AngularFirestoreCollection;
   public listAnimator: string;
+  public folders: string[] = [];
   constructor(
     private _afs: AngularFirestore,
     private _deckService: MoxDeckService,
@@ -98,6 +100,12 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
                     return 0;
                   }
                 } );
+                this.folders = [];
+                this.filteredDeckList().forEach((deck) => {
+                  if (deck.folder && deck.folder !== '' && !this.folders.includes(deck.folder)) {
+                    this.folders.push(deck.folder);
+                  }
+                });
                 this._state.setState('nav');
               }
             )
@@ -173,5 +181,11 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
         }
         break;
     }
+    this.folders = [];
+    this.filteredDeckList().forEach((deck) => {
+      if (deck.folder && deck.folder !== '' && !this.folders.includes(deck.folder)) {
+        this.folders.push(deck.folder);
+      }
+    });
   }
 }

@@ -13,40 +13,92 @@
   </app-mox-titlebar>
   <div class="main">
     <span *ngIf="!showLoader && deckList.length == 0" >Empty decklist</span>
+    <ul *ngIf="!showLoader && folders.length > 0">
+      <li *ngFor="let folder of folders; let i=index" >
+        <div class="folder">
+          <h4 class="folder-name" (click)="folderVisible[i] = !folderVisible[i]">
+            <i *ngIf="folderVisible[i]" class="fas fa-folder-open"></i> 
+            <i *ngIf="!folderVisible[i]" class="fas fa-folder"></i>
+            {{folder}}
+          </h4>
+          
+          <ol *ngIf="!showLoader && folderVisible[i]" 
+          [@listAnimator]="listAnimator"
+          (@listAnimator.done)="resetAnimationState()">
+            <ng-container *ngFor="let deck of filteredDeckList()" >
+              <li *ngIf="deck.folder === folder" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
+                <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
+                <div class="cover"   (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+                  <p class="color-identity" *ngIf="deck.colorIdentity">
+                      <i *ngFor="let ico of deck.colorIdentity"
+                      [className]="'ms ms-' + ico.toLowerCase()"
+                      [class.ms-cost]=" ico != ''"
+                      [class.shadow]=" ico != ''"
+                    ></i>
+                  </p>
+                </div>
+                <div class="content" (click)="deckSelected(deck)">
+                  <div>
+                    <label>{{deck.name}}</label>
+                    <span>{{deck.format}}</span>
+                  </div>
+                  <div class="second-level">
+                    <div class="owner" >by {{deck.ownerName}}</div>
+                    <div class="icons">
+                      <span>
+                        <i class="fas fa-lock" *ngIf="!deck.public"></i>
+                        <i class="fas fa-unlock" *ngIf="deck.public"></i>
+                      </span>
+                      <span>
+                        <i class="far fa-times-circle" *ngIf="!deck.legal"></i>
+                        <i class="far fa-check-circle" *ngIf="deck.legal"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ng-container>
+          </ol>
+        </div>
+      </li>
+    </ul>
+    <hr />
     <ol *ngIf="!showLoader" 
     [@listAnimator]="listAnimator"
     (@listAnimator.done)="resetAnimationState()">
-      <li *ngFor="let deck of filteredDeckList()" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
-        <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
-        <div class="cover"   (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
-          <p class="color-identity" *ngIf="deck.colorIdentity">
-              <i *ngFor="let ico of deck.colorIdentity"
-              [className]="'ms ms-' + ico.toLowerCase()"
-              [class.ms-cost]=" ico != ''"
-              [class.shadow]=" ico != ''"
-            ></i>
-          </p>
-        </div>
-        <div class="content" (click)="deckSelected(deck)">
-          <div>
-            <label>{{deck.name}}</label>
-            <span>{{deck.format}}</span>
+      <ng-container *ngFor="let deck of filteredDeckList()" >
+        <li *ngIf="!deck.folder || (deck.folder && !folders.includes(deck.folder))" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
+          <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
+          <div class="cover"   (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+            <p class="color-identity" *ngIf="deck.colorIdentity">
+                <i *ngFor="let ico of deck.colorIdentity"
+                [className]="'ms ms-' + ico.toLowerCase()"
+                [class.ms-cost]=" ico != ''"
+                [class.shadow]=" ico != ''"
+              ></i>
+            </p>
           </div>
-          <div class="second-level">
-            <div class="owner" >by {{deck.ownerName}}</div>
-            <div class="icons">
-              <span>
-                <i class="fas fa-lock" *ngIf="!deck.public"></i>
-                <i class="fas fa-unlock" *ngIf="deck.public"></i>
-              </span>
-              <span>
-                <i class="far fa-times-circle" *ngIf="!deck.legal"></i>
-                <i class="far fa-check-circle" *ngIf="deck.legal"></i>
-              </span>
+          <div class="content" (click)="deckSelected(deck)">
+            <div>
+              <label>{{deck.name}}</label>
+              <span>{{deck.format}}</span>
+            </div>
+            <div class="second-level">
+              <div class="owner" >by {{deck.ownerName}}</div>
+              <div class="icons">
+                <span>
+                  <i class="fas fa-lock" *ngIf="!deck.public"></i>
+                  <i class="fas fa-unlock" *ngIf="deck.public"></i>
+                </span>
+                <span>
+                  <i class="far fa-times-circle" *ngIf="!deck.legal"></i>
+                  <i class="far fa-check-circle" *ngIf="deck.legal"></i>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      </li>
+        </li>
+      </ng-container>
     </ol>
   </div>
   <app-mox-action-bar *ngIf="internalDeck">
