@@ -55,6 +55,13 @@ import { FilterPickerComponent } from './_shared/ui/picker/filter-picker/filter-
 import { SortPickerComponent } from './_shared/ui/picker/sort-picker/sort-picker.component';
 import { MoxFavoriteService } from '@application/_services/mox-services/favorite/mox-favorite.service';
 import { FavoriteTagComponent } from './search-hub/favorite-tag/favorite-tag.component';
+import { DeckListComponent } from './deck-hub/deck-list/deck-list.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatRippleModule } from '@angular/material/core';
+import { MatSelectModule, MatInputModule, MatButtonModule } from '@angular/material';
+import { PickerComponent } from './_shared/ui/picker/picker.component';
+import { FolderPickerComponent } from './_shared/ui/picker/folder-picker/folder-picker.component';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -95,6 +102,9 @@ export class MyHammerConfig extends HammerGestureConfig  {
     FilterPickerComponent,
     SortPickerComponent,
     FavoriteTagComponent,
+    DeckListComponent,
+    PickerComponent,
+    FolderPickerComponent,
   ],
   imports: [
     CommonModule,
@@ -105,6 +115,12 @@ export class MyHammerConfig extends HammerGestureConfig  {
     HttpModule,
     HttpClientModule,
     AppRoutingModule,
+    ScrollingModule,
+    MatBadgeModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
     MetaModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,

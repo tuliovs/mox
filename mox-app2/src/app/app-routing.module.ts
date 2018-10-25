@@ -12,6 +12,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from '@karn/_services/auth.guard';
 import { SearchHubComponent } from './search-hub/search-hub.component';
 import { MetaGuard } from 'ng2-meta';
+import { DeckListComponent } from './deck-hub/deck-list/deck-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'deckhub', component: DeckHubComponent,  canActivate: [AuthGuard] },
   { path: 'search', component: SearchHubComponent},
   { path: 'deck/new', component: NewDeckComponent,  canActivate: [AuthGuard] },
+  { path: 'deck/list', component: DeckListComponent, canActivate: [AuthGuard] },
   { path: 'deck/:id', component: DeckViewComponent, canActivate: [MetaGuard],
     data: { meta: {
     title: 'Mox Home page',

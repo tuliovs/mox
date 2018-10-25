@@ -1,0 +1,157 @@
+@import './../../../styles/theme.colors'
+
+$bg-zoom: rgba(255, 255, 255, .5);
+$shad: rgba(0, 0, 0, .5);
+$shad-base: rgba(0, 0, 0, .25);
+$shad-in: rgba(0, 0, 0, .15);
+
+h4
+  font-size: 1.3em
+
+.folder
+  border-bottom: solid 3px color(_jeans)
+  border-left: solid 2px color(_jeans)
+  border-radius: 4px
+  border-right: solid 2px color(_jeans)
+  margin: 1% .5% 2%
+
+  .folder-name
+    background-color: color(_jeans)
+    border-radius: 4px 4px 0 0
+    font-size: 1em
+    margin: 0
+    padding: 0 1%
+    text-align: left
+
+cdk-virtual-scroll-viewport
+  display: inline-flex
+  flex-direction: column
+  height: 100vh
+  list-style: none
+  margin: 0
+  padding: .5em .5%
+  width: 100%
+
+  .list-end
+    color: color(_darkblue)
+    display: inline-flex
+    flex-direction: row
+    font-size: 4em
+    margin: 10% 0%
+    min-height: 14vh
+    opacity: .6
+    text-shadow: 0 4px 12px $shad-in
+
+  li
+    align-content: flex-end
+    align-items: center
+    background-color: color(_white)
+    border-radius: 4px
+    box-shadow: 0 4px 12px $shad-in
+    display: inline-flex
+    height: 4.2em
+    margin: .5%
+    position: relative
+
+    .zoom
+      align-items: center
+      background-color: $bg-zoom
+      border-radius: 4px
+      display: inline-flex
+      flex-direction: column
+      height: 3.8em
+      justify-content: center
+      margin-left: .1em
+      position: absolute
+      width: 5.8em
+      z-index: 1
+
+      i
+        color: color(_white)
+        font-size: 2.5em
+        text-shadow: 2px 2px 10px $shad-base
+
+    .cover
+      background-color: $bg-uclass-normal
+      background-size: cover
+      border-radius: 4px
+      box-shadow: 0 0 4px $shad-base, inset 3px 3px 14px $shad-in
+      display: inline-flex
+      flex-direction: column-reverse
+      height: 3.8em
+      margin-left: .1em
+      position: relative
+      width: 7.8em
+
+    .color-identity
+      font-size: 13px
+
+    .content
+      display: inline-block
+      height: 100%
+      padding: 1%
+      position: relative
+      width: 100%
+
+      div
+        color: color(_darkblue)
+        display: inline-flex
+        font-size: .7em
+        font-weight: 600
+        height: 50%
+        justify-content: space-between
+        margin: 0
+        width: 100%
+
+        span
+          color: color(_blue)
+
+        label
+          font-size: 1.5em
+          max-width: 77%
+          text-align: left
+
+        .fa-lock
+          color: color(_grayer)
+
+        .fa-unlock
+          color: color(_darkblue)
+
+        .fa-times-circle
+          color: color(_grayer)
+
+        .fa-check-circle
+          color: color(_darkblue)
+
+      .second-level
+        align-items: flex-end
+
+        .owner
+          color: color(_slate)
+          font-size: 1em
+
+        .icons
+          font-size: 1.3em
+          width: 15%
+
+.deck-format
+  display: inline-flex
+  flex-direction: row
+  justify-content: space-between
+  overflow-x: scroll
+  overflow-y: hidden
+  white-space: nowrap
+  width: 100%
+
+  label
+    background-color: color(_blue)
+    border-bottom: 1.5px color(_blue)
+    border-radius: 4px
+    color: color(_white)
+    display: inline-block
+    padding: 0 1.8%
+    text-transform: capitalize
+
+.selected-deck
+  border-bottom: 1px solid color(_darkblue)
+  box-shadow: 3px 3px 5px $shad !important

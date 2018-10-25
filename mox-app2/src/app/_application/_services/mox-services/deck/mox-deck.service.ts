@@ -280,6 +280,8 @@ export class MoxDeckService {
       if (this.deckProcess._deckStats && this.deckProcess._deckStats.key !== d.key) {
         this.deckProcess._deckStats = null;
         this.getDeckStats();
+      } else {
+        this.getDeckStats();
       }
     }
   }

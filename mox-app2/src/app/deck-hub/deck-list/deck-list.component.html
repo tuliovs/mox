@@ -1,0 +1,86 @@
+<div *ngIf="infinite | async as deckList">
+  <app-mox-titlebar>
+    <div class="deck-format mox-font animate fadeInDown">
+      <label>Listing {{(formatSelected)? formatSelected : 'All'}} decks</label>
+      <!-- <label>{{deckList.length | number:'2.0'}}</label> -->
+    </div>
+  </app-mox-titlebar>
+
+  <div class="main">
+    <span *ngIf="deckList.length == 0" >Empty decklist</span>
+    <ol>
+      <cdk-virtual-scroll-viewport itemSize="68" (scrolledIndexChange)="nextBatch($event, (deckList[deckList.length - 1].name))">
+        <ng-container *cdkVirtualFor="let deck of deckList; let i = index; trackBy: trackByIdx">
+          <!-- *ngIf="!formatSelected || formatSelected && formatSelected == deck.format" -->
+          <li class="animated fadeInDown" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
+            <div class="cover" (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+              <p class="color-identity" *ngIf="deck.colorIdentity">
+                  <i *ngFor="let ico of deck.colorIdentity"
+                  [className]="'ms ms-' + ico.toLowerCase()"
+                  [class.ms-cost]=" ico != ''"
+                  [class.shadow]=" ico != ''"
+                ></i>
+              </p>
+            </div>
+            <div class="content" (click)="deckSelected(deck)">
+              <div>
+                <label>{{deck.name}}</label>
+                <span>{{(deck.format) ? deck.format : 'No Format' }}</span>
+              </div>
+              <div class="second-level">
+                <div class="owner" >by {{deck.ownerName}}</div>
+                <div class="icons">
+                  <span>
+                    <i class="fas fa-lock" *ngIf="!deck.public"></i>
+                    <i class="fas fa-unlock" *ngIf="deck.public"></i>
+                  </span>
+                  <span>
+                    <i class="far fa-times-circle" *ngIf="!deck.legal"></i>
+                    <i class="far fa-check-circle" *ngIf="deck.legal"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ng-container>
+        <div *ngIf="theEnd" (click)="viewport.scrollToIndex(0)" class="list-end animate fadeInDown">
+          <i class="fas fa-angle-double-up"></i>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </ol>
+  </div>
+
+  <app-mox-action-bar *ngIf="internalDeck">
+    <button class="btn btn-action" routerLink="/search" [disabled]="internalDeck.ownerId !== _user.uid">  
+      <i class="fas fa-plus-square"></i>
+    </button>
+    <button class="btn btn-action" disabled>
+      <i class="far fa-heart"></i>
+    </button>
+    <div class="fixer"></div>
+    <button class="btn btn-action" disabled>
+      <i class="fas fa-folder"></i>
+    </button>
+    <app-mox-deck-context [deck]="internalDeck" [icon]="'fas fa-ellipsis-h'" *ngIf="internalDeck"></app-mox-deck-context>
+  </app-mox-action-bar>
+
+  <app-mox-action-bar *ngIf="!internalDeck" (swipeleft)="changeFormat('left')" (swiperight)="changeFormat('right')">
+    <button class="btn btn-action" [disabled]="!_user" (click)="navigateToDeckHub()">
+      <i class="fas fa-book"></i>
+    </button>    
+    <button class="btn btn-action" disabled>
+      <i class="fas fa-filter" style="font-size: .9em"></i>
+    </button>
+    <div class="fixer"></div>
+    <button class="btn btn-action" disabled>
+      <i class="fas fa-sort" style="font-size: 1.3em"></i>
+    </button>
+    <button (click)="newDeck()" [disabled]="!_user" type="button" class="btn btn-action">
+      <i class="fas fa-plus"></i>
+    </button>
+  </app-mox-action-bar>
+</div>
+
+<div class="container" *ngIf="!infinite">
+  <app-mox-loading-spinner></app-mox-loading-spinner>
+</div>

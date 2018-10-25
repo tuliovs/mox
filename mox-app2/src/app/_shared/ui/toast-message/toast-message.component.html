@@ -1,4 +1,9 @@
-<i class="fas fa-bell"
+<i 
+  [matBadgeHidden]="!(messages && messages.length > 0)" 
+  matBadgePosition="before below" 
+  matBadge="{{ribbonCounter()}}"
+  matBadgeOverlap="true"
+  class="fas fa-bell"
         [@notificationAnimator]="animationState"
         (@notificationAnimator.done)="resetAnimationState()"
         (press)="dismissAll()"
@@ -6,8 +11,8 @@
         (swiperight)="dismissAll()"
         (click)="active = !active"
         (tap)="startAnimation('swing');navigator.vibrate([50]);"></i>
-<span class="ribbon mox_font" *ngIf="messages && messages.length > 0">{{ribbonCounter()}}</span>
-<div class="wrapper" *ngIf="messages && messages.length > 0 && active">
+<!-- <span class="ribbon mox_font" *ngIf="messages && messages.length > 0">{{ribbonCounter()}}</span> -->
+<div class="wrapper animate fadeInDown" *ngIf="messages && messages.length > 0 && active">
   <aside>
     <div *ngFor="let message of messages" class="alert"
         [ngClass]="{'alert-info':     message.style=='info',

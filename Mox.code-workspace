@@ -6,6 +6,8 @@
 	],
 	"settings": {
 		"typescript.tsdk": "node_modules\\typescript\\lib",
-		"breadcrumbs.enabled": true
+		"breadcrumbs.enabled": true,
+		"favorites.sortDirection": "ASC",
+		"favorites.groupsFirst": true
 	}
 }

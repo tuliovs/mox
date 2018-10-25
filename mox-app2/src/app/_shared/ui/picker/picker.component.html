@@ -1,0 +1,13 @@
+<button class="btn btn-action" (click)="activatePicker()" [disabled]="!enabled" matRipple>
+  <i class="{{pickerIcon()}}"></i>
+</button>
+
+<div [@deck-contextTrigger]="componentState" class="lightbox"
+    (click)="closeContext()"
+    (swipeleft)="closeContext()"
+    (swiperight)="closeContext()"
+    (swipedown)="closeContext()"
+></div>
+<div class="action-menu" [@deck-contextTrigger]="componentState" [ngSwitch]="pickerType">
+  <app-mox-folder-picker *ngSwitchCase="'folder'" (cancel)="closeContext()" (remove)="deckFolderRemove.emit($event);closeContext()" (include)="deckFolderInclude.emit($event);closeContext()" [folders]="userFolders" ></app-mox-folder-picker>
+</div>

@@ -3,7 +3,7 @@ import { filter, take, tap } from 'rxjs/operators';
 import { MetaService } from 'ng2-meta';
 
 import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
@@ -11,24 +11,8 @@ import { NotificationService } from '@application/_services/notification/notific
 import { AuthService } from '@karn/_services/auth.service';
 import { MoxFavoriteService } from '@application/_services/mox-services/favorite/mox-favorite.service';
 import { LocalstorageService } from '@application/_services/localstorage/localstorage.service';
-
-export const rubberBand = [
-  style({transform: 'scale3d(1, 1, 1)'}),
-  style({transform: 'scale3d(1.25, 0.75, 1)'}),
-  style({transform: 'scale3d(0.75, 1.25, 1)'}),
-  style({transform: 'scale3d(1.15, 0.85, 1)'}),
-  style({transform: 'scale3d(0.95, 1.05, 1)'}),
-  style({transform: 'scale3d(1.05, 0.95, 1)'}),
-  style({transform: 'scale3d(1, 1, 1)'}),
-];
-
-export const flipInY = [
-  style({transform: 'perspective(400px) rotate3d(0, 1, 0, 90deg)'}),
-  style({transform: 'perspective(400px) rotate3d(0, 1, 0, -20deg)'}),
-  style({transform: 'perspective(400px) rotate3d(0, 1, 0, 10deg)'}),
-  style({transform: 'perspective(400px) rotate3d(0, 1, 0, -5deg)'}),
-  style({transform: 'perspective(400px)'}),
-];
+import { flipInY, rubberBand } from '@application/_constraints/KEYFRAMES';
+import { MatRipple } from '@angular/material/core';
 
 @Component({
   selector: 'app-root',
@@ -66,6 +50,7 @@ export class AppComponent implements OnInit {
   public animationState: string;
   public animationState2: string;
   public navigator = navigator;
+  @ViewChild(MatRipple) ripple: MatRipple;
   constructor(
     private router: Router,
     private _dekService: MoxDeckService,
@@ -90,6 +75,10 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this._state.getState().subscribe(stt => {
       this.animationState = stt;
+      if (this.ripple) {
+        this.ripple.centered = true;
+        this.ripple.radius = 20;
+      }
     });
     this._state.setState('nav');
     this.auth.getUser().pipe(

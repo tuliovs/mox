@@ -11,7 +11,7 @@
       <label>{{filteredDeckList().length | number:'2.0'}}</label>
     </div>
   </app-mox-titlebar>
-  <div class="main">
+  <div class="main animated fadeInDown">
     <span *ngIf="!showLoader && deckList.length == 0" >Empty decklist</span>
     <ul *ngIf="!showLoader && folders.length > 0">
       <li *ngFor="let folder of folders; let i=index" >
@@ -22,9 +22,8 @@
             {{folder}}
           </h4>
           
-          <ol *ngIf="!showLoader && folderVisible[i]" 
-          [@listAnimator]="listAnimator"
-          (@listAnimator.done)="resetAnimationState()">
+          <ol *ngIf="!showLoader && folderVisible[i]"
+          class="animated fadeIn">
             <ng-container *ngFor="let deck of filteredDeckList()" >
               <li *ngIf="deck.folder === folder" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
                 <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
@@ -109,14 +108,12 @@
       <i class="far fa-heart"></i>
     </button>
     <div class="fixer"></div>
-    <button class="btn btn-action" disabled>
-      <i class="fas fa-folder"></i>
-    </button>
+    <app-mox-picker [pickerType]="'folder'" (deckFolderRemove)="deckFolderRemove()" (deckFolderInclude)="deckFolderInclude($event)"  [userFolders]="folders" ></app-mox-picker>
     <app-mox-deck-context [deck]="internalDeck" [icon]="'fas fa-ellipsis-h'" *ngIf="internalDeck"></app-mox-deck-context>
   </app-mox-action-bar>
 
   <app-mox-action-bar *ngIf="!internalDeck" (swipeleft)="changeFormat('left')" (swiperight)="changeFormat('right')">
-    <button class="btn btn-action" disabled>
+    <button class="btn btn-action" (click)="navigateToDeckList()">
       <i class="fas fa-search"></i>
     </button>
     <button class="btn btn-action" disabled>

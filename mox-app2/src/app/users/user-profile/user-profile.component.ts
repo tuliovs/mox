@@ -1,3 +1,4 @@
+import { LocalstorageService } from './../../_application/_services/localstorage/localstorage.service';
 import { tap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@karn/_services/auth.service';
@@ -11,14 +12,21 @@ import { ToastService } from '@application/_services/toast/toast.service';
 export class UserProfileComponent implements OnInit {
   public tab = 'profileTab';
   public _user: any;
-  constructor(public auth: AuthService, public toast: ToastService) { }
+  constructor(
+    public _auth: AuthService,
+    public _storage: LocalstorageService,
+    public _toast: ToastService) { }
 
   ngOnInit() {
-    this.auth.getUser().pipe(
+    this._auth.getUser().pipe(
       tap((data) => {
         this._user = data;
       })
     ).subscribe();
+  }
+
+  clearStorage() {
+    // this._storage.clear();
   }
 
   changetab(side) {
@@ -36,7 +44,7 @@ export class UserProfileComponent implements OnInit {
               this.tab = 'statsTab';
             break;
           default:
-              this.toast.sendMessage('I`m sorry, I got lost', 'warning', this._user.uid);
+              this._toast.sendMessage('I`m sorry, I got lost', 'warning', this._user.uid);
             break;
         }
         break;
@@ -53,7 +61,7 @@ export class UserProfileComponent implements OnInit {
               this.tab = 'statsTab';
             break;
           default:
-              this.toast.sendMessage('I`m sorry, I got lost', 'warning', this._user.uid);
+              this._toast.sendMessage('I`m sorry, I got lost', 'warning', this._user.uid);
             break;
         }
         break;

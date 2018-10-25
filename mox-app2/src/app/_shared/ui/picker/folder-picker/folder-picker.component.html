@@ -1,0 +1,23 @@
+<div class="folder-actions">
+  <ng-container *ngIf="folders">
+    <mat-form-field>
+      <mat-select placeholder="Your folders" [(ngModel)]="_folderSelection">
+        <mat-option *ngFor="let folder of folders" [value]="folder">
+          {{folder}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
+  
+  <ng-container *ngIf="!folders">
+    <p>No-folders</p>
+  </ng-container>
+  <mat-form-field>
+    <input matInput [(ngModel)]="_folderSelection" placeholder="New Folder" value="{{actualFolder}}">
+  </mat-form-field>
+  <div class="confirmation animated slideInDown">
+    <button (click)="include.emit(_folderSelection)" mat-raised-button color="primary" [disabled]="!_folderSelection"><i class="fas fa-folder-plus"></i> Include</button>
+    <button (click)="remove.emit()" mat-raised-button color="primary" [disabled]="!folders || !(folders.includes(_folderSelection))" ><i class="fas fa-folder-minus"></i> Remove</button>
+    <button (click)="cancel.emit()" mat-raised-button color="primary" ><i class="fas fa-times"></i> Cancel</button>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import { slideInUp, slideOutDown } from '@application/_constraints/KEYFRAMES';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 
@@ -17,8 +18,8 @@ import { MoxDeckService } from '@application/_services/mox-services/deck/mox-dec
         transform: 'translate3d(0, 0, 0)',
         display: 'visible'
       })),
-      transition('closed=>opened', animate('200ms')),
-      transition('opened=>closed', animate('150ms'))
+      transition('closed=>opened', animate('200ms', keyframes(slideInUp))),
+      transition('opened=>closed', animate('150ms', keyframes(slideOutDown)))
     ])
   ]
 })

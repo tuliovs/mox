@@ -1,0 +1,65 @@
+[
+    {
+        "type": "File",
+        "name": "d:\\Repositorio\\Mox\\mox-app2\\package.json",
+        "parent_id": null,
+        "workspacePath": null,
+        "id": "mvoXbCqh3a8sGDYr",
+        "workspaceRoot": null,
+        "fsPath": "d:\\Repositorio\\Mox\\mox-app2\\package.json"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Repositorio\\Mox\\mox-app2\\src\\app\\karn\\_services\\auth.service.ts",
+        "parent_id": null,
+        "workspacePath": null,
+        "id": "RUQ1BPj3fIwlWeS8",
+        "workspaceRoot": null,
+        "fsPath": "d:\\Repositorio\\Mox\\mox-app2\\src\\app\\karn\\_services\\auth.service.ts"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Repositorio\\Mox\\mox-app2\\src\\app\\app.module.ts",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "Cx302cOY9ldf8qti",
+        "fsPath": "d:\\Repositorio\\Mox\\mox-app2\\src\\app\\app.module.ts"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Repositorio\\Mox\\mox-app2\\src\\styles\\theme.sass",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "GT2Z7Fjzm5YOdPNI",
+        "fsPath": "d:\\Repositorio\\Mox\\mox-app2\\src\\styles\\theme.sass"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Repositorio\\Mox\\mox-app2\\src\\styles\\theme.colors.scss",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "QOWBEM6jf9R3XFam",
+        "fsPath": "d:\\Repositorio\\Mox\\mox-app2\\src\\styles\\theme.colors.scss"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Repositorio\\Mox\\mox-app2\\angular.json",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "BTVK1NCthFeYMHEv",
+        "fsPath": "d:\\Repositorio\\Mox\\mox-app2\\angular.json"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Repositorio\\Mox\\mox-app2\\src\\styles\\mox-material.scss",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "O8LTxMHDz9wuFn6t",
+        "fsPath": "d:\\Repositorio\\Mox\\mox-app2\\src\\styles\\mox-material.scss"
+    }
+]

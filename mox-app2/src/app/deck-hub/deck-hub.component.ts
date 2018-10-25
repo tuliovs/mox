@@ -1,32 +1,16 @@
+
 import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { animate, style, keyframes, transition, trigger, state } from '@angular/animations';
+import { animate, keyframes, transition, trigger } from '@angular/animations';
 import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '@karn/_services/auth.service';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
+import { FORMATS } from '@application/_constraints/FORMATS';
+import { slideOutLeft, slideOutRight, slideInLeft, slideInRight } from '@application/_constraints/KEYFRAMES';
 
-export const slideOutLeft = [
-  style({'transform': 'translate3d(0, 0, 0)'}),
-  style({'transform': 'translate3d(-100%, 0, 0)', 'visibility': 'hidden'})
-];
-
-export const slideOutRight = [
-  style({'transform': 'translate3d(0, 0, 0)'}),
-  style({'transform': 'translate3d(100%, 0, 0)', 'visibility': 'hidden'})
-];
-
-export const slideInLeft = [
-  style({'transform': 'translate3d(-100%, 0, 0)', 'visibility': 'visible'}),
-  style({'transform': 'translate3d(0, 0, 0)'})
-];
-
-export const slideInRight  = [
-  style({'transform': 'translate3d(100%, 0, 0)', 'visibility': 'visible'}),
-  style({'transform': 'translate3d(0, 0, 0)'})
-];
 
 
 @Component({
@@ -51,21 +35,6 @@ export const slideInRight  = [
 
 export class DeckHubComponent implements OnInit, AfterViewInit {
   public deckList: MoxDeck[];
-  public formats = [
-    'all',
-    'standard',
-    'modern',
-    'legacy',
-    'commander',
-    'pauper',
-    'vintage',
-    'brawl',
-    '1v1',
-    'duek',
-    'penny',
-    'frontier',
-    'future'
-  ];
   private internalDeck: any;
   private formatSelected: string;
   public folderVisible: boolean[] = [];
@@ -123,7 +92,13 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     ).subscribe();
   }
 
+  navigateToDeckList() {
+    navigator.vibrate([40]);
+    this._router.navigateByUrl('/deck/list');
+  }
+
   newDeck() {
+    navigator.vibrate([40]);
     this._router.navigateByUrl('/deck/new');
   }
 
@@ -135,6 +110,15 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     return (this.formatSelected) ? this.deckList.filter(x => x.format === this.formatSelected) : this.deckList;
   }
 
+  deckFolderInclude(fparam) {
+    this._deckService.deckProcess._deck.folder = fparam;
+    this._deckService.updateDeck();
+  }
+
+  deckFolderRemove() {
+    this._deckService.deckProcess._deck.folder = null;
+    this._deckService.updateDeck();
+  }
   deckSelected(deck: MoxDeck) {
     if (this.internalDeck === deck) {
       navigator.vibrate([30, 30]);
@@ -166,18 +150,18 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     switch (side) {
       case 'right':
         this.startAnimation('entersLeft');
-        if (this.formats.indexOf(this.formatSelected) + 1 === this.formats.length) {
+        if (FORMATS.indexOf(this.formatSelected) + 1 === FORMATS.length) {
           this.setFormat('all');
         } else {
-          this.setFormat(this.formats[this.formats.indexOf(this.formatSelected) + 1].valueOf());
+          this.setFormat(FORMATS[FORMATS.indexOf(this.formatSelected) + 1].valueOf());
         }
         break;
       case 'left':
       this.startAnimation('entersRight');
-        if (this.formats.indexOf(this.formatSelected) - 1 < 0) {
+        if (FORMATS.indexOf(this.formatSelected) - 1 < 0) {
           this.setFormat('all');
         } else {
-          this.setFormat(this.formats[this.formats.indexOf(this.formatSelected) - 1].valueOf());
+          this.setFormat(FORMATS[FORMATS.indexOf(this.formatSelected) - 1].valueOf());
         }
         break;
     }

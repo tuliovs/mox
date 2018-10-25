@@ -31,6 +31,7 @@
               "src/firebase-messaging-sw.js"
             ],
             "styles": [
+              "src/styles/mox-material.scss",
               "src/styles/fontawesome-all.css",
               "src/styles/theme.sass",
               "node_modules/mana-font/css/mana.css",
@@ -86,7 +87,6 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.sass"
             ],
             "scripts": [],
             "assets": [

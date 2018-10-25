@@ -6,14 +6,7 @@ import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { ToastService } from '@application/_services/toast/toast.service';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
-
-export const bounceInDown = [
-  style({transform: 'translate3d(0, -3000px, 0)', opacity: 0, offset: .0}),
-  style({transform: 'translate3d(0, 25px, 0)', opacity: 1, offset: .60}),
-  style({transform: 'translate3d(0, -10px, 0)', offset: .75}),
-  style({transform: 'translate3d(0, 5px, 0)', offset: .90}),
-  style({transform: 'translate3d(0, 0, 0)', offset: 1}),
-];
+import { bounceInDown } from '@application/_constraints/KEYFRAMES';
 
 @Component({
   selector: 'app-mox-import-deck-context',
@@ -25,8 +18,8 @@ export const bounceInDown = [
         transform: 'translate3d(-100%, 0, 0)',
         display: 'none'
       })),
-      transition('*=>opened', animate('800ms', keyframes(bounceInDown))),
-      transition('opened=>closed', animate('200ms'))
+      transition('*=>opened', animate('500ms', keyframes(bounceInDown))),
+      transition('opened=>closed', animate('150ms'))
     ])
   ]
 })

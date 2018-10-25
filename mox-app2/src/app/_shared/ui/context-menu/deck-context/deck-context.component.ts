@@ -1,12 +1,13 @@
 import { Router } from '@angular/router';
 import { ToastService } from '@application/_services/toast/toast.service';
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
-import { animate, style, transition, trigger, state } from '@angular/animations';
+import { animate, style, transition, trigger, state, keyframes } from '@angular/animations';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { AuthService } from '@karn/_services/auth.service';
 import { NgNavigatorShareService } from 'ng-navigator-share';
 import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
+import { slideInUp, slideOutDown } from '@application/_constraints/KEYFRAMES';
 
 @Component({
   selector: 'app-mox-deck-context',
@@ -22,8 +23,8 @@ import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
         transform: 'translate3d(0, 0, 0)',
         display: 'visible'
       })),
-      transition('closed=>opened', animate('200ms')),
-      transition('opened=>closed', animate('150ms'))
+      transition('closed=>opened', animate('200ms', keyframes(slideInUp))),
+      transition('opened=>closed', animate('150ms', keyframes(slideOutDown)))
     ])
   ]
 })
@@ -108,11 +109,9 @@ export class DeckContextComponent implements OnInit, OnChanges {
 
   activateContext() {
     navigator.vibrate([30]);
-    this._deckService.editDeck(this.deck);
-    this.lightboxActive = true;
     this._state.setState('hidden');
+    this.lightboxActive = true;
     this.componentState = 'opened';
-    // console.log('#', this._deckService.deckProcess._deck);
   }
 
   closeContext() {

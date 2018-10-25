@@ -1,18 +1,18 @@
 <app-mox-titlebar titleHeight="2.88">
-  <form>
-    <input *ngIf="!settings_stats" class="search-input" type="text" placeholder="Search" [(ngModel)]="param" value="{{param}}"
+  <form *ngIf="!settings_stats" class="animate flipInx">
+    <input class="search-input" type="text" placeholder="Search" [(ngModel)]="param" value="{{param}}"
       name="param" required />
-    <button *ngIf="!settings_stats" class="btn btn-search" type="submit" (click)="searchGo(param)" [disabled]="(!param) || (param.length < 3)" >
+    <button class="btn btn-search" type="submit" matRipple (click)="searchGo(param)" [disabled]="(!param) || (param.length < 3)" >
       <i class="fas fa-search"></i>
     </button>
   </form>
-  <div *ngIf="settings_stats && searchResult.data" class="stats" (click)="settings_stats = false">
+  <div *ngIf="settings_stats && searchResult.data" class="stats animate flipInx" (click)="settings_stats = false">
     <p>[Total Results]: {{searchResult.total_cards}} | [Response Time]: {{resp_time}}ms</p>
   </div>
 </app-mox-titlebar>
 <div class="favorites" *ngIf="!searchResult.data && favoriteList && favoriteList.length > 0">
   <ul>
-    <li *ngFor="let Id of favoriteList">
+    <li *ngFor="let Id of favoriteList" class="animate bounce">
       <app-mox-favorite-tag *ngIf="Id" [favoriteCardId]="Id" (tag)="quickSearch($event)" ></app-mox-favorite-tag>
       <!-- <label *ngIf="_cardService.getFreshCard(cardId) | async as card" (click)="quickSearch(card.name)">
         {{card.name}}
@@ -22,11 +22,11 @@
 </div>
 <div class="search-result" *ngIf="searchResult.data && searchResult.data.length > 0">
   <ol>
-    <li *ngFor="let item of searchResult.data" [ngClass]="{'selected-card': this.selectedCard === item}">
+    <li *ngFor="let item of searchResult.data" class="animated fadeInDown" [ngClass]="{'selected-card': this.selectedCard === item}">
       <div class="card-rarity" [class.common]=" item.rarity == 'common'" [class.uncommon]=" item.rarity == 'uncommon'"
         [class.rare]=" item.rarity == 'rare'" [class.mythic]=" item.rarity == 'mythic'"></div>
       <div class="img-container">
-        <div *ngIf="this.selectedCard === item" (click)="cardView = true" class="zoom"><i class="fas fa-search-plus"></i></div>
+        <div *ngIf="this.selectedCard === item" (click)="cardView = true" class="zoom animate fadeIn"><i class="fas fa-search-plus"></i></div>
         <!-- <img class="img" *ngIf="item.image_uris"  (click)="cardView = true;selectCard(item)" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }"/>
         <img class="img" *ngIf="!item.image_uris" (click)="cardView = true;selectCard(item)" [ngStyle]="{ 'background-image': 'url(' + item.card_faces[0].image_uris.art_crop + ')' }"/> -->
         <div class="img" (click)="cardView = true;selectCard(item)" *ngIf="item.image_uris" [ngStyle]="{ 'background-image': 'url(' + item.image_uris.art_crop + ')' }">
@@ -72,7 +72,7 @@
       [ngStyle]="{ 'background-image': 'url(' + this.selectedCard.card_faces[1].image_uris.normal + ')' }"></div>
   </div>
 </div>
-<div class="search-result" *ngIf="isState('error')">
+<div class="search-result animated fadeInDown" *ngIf="isState('error')">
   <p>I'm sorry buddy, I couldn't find anything</p>
 </div>
 <app-mox-action-bar>
@@ -87,7 +87,7 @@
     <i class="fas fa-sort" style="font-size: 1.4em"></i>
   </button>
   <app-mox-card-context [card]="selectedCard" [icon]="'fas fa-ellipsis-h'" *ngIf="selectedCard"></app-mox-card-context>
-  <button class="btn btn-action" (click)="clear()" *ngIf="!selectedCard" [disabled]="(!searchResult.data || searchResult.data.length == 0)">
+  <button class="btn btn-action" matRipple (click)="clear()" *ngIf="!selectedCard" [disabled]="(!searchResult.data || searchResult.data.length == 0)">
     <i class="fas fa-undo-alt"></i>
   </button>
 </app-mox-action-bar>
