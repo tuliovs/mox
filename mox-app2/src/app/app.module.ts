@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { ReversePipe } from '@application/_pipes/reverse.pipe';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -17,6 +17,11 @@ import { MetaModule } from 'ng2-meta';
 import * as Hammer from 'hammerjs';
 import { } from '@angular/platform-browser';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+
+import { MarkdownModule, MarkdownService, MarkedRenderer, MarkedOptions } from 'ngx-markdown';
+
+import { MatBadgeModule, MatSelectModule, MatRippleModule,
+        MatInputModule, MatButtonModule, MatTooltipModule } from '@angular/material';
 
 import { ActionBarComponent } from '@shared/ui/action-bar/action-bar.component';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
@@ -57,11 +62,9 @@ import { MoxFavoriteService } from '@application/_services/mox-services/favorite
 import { FavoriteTagComponent } from './search-hub/favorite-tag/favorite-tag.component';
 import { DeckListComponent } from './deck-hub/deck-list/deck-list.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatRippleModule } from '@angular/material/core';
-import { MatSelectModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { PickerComponent } from './_shared/ui/picker/picker.component';
 import { FolderPickerComponent } from './_shared/ui/picker/folder-picker/folder-picker.component';
+
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -69,6 +72,25 @@ export class MyHammerConfig extends HammerGestureConfig  {
   overrides = <any>{
       // override hammerjs default configuration
       'swipe': { direction: Hammer.DIRECTION_ALL  }
+  };
+}
+
+export function markedOptions(): MarkedOptions {
+  const renderer = new MarkedRenderer();
+
+  renderer.blockquote = (text: string) => {
+    return '<blockquote class="blockquote"><p>' + text + '</p></blockquote>';
+  };
+
+  return {
+    renderer: renderer,
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
   };
 }
 
@@ -120,7 +142,15 @@ export class MyHammerConfig extends HammerGestureConfig  {
     MatRippleModule,
     MatSelectModule,
     MatInputModule,
+    MatTooltipModule,
     MatButtonModule,
+    MarkdownModule.forRoot({
+      loader: HttpClient,
+      markedOptions: {
+        provide: MarkedOptions,
+        useFactory: markedOptions,
+      },
+    }),
     MetaModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
@@ -140,6 +170,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     ScryfallCardService,
     ScryfallSearchService,
     LocalstorageService,
+    MarkdownService,
     ToastService,
   ],
   schemas: [

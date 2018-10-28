@@ -2,11 +2,7 @@
 
 <ng-template #deckListed>
   <app-mox-titlebar>
-    <!-- <ul class="tabs mox-font">
-      <li *ngFor="let f of formats" (click)="setFormat(f)" [ngClass]="{'active': this.formatSelected === f}">{{f}}</li>
-    </ul>
-    <i class="fas fa-caret-right"></i> -->
-    <div class="deck-format mox-font">
+    <div class="deck-format mox-font animated fadeInDown">
       <label>Listing {{(formatSelected)? formatSelected : 'All'}} decks</label>
       <label>{{filteredDeckList().length | number:'2.0'}}</label>
     </div>
@@ -16,7 +12,7 @@
     <ul *ngIf="!showLoader && folders.length > 0">
       <li *ngFor="let folder of folders; let i=index" >
         <div class="folder">
-          <h4 class="folder-name" (click)="folderVisible[i] = !folderVisible[i]">
+          <h4 class="folder-name" matRipple (click)="folderVisible[i] = !folderVisible[i]">
             <i *ngIf="folderVisible[i]" class="fas fa-folder-open"></i> 
             <i *ngIf="!folderVisible[i]" class="fas fa-folder"></i>
             {{folder}}
@@ -27,7 +23,7 @@
             <ng-container *ngFor="let deck of filteredDeckList()" >
               <li *ngIf="deck.folder === folder" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
                 <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
-                <div class="cover"   (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+                <div class="cover" matRipple (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
                   <p class="color-identity" *ngIf="deck.colorIdentity">
                       <i *ngFor="let ico of deck.colorIdentity"
                       [className]="'ms ms-' + ico.toLowerCase()"
@@ -36,7 +32,7 @@
                     ></i>
                   </p>
                 </div>
-                <div class="content" (click)="deckSelected(deck)">
+                <div class="content" matRipple (click)="deckSelected(deck)">
                   <div>
                     <label>{{deck.name}}</label>
                     <span>{{deck.format}}</span>
@@ -68,7 +64,7 @@
       <ng-container *ngFor="let deck of filteredDeckList()" >
         <li *ngIf="!deck.folder || (deck.folder && !folders.includes(deck.folder))" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
           <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
-          <div class="cover"   (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+          <div class="cover" matRipple  (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
             <p class="color-identity" *ngIf="deck.colorIdentity">
                 <i *ngFor="let ico of deck.colorIdentity"
                 [className]="'ms ms-' + ico.toLowerCase()"
@@ -77,7 +73,7 @@
               ></i>
             </p>
           </div>
-          <div class="content" (click)="deckSelected(deck)">
+          <div class="content" matRipple (click)="deckSelected(deck)">
             <div>
               <label>{{deck.name}}</label>
               <span>{{deck.format}}</span>
@@ -101,10 +97,10 @@
     </ol>
   </div>
   <app-mox-action-bar *ngIf="internalDeck">
-    <button class="btn btn-action" routerLink="/search">
+    <button class="btn btn-action" matRipple routerLink="/search">
       <i class="fas fa-plus-square"></i>
     </button>
-    <button class="btn btn-action" disabled>
+    <button class="btn btn-action" matRipple disabled>
       <i class="far fa-heart"></i>
     </button>
     <div class="fixer"></div>
@@ -113,17 +109,17 @@
   </app-mox-action-bar>
 
   <app-mox-action-bar *ngIf="!internalDeck" (swipeleft)="changeFormat('left')" (swiperight)="changeFormat('right')">
-    <button class="btn btn-action" (click)="navigateToDeckList()">
+    <button class="btn btn-action" matRipple (click)="navigateToDeckList()">
       <i class="fas fa-search"></i>
     </button>
-    <button class="btn btn-action" disabled>
+    <button class="btn btn-action" matRipple disabled>
       <i class="fas fa-filter" style="font-size: .9em"></i>
     </button>
     <div class="fixer"></div>
-    <button class="btn btn-action" disabled>
+    <button class="btn btn-action" matRipple disabled>
       <i class="fas fa-sort" style="font-size: 1.3em"></i>
     </button>
-    <button (click)="newDeck()" type="button" class="btn btn-action">
+    <button (click)="newDeck()" matRipple type="button" class="btn btn-action">
       <i class="fas fa-plus"></i>
     </button>
   </app-mox-action-bar>

@@ -1,6 +1,6 @@
 
 import { Router } from '@angular/router';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { animate, keyframes, transition, trigger } from '@angular/animations';
 import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
@@ -10,8 +10,7 @@ import { ActionStateService } from '@application/_services/action-state/action-s
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { FORMATS } from '@application/_constraints/FORMATS';
 import { slideOutLeft, slideOutRight, slideInLeft, slideInRight } from '@application/_constraints/KEYFRAMES';
-
-
+import { MatRipple } from '@angular/material';
 
 @Component({
   selector: 'app-mox-deck-hub',
@@ -34,6 +33,7 @@ import { slideOutLeft, slideOutRight, slideInLeft, slideInRight } from '@applica
 })
 
 export class DeckHubComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatRipple) ripple: MatRipple;
   public deckList: MoxDeck[];
   private internalDeck: any;
   private formatSelected: string;
@@ -75,6 +75,10 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
                     this.folders.push(deck.folder);
                   }
                 });
+                if (this.ripple) {
+                  this.ripple.centered = true;
+                  this.ripple.radius = 20;
+                }
                 this._state.setState('nav');
               }
             )

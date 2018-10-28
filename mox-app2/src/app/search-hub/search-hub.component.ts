@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { List } from '@application/_models/_scryfall-models/models';
 import { tap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -8,13 +8,14 @@ import { ScryfallSearchService } from '@application/_services/scryfall-services/
 import { LocalstorageService } from '@application/_services/localstorage/localstorage.service';
 import { FavoriteCards } from '@application/_models/_mox-models/Favorites';
 import { MoxCardService } from '@application/_services/mox-services/card/mox-card.service';
+import { MatRipple } from '@angular/material';
 
 @Component({
   selector: 'app-mox-search-hub',
   templateUrl: './search-hub.component.html',
   styleUrls: ['./search-hub.component.sass']
 })
-export class SearchHubComponent {
+export class SearchHubComponent implements OnInit {
   public param: string;
   public searchResult: List = new List();
   public favoriteList: any[];
@@ -25,6 +26,7 @@ export class SearchHubComponent {
   public cardView = false;
   public searchState = 'closed';
   public selectedCard;
+  @ViewChild(MatRipple) ripple: MatRipple;
   constructor(
     private _searchService: ScryfallSearchService,
     private _deckService: MoxDeckService,
@@ -40,6 +42,15 @@ export class SearchHubComponent {
     if (favList) {
       this.favoriteList = favList.actualFavs;
     }
+  }
+
+  ngOnInit() {
+    setTimeout(() => {
+      if (this.ripple) {
+        this.ripple.centered = true;
+        this.ripple.radius = 20;
+      }
+    }, 5000);
   }
 
   selectCard(card: any) {
@@ -75,19 +86,16 @@ export class SearchHubComponent {
   }
 
   searchGo(param: string) {
-    // console.log('param: ', this.param);
     navigator.vibrate([30]);
     this._state.setState('loading');
     this.settings_stats = true;
     this.resp_time = Date.now();
     this._searchService.search(param).pipe(
         tap((list) => {
-          // this._card = new CardMapper().map(card);
           this.searchResult = list;
           this.resp_time = Date.now() - this.resp_time;
           this.showError = false;
           this._state.returnState();
-          // console.log('>> ', this.searchResult);
         }),
         catchError((err) => {
           console.log(err);

@@ -34,11 +34,16 @@
               "src/styles/mox-material.scss",
               "src/styles/fontawesome-all.css",
               "src/styles/theme.sass",
+              "node_modules/prismjs/themes/prism-okaidia.css",
               "node_modules/mana-font/css/mana.css",
               "node_modules/animate.css/animate.min.css"
             ],
             "scripts": [
-              "node_modules/@webcomponents/custom-elements/custom-elements.min.js"
+              "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
+              "node_modules/marked/lib/marked.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-csharp.min.js",
+              "node_modules/prismjs/components/prism-css.min.js"
             ]
           },
           "configurations": {

@@ -9,6 +9,7 @@ import { tap } from 'rxjs/operators';
 import { AuthService } from '@karn/_services/auth.service';
 import { MetaService } from 'ng2-meta';
 import { ActionBarConfig, ActionButton } from '@application/_models/_mox-models/Config';
+import { MarkdownService } from 'ngx-markdown';
 
 @Component({
   selector: 'app-mox-deck-view',
@@ -17,21 +18,6 @@ import { ActionBarConfig, ActionButton } from '@application/_models/_mox-models/
 })
 
 export class DeckViewComponent implements OnInit {
-  public formats = [
-    '1v1',
-    'brawl',
-    'commander',
-    'duek',
-    'frontier',
-    'future',
-    'legacy',
-    'modern',
-    'pauper',
-    'penny',
-    'standard',
-    'vintage'
-  ];
-
   public navigator = navigator;
   public _deck: Observable<MoxDeck>;
   public _selectedCard: Card;
@@ -47,9 +33,9 @@ export class DeckViewComponent implements OnInit {
     public  _auth: AuthService,
     public _deckService: MoxDeckService,
     private _route: ActivatedRoute,
-    private _router: Router,
     private _toast: ToastService,
-    private _metaService: MetaService
+    private _metaService: MetaService,
+    public _mdService: MarkdownService
   ) {
       this.actionConfigSocial.actions = new Array<ActionButton>();
       this.actionConfigStats.actions = new Array<ActionButton>();
@@ -70,6 +56,7 @@ export class DeckViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initMarkdown();
     this._route.params.subscribe(params => {
       const deckId = params['id'];
       if (!deckId) {
@@ -89,6 +76,17 @@ export class DeckViewComponent implements OnInit {
         )).subscribe();
       }
     });
+  }
+
+  private initMarkdown() {
+    this._mdService.renderer.heading = (text: string, level: number) => {
+      const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+      return '<h' + level + '>' +
+              '<a name="' + escapedText + '" class="anchor" href="#' + escapedText + '">' +
+                '<span class="header-link"></span>' +
+              '</a>' + text +
+            '</h' + level + '>';
+    };
   }
 
   saveDeck() {
@@ -215,13 +213,7 @@ export class DeckViewComponent implements OnInit {
   }
 
   activateCardView() {
-    // if (this._selectedCard === v) {
-    //   this._selectedCard = null;
-    //   this.cardView = false;
-    // } else {
-      // this.selectedCard(v);
-      this.cardView = true;
-    // }
+    this.cardView = true;
   }
 
   changetab(side) {

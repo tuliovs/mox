@@ -3,7 +3,7 @@ import { filter, take, tap } from 'rxjs/operators';
 import { MetaService } from 'ng2-meta';
 
 import { animate, keyframes, style, transition, trigger, state } from '@angular/animations';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
@@ -11,7 +11,7 @@ import { NotificationService } from '@application/_services/notification/notific
 import { AuthService } from '@karn/_services/auth.service';
 import { MoxFavoriteService } from '@application/_services/mox-services/favorite/mox-favorite.service';
 import { LocalstorageService } from '@application/_services/localstorage/localstorage.service';
-import { flipInY, rubberBand } from '@application/_constraints/KEYFRAMES';
+import { flipInY } from '@application/_constraints/KEYFRAMES';
 import { MatRipple } from '@angular/material/core';
 
 @Component({

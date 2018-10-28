@@ -1,3 +1,6 @@
-<label *ngIf="_card" matRipple (press)="activate()" >
+<label *ngIf="_card" matRipple 
+  (tap)="activate();startAnimation('tada');navigator.vibrate([30]);" 
+  [@tagAnimator]="animationState"
+  (@tagAnimator.done)="resetAnimationState()">
   {{_card.name}}
 </label>

@@ -9,6 +9,7 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { FORMATS } from '@application/_constraints/FORMATS';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
+import { MatRipple } from '@angular/material';
 
 @Component({
   selector: 'app-mox-deck-list',
@@ -23,7 +24,7 @@ export class DeckListComponent implements OnInit {
 
   offset = new BehaviorSubject(null);
   public infinite: Observable<any[]>;
-
+  @ViewChild(MatRipple) ripple: MatRipple;
   public deckList: MoxDeck[];
   private internalDeck: any;
   private formatSelected: string;
@@ -56,6 +57,10 @@ export class DeckListComponent implements OnInit {
           //   })
           // ).subscribe();
           this._user = u;
+          if (this.ripple) {
+            this.ripple.centered = true;
+            this.ripple.radius = 20;
+          }
         }
       }
     );
@@ -74,6 +79,10 @@ export class DeckListComponent implements OnInit {
       .pipe(
         tap(arr => (arr.length ? null : (this.theEnd = true))),
         tap((data) => {
+          if (this.ripple) {
+            this.ripple.centered = true;
+            this.ripple.radius = 20;
+          }
           this._state.setState('nav');
         }),
         map(arr => {

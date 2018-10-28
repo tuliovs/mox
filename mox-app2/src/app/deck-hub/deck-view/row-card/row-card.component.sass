@@ -50,6 +50,24 @@ $bg-zoom: rgba(255, 255, 255, .5)
     label
       margin: auto
 
+  .zoom
+    align-items: center
+    background-color: $bg-zoom
+    border-radius: 0 4px 4px 0
+    display: inline-flex
+    flex-direction: column
+    height: 3.73em
+    justify-content: center
+    margin-left: 8%
+    position: absolute
+    width: 68px
+    z-index: 2
+
+    i
+      color: color(_white)
+      font-size: 1.75em
+      text-shadow: 2px 2px 10px $shad-text
+
   .card-img
     background-size: cover
     border-radius: 4px
@@ -57,22 +75,6 @@ $bg-zoom: rgba(255, 255, 255, .5)
     display: inline-flex
     flex-direction: column-reverse
     width: 68px
-
-    .zoom
-      align-items: center
-      background-color: $bg-zoom
-      border-radius: 0 4px 4px 0
-      display: inline-flex
-      flex-direction: column
-      height: 3.94em
-      justify-content: center
-      position: absolute
-      width: 68px
-
-      i
-        color: color(_white)
-        font-size: 1.75em
-        text-shadow: 2px 2px 10px $shad-text
 
     label
       color: color(_white)
