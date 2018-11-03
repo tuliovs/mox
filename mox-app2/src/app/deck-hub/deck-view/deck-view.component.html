@@ -12,14 +12,14 @@
       <app-mox-deck-stats class="animated fadeIn" [deckid]="deck.id"></app-mox-deck-stats>
     </div>
     <div [hidden]="tab !='deckList'">
-      <div class="summary" *ngIf="user.uid === deck.ownerId || deck.public">
-        <div class="decksize mox-font animated fadeInDown">
+      <div class="summary animated fadeInDown" *ngIf="user.uid === deck.ownerId || deck.public">
+        <div class="decksize mox-font">
           <i class="fas fa-clone"></i>{{deck.cards.length}}
           /
           <i class="far fa-clone"></i>{{(deck.side) ? deck.side.length : 0}}
         </div>
-        <div class="deckname animated fadeInDown">{{deck.name}}</div>
-        <div class="decktype animated fadeInDown">{{deck.format}}</div>
+        <div class="deckname">{{deck.name}}</div>
+        <div class="decktype">{{deck.format}}</div>
       </div>
       <div *ngIf="!deck.public && user.uid !== deck.ownerId">
         <p>Deck Private</p>
@@ -33,9 +33,9 @@
       </ul>
       <app-mox-divider *ngIf="deck.side && deck.side.length > 0" [format]="deck.format" [color]="'000000'"></app-mox-divider>
       <ul *ngIf="user.uid === deck.ownerId || deck.public">
-        <li *ngFor="let card of _deckService.deckProcess._sideList">
+        <li *ngFor="let card of _deckService.deckProcess._sideList" class="animated fadeInDown">
           <app-mox-row-card *ngIf="card" [cardAmout]="cardSideAmount(card.id)" [card]="card" [selected]="(this._selectedCard && this._selectedCard === card)"
-            (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)" (select)="selectedCard($event)" (cardView)="activateCardView($event)"
+            (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)" (cardSelect)="selectedCard($event)" (cardView)="activateCardView($event)"
           ></app-mox-row-card>
         </li>
       </ul>

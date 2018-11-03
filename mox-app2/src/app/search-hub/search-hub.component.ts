@@ -50,7 +50,8 @@ export class SearchHubComponent implements OnInit {
         this.ripple.centered = true;
         this.ripple.radius = 20;
       }
-    }, 5000);
+      this._state.setState('nav');
+    }, 1000);
   }
 
   selectCard(card: any) {

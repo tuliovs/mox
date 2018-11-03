@@ -1,0 +1,20 @@
+<div class="action-button" *ngIf="!isState('hidden')">
+  <div *ngIf="_auth.getUser() | async as user" matRipple>
+    <i *ngIf="isState('nav') && user.actionIco" [className]="'animated pulse ss ss-' + user.actionIco" [@actionIcoAnimator]="animationState2"
+      (@actionIcoAnimator.done)="resetAnimationState()"
+      (tap)="activateMenuOpen.emit('opened');navigator.vibrate([50]);"></i>
+
+    <i *ngIf="!user || (isState('nav') && !user.actionIco)" [className]="'animated pulse ss ss-pmtg1'" [@actionIcoAnimator]="animationState2"
+      (@actionIcoAnimator.done)="resetAnimationState()" (tap)="menuOpen('opened');setState('closed')"></i>
+
+    <i *ngIf="isState('closed')"  (tap)="setState('nav')" class="animated pulse fas fa-times-circle"></i>
+    <i *ngIf="isState('loading')" (tap)="abortState()"    class="fas fa-sync-alt fa-spin"></i>
+    <i *ngIf="isState('config')"  (tap)="abortState()"    class="animated pulse fas fa-cog fa-spin"></i>
+    <i *ngIf="isState('view')"    (tap)="view();navigator.vibrate([50]);"    class="animated pulse fas fa-book-open"></i>
+    <i *ngIf="isState('error')"   (tap)="setState('nav')" class="animated pulse fas fa-not-equal"></i>
+    <span *ngIf="isState('cloud')" style="display: contents" (tap)="abortState()">
+      <i class="fas fa-cloud fa-stack-1x"></i>
+      <i class="fas fa-sync-alt fa-spin fa-stack-2x" style="color:white"></i>
+    </span>
+  </div>
+</div>

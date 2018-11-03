@@ -64,6 +64,7 @@ import { DeckListComponent } from './deck-hub/deck-list/deck-list.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PickerComponent } from './_shared/ui/picker/picker.component';
 import { FolderPickerComponent } from './_shared/ui/picker/folder-picker/folder-picker.component';
+import { ActionButtonComponent } from './_shared/ui/action-button/action-button.component';
 
 
 export const firebaseConfig = environment.firebaseConfig;
@@ -127,6 +128,7 @@ export function markedOptions(): MarkedOptions {
     DeckListComponent,
     PickerComponent,
     FolderPickerComponent,
+    ActionButtonComponent,
   ],
   imports: [
     CommonModule,
