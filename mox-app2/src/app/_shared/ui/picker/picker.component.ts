@@ -49,6 +49,12 @@ export class PickerComponent implements OnInit {
         return 'fas fa-folder';
       case 'sort':
         return 'fas fa-sort';
+      case 'card':
+        return 'ss ss-bcore';
+      case 'deck-action':
+        return 'fas fa-book';
+      case 'deck-import':
+        return 'fas fa-cloud-upload-alt';
       default:
         return 'fas fa-question';
     }

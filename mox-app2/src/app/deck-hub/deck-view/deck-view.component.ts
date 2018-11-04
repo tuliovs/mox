@@ -1,3 +1,4 @@
+import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { Card } from '@application/_models/_scryfall-models/models';
 import { ToastService } from '@application/_services/toast/toast.service';
 import { Observable } from 'rxjs';
@@ -34,6 +35,7 @@ export class DeckViewComponent implements OnInit {
     public _deckService: MoxDeckService,
     private _route: ActivatedRoute,
     private _toast: ToastService,
+    private _state: ActionStateService,
     private _metaService: MetaService,
     public _mdService: MarkdownService
   ) {
@@ -69,6 +71,7 @@ export class DeckViewComponent implements OnInit {
             this._metaService.setTitle('[Mox]DeckData - ' + dck.name);
             this._metaService.setTag('og:image', dck.cover);
             this._deckService.editDeck(dck);
+            this._state.setState('nav');
             if (this._cardSort) {
               this.sortChoosen(this._cardSort);
             }

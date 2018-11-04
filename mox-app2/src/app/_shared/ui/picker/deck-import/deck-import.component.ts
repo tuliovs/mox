@@ -1,58 +1,37 @@
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { animate, style, transition, trigger, state, keyframes } from '@angular/animations';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
-import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
-import { ToastService } from '@application/_services/toast/toast.service';
+import { Router } from '@angular/router';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
-import { bounceInDown } from '@application/_constraints/KEYFRAMES';
+import { ToastService } from '@application/_services/toast/toast.service';
+import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 
 @Component({
-  selector: 'app-mox-import-deck-context',
-  templateUrl: './import-deck-context.component.html',
-  styleUrls: ['./import-deck-context.component.sass'],
-  animations: [
-    trigger('importdeck-contextTrigger', [
-      state('closed', style({
-        transform: 'translate3d(-100%, 0, 0)',
-        display: 'none'
-      })),
-      transition('*=>opened', animate('500ms', keyframes(bounceInDown))),
-      transition('opened=>closed', animate('150ms'))
-    ])
-  ]
+  selector: 'app-mox-deck-import',
+  templateUrl: './deck-import.component.html',
+  styleUrls: ['./deck-import.component.sass']
 })
-
-export class ImportDeckContextComponent implements OnInit {
-  public importState = 'closed';
-  public lightboxActive = false;
+export class DeckImportComponent implements OnInit {
   public importText: string;
-  public showLoader = false;
   public _deckList: string[] = [];
   public _sideList: string[] = [];
-  public _actualState: string;
-  constructor(public _scryService: ScryfallSearchService,
-              public _deckService: MoxDeckService,
-              public _router: Router,
-              public _state: ActionStateService,
-              public toast: ToastService,
-              public router: Router) { }
+  public showLoader = false;
+  @Output() cancel: EventEmitter<any> = new EventEmitter();
+  constructor(
+    public _scryService: ScryfallSearchService,
+    public _deckService: MoxDeckService,
+    public _router: Router,
+    public _state: ActionStateService,
+    public toast: ToastService,
+    public router: Router
+  ) { }
 
   ngOnInit() {
   }
 
-  activateContext() {
-    navigator.vibrate([30]);
-    this._state.setState('hidden');
-    this.lightboxActive = true;
-    this.importState = 'opened';
-  }
-
   closeContext() {
+    this.cancel.emit();
     this._state.returnState();
-    this.lightboxActive = false;
-    this.importState = 'closed';
   }
 
   async onFilePicked(event) {
@@ -142,4 +121,5 @@ export class ImportDeckContextComponent implements OnInit {
       this.showLoader = false;
     }
   }
+
 }

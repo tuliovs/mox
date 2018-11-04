@@ -1,17 +1,17 @@
 <app-mox-loading-spinner *ngIf="!card"></app-mox-loading-spinner>
-<div class="card-row" *ngIf="card" [ngClass]="{'selected-card': selected, 'ilegal-card': isFormatLegal()}">
+<div class="card-row" matRipple *ngIf="card" [ngClass]="{'selected-card': selected, 'ilegal-card': isFormatLegal()}">
   <div class="card-counter"><label>{{cardAmout}}</label></div>
   <div  [class.common]=" card.rarity == 'common'"
         [class.uncommon]=" card.rarity == 'uncommon'"
         [class.rare]=" card.rarity == 'rare'"
         [class.mythic]=" card.rarity == 'mythic'" class="card-rarity"></div>
 
-  <div class="zoom animated fadeIn" *ngIf="selected" (click)="cardView.emit(card)" matRipple><i class="fas fa-search-plus"></i></div>
+  <div class="zoom animated fadeIn" *ngIf="selected" (click)="cardView.emit(card)"><i class="fas fa-search-plus" matRipple></i></div>
   <div class="card-img animated fadeIn" (click)="cardSelect.emit(card);cardView.emit(card)" [ngStyle]="{ 'background-image': 'url(' + getCardImgUri() + ')' }" matRipple>
   
   <label *ngIf="card.usd" class="mox-font">${{card.usd}}</label></div>
   
-  <div class="data-container" matRipple (click)="cardSelect.emit(card)" >
+  <div class="data-container" (click)="cardSelect.emit(card)" >
     <div class="card-data"><h4>{{getName()}}</h4></div>
     <div class="card-data typeline">
         {{(getTypeLine().length>32)? (getTypeLine() | slice:0:30)+'...':(getTypeLine())}}

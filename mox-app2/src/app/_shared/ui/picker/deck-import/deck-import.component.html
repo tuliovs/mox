@@ -1,0 +1,38 @@
+<div class="picker-bg-2 card-rarity animated bounceInLeft"></div>
+<div class="picker-bg-1 animated bounceInLeft"></div>
+<div class="action-menu">
+  <div class="animated fadeIn">
+    <h2>Deck Import</h2>
+  </div>
+  <section class="options mox-font animated bounceInRight">
+    <section class="form-block">
+      <div *ngIf="showLoader && _deckService.deckProcess._deck">
+        <p>Importing: {{_deckService.deckProcess._deck.name}}</p>
+        <p>by {{_deckService.deckProcess._deck.ownerName}}</p>
+        <p>Cards: {{_deckService.deckProcess._deck.cards.length}}</p>
+        <p>Status: {{_deckService.deckProcess.status}}</p>
+      </div>
+
+      <div *ngIf="!showLoader">
+        <p>
+          Hello! This is Karn import interface. Here you can Import decks from many formats!
+        </p>
+        <textarea [(ngModel)]="importText" placeholder="paste here your text or arena format deck list" value="{{importText}}"></textarea>
+        <div class="actions">
+          <button (click)="importDeckTxt()"   mat-raised-button color="accent"><i class="ss ss-pleaf"></i> Text</button>
+          <button (click)="importDeckArena()" mat-raised-button color="accent"><i class="ss ss-parl3"></i> MTGArena</button>
+          <button (click)="inputMtgo.click()" mat-raised-button color="accent"><i class="ss ss-dpa"  ></i> MTGO</button>
+          <div class="mtgo-input">
+            <i class="ss ss-dpa"></i> MTGO Format
+            <input type="file" #inputMtgo (change)="onFilePicked($event)" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+</div>
+<div class="action-button animated bounceInUp">
+  <div matRipple (click)="closeContext()">
+    <i class="fas fa-cloud-upload-alt"></i>
+  </div>
+</div>

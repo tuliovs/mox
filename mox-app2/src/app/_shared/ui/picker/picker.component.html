@@ -1,4 +1,4 @@
-<button class="btn btn-action" (click)="activatePicker()" [disabled]="!enabled" matRipple>
+<button class="btn btn-action animated flipInX" (click)="activatePicker()" [disabled]="!enabled" matRipple>
   <i class="{{pickerIcon()}}"></i>
 </button>
 
@@ -11,4 +11,7 @@
 <div class="action-menu" [@deck-contextTrigger]="componentState" [ngSwitch]="pickerType">
   <app-mox-folder-picker *ngSwitchCase="'folder'" (cancel)="closeContext()" (remove)="deckFolderRemove.emit($event);closeContext()" (include)="deckFolderInclude.emit($event);closeContext()" [folders]="userFolders" ></app-mox-folder-picker>
   <app-mox-sort-picker *ngSwitchCase="'sort'" [selected]="currentState" (cancel)="closeContext()" (sortChoosen)="sortSelection.emit($event)"></app-mox-sort-picker>
+  <app-mox-card-action *ngSwitchCase="'card'" [card]="currentState" (cancel)="closeContext()" (cardActionChoosen)="sortSelection.emit($event)"></app-mox-card-action>
+  <app-mox-deck-action *ngSwitchCase="'deck-action'" [deck]="currentState" (cancel)="closeContext()"></app-mox-deck-action>
+  <app-mox-deck-import *ngSwitchCase="'deck-import'" (cancel)="closeContext()"></app-mox-deck-import>
 </div>

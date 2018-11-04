@@ -24,8 +24,9 @@ export class SearchHubComponent implements OnInit {
   public settings_stats = false;
   public showError = false;
   public cardView = false;
+  public side = false;
   public searchState = 'closed';
-  public selectedCard;
+  public _selectedCard;
   @ViewChild(MatRipple) ripple: MatRipple;
   constructor(
     private _searchService: ScryfallSearchService,
@@ -54,12 +55,13 @@ export class SearchHubComponent implements OnInit {
     }, 1000);
   }
 
-  selectCard(card: any) {
-    if (this.selectedCard === card) {
-      this.selectedCard = null;
+  selectedCard(card: any) {
+    if (this._selectedCard === card) {
+      this._selectedCard = null;
+      this.side = false;
     } else {
       navigator.vibrate([30]);
-      this.selectedCard = card;
+      this._selectedCard = card;
     }
   }
 
@@ -83,6 +85,22 @@ export class SearchHubComponent implements OnInit {
     const favs = <FavoriteCards>this._localstorageService.favsStorage.get('cards');
     if (favs) {
       this.favoriteList =  favs.actualFavs;
+    }
+  }
+
+  getCardImgUri() {
+    if (this._selectedCard && this._selectedCard.image_uris) {
+      return this._selectedCard.image_uris.normal;
+    } else {
+      return this._selectedCard.card_faces[0].image_uris.normal;
+    }
+  }
+
+  getCardBackImgUri() {
+    if (this._selectedCard && this._selectedCard.image_uris) {
+      return './../../../assets/card_back.jpg';
+    } else {
+      return this._selectedCard.card_faces[1].image_uris.normal;
     }
   }
 

@@ -1,9 +1,10 @@
 import { AuthService } from '@karn/_services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastService, Message } from '@application/_services/toast/toast.service';
 import { filter, take, tap } from 'rxjs/operators';
 import { animate, keyframes, transition, trigger } from '@angular/animations';
 import { swing } from '@application/_constraints/KEYFRAMES';
+import { MatRipple } from '@angular/material';
 
 @Component({
   selector: 'app-mox-toast-message',
@@ -20,6 +21,7 @@ export class ToastMessageComponent implements OnInit {
   public active = false;
   public animationState: string;
   public navigator = navigator;
+  @ViewChild(MatRipple) ripple: MatRipple;
   ribbonCounter(): number {
     return this.messages.length;
   }
@@ -52,6 +54,8 @@ export class ToastMessageComponent implements OnInit {
               }).filter( (m: Message) => {
                 return !m.dismissed;
               });
+              this.ripple.centered = true;
+              this.ripple.radius = 20;
               // console.log('>>', this.messages);
             })
           ).subscribe();

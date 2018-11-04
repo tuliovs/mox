@@ -1,3 +1,41 @@
-<p>
-  deck-action works!
-</p>
+<div class="picker-bg-2 animated bounceInLeft"></div>
+<div class="picker-bg-1 animated bounceInLeft" *ngIf="_deckService.deckProcess._deck && _deckService.deckProcess._deck.cover" [ngStyle]="{ 'background-image': 'url(' + _deckService.deckProcess._deck.cover + ')' }"></div>
+<div class="no-img" *ngIf="_deckService.deckProcess._deck && !_deckService.deckProcess._deck.cover">
+  <i class="fas fa-camera-retro"></i>
+</div>
+<div class="action-menu" *ngIf="_deckService.deckProcess._deck">
+  <div class="animated fadeIn">
+    <h2>{{_deckService.deckProcess._deck.name}}</h2>
+  </div>
+  <section class="options mox-font animated bounceInRight">
+    <button disabled matRipple>
+      <i class="fas fa-heart" style="font-size: 1.4em"></i> Add to Favorites
+    </button>
+    <button disabled matRipple>
+      <i class="fas fa-shopping-bag" style="font-size: 1.4em"></i> Shop
+    </button>
+    <button disabled matRipple>
+      <i class="fas fa-address-card" style="font-size: 1.3em"></i> Creator Profile
+    </button>
+    <button disabled matRipple>
+      <i class="fas fa-box-open" style="font-size: 1.3em"></i> Check In Collection
+    </button>
+    <button disabled matRipple>
+      <i class="fas fa-cloud-download-alt" style="font-size: 1.3em"></i> Export Deck
+    </button>
+    <button (click)="forkDeck()" [disabled]="!_deckService.deckProcess._deck" matRipple>
+      <i class="fas fa-code-branch" style="font-size: 1.4em"></i> Fork Deck
+    </button>
+    <button (click)="share()" matRipple>
+      <i class="fas fa-retweet" style="font-size: 1.3em"></i> Share
+    </button>
+    <button disabled matRipple>
+      <i class="fas fa-flask" style="font-size: 1.4em"></i> Take to the Lab
+    </button>
+  </section>
+</div>
+<div class="action-button animated bounceInUp">
+  <div matRipple (click)="closeContext()">
+    <i class="fas fa-book"></i>
+  </div>
+</div>

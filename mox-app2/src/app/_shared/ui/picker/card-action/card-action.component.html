@@ -1,3 +1,44 @@
-<p>
-  card-action works!
-</p>
+<div class="picker-bg-2 card-rarity animated bounceInLeft" 
+    [class.common]=" card.rarity == 'common'"
+    [class.uncommon]=" card.rarity == 'uncommon'"
+    [class.rare]=" card.rarity == 'rare'"
+    [class.mythic]=" card.rarity == 'mythic'"></div>
+<div class="picker-bg-1 animated bounceInLeft" [ngStyle]="{ 'background-image': 'url(' + getCardImgUriCrop() + ')' }"></div>
+<div class="action-menu">
+  <div class="animated fadeIn">
+    <h2>{{card.name}}</h2>
+  </div>
+  <section class="options mox-font animated bounceInRight">
+    <button *ngIf="_favService._userFavorites" (click)="favoriteCard(card)" matRipple [ngClass]="{'selected': selected === 'alpha-up' }">
+      <i *ngIf="!isFavorite()" class="far fa-heart" style="font-size: 1.4em"></i>
+      <i *ngIf="isFavorite()" class="fas fa-heart" style="font-size: 1.4em"></i> 
+      Add to Favorites
+    </button>
+    <button disabled matRipple [ngClass]="{'selected': selected === 'alpha-down' }">
+      <i class="fas fa-shopping-bag" style="font-size: 1.4em"></i> Shop  U${{card.usd}} | tix{{card.tix}}
+    </button>
+    <button (click)="addOneCard()" matRipple [ngClass]="{'selected': selected === 'cmc-up' }">
+      <i class="fas fa-plus-circle" style="font-size: 1.4em"></i> Add 1 to Deck List
+    </button>
+    <button (click)="addOneCard(true)" matRipple [ngClass]="{'selected': selected === 'cmc-down' }">
+      <i class="fas fa-plus-circle" style="font-size: 1.4em"></i> Add 1 to Side List
+    </button>
+    <button disabled matRipple [ngClass]="{'selected': selected === 'price-up' }">
+      <i class="fas fa-box-open" style="font-size: 1.4em"></i> Add 1 to collection
+    </button>
+    <button (click)="setCover()" matRipple [ngClass]="{'selected': selected === 'price-down' }">
+      <i class="fas fa-tags" style="font-size: 1.4em"></i> Make Deck Cover
+    </button>
+    <button disabled matRipple [ngClass]="{'selected': selected === 'type-up' }">
+      <i class="fas fa-retweet" style="font-size: 1.4em"></i> Share
+    </button>
+    <button (click)="viewCard()" matRipple [ngClass]="{'selected': selected === 'type-down' }">
+      <i class="fas fa-search-plus" style="font-size: 1.4em"></i> View More About the Card
+    </button>
+  </section>
+</div>
+<div class="action-button animated bounceInUp">
+  <div matRipple (click)="closeContext()">
+    <i class="ss ss-bcore"></i>
+  </div>
+</div>

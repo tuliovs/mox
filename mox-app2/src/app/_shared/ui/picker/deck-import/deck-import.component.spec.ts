@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CardContextComponent } from '@shared/ui/context-menu/card-context/card-context.component';
+import { DeckImportComponent } from './deck-import.component';
 
-describe('CardContextComponent', () => {
-  let component: CardContextComponent;
-  let fixture: ComponentFixture<CardContextComponent>;
+describe('DeckImportComponent', () => {
+  let component: DeckImportComponent;
+  let fixture: ComponentFixture<DeckImportComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CardContextComponent ]
+      declarations: [ DeckImportComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CardContextComponent);
+    fixture = TestBed.createComponent(DeckImportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

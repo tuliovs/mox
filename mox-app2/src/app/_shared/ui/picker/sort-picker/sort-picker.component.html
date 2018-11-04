@@ -1,32 +1,32 @@
-<div class="picker-bg-2"></div>
-<div class="picker-bg-1"></div>
+<div class="picker-bg-2 animated bounceInLeft"></div>
+<div class="picker-bg-1 animated bounceInLeft"></div>
 <div class="action-menu">
   <div class="animated fadeIn">
     <h2>Sorting  Card List</h2>
   </div>
-  <section class="options mox-font">
-    <button (click)="alphaU()" matRipple [ngClass]="{'selected': selected === 'alpha-up' }" class="animated bounceInUp">
+  <section class="options mox-font animated bounceInRight">
+    <button (click)="alphaU()" matRipple [ngClass]="{'selected': selected === 'alpha-up' }">
       <i class="fas fa-sort-alpha-down" style="font-size: 1.4em"></i> Alphabetic asc
     </button>
-    <button (click)="alphaD()" matRipple [ngClass]="{'selected': selected === 'alpha-down' }" class="animated bounceInUp">
+    <button (click)="alphaD()" matRipple [ngClass]="{'selected': selected === 'alpha-down' }">
       <i class="fas fa-sort-alpha-up" style="font-size: 1.4em"></i> Alphabetic dsc
     </button>
-    <button (click)="cmcU()" matRipple [ngClass]="{'selected': selected === 'cmc-up' }" class="animated bounceInUp">
+    <button (click)="cmcU()" matRipple [ngClass]="{'selected': selected === 'cmc-up' }">
       <i class="fas fa-sort-amount-down" style="font-size: 1.4em"></i> CMC asc
     </button>
-    <button (click)="cmcD()" matRipple [ngClass]="{'selected': selected === 'cmc-down' }" class="animated bounceInUp">
+    <button (click)="cmcD()" matRipple [ngClass]="{'selected': selected === 'cmc-down' }">
       <i class="fas fa-sort-amount-up" style="font-size: 1.4em"></i> CMC dsc
     </button>
-    <button (click)="priceU()" matRipple [ngClass]="{'selected': selected === 'price-up' }" class="animated bounceInUp">
+    <button (click)="priceU()" matRipple [ngClass]="{'selected': selected === 'price-up' }">
       <i class="fas fa-sort-numeric-down" style="font-size: 1.4em"></i> Price U$ asc
     </button>
-    <button (click)="priceD()" matRipple [ngClass]="{'selected': selected === 'price-down' }" class="animated bounceInUp">
+    <button (click)="priceD()" matRipple [ngClass]="{'selected': selected === 'price-down' }">
       <i class="fas fa-sort-numeric-up" style="font-size: 1.4em"></i> Price U$ dsc
     </button>
-    <button (click)="typeU()" matRipple [ngClass]="{'selected': selected === 'type-up' }" class="animated bounceInUp">
+    <button (click)="typeU()" matRipple [ngClass]="{'selected': selected === 'type-up' }">
       <i class="fas fa-sort-amount-down" style="font-size: 1.4em"></i> Card Type asc
     </button>
-    <button (click)="typeD()" matRipple [ngClass]="{'selected': selected === 'type-down' }" class="animated bounceInUp">
+    <button (click)="typeD()" matRipple [ngClass]="{'selected': selected === 'type-down' }">
       <i class="fas fa-sort-amount-up" style="font-size: 1.4em"></i> Card Type dsc
     </button>
   </section>

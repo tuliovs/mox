@@ -40,7 +40,6 @@ export class RowCardComponent implements OnInit, AfterViewInit {
         this._user = user;
         if (this.ripple) {
           this.ripple.centered = true;
-          this.ripple.radius = 20;
         }
       })
     ).subscribe();

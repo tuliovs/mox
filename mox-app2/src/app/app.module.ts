@@ -28,12 +28,10 @@ import { ActionStateService } from '@application/_services/action-state/action-s
 import { LocalstorageService } from '@application/_services/localstorage/localstorage.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { CardContextComponent } from '@shared/ui/context-menu/card-context/card-context.component';
 import { CommingWarningComponent } from '@shared/ui/comming-warning/comming-warning.component';
 import { DeckHubComponent } from './deck-hub/deck-hub.component';
 import { DeckViewComponent } from './deck-hub/deck-view/deck-view.component';
 import { HomeComponent } from './home/home.component';
-import { ImportDeckContextComponent } from '@shared/ui/context-menu/import-deck-context/import-deck-context.component';
 import { KarnInfoCardComponent } from '@shared/ui/karn-info-card/karn-info-card.component';
 import { LoadingSpinnerComponent } from '@shared/ui/loading-spinner/loading-spinner.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -54,7 +52,6 @@ import { ToastService } from '@application/_services/toast/toast.service';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { DotComponent } from '@shared/ui/dot/dot.component';
 import { DeckStatsComponent } from './deck-hub/deck-view/deck-stats/deck-stats.component';
-import { DeckContextComponent } from '@shared/ui/context-menu/deck-context/deck-context.component';
 import { DividerComponent } from './_shared/ui/divider/divider.component';
 import { FilterPickerComponent } from './_shared/ui/picker/filter-picker/filter-picker.component';
 import { SortPickerComponent } from './_shared/ui/picker/sort-picker/sort-picker.component';
@@ -67,6 +64,7 @@ import { FolderPickerComponent } from './_shared/ui/picker/folder-picker/folder-
 import { ActionButtonComponent } from './_shared/ui/action-button/action-button.component';
 import { DeckActionComponent } from './_shared/ui/picker/deck-action/deck-action.component';
 import { CardActionComponent } from './_shared/ui/picker/card-action/card-action.component';
+import { DeckImportComponent } from './_shared/ui/picker/deck-import/deck-import.component';
 
 
 export const firebaseConfig = environment.firebaseConfig;
@@ -101,12 +99,10 @@ export function markedOptions(): MarkedOptions {
   declarations: [
     ActionBarComponent,
     AppComponent,
-    CardContextComponent,
     CommingWarningComponent,
     DeckHubComponent,
     DeckViewComponent,
     HomeComponent,
-    ImportDeckContextComponent,
     KarnInfoCardComponent,
     LoadingSpinnerComponent,
     LoginComponent,
@@ -122,7 +118,6 @@ export function markedOptions(): MarkedOptions {
     UserProfileComponent,
     DotComponent,
     DeckStatsComponent,
-    DeckContextComponent,
     DividerComponent,
     FilterPickerComponent,
     SortPickerComponent,
@@ -133,6 +128,7 @@ export function markedOptions(): MarkedOptions {
     ActionButtonComponent,
     DeckActionComponent,
     CardActionComponent,
+    DeckImportComponent,
   ],
   imports: [
     CommonModule,

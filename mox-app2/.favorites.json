@@ -7,5 +7,32 @@
         "workspaceRoot": null,
         "workspacePath": null,
         "id": "xUbw941LhroX5unq"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Repositorio\\Mox\\mox-app2\\src\\app\\app.module.ts",
+        "parent_id": null,
+        "fsPath": "d:\\Repositorio\\Mox\\mox-app2\\src\\app\\app.module.ts",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "U3cLVeYv2FlmBSWs"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Repositorio\\Mox\\mox-app2\\angular.json",
+        "parent_id": null,
+        "fsPath": "d:\\Repositorio\\Mox\\mox-app2\\angular.json",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "8OVQHBbUpG4E2RIc"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Repositorio\\Mox\\mox-app2\\package.json",
+        "parent_id": null,
+        "fsPath": "d:\\Repositorio\\Mox\\mox-app2\\package.json",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "FydnRkVAH84ozucq"
     }
 ]

@@ -61,7 +61,7 @@
     <button class="btn btn-action" matRipple disabled>
       <i class="fas fa-folder"></i>
     </button>
-    <app-mox-deck-context [deck]="internalDeck" [icon]="'fas fa-ellipsis-h'" *ngIf="internalDeck"></app-mox-deck-context>
+    <app-mox-picker *ngIf="internalDeck" [pickerType]="'deck-action'" [currentState]="internalDeck"></app-mox-picker>
   </app-mox-action-bar>
 
   <app-mox-action-bar *ngIf="!internalDeck" (swipeleft)="changeFormat('left')" (swiperight)="changeFormat('right')">

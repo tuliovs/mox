@@ -1,4 +1,4 @@
-<i 
+<i matRipple
   [matBadgeHidden]="!(messages && messages.length > 0)" 
   matBadgePosition="before below" 
   matBadge="{{ribbonCounter()}}"
@@ -12,9 +12,9 @@
         (click)="active = !active"
         (tap)="startAnimation('swing');navigator.vibrate([50]);"></i>
 <!-- <span class="ribbon mox_font" *ngIf="messages && messages.length > 0">{{ribbonCounter()}}</span> -->
-<div class="wrapper animate fadeInDown" *ngIf="messages && messages.length > 0 && active">
+<div class="wrapper" *ngIf="messages && messages.length > 0 && active">
   <aside>
-    <div *ngFor="let message of messages" class="alert"
+    <div *ngFor="let message of messages" matRipple class="alert animated fadeInDown"
         [ngClass]="{'alert-info':     message.style=='info',
                     'alert-danger':   message.style=='danger',
                     'alert-warning':   message.style=='warning',
