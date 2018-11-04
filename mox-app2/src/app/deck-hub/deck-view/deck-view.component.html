@@ -151,7 +151,8 @@
   </button>
   <app-mox-filter-picker></app-mox-filter-picker>
   <div class="fixer"></div>
-  <app-mox-sort-picker [selected]="_cardSort" (sortChoosen)="sortChoosen($event)"></app-mox-sort-picker>
+  <app-mox-picker [pickerType]="'sort'" (sortSelection)="sortChoosen($event)"  [currentState]="_cardSort" ></app-mox-picker>
+  <!-- <app-mox-sort-picker [selected]="_cardSort" (sortChoosen)="sortChoosen($event)"></app-mox-sort-picker> -->
   <app-mox-deck-context *ngIf="!_selectedCard" [deck]="_deck | async" [icon]="'fas fa-bars'"></app-mox-deck-context>  
   <app-mox-card-context *ngIf="_selectedCard"  [card]="_selectedCard"  [icon]="'fas fa-ellipsis-h'"></app-mox-card-context>
 </app-mox-action-bar>

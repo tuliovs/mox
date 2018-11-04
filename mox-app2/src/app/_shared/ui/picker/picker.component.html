@@ -10,4 +10,5 @@
 ></div>
 <div class="action-menu" [@deck-contextTrigger]="componentState" [ngSwitch]="pickerType">
   <app-mox-folder-picker *ngSwitchCase="'folder'" (cancel)="closeContext()" (remove)="deckFolderRemove.emit($event);closeContext()" (include)="deckFolderInclude.emit($event);closeContext()" [folders]="userFolders" ></app-mox-folder-picker>
+  <app-mox-sort-picker *ngSwitchCase="'sort'" [selected]="currentState" (cancel)="closeContext()" (sortChoosen)="sortSelection.emit($event)"></app-mox-sort-picker>
 </div>

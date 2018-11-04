@@ -65,6 +65,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PickerComponent } from './_shared/ui/picker/picker.component';
 import { FolderPickerComponent } from './_shared/ui/picker/folder-picker/folder-picker.component';
 import { ActionButtonComponent } from './_shared/ui/action-button/action-button.component';
+import { DeckActionComponent } from './_shared/ui/picker/deck-action/deck-action.component';
+import { CardActionComponent } from './_shared/ui/picker/card-action/card-action.component';
 
 
 export const firebaseConfig = environment.firebaseConfig;
@@ -129,6 +131,8 @@ export function markedOptions(): MarkedOptions {
     PickerComponent,
     FolderPickerComponent,
     ActionButtonComponent,
+    DeckActionComponent,
+    CardActionComponent,
   ],
   imports: [
     CommonModule,

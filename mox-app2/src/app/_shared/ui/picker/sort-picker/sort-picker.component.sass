@@ -5,86 +5,120 @@
 $light-white: rgba(255, 255, 255, .7);
 $shad: 15px 15px 30px rgba(0, 0, 0, .25);
 $bg-picker: rgba(19, 32, 48, .9);
+$shad-action-button: rgba(0, 0, 0, .15);
+$shad-picker: 0 4px 4px rgba(0, 0, 0, .25)
 
-.btn-action
-  font-size: 1.8em
-  height: 100%
-  margin-top: 0
+.fas,
+.ss
+  color: color(_white)
+  font-size: 2.4em
+  margin-right: 5%
+  padding: .4em
 
-.lightbox
-  background: $light-white
-  box-shadow: $shad
-  color: color(_ice)
-  font-size: 1.25em
-  font-weight: normal
-  height: 100vh
-  left: 0
-  line-height: 40px
-  max-width: 100%
-  min-width: 100%
-  overflow: scroll
-  padding: 0
-  position: absolute
-  text-align: center
-  top: -94vh
+.action-button
+  align-items: center
+  background-color: color(_white)
+  border-radius: 25em
+  bottom: 1.3%
+  box-shadow: 0 0 20px $shad-action-button
+  display: flex
+  height: 66px
+  justify-content: center
+  left: 39.9%
+  position: fixed
+  right: 40%
+  width: 66px
+  z-index: 20
+
+  div
+    align-items: center
+    background-color: color(_white)
+    border-radius: 25em
+    box-shadow: 0 0 5px $shad-action-button
+    display: flex
+    height: 56px
+    justify-content: center
+    width: 56px
+    z-index: 21
+
+    i
+      color: color(_darkblue)
+      padding: 0
+      text-align: center
+      text-shadow: 0 0 0 color(_white)
+      vertical-align: middle
+
+.picker-bg-1
+  background-color: color(_blue)
+  border-radius: 5px
+  display: inline-flex
+  height: 1em
+  left: 2.5%
+  opacity: .65
+  position: fixed
+  top: 6%
+  width: 95%
+  z-index: 18
+
+.picker-bg-2
+  background-color: color(_blue)
+  border-radius: 5px
+  display: inline-flex
+  height: .81em
+  left: 5%
+  opacity: .2
+  position: fixed
+  top: 5%
+  width: 90%
+  z-index: 18
 
 .action-menu
+  background-color: $bg-picker
+  border-radius: 5px
+  bottom: 6.7%
+  box-shadow: $shad-picker
+  color: color(_white)
   display: inline-flex
-  flex-direction: row
-  height: 85vh
-  justify-content: center
-  left: 5%
+  flex-direction: column
+  height: 80vh
+  justify-content: initial
+  left: 0%
   overflow-y: scroll
   padding: 0
   position: absolute
   text-align: center
-  top: -77.4vh
-  width: 90%
-  z-index: 21
+  width: 100%
+  z-index: 19
 
   .options
-    background-color: $bg-picker
-    border-radius: 0 20px
     display: inline-flex
     flex-direction: column
-    height: 76vh
-    justify-content: space-evenly
+    height: 70vh
+    justify-content: initial
+    overflow: scroll
     padding: 0 1%
     width: 100%
 
-  div
-    display: inline-flex
-    flex-direction: row
-
     button
       align-items: center
-      background-color: color(_white)
-      box-shadow: 0 4px 0 color(_grayer)
-      color: color(_darkblue)
+      background-color: transparent
+      border-bottom: solid 1px color(_white)
+      border-radius: 0
+      color: color(_white)
       display: inline-flex
-      flex-flow: row
-      justify-content: space-between
-      padding: 3% 6%
-      text-transform: capitalize
-      width: 50%
+      font-size: 1em
+      margin: 0 5%
+      min-height: 10vh
+      padding: 0 4%
 
-    & .left
-      border-radius: 100px 0 0 100px
-      border-right: solid 1px color(_darkblue)
-      padding-right: 2%
-      text-align: right
+.selected
+  font-style: italic
+  font-weight: 600
 
-    & .right
-      border-left: solid 1px color(_darkblue)
-      border-radius: 0 100px 100px 0
-      padding-left: 2%
-      text-align: left
-
-    & .selected
-      background-color: color(_white)
-      border: solid 2px color(_darkblue)
-      color: color(_darkblue)
-      font-weight: 600
+  i
+    border: solid 2px color(_blue)
+    border-radius: 25em
+    color: color(_blue)
 
 .closer
   background-color: color(_darkblue)

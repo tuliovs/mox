@@ -26,7 +26,7 @@ export class DeckViewComponent implements OnInit {
   public cardView = false;
   public side = false;
   public _cardFilter;
-  public _cardSort;
+  public _cardSort: string;
   public actionConfigSocial = new ActionBarConfig();
   public actionConfigStats = new ActionBarConfig();
   constructor(

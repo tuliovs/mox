@@ -1,34 +1,38 @@
-<button class="btn btn-action" (click)="activatePicker()">
-  <i class="fas fa-sort"></i>
-</button>
-
-
-<div [@deck-contextTrigger]="componentState" class="lightbox"
-    (click)="closeContext()"
-    (swipeleft)="closeContext()"
-    (swiperight)="closeContext()"
-    (swipedown)="closeContext()"
-></div>
-<div [@deck-contextTrigger]="componentState" class="action-menu">
+<div class="picker-bg-2"></div>
+<div class="picker-bg-1"></div>
+<div class="action-menu">
+  <div class="animated fadeIn">
+    <h2>Sorting  Card List</h2>
+  </div>
   <section class="options mox-font">
-    <div>
-      <button (click)="alphaU()" [ngClass]="{'selected': selected === 'Alpha Up' }" class="left"><i class="fas fa-sort-alpha-down" style="font-size: 1.4em"></i> Alphabetic asc</button>
-      <button (click)="alphaD()" [ngClass]="{'selected': selected === 'Alpha Down' }" class="right">Alphabetic dsc <i class="fas fa-sort-alpha-up" style="font-size: 1.4em"></i></button>
-    </div>
-    <div>
-      <button (click)="cmcU()" [ngClass]="{'selected': selected === 'Cmc Up' }" class="left"><i class="fas fa-sort-amount-down" style="font-size: 1.4em"></i> CMC asc</button>
-      <button (click)="cmcD()" [ngClass]="{'selected': selected === 'Cmc Down' }" class="right">CMC dsc <i class="fas fa-sort-amount-up" style="font-size: 1.4em"></i></button>
-    </div>
-    <div>
-      <button (click)="priceU()" [ngClass]="{'selected': selected === 'Price Up' }" class="left"><i class="fas fa-sort-numeric-down" style="font-size: 1.4em"></i> Price U$ asc</button>
-      <button (click)="priceD()" [ngClass]="{'selected': selected === 'Price Down' }" class="right">Price U$ dsc <i class="fas fa-sort-numeric-up" style="font-size: 1.4em"></i></button>
-    </div>
-    <div>
-      <button (click)="typeU()" [ngClass]="{'selected': selected === 'Type Up' }" class="left"><i class="fas fa-sort-amount-down" style="font-size: 1.4em"></i> Card Type asc</button>
-      <button (click)="typeD()" [ngClass]="{'selected': selected === 'Type Down' }" class="right">Card Type dsc <i class="fas fa-sort-amount-up" style="font-size: 1.4em"></i></button>
-    </div>
+    <button (click)="alphaU()" matRipple [ngClass]="{'selected': selected === 'alpha-up' }" class="animated bounceInUp">
+      <i class="fas fa-sort-alpha-down" style="font-size: 1.4em"></i> Alphabetic asc
+    </button>
+    <button (click)="alphaD()" matRipple [ngClass]="{'selected': selected === 'alpha-down' }" class="animated bounceInUp">
+      <i class="fas fa-sort-alpha-up" style="font-size: 1.4em"></i> Alphabetic dsc
+    </button>
+    <button (click)="cmcU()" matRipple [ngClass]="{'selected': selected === 'cmc-up' }" class="animated bounceInUp">
+      <i class="fas fa-sort-amount-down" style="font-size: 1.4em"></i> CMC asc
+    </button>
+    <button (click)="cmcD()" matRipple [ngClass]="{'selected': selected === 'cmc-down' }" class="animated bounceInUp">
+      <i class="fas fa-sort-amount-up" style="font-size: 1.4em"></i> CMC dsc
+    </button>
+    <button (click)="priceU()" matRipple [ngClass]="{'selected': selected === 'price-up' }" class="animated bounceInUp">
+      <i class="fas fa-sort-numeric-down" style="font-size: 1.4em"></i> Price U$ asc
+    </button>
+    <button (click)="priceD()" matRipple [ngClass]="{'selected': selected === 'price-down' }" class="animated bounceInUp">
+      <i class="fas fa-sort-numeric-up" style="font-size: 1.4em"></i> Price U$ dsc
+    </button>
+    <button (click)="typeU()" matRipple [ngClass]="{'selected': selected === 'type-up' }" class="animated bounceInUp">
+      <i class="fas fa-sort-amount-down" style="font-size: 1.4em"></i> Card Type asc
+    </button>
+    <button (click)="typeD()" matRipple [ngClass]="{'selected': selected === 'type-down' }" class="animated bounceInUp">
+      <i class="fas fa-sort-amount-up" style="font-size: 1.4em"></i> Card Type dsc
+    </button>
   </section>
-  <div class="closer" (click)="closeContext()">
-    <i class="fas fa-times"></i>
+</div>
+<div class="action-button">
+  <div matRipple (click)="closeContext()">
+    <i class="fas fa-sort"></i>
   </div>
 </div>

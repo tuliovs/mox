@@ -27,9 +27,11 @@ export class PickerComponent implements OnInit {
   @Input() enabled = true;
   @Input() pickerType: any;
   @Input() userFolders?: string[];
+  @Input() currentState?: string;
   @ViewChild(MatRipple) ripple: MatRipple;
   @Output() deckFolderRemove: EventEmitter<any> = new EventEmitter();
   @Output() deckFolderInclude: EventEmitter<any> = new EventEmitter();
+  @Output() sortSelection: EventEmitter<string> = new EventEmitter();
   public componentState = 'closed';
   public lightboxActive = false;
   constructor(
@@ -45,6 +47,8 @@ export class PickerComponent implements OnInit {
     switch (this.pickerType) {
       case 'folder':
         return 'fas fa-folder';
+      case 'sort':
+        return 'fas fa-sort';
       default:
         return 'fas fa-question';
     }
