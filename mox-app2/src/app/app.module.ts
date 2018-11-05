@@ -13,6 +13,7 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { environment } from '@envoirment/environment';
 import { KarnModule } from '@karn/karn.module';
 import { MetaModule } from 'ng2-meta';
+import { ChartsModule } from 'ng2-charts';
 
 import * as Hammer from 'hammerjs';
 import { } from '@angular/platform-browser';
@@ -140,6 +141,7 @@ export function markedOptions(): MarkedOptions {
     HttpClientModule,
     AppRoutingModule,
     ScrollingModule,
+    ChartsModule,
     MatBadgeModule,
     MatRippleModule,
     MatSelectModule,

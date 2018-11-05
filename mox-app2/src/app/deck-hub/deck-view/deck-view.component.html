@@ -130,7 +130,7 @@
 </div>
 
 <app-mox-action-bar [hidden]="tab !='statsTab'"> 
-  <button disabled matRipple class="btn btn-action">
+  <button (click)="delete()" matRipple class="btn btn-action">
     <i class="fas fa-trash"></i>
   </button>
   <button disabled matRipple class="btn btn-action">

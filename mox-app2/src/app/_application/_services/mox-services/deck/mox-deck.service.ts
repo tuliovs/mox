@@ -117,7 +117,6 @@ export class MoxDeckService {
       try {
         this.deckProcess.status = 'Processing Card Types';
         const typeLineCounter = {
-          totalCards: this.deckProcess._cardList.length,
           d_totalLands: this.countTypes('land'),
           d_totalCreatures: this.countTypes('creature'),
           d_totalInstants: this.countTypes('instant'),
@@ -125,9 +124,12 @@ export class MoxDeckService {
           d_totalArtifacts: this.countTypes('artifact'),
           d_totalEnchantments: this.countTypes('enchantment'),
           d_totalPlaneswalkers: this.countTypes('planeswalker'),
+          totalCards: this.deckProcess._cardList.length
         };
         this.deckProcess._deckStats.typeLineCounter = typeLineCounter;
-        // console.log(typeLineCounter);
+        this.deckProcess._deckStats.typeLineData = Object.values(typeLineCounter).pop();
+
+        console.log('typeLineCounter', this.deckProcess._deckStats.typeLineData);
         // console.log('Cards: ', this.deckProcess._cardList);
         resolve(true);
       } catch (err) {

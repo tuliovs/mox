@@ -34,6 +34,7 @@ export class DeckViewComponent implements OnInit {
     public  _auth: AuthService,
     public _deckService: MoxDeckService,
     private _route: ActivatedRoute,
+    public _router: Router,
     private _toast: ToastService,
     private _state: ActionStateService,
     private _metaService: MetaService,
@@ -105,6 +106,12 @@ export class DeckViewComponent implements OnInit {
     console.log('DUDE THIS WORKS');
   }
 
+  delete() {
+    if (confirm('This action can not be undone, are you sure?')) {
+      this._deckService.deleteDeck(this._deckService.deckProcess._deck);
+      this._router.navigate(['/deckhub']);
+    }
+  }
 
   sortChoosen(sort: string) {
     this._cardSort = sort;

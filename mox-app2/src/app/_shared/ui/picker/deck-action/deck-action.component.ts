@@ -75,15 +75,6 @@ export class DeckActionComponent implements OnInit, OnChanges {
     }
   }
 
-  delete() {
-    if (confirm('This action can not be undone, are you sure?')) {
-      this._deckService.deleteDeck(this.deck);
-      this.deck = null;
-      this.closeContext();
-      this._router.navigate(['/deckhub']);
-    }
-  }
-
   closeContext() {
     this.cancel.emit();
     this._state.returnState();

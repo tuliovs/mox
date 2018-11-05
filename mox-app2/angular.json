@@ -43,7 +43,8 @@
               "node_modules/marked/lib/marked.js",
               "node_modules/prismjs/prism.js",
               "node_modules/prismjs/components/prism-csharp.min.js",
-              "node_modules/prismjs/components/prism-css.min.js"
+              "node_modules/prismjs/components/prism-css.min.js",
+              "node_modules/chart.js/dist/chart.bundle.js"
             ]
           },
           "configurations": {
