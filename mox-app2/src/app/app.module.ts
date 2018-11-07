@@ -5,7 +5,7 @@ import { ReversePipe } from '@application/_pipes/reverse.pipe';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HammerGestureConfig, BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -13,7 +13,7 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { environment } from '@envoirment/environment';
 import { KarnModule } from '@karn/karn.module';
 import { MetaModule } from 'ng2-meta';
-import { ChartsModule } from 'ng2-charts';
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
 import * as Hammer from 'hammerjs';
 import { } from '@angular/platform-browser';
@@ -21,8 +21,9 @@ import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { MarkdownModule, MarkdownService, MarkedRenderer, MarkedOptions } from 'ngx-markdown';
 
-import { MatBadgeModule, MatSelectModule, MatRippleModule,
+import { MatBadgeModule, MatSelectModule, MatRippleModule, MatFormFieldModule,
         MatInputModule, MatButtonModule, MatTooltipModule } from '@angular/material';
+
 
 import { ActionBarComponent } from '@shared/ui/action-bar/action-bar.component';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
@@ -66,6 +67,7 @@ import { ActionButtonComponent } from './_shared/ui/action-button/action-button.
 import { DeckActionComponent } from './_shared/ui/picker/deck-action/deck-action.component';
 import { CardActionComponent } from './_shared/ui/picker/card-action/card-action.component';
 import { DeckImportComponent } from './_shared/ui/picker/deck-import/deck-import.component';
+import { StatsHolderComponent } from './_shared/ui/stats-holder/stats-holder.component';
 
 
 export const firebaseConfig = environment.firebaseConfig;
@@ -130,24 +132,27 @@ export function markedOptions(): MarkedOptions {
     DeckActionComponent,
     CardActionComponent,
     DeckImportComponent,
+    StatsHolderComponent,
   ],
   imports: [
     CommonModule,
     KarnModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
     HttpClientModule,
     AppRoutingModule,
     ScrollingModule,
-    ChartsModule,
+    Ng2GoogleChartsModule,
     MatBadgeModule,
     MatRippleModule,
     MatSelectModule,
     MatInputModule,
     MatTooltipModule,
     MatButtonModule,
+    MatFormFieldModule,
     MarkdownModule.forRoot({
       loader: HttpClient,
       markedOptions: {

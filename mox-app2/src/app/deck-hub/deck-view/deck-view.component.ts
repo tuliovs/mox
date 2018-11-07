@@ -1,3 +1,4 @@
+import { FORMATS } from '@application/_constraints/FORMATS';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { Card } from '@application/_models/_scryfall-models/models';
 import { ToastService } from '@application/_services/toast/toast.service';
@@ -9,7 +10,6 @@ import { MoxDeckService } from '@application/_services/mox-services/deck/mox-dec
 import { tap } from 'rxjs/operators';
 import { AuthService } from '@karn/_services/auth.service';
 import { MetaService } from 'ng2-meta';
-import { ActionBarConfig, ActionButton } from '@application/_models/_mox-models/Config';
 import { MarkdownService } from 'ngx-markdown';
 
 @Component({
@@ -20,16 +20,15 @@ import { MarkdownService } from 'ngx-markdown';
 
 export class DeckViewComponent implements OnInit {
   public navigator = navigator;
+  public formats = FORMATS;
   public _deck: Observable<MoxDeck>;
   public _selectedCard: Card;
-  public tab = 'deckList';
+  public tab = 'statsTab';
   public _orderAsc = false;
   public cardView = false;
   public side = false;
   public _cardFilter;
   public _cardSort: string;
-  public actionConfigSocial = new ActionBarConfig();
-  public actionConfigStats = new ActionBarConfig();
   constructor(
     public  _auth: AuthService,
     public _deckService: MoxDeckService,
@@ -39,24 +38,7 @@ export class DeckViewComponent implements OnInit {
     private _state: ActionStateService,
     private _metaService: MetaService,
     public _mdService: MarkdownService
-  ) {
-      this.actionConfigSocial.actions = new Array<ActionButton>();
-      this.actionConfigStats.actions = new Array<ActionButton>();
-      // actionSettings
-      let act;
-      // social
-      act = this.actionConfigSocial.actions;
-        act[0] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
-        act[1] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
-        act[2] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
-        act[3] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
-      // stats
-      act = this.actionConfigStats.actions;
-        act[0] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
-        act[1] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
-        act[2] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
-        act[3] = Object.assign({icon: '', disabled: true, action: this.navigateToNewDeck.bind(this) });
-  }
+  ) { }
 
   ngOnInit() {
     this.initMarkdown();

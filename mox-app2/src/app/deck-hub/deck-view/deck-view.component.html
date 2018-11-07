@@ -9,7 +9,7 @@
   </app-mox-titlebar>
   <div *ngIf="_auth.getUser() | async as user" class="main">
     <div [hidden]="tab != 'statsTab'">
-      <app-mox-deck-stats class="animated fadeIn" [deckid]="deck.id"></app-mox-deck-stats>
+      <app-mox-deck-stats class="animated fadeIn" [deckStats]="_deckService.deckProcess._deckStats"></app-mox-deck-stats>
     </div>
     <div [hidden]="tab !='deckList'">
       <div class="summary animated fadeInDown" *ngIf="user.uid === deck.ownerId || deck.public">
@@ -103,9 +103,8 @@
 
           <div class="item" [ngClass]="{'positive': deck.format }">
             <div class="select">
-              <select id="iformat" [disabled]="!_deckService.deckProcess._deck || user.uid !== _deckService.deckProcess._deck.ownerId"
-                [(ngModel)]="_deckService.deckProcess._deck.format" (change)="saveDeck()" name="format" required>
-
+              <select id="iformat" [disabled]="user.uid !== _deckService.deckProcess._deck.ownerId"
+                  [(ngModel)]="_deckService.deckProcess._deck.format" (change)="saveDeck()" name="format" required>
                 <option *ngFor="let f of formats" [value]="f">{{f}}</option>
               </select>
             </div>

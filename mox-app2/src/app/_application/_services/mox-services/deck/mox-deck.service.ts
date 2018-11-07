@@ -96,12 +96,23 @@ export class MoxDeckService {
       try {
         this.deckProcess.status = 'Processing Price';
         const t = this.deckProcess._cardList
-          .reduce((acc: number, cur) => acc + (this.countOccurrences(this.deckProcess._deck.cards, cur.id) * Number(cur.usd)), 0);
+          .reduce((acc: number, cur?) =>
+          acc + (this.countOccurrences(this.deckProcess._deck.cards, cur.id) * (cur.usd ? Number(cur.usd) : 0)), 0);
 
         const s = this.deckProcess._sideList
-          .reduce((acc: number, cur) => acc + (this.countOccurrences(this.deckProcess._deck.cards, cur.id) * Number(cur.usd)), 0);
+          .reduce((acc: number, cur?) =>
+            acc + (this.countOccurrences(this.deckProcess._deck.cards, cur.id) * (cur.usd ? Number(cur.usd) : 0)), 0);
+
+        const x = this.deckProcess._cardList
+          .reduce((acc: number, cur?) =>
+            acc + (this.countOccurrences(this.deckProcess._deck.cards, cur.id) * (cur.tix ? Number(cur.tix) : 0)), 0);
+
+        const z = this.deckProcess._sideList
+          .reduce((acc: number, cur?) =>
+              acc + (this.countOccurrences(this.deckProcess._deck.cards, cur.id) * (cur.tix ? Number(cur.tix) : 0)), 0);
 
         this.deckProcess._deckStats.totalPrice = (t + s).toFixed(2);
+        this.deckProcess._deckStats.totalTix = (x + z).toFixed(2);
         resolve(true);
       } catch (err) {
         this.deckProcess.status = 'Error';
@@ -116,6 +127,7 @@ export class MoxDeckService {
     return new Promise((resolve, reject) => {
       try {
         this.deckProcess.status = 'Processing Card Types';
+        this.deckProcess._deckStats.totalCards = this.deckProcess._cardList.length;
         const typeLineCounter = {
           d_totalLands: this.countTypes('land'),
           d_totalCreatures: this.countTypes('creature'),
@@ -124,13 +136,9 @@ export class MoxDeckService {
           d_totalArtifacts: this.countTypes('artifact'),
           d_totalEnchantments: this.countTypes('enchantment'),
           d_totalPlaneswalkers: this.countTypes('planeswalker'),
-          totalCards: this.deckProcess._cardList.length
         };
         this.deckProcess._deckStats.typeLineCounter = typeLineCounter;
-        this.deckProcess._deckStats.typeLineData = Object.values(typeLineCounter).pop();
-
-        console.log('typeLineCounter', this.deckProcess._deckStats.typeLineData);
-        // console.log('Cards: ', this.deckProcess._cardList);
+        this.deckProcess._deckStats.typeLineData = Object.values(typeLineCounter);
         resolve(true);
       } catch (err) {
         this.deckProcess.status = 'Error';
@@ -142,24 +150,41 @@ export class MoxDeckService {
   }
 
   private processLegalities() {
+    // const a = this.deckProcess._cardList
+    // .filter((card: Card) => {
+    //   if (card.card_faces) {
+    //     return card.card_faces[0].type_line.toLowerCase().trim().includes(param);
+    //   } else {
+    //     return card.type_line.toLowerCase().trim().includes(param);
+    //   }
+    // }).length;
+
     return new Promise((resolve, reject) => {
       try {
         if (this.deckProcess._deck.format) {
           this.deckProcess.status = 'Processing Legalities';
-          this.deckProcess._deck.legal = true;
           const f = this.deckProcess._deck.format;
-          this.deckProcess._cardList.forEach((c: Card) => {
-            if (c.legalities && c.legalities[f].valueOf() !== 'legal') {
-              this.deckProcess._deck.legal = false;
-              this.deckProcess.errorList.push('Error of legalities of card[DeckList]: ' + c.name);
-            }
-          });
-          this.deckProcess._sideList.forEach((c: Card) => {
-            if (c.usd) {
-              this.deckProcess._deck.legal = false;
-              this.deckProcess.errorList.push('Error of legalities of card[SideList]: ' + c.name);
-            }
-          });
+          const errCountDeckList = this.deckProcess._cardList
+          .filter((card: Card) => {
+            return card.legalities[f].valueOf() !== 'legal';
+          }).length;
+
+          const errCountSideList = this.deckProcess._sideList
+          .filter((card: Card) => {
+            return card.legalities[f].valueOf() !== 'legal';
+          }).length;
+
+          if ( errCountDeckList > 0 || errCountSideList > 0 ) {
+            this.deckProcess._deck.legal = false;
+            this.deckProcess._cardList.filter((card: Card) => {
+              return card.legalities[f].valueOf() !== 'legal';
+            }).forEach((c: Card) => {
+              const err = `Card Name: ${c.name} \n Legal Value: ${c.legalities[f].valueOf()}`;
+              this.deckProcess.errorList.push(err);
+            });
+          } else {
+            this.deckProcess._deck.legal = true;
+          }
           resolve(true);
         } else {
           reject(new Error('Error processing Legalities'));
@@ -767,15 +792,20 @@ export class MoxDeckService {
     return text;
   }
 
-  private countTypes(param: string): number {
-    return this.deckProcess._cardList
-    .filter((card: Card) => {
-      if (card.card_faces) {
-        return card.card_faces[0].type_line.toLowerCase().trim().includes(param);
-      } else {
-        return card.type_line.toLowerCase().trim().includes(param);
-      }
-    }).length;
+  countTypes(param: string): number {
+    const t = this.deckProcess._cardList
+          .reduce((acc: number, cur?) =>
+          acc + (this.typeCounterValid(cur, param)), 0);
+    // console.log('#' + param, { cardList: this.deckProcess._cardList, Cont: t});
+    return t;
+  }
+
+  typeCounterValid(currCard: Card, param) {
+    const ocu = this.countOccurrences(this.deckProcess._deck.cards, currCard.id);
+    const pass = (currCard.card_faces) ?
+      currCard.card_faces[0].type_line.toLowerCase().trim().includes(param) :
+      currCard.type_line.toLowerCase().trim().includes(param);
+    return (pass) ? ocu : 0;
   }
 
   countOccurrences(arr: string[], value: string) {

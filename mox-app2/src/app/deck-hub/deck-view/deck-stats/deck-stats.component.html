@@ -9,51 +9,45 @@
       </p>
     </div>
     <div class="main-data animated slideInUp">
-      <div *ngIf="stats.typeLineData" class="chart" style="display: block">
-        <canvas baseChart
-          [data]="stats.typeLineData"
-          [labels]="typeLineTitles"
-          [options]="options"
-          [chartType]="'pie'"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"></canvas>
+      <div *ngIf="!deckStats" class="chart">
+        <p>No Stats yet!</p>
+      </div>
+      <div *ngIf="deckStats" class="chart">
+        <form class="example-container" [formGroup]="formOptions">
+          <mat-form-field [color]="formOptions.colors" class="chart-title">
+              <mat-select formControlName="chartSelection">
+                <mat-option [value]="_ChartSelection">
+                  Card Types
+                </mat-option>
+              </mat-select>
+            </mat-form-field>      
+        </form>
+        <google-chart [data]="pieChartData"></google-chart>
+      </div>
+      <div class="other-data">
+        <app-mox-stats-holder [ico]="'fas fa-dollar-sign'" [title]="'Total Price'" (actionButton)="alert('oi')" >
+          <p *ngIf="deckStats.totalPrice">U$ {{deckStats.totalPrice}}</p>
+          <p *ngIf="deckStats.totalTix">Tik {{deckStats.totalTix}}</p>
+        </app-mox-stats-holder>
+        <app-mox-stats-holder [ico]="'fas fa-tasks'" [title]="'Format Legal'" (actionButton)="alert('oi')" >
+          <div class="legal-container">
+            <i *ngIf="deck.legal" class="fas fa-check"></i>
+            <i *ngIf="!deck.legal" class="fas fa-times"></i>
+            <label *ngIf="deck.legal">Deck List Legal</label>
+            <div class="not-legal" *ngIf="!deck.legal">
+              <label *ngIf="!_deckService.deckProcess.errorList || _deckService.deckProcess.errorList.length == 0">Process to get error list</label>
+              <label *ngIf="_deckService.deckProcess.errorList && _deckService.deckProcess.errorList.length > 0" style="width: 1.4%;margin-right: 2px">Error List:</label>
+              <ul *ngIf="_deckService.deckProcess.errorList && _deckService.deckProcess.errorList.length > 0">
+                <li *ngFor="let err of _deckService.deckProcess.errorList">{{err}}</li>
+              </ul>
+            </div>
+          </div>
+        </app-mox-stats-holder>
+        <app-mox-stats-holder [ico]="'fas fa-address-card'" *ngIf="deck.creatorId" [title]="'Original Creator'" (actionButton)="alert('oi')" >
+          <p>{{deck.creatorId}}</p>
+        </app-mox-stats-holder>
       </div>
     </div>
-    <!-- <div class="summary">
-      <div class="decksize mox-font">Deck Data</div>
-      <div class="decktype">Last Processed: {{ _deckService.deckProcess._deckStats.processDate ? (_deckService.deckProcess._deckStats.processDate.toDate() | date:'medium') : '' }}</div>
-    </div>
-    <fieldset>
-      <p>
-        <label class="mox-font">Name: </label>{{_deckService.deckProcess._deck.name}}
-      </p>
-      <p>
-        <label class="mox-font">Owner: </label>{{_deckService.deckProcess._deck.ownerName}}
-      </p>
-      <p>
-        <label class="mox-font">Public: </label>{{_deckService.deckProcess._deck.public ? 'Yes' : 'No'}}
-      </p>
-      <p>
-        <label class="mox-font">Format: </label>{{_deckService.deckProcess._deck.format}}
-      </p>
-      <p>
-        <label class="mox-font">Legal: </label>{{_deckService.deckProcess._deck.legal ? 'Legal' : 'Ilegal'}}
-      </p>
-      <p>
-        <label class="mox-font">Total Price: </label>US$ {{_deckService.deckProcess._deckStats.totalPrice}}
-      </p>
-      <hr *ngIf="_deckService.deckProcess._deckStats.typeLineCounter" />
-      <div *ngIf="_deckService.deckProcess._deckStats.typeLineCounter as ttl">
-        <h3>Card Types Variety</h3>
-          <p><label class="mox-font">Lands: </label>{{ttl.d_totalLands}}</p>
-          <p><label class="mox-font">Creatures: </label>{{ttl.d_totalCreatures}}</p>
-          <p><label class="mox-font">Instants: </label>{{ttl.d_totalInstants}}</p>
-          <p><label class="mox-font">Sorcery: </label>{{ttl.d_totalSorcery}}</p>
-          <p><label class="mox-font">Artifacts: </label>{{ttl.d_totalArtifacts}}</p>
-          <p><label class="mox-font">Enchantments: </label>{{ttl.d_totalEnchantments}}</p>
-          <p><label class="mox-font">Planeswalkers: </label>{{ttl.d_totalPlaneswalkers}}</p>
-      </div>
-    </fieldset> -->
   </div>
 </ng-container>
 
