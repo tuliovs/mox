@@ -1,3 +1,4 @@
+import { Card } from './../_scryfall-models/models';
 
 export class MoxDeck {
   cards: string[];
@@ -19,11 +20,26 @@ export class MoxDeck {
   updated: any[];
 }
 
-export class MoxCardDeck {
-  cardId: string;
-  quantity: number;
-  side: number;
+export class DeckProcess {
+  active = false;
+  totalcards = 0;
+  status: string;
+  _deck?: MoxDeck;
+  _cardList: Card[];
+  _sideList: Card[];
+  _deckStats?: DeckStatistics;
+  errorList?: any[];
 }
+
+export class DeckStatistics {
+  key: string;
+  processDate?: Date;
+  totalPrice?: Number;
+  totalTix?: Number;
+  typeLineCounter?: any;
+  typeLineData?: any[];
+}
+
 
   // "archetype": {
   //   "color_identity": "",

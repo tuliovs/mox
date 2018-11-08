@@ -41,7 +41,7 @@ export class DeckActionComponent implements OnInit, OnChanges {
   processData() {
     navigator.vibrate([30]);
     this.closeContext();
-    this._deckService.processStats();
+    this._deckService.statTools.processStats(this._deckService.deckProcess);
   }
 
   share() {

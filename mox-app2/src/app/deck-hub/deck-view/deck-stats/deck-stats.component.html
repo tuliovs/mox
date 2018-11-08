@@ -26,8 +26,10 @@
       </div>
       <div class="other-data">
         <app-mox-stats-holder [ico]="'fas fa-dollar-sign'" [title]="'Total Price'" (actionButton)="alert('oi')" >
-          <p *ngIf="deckStats.totalPrice">U$ {{deckStats.totalPrice}}</p>
-          <p *ngIf="deckStats.totalTix">Tik {{deckStats.totalTix}}</p>
+          <div class="price-container">
+            <p *ngIf="deckStats.totalPrice">U$ {{deckStats.totalPrice.toFixed(2)}}</p>
+            <p *ngIf="deckStats.totalTix">Tik {{deckStats.totalTix.toFixed(2)}}</p>
+          </div>
         </app-mox-stats-holder>
         <app-mox-stats-holder [ico]="'fas fa-tasks'" [title]="'Format Legal'" (actionButton)="alert('oi')" >
           <div class="legal-container">
@@ -35,16 +37,31 @@
             <i *ngIf="!deck.legal" class="fas fa-times"></i>
             <label *ngIf="deck.legal">Deck List Legal</label>
             <div class="not-legal" *ngIf="!deck.legal">
-              <label *ngIf="!_deckService.deckProcess.errorList || _deckService.deckProcess.errorList.length == 0">Process to get error list</label>
-              <label *ngIf="_deckService.deckProcess.errorList && _deckService.deckProcess.errorList.length > 0" style="width: 1.4%;margin-right: 2px">Error List:</label>
-              <ul *ngIf="_deckService.deckProcess.errorList && _deckService.deckProcess.errorList.length > 0">
-                <li *ngFor="let err of _deckService.deckProcess.errorList">{{err}}</li>
-              </ul>
+              <ng-container *ngIf="!deck.format">
+                <label>Deck does not have a format yet.</label>
+              </ng-container>
+              <ng-container *ngIf="deck.format">
+                <label *ngIf="!_deckService.deckProcess.errorList || _deckService.deckProcess.errorList.length == 0">Process to get error list</label>
+                <label *ngIf="_deckService.deckProcess.errorList && _deckService.deckProcess.errorList.length > 0" style="width: 1.4%;margin-right: 2px">Error List:</label>
+                <ul *ngIf="_deckService.deckProcess.errorList && _deckService.deckProcess.errorList.length > 0">
+                  <li *ngFor="let err of _deckService.deckProcess.errorList">{{err}}</li>
+                </ul>
+              </ng-container>
             </div>
           </div>
         </app-mox-stats-holder>
         <app-mox-stats-holder [ico]="'fas fa-address-card'" *ngIf="deck.creatorId" [title]="'Original Creator'" (actionButton)="alert('oi')" >
           <p>{{deck.creatorId}}</p>
+        </app-mox-stats-holder>
+        <app-mox-stats-holder [ico]="'fas fa-list-ol'" *ngIf="deckStats.typeLineCounter" [title]="'Type Sumary'" (actionButton)="alert('oi')"  >
+          <div class="type-sum-container">
+            <ul>
+              <li *ngFor="let cnt of object.values(deckStats.typeLineCounter); index as i;">
+                <i class="{{typeIcons[i]}}" matTooltip="{{typeTooltips[i]}}" [matTooltipPosition]="'below'"></i>
+                {{cnt.valueOf()}}
+              </li>
+            </ul>
+          </div>
         </app-mox-stats-holder>
       </div>
     </div>

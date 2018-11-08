@@ -50,13 +50,15 @@ export class DeckViewComponent implements OnInit {
       } else {
         this._deck = this._deckService.getDeck(deckId);
         this._deck.pipe(
-          tap((dck) => {
-            this._metaService.setTitle('[Mox]DeckData - ' + dck.name);
-            this._metaService.setTag('og:image', dck.cover);
-            this._deckService.editDeck(dck);
-            this._state.setState('nav');
-            if (this._cardSort) {
-              this.sortChoosen(this._cardSort);
+          tap((dck: MoxDeck) => {
+            if (dck) {
+              this._metaService.setTitle('[Mox]DeckData - ' + dck.name);
+              this._metaService.setTag('og:image', dck.cover);
+              this._deckService.editDeck(dck);
+              this._state.setState('nav');
+              if (this._cardSort) {
+                this.sortChoosen(this._cardSort);
+              }
             }
           }
         )).subscribe();
@@ -64,7 +66,7 @@ export class DeckViewComponent implements OnInit {
     });
   }
 
-  private initMarkdown() {
+  initMarkdown() {
     this._mdService.renderer.heading = (text: string, level: number) => {
       const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
       return '<h' + level + '>' +
@@ -80,7 +82,6 @@ export class DeckViewComponent implements OnInit {
   }
 
   filteredDeckList() {
-    // tslint:disable-next-line:max-line-length
     return this._deckService.deckProcess._cardList;
   }
 
@@ -90,37 +91,64 @@ export class DeckViewComponent implements OnInit {
 
   delete() {
     if (confirm('This action can not be undone, are you sure?')) {
-      this._deckService.deleteDeck(this._deckService.deckProcess._deck);
-      this._router.navigate(['/deckhub']);
+      this._deckService.deleteDeck(this._deckService.deckProcess._deck)
+      .then(
+        (res) => {
+          if (res) {
+            this._router.navigate(['/deckhub']);
+          } else {
+            alert('Error! Delete process failed.');
+          }
+        }
+      )
+      .catch(
+        (err) => {
+          alert(err);
+        }
+      );
     }
+  }
+
+  processStats() {
+    this._state.setState('cloud');
+    this._deckService.statTools.processStats(this._deckService.deckProcess)
+    .then((stats) => {
+      this._deckService.setDeckStats(stats);
+      this._state.setState('nav');
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   }
 
   sortChoosen(sort: string) {
     this._cardSort = sort;
+    const sorter = this._deckService.sortTools;
+    let paramCardList = this._deckService.deckProcess._cardList;
     switch (sort) {
       case 'alpha-up':
-          this._deckService.sortAlphaUp();
+          paramCardList = sorter.sortAlphaUp(paramCardList);
         break;
       case 'alpha-down':
-          this._deckService.sortAlphaDown();
+          paramCardList = sorter.sortAlphaDown(paramCardList);
         break;
       case 'cmc-up':
-          this._deckService.sortCmcUp();
+          paramCardList = sorter.sortCmcUp(paramCardList);
         break;
       case 'cmc-down':
-          this._deckService.sortCmcDown();
+          paramCardList = sorter.sortCmcDown(paramCardList);
         break;
       case 'price-up':
-          this._deckService.sortPriceUp();
+          paramCardList = sorter.sortPriceUp(paramCardList);
         break;
       case 'price-down':
-          this._deckService.sortPriceDown();
+          paramCardList = sorter.sortPriceDown(paramCardList);
         break;
       case 'type-up':
-          this._deckService.sortTypeUp();
+          paramCardList = sorter.sortTypeUp(paramCardList);
         break;
       case 'type-down':
-          this._deckService.sortTypeDown();
+          paramCardList = sorter.sortTypeDown(paramCardList);
         break;
       default:
           this._cardSort = null;
@@ -129,11 +157,11 @@ export class DeckViewComponent implements OnInit {
   }
 
   cardAmount(cardId) {
-    return this._deckService.countOccurrences(this._deckService.deckProcess._deck.cards, cardId);
+    return this._deckService.statTools.countOccurrences(this._deckService.deckProcess._deck.cards, cardId);
   }
 
   cardSideAmount(cardId) {
-    return this._deckService.countOccurrences(this._deckService.deckProcess._deck.side, cardId);
+    return this._deckService.statTools.countOccurrences(this._deckService.deckProcess._deck.side, cardId);
   }
 
   togglePublicDeck(uid) {
@@ -149,11 +177,13 @@ export class DeckViewComponent implements OnInit {
     this._deckService.deckProcess._deck.cards.push(event);
     this.saveDeck();
   }
+
   cardSidePlus(event) {
     navigator.vibrate([30]);
     this._deckService.deckProcess._deck.side.push(event);
     this.saveDeck();
   }
+
   cardMinus(event) {
     navigator.vibrate([30]);
     const deck = this._deckService.deckProcess._deck;
@@ -163,6 +193,7 @@ export class DeckViewComponent implements OnInit {
     }
     this.saveDeck();
   }
+
   cardSideMinus(event) {
     const deck = this._deckService.deckProcess._deck;
     deck.side.splice(deck.side.indexOf(event), 1);
@@ -193,12 +224,10 @@ export class DeckViewComponent implements OnInit {
   }
 
   selectedCard(card: Card) {
-    // console.log(card);
     if (this._selectedCard === card) {
       this._selectedCard = null;
       this.side = false;
     } else {
-      // this._moxService.editDeck(deck);
       navigator.vibrate([30]);
       this._selectedCard = card;
     }

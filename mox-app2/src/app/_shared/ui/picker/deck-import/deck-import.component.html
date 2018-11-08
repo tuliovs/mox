@@ -6,11 +6,27 @@
   </div>
   <section class="options mox-font animated bounceInRight">
     <section class="form-block">
-      <div *ngIf="showLoader && _deckService.deckProcess._deck">
-        <p>Importing: {{_deckService.deckProcess._deck.name}}</p>
-        <p>by {{_deckService.deckProcess._deck.ownerName}}</p>
-        <p>Cards: {{_deckService.deckProcess._deck.cards.length}}</p>
-        <p>Status: {{_deckService.deckProcess.status}}</p>
+      <div class="import-stats animated fadeIn" *ngIf="showLoader && _deckService.deckProcess._deck">
+        <p class="">Importing: {{_deckService.deckProcess._deck.name}}</p>
+        <p class="">Status: {{_deckService.deckProcess.status}}</p>
+        <div class="progress animated fadeIn">
+          <mat-progress-bar [color]="'accent'" mode="buffer" [value]="_deckService.deckProcess._deck.cards.length" [bufferValue]="25">
+          </mat-progress-bar>
+        </div>
+        <div *ngIf="errorList" class="error-container">
+          <ul>
+            <li *ngFor="let e of errorList; let i = index" class="err-item animated slideInUp">
+              <p *ngIf="e.msg">{{e.msg}}</p>
+              <app-mox-row-card *ngIf="e.card" [cardAmout]="cardAmount(e.card.id)" [card]="e.card"
+                (plus)="cardPlus($event)" (minus)="cardMinus($event)"
+              ></app-mox-row-card>
+            </li>
+          </ul>
+          <div class="error-actions">
+            <button (click)="saveDeck()" class="animated fadeIn" mat-raised-button color="accent"><i class="fas fa-save" ></i> Save</button>
+            <button (click)="return()"   class="animated fadeIn" mat-raised-button color="accent"><i class="fas fa-times"></i> Restart</button>
+          </div>
+        </div>
       </div>
 
       <div *ngIf="!showLoader">

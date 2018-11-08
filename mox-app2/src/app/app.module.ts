@@ -22,7 +22,7 @@ import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { MarkdownModule, MarkdownService, MarkedRenderer, MarkedOptions } from 'ngx-markdown';
 
 import { MatBadgeModule, MatSelectModule, MatRippleModule, MatFormFieldModule,
-        MatInputModule, MatButtonModule, MatTooltipModule } from '@angular/material';
+        MatInputModule, MatButtonModule, MatTooltipModule, MatProgressBarModule } from '@angular/material';
 
 
 import { ActionBarComponent } from '@shared/ui/action-bar/action-bar.component';
@@ -153,6 +153,7 @@ export function markedOptions(): MarkedOptions {
     MatTooltipModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatProgressBarModule,
     MarkdownModule.forRoot({
       loader: HttpClient,
       markedOptions: {
