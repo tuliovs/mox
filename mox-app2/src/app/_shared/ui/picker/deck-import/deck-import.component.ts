@@ -58,9 +58,10 @@ export class DeckImportComponent implements OnInit {
 
   saveDeck() {
     const s = this._deckService;
-    this._afs.collection('decks').doc(s.deckProcess._deck.key).ref.get().then(async (doc) => {
+    this._afs.collection('decks').doc(s.deckProcess._deck.key).ref.get()
+    .then(async (doc) => {
       if (doc.exists) {
-        s.updateDeck();
+        s.updateDeck(s.deckProcess);
       } else {
         await s.setDeck(s.deckProcess._deck)
         .then( sk => this._deckService.editDeck(sk._deck))

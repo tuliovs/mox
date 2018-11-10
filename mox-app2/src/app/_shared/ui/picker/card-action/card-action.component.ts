@@ -101,6 +101,7 @@ export class CardActionComponent implements OnInit {
   }
 
   viewCard() {
+    console.log(this.card);
     this._router.navigate(['/card/' + this.card.id]);
   }
 

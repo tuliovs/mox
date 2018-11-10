@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatRipple } from '@angular/material';
 
 @Component({
@@ -8,6 +8,7 @@ import { MatRipple } from '@angular/material';
 })
 export class StatsHolderComponent implements OnInit {
   @ViewChild(MatRipple) ripple: MatRipple;
+  @Output() action: EventEmitter<any> = new EventEmitter();
   @Input() ico;
   @Input() title;
   constructor() { }

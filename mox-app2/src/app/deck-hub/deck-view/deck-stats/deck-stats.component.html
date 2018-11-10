@@ -1,38 +1,60 @@
 <ng-container *ngIf="_deckService.deckProcess._deck as deck">
   <div class="deck-data" *ngIf="_deckService.deckProcess._deckStats as stats">
-    <div class="cover animated fadeIn" socialshare-media="deck.cover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
+    <div
+      class="cover animated fadeIn"
+      socialshare-media="deck.cover"
+      [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"
+    ></div>
     <div class="header animated fadeIn">
-      <h2>{{deck.name}}</h2>
+      <h2>{{ deck.name }}</h2>
       <p>
-        <label>{{deck.format}}</label>
-        <label>by {{deck.ownerName}}</label>
+        <label>{{ deck.format }}</label> <label>by {{ deck.ownerName }}</label>
       </p>
     </div>
     <div class="main-data animated slideInUp">
-      <div *ngIf="!deckStats" class="chart">
-        <p>No Stats yet!</p>
-      </div>
+      <div *ngIf="!deckStats" class="chart"><p>No Stats yet!</p></div>
       <div *ngIf="deckStats" class="chart">
         <form class="example-container" [formGroup]="formOptions">
           <mat-form-field [color]="formOptions.colors" class="chart-title">
-              <mat-select formControlName="chartSelection">
-                <mat-option [value]="_ChartSelection">
-                  Card Types
-                </mat-option>
-              </mat-select>
-            </mat-form-field>      
+            <mat-select formControlName="chartSelection" [(value)]="_chartSelection" (selectionChange)="changeDataChart()">
+              <mat-option [value]="'cardtypes'"> Card Types </mat-option>
+              <mat-option [value]="'cmcCourve'"> Cmc Curve </mat-option>
+            </mat-select>
+          </mat-form-field>
         </form>
-        <google-chart [data]="pieChartData"></google-chart>
+        <google-chart [data]="_chartData"></google-chart>
       </div>
       <div class="other-data">
-        <app-mox-stats-holder [ico]="'fas fa-dollar-sign'" [title]="'Total Price'" (actionButton)="alert('oi')" >
-          <div class="price-container">
-            <p *ngIf="deckStats.totalPrice">U$ {{deckStats.totalPrice.toFixed(2)}}</p>
-            <p *ngIf="deckStats.totalTix">Tik {{deckStats.totalTix.toFixed(2)}}</p>
+        <app-mox-stats-holder
+          *ngIf="deckStats.guildIdentity && deckStats.guildIco"
+          [ico]="deckStats.guildIco"
+          [title]="'Guild Identification'"
+          (action)="proGuild()"
+        >
+          <div class="price-container animated fadeIn">
+            <p>{{ deckStats.guildIdentity }}</p>
           </div>
         </app-mox-stats-holder>
-        <app-mox-stats-holder [ico]="'fas fa-tasks'" [title]="'Format Legal'" (actionButton)="alert('oi')" >
-          <div class="legal-container">
+        <app-mox-stats-holder
+          [ico]="'fas fa-dollar-sign'"
+          [title]="'Total Price'"
+          (action)="proPrice()"
+        >
+          <div class="price-container animated fadeIn">
+            <p *ngIf="deckStats.totalPrice">
+              U$ {{ deckStats.totalPrice.toFixed(2) }}
+            </p>
+            <p *ngIf="deckStats.totalTix">
+              Tik {{ deckStats.totalTix.toFixed(2) }}
+            </p>
+          </div>
+        </app-mox-stats-holder>
+        <app-mox-stats-holder
+          [ico]="'fas fa-tasks'"
+          [title]="'Format Legal'"
+          (action)="proLegal()"
+        >
+          <div class="legal-container animated fadeIn">
             <i *ngIf="deck.legal" class="fas fa-check"></i>
             <i *ngIf="!deck.legal" class="fas fa-times"></i>
             <label *ngIf="deck.legal">Deck List Legal</label>
@@ -41,24 +63,78 @@
                 <label>Deck does not have a format yet.</label>
               </ng-container>
               <ng-container *ngIf="deck.format">
-                <label *ngIf="!_deckService.deckProcess.errorList || _deckService.deckProcess.errorList.length == 0">Process to get error list</label>
-                <label *ngIf="_deckService.deckProcess.errorList && _deckService.deckProcess.errorList.length > 0" style="width: 1.4%;margin-right: 2px">Error List:</label>
-                <ul *ngIf="_deckService.deckProcess.errorList && _deckService.deckProcess.errorList.length > 0">
-                  <li *ngFor="let err of _deckService.deckProcess.errorList">{{err}}</li>
+                <label
+                  *ngIf="
+                    !_deckService.deckProcess.errorList ||
+                    _deckService.deckProcess.errorList.length == 0
+                  "
+                  >Process to get error list</label
+                >
+                <label
+                  *ngIf="
+                    _deckService.deckProcess.errorList &&
+                    _deckService.deckProcess.errorList.length > 0
+                  "
+                  style="width: 1.4%;margin-right: 2px"
+                  >Error List:</label
+                >
+                <ul
+                  *ngIf="
+                    _deckService.deckProcess.errorList &&
+                    _deckService.deckProcess.errorList.length > 0
+                  "
+                >
+                  <li *ngFor="let err of _deckService.deckProcess.errorList">
+                    {{ err }}
+                  </li>
                 </ul>
               </ng-container>
             </div>
           </div>
         </app-mox-stats-holder>
-        <app-mox-stats-holder [ico]="'fas fa-address-card'" *ngIf="deck.creatorId" [title]="'Original Creator'" (actionButton)="alert('oi')" >
-          <p>{{deck.creatorId}}</p>
+        <app-mox-stats-holder
+          [ico]="'fas fa-address-card'"
+          *ngIf="deck.creatorId"
+          [title]="'Original Creator'"
+        >
+          <p class="animated fadeIn">{{ deck.creatorId }}</p>
         </app-mox-stats-holder>
-        <app-mox-stats-holder [ico]="'fas fa-list-ol'" *ngIf="deckStats.typeLineCounter" [title]="'Type Sumary'" (actionButton)="alert('oi')"  >
-          <div class="type-sum-container">
+        <app-mox-stats-holder [ico]="'fas fa-list-ol'" *ngIf="deckStats.typeLineCounter" [title]="'Type Sumary'" (action)="proTypes()"
+        >
+          <div class="type-sum-container animated fadeIn">
             <ul>
-              <li *ngFor="let cnt of object.values(deckStats.typeLineCounter); index as i;">
-                <i class="{{typeIcons[i]}}" matTooltip="{{typeTooltips[i]}}" [matTooltipPosition]="'below'"></i>
-                {{cnt.valueOf()}}
+              <li
+                *ngFor="
+                  let cnt of object.values(deckStats.typeLineCounter);
+                  index as i
+                "
+              >
+                <i
+                  class="{{typeIcons[i]}}"
+                  matTooltip="{{typeTooltips[i]}}"
+                  [matTooltipPosition]="'below'"
+                ></i>
+                {{ cnt.valueOf() }}
+              </li>
+            </ul>
+          </div>
+        </app-mox-stats-holder>
+        <app-mox-stats-holder [ico]="'fas fa-chart-bar'" *ngIf="deckStats.cmcTotals" [title]="'Cmc Totals'" (action)="proCmc()">
+          <div class="type-sum-container animated fadeIn">
+            <ul>
+              <li *ngFor="let cnt of deckStats.cmcTotals;index as i">
+                <i  class="ms ms-{{i}} ms-cost" style="color: #000;font-size: 1.1em;" matTooltip="Converted Mana Cost {{i}}" [matTooltipPosition]="'below'"></i>
+                {{ cnt }}
+              </li>
+            </ul>
+          </div>
+        </app-mox-stats-holder>
+        <app-mox-stats-holder [ico]="'fas fa-adjust'" *ngIf="deckStats.manaDevotion" [title]="'Mana Devotion'" (action)="proDevo()">
+          <div class="type-sum-container animated fadeIn">
+            <ul>
+              <li *ngFor="let cnt of object.values(deckStats.manaDevotion);index as i">
+                <i  class="{{manaDevoIcons[i]}}" matTooltip="{{manaDevotips[i]}}" [matTooltipPosition]="'below'"></i>
+                {{ cnt.valueOf() }}
               </li>
             </ul>
           </div>
@@ -67,4 +143,3 @@
     </div>
   </div>
 </ng-container>
-

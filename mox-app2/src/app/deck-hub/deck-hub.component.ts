@@ -116,13 +116,14 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
 
   deckFolderInclude(fparam) {
     this._deckService.deckProcess._deck.folder = fparam;
-    this._deckService.updateDeck();
+    this._deckService.updateDeck(this._deckService.deckProcess);
   }
 
   deckFolderRemove() {
     this._deckService.deckProcess._deck.folder = null;
-    this._deckService.updateDeck();
+    this._deckService.updateDeck(this._deckService.deckProcess);
   }
+
   deckSelected(deck: MoxDeck) {
     if (this.internalDeck === deck) {
       navigator.vibrate([30, 30]);
@@ -130,9 +131,15 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
       this._state.setState('nav');
     } else {
       navigator.vibrate([30]);
-      this._deckService.editDeck(deck);
+      this._state.setState('loading');
       this.internalDeck = deck;
-      this._state.setState('view');
+      this._deckService.editDeck(deck)
+      .then(() => {
+        this._state.setState('view');
+      })
+      .catch(() => {
+        this._state.setState('error');
+      });
     }
   }
 

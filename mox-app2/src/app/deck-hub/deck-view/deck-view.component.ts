@@ -23,7 +23,7 @@ export class DeckViewComponent implements OnInit {
   public formats = FORMATS;
   public _deck: Observable<MoxDeck>;
   public _selectedCard: Card;
-  public tab = 'statsTab';
+  public tab = 'deckList';
   public _orderAsc = false;
   public cardView = false;
   public side = false;
@@ -78,7 +78,7 @@ export class DeckViewComponent implements OnInit {
   }
 
   saveDeck() {
-    this._deckService.updateDeck();
+    this._deckService.updateDeck(this._deckService.deckProcess);
   }
 
   filteredDeckList() {
@@ -112,11 +112,14 @@ export class DeckViewComponent implements OnInit {
   processStats() {
     this._state.setState('cloud');
     this._deckService.statTools.processStats(this._deckService.deckProcess)
-    .then((stats) => {
-      this._deckService.setDeckStats(stats);
+    .then(p1 => this._deckService.updateDeckStats(p1))
+    .then(p2 => this._deckService.updateDeck(p2))
+    .then((dp) => {
       this._state.setState('nav');
+      this._toast.sendMessage('Deck Fully Processed!', 'info', dp._deck.ownerId);
     })
     .catch((err) => {
+      this._state.setState('error');
       console.error(err);
     });
   }

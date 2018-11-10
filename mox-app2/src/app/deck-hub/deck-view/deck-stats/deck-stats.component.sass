@@ -34,7 +34,7 @@ svg
   .main-data
     background-color: color(_ice)
     border-radius: 14px
-    height: 57%
+    height: 58.5%
     overflow-y: auto
     position: fixed
     top: 35.6%
@@ -76,6 +76,7 @@ svg
       flex-direction: column
       justify-content: center
       margin: 1%
+      padding-bottom: 2%
       width: 98%
 
       form
@@ -143,13 +144,14 @@ svg
 
   .fas
     font-size: 1.4em
-    margin: 0% 3% 0 2%
+    margin: 0 0 0 5%
 
   .fa-check
-    color: #66cd6f
+    align-self: center
+    color: color(notification, success) // #66cd6f
 
   .fa-times
-    color: #ff454a
+    color: color(notification, error)
 
   .not-legal
     display: inline-flex

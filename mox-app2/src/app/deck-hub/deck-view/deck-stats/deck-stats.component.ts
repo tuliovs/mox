@@ -2,7 +2,13 @@ import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { TYPE_SUMARY_ICONS, TYPE_SUMARY_TOOLTIP } from '@application/_constraints/ICON_LISTS';
+import {  TYPE_SUMARY_ICONS,
+          TYPE_SUMARY_TOOLTIP,
+          MANA_DEVO_TOOLTIP,
+          MANA_DEVO_ICONS,
+          CHART_COLORS
+        } from '@application/_constraints/ICON_LISTS';
+import { ActionStateService } from '@application/_services/action-state/action-state.service';
 
 
 @Component({
@@ -15,9 +21,13 @@ export class DeckStatsComponent implements OnInit, AfterViewInit {
   @Input() deckStats;
   public typeIcons = TYPE_SUMARY_ICONS;
   public typeTooltips = TYPE_SUMARY_TOOLTIP;
+  public manaDevoIcons = MANA_DEVO_ICONS;
+  public manaDevotips = MANA_DEVO_TOOLTIP;
   public formOptions;
-  public _ChartSelection: string;
-  public pieChartData = {
+  public _chartSelection: string;
+  public _chartData: any;
+
+  public chartPie = {
     chartType: 'PieChart',
     dataTable: [ ],
     options: {
@@ -32,15 +42,7 @@ export class DeckStatsComponent implements OnInit, AfterViewInit {
         width: '100%',
         height: '70%'
       },
-      colors: [
-        '#f9ffff',
-        '#CCD1D1',
-        '#888C8C',
-        '#A0AFC8',
-        '#667A95',
-        '#9DAABB',
-        '#BDCBE2'
-      ],
+      colors: CHART_COLORS,
       pieSliceTextStyle: {
         color: '#132030',
       },
@@ -61,29 +63,68 @@ export class DeckStatsComponent implements OnInit, AfterViewInit {
       },
     },
   };
+
+  chartColumn = {
+    chartType: 'ColumnChart',
+    dataTable: [ ],
+    options: {
+      title: 'Amount of Cards group by Coverted Mana Cost (CMC)',
+      titleTextStyle: {
+        color: '#fff',
+        fontName: 'Exo 2',
+        fontSize: '15px',
+        bold: 'true'
+      },
+      vAxis: {
+        textStyle: {
+          color: '#667a95',
+          fontName: 'Exo 2',
+        }
+      },
+      hAxis: {
+        textStyle: {
+          color: '#667a95',
+          fontName: 'Exo 2',
+        }
+      },
+      backgroundColor: '#132030',
+      fontName: 'Exo 2',
+      width: 350,
+      bar: {groupWidth: '55%'},
+      legend: { position: 'none' },
+      tooltip: {
+        textStyle: {color: '#132030', fontName: 'Exo 2'},
+        showColorCode: true
+      },
+    }
+  };
   constructor(
     public _formbuilder: FormBuilder,
+    public _state: ActionStateService,
     public _deckService: MoxDeckService,
     public _router: Router,
   ) { }
 
   ngOnInit() {
     if (this.deckStats) {
-      const data = [
+      const s = this._deckService.deckProcess._deckStats;
+      let data;
+      data = [
         ['Types', 'N in deck'],
-        ['Lands', this.deckStats.typeLineData[0]],
-        ['Creatures', this.deckStats.typeLineData[1]],
-        ['Instants', this.deckStats.typeLineData[2]],
-        ['Sorcerys', this.deckStats.typeLineData[3]],
-        ['Artifacts', this.deckStats.typeLineData[4]],
-        ['Enchantments', this.deckStats.typeLineData[5]],
-        ['Planeswalker', this.deckStats.typeLineData[6]]
+        ['Lands', s.typeLineData[0]],
+        ['Creatures', s.typeLineData[1]],
+        ['Instants', s.typeLineData[2]],
+        ['Sorcerys', s.typeLineData[3]],
+        ['Artifacts', s.typeLineData[4]],
+        ['Enchantments', s.typeLineData[5]],
+        ['Planeswalker', s.typeLineData[6]]
       ];
-      this._ChartSelection = 'cardtypes';
-      this.pieChartData.dataTable = data;
+      this.chartPie.dataTable = data;
+      this._chartSelection = 'cardtypes';
+      this._chartData = this.chartPie;
       this.formOptions = this._formbuilder.group({
         color: 'accent',
-        chartSelection: this._ChartSelection,
+        chartSelection: this._chartSelection,
       });
     }
   }
@@ -91,13 +132,126 @@ export class DeckStatsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
   }
 
-  // events
-  public chartClicked(e: any): void {
-    // console.log(e);
+  changeDataChart() {
+    const s = this._deckService.deckProcess._deckStats;
+    let data;
+    switch (this._chartSelection) {
+      case 'cmcCourve':
+        data = [];
+        data.push(['Cost', 'Amount of Cards', { role: 'style' }, { role: 'annotation' }]);
+        s.cmcTotals.forEach(
+          (v, i) => {
+            data.push([i, v , CHART_COLORS[i] , i]);
+          }
+        );
+        this.chartColumn.dataTable = data;
+        this._chartData = this.chartColumn;
+        break;
+      case 'cardtypes':
+        data = [
+          ['Types', 'N in deck'],
+          ['Lands', s.typeLineData[0]],
+          ['Creatures', s.typeLineData[1]],
+          ['Instants', s.typeLineData[2]],
+          ['Sorcerys', s.typeLineData[3]],
+          ['Artifacts', s.typeLineData[4]],
+          ['Enchantments', s.typeLineData[5]],
+          ['Planeswalker', s.typeLineData[6]]
+        ];
+        this.chartPie.dataTable = data;
+        this._chartData = this.chartPie;
+        break;
+    }
   }
 
-  public chartHovered(e: any): void {
-    // console.log(e);
+  async proCmc() {
+    const dk = this._deckService;
+    this._state.setState('loading');
+    await dk.statTools.proCmcTotals(dk.deckProcess)
+    .then(p => dk.updateDeckStats(p))
+    .then(() => {
+        this._state.setState('nav');
+      }
+    )
+    .catch((err) => {
+      console.error(err);
+      this._state.setState('error');
+    });
+  }
+
+  async proGuild() {
+    const dk = this._deckService;
+    this._state.setState('loading');
+    await dk.statTools.proColorId(dk.deckProcess)
+    .then(p => dk.updateDeckStats(p))
+    .then(() => {
+        this._state.setState('nav');
+      }
+    )
+    .catch((err) => {
+      console.error(err);
+      this._state.setState('error');
+    });
+  }
+
+  async proPrice() {
+    const dk = this._deckService;
+    this._state.setState('loading');
+    await dk.statTools.proPrice(dk.deckProcess)
+    .then(p => dk.updateDeckStats(p))
+    .then(() => {
+        this._state.setState('nav');
+      }
+    )
+    .catch((err) => {
+      console.error(err);
+      this._state.setState('error');
+    });
+  }
+
+  async proLegal() {
+    const dk = this._deckService;
+    this._state.setState('loading');
+    await dk.statTools.proLegalities(dk.deckProcess)
+    .then(p => dk.updateDeckStats(p))
+    .then(() => {
+        this._state.setState('nav');
+      }
+    )
+    .catch((err) => {
+      console.error(err);
+      this._state.setState('error');
+    });
+  }
+
+  async proTypes() {
+    const dk = this._deckService;
+    this._state.setState('loading');
+    await dk.statTools.proCardTypesTotals(dk.deckProcess)
+    .then(p => dk.updateDeckStats(p))
+    .then(() => {
+        this._state.setState('nav');
+      }
+    )
+    .catch((err) => {
+      console.error(err);
+      this._state.setState('error');
+    });
+  }
+
+  async proDevo() {
+    const dk = this._deckService;
+    this._state.setState('loading');
+    await dk.statTools.proColorDevo(dk.deckProcess)
+    .then(p => dk.updateDeckStats(p))
+    .then(() => {
+        this._state.setState('nav');
+      }
+    )
+    .catch((err) => {
+      console.error(err);
+      this._state.setState('error');
+    });
   }
 
 }

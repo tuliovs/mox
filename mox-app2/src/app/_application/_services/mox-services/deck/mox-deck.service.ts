@@ -225,28 +225,29 @@ export class MoxDeckService {
     }
   }
 
-  updateDeck() {
-    if (this.deckProcess._deck) {
-      this._state.setState('cloud');
-      this.deckProcess.status = 'saving';
-      this.afs.collection('decks')
-      .doc<MoxDeck>(this.deckProcess._deck.key)
-      .update(Object.assign({}, this.deckProcess._deck))
-      .then(() => {
-        this.deckProcess.status = 'ready';
-        this._state.setState('nav');
-      })
-      .catch((err) => {
-        this.deckProcess.errorList.push(err);
-        console.error(err);
-        this._state.setState('error');
-      });
-    } else {
-      this.deckProcess.status = 'Error';
-      this.deckProcess.active = false;
-      console.error('#234 [updateDeck] Coulnd find any deck to update!');
-      this._state.setState('error');
-    }
+  updateDeck(dkPs: DeckProcess) {
+    return new Promise<DeckProcess>((resolve, reject) => {
+      if (dkPs._deck) {
+        dkPs.status = 'Updating Deck';
+        this.afs.collection('decks')
+        .doc<MoxDeck>(dkPs._deck.key)
+        .update(Object.assign({}, dkPs._deck))
+        .then(() => {
+          dkPs.status = 'updated';
+          resolve (dkPs);
+        })
+        .catch((err) => {
+          dkPs.errorList.push(err);
+          console.error(err);
+          reject (err);
+        });
+      } else {
+        dkPs.status = 'Error';
+        dkPs.active = false;
+        console.error('#234 [updateDeck] Coulnd find any deck to update!');
+        reject ('#234 [updateDeck] Coulnd find any deck to update!');
+      }
+    });
   }
 
   deleteDeck(deck: MoxDeck) {
@@ -324,11 +325,38 @@ export class MoxDeckService {
           reject(`#111 [SaveDeckStats] - Error adding document: ${error}`);
         }).then(
           () => {
-            resolve(this.deckProcess);
+            resolve(deckP);
           }
         );
       } else {
         reject('#343 [setDeckStats] - no process');
+      }
+    });
+  }
+
+  updateDeckStats(dkPs: DeckProcess) {
+    return new Promise<DeckProcess>((resolve, reject) => {
+      if (dkPs._deckStats) {
+        dkPs.status = 'Updating Deck Stats';
+        this.afs.collection('decks-stats')
+        .doc<DeckStatistics>(dkPs._deckStats.key)
+        .update(Object.assign({}, dkPs._deckStats))
+        .then(() => {
+          dkPs.status = 'ready';
+          dkPs.active = false;
+          resolve (dkPs);
+        })
+        .catch((err) => {
+          dkPs.errorList.push(err);
+          dkPs.active = false;
+          console.error(err);
+          reject (err);
+        });
+      } else {
+        dkPs.status = 'Error';
+        dkPs.active = false;
+        console.error('#234 [updateDeck] Coulnd find any deck to update!');
+        reject ('#234 [updateDeck] Coulnd find any deck to update!');
       }
     });
   }
