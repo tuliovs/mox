@@ -1,15 +1,14 @@
-<div *ngIf="!config" class="action-bar"
+<div *ngIf="!config" class="action-bar animated fadeIn"
   (swipeleft)="actionSwipeLeft()"
   (swiperight)="actionSwipeRight()"
   (swipeup)="actionSwipeUp()"
-  (swipedown)="actionSwipeDown()"
->
+  (swipedown)="actionSwipeDown()">
   <ng-content>
 
   </ng-content>
 </div>
 
-<div *ngIf="config"
+<!-- <div *ngIf="config"
   (swipeleft)="actionSwipeLeft()"
   (swiperight)="actionSwipeRight()"
   (swipeup)="actionSwipeUp()"
@@ -31,4 +30,4 @@
       <i  [className]="'fas ' + actBtns[3].icon" class="fas" [ngClass]="fa-book-open"></i>
     </button>
   </div>
-</div>
+</div> -->

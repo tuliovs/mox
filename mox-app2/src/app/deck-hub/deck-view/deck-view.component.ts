@@ -51,11 +51,14 @@ export class DeckViewComponent implements OnInit {
             if (dck) {
               this._metaService.setTitle('[Mox]DeckData - ' + dck.name);
               this._metaService.setTag('og:image', dck.cover);
-              this._deckService.editDeck(dck);
-              this._state.setState('nav');
-              if (this._cardSort) {
-                this.sortChoosen(this._cardSort);
-              }
+              this._deckService.editDeck(dck).then(
+                () => {
+                  this._state.setState('nav');
+                  if (this._cardSort) {
+                    this.sortChoosen(this._cardSort);
+                  }
+                }
+              );
             }
           }
         )).subscribe();
@@ -98,7 +101,7 @@ export class DeckViewComponent implements OnInit {
   }
 
   processStats() {
-    this._state.setState('cloud');
+    this._state.setState('loading');
     this._deckService.statTools.processStats(this._deckService.deckProcess)
     .then(p1 => this._deckService.updateDeckStats(p1))
     .then(p2 => this._deckService.updateDeck(p2))

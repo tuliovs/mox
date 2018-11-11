@@ -106,6 +106,13 @@ export class AppComponent implements OnInit {
     }
   }
 
+  menuClose() {
+    navigator.vibrate([30, 30]);
+    this.menuOpen('rubberBand');
+    this.animateNav();
+    this.setState('nav');
+  }
+
   resetAnimationState() {
     this.animationState2 = '';
   }

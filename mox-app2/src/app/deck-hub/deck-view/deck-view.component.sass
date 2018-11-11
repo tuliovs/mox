@@ -24,6 +24,7 @@ hr
   justify-content: space-between
   padding: 0
   position: fixed
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, .3)
   width: 100%
   z-index: 1
 
@@ -170,3 +171,23 @@ ol
 .tab-content
   height: 90%
   overflow-y: scroll
+
+.mat-ink-bar
+  background-color: color(_darkblue) !important
+  border-radius: 50%
+  height: 6px
+  margin: -2px 16.5%
+  width: 6px !important
+
+.mat-tab-header
+  background-color: color(_white) !important
+  line-height: 1em !important
+  max-height: 2em
+
+.mat-tab-group
+  .mat-background-primary
+    .mat-tab-label
+      color: color(_darkblue)
+      font-family: 'Exo 2'
+      font-weight: 600
+      height: 2em

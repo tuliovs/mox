@@ -78,7 +78,7 @@
   </div>
 </div>
 
-<app-mox-action-bar [hidden]=" tab != 0"> 
+<app-mox-action-bar [hidden]=" tab != 0" (swiperight)="tab = 1" (swipeleft)="tab = 2"> 
   <button (click)="activateCardView()" matRipple [disabled]="!(this._selectedCard)" class="btn btn-action animated flipInX">
     <i  class="fas fa-search-plus"></i>
   </button>
@@ -89,7 +89,7 @@
   <app-mox-picker *ngIf="_selectedCard" [pickerType]="'card'" [currentState]="_selectedCard" (sortSelection)="sortChoosen($event)"></app-mox-picker>
 </app-mox-action-bar>
 
-<app-mox-action-bar [hidden]="tab != 1"> 
+<app-mox-action-bar [hidden]="tab != 1" (swiperight)="tab = 2" (swipeleft)="tab = 0"> 
   <button disabled matRipple class="btn btn-action animated flipInX">
     <i class="fas fa-address-card"></i>
   </button>
@@ -105,7 +105,7 @@
   </button>        
 </app-mox-action-bar>
 
-<app-mox-action-bar [hidden]="tab != 2"> 
+<app-mox-action-bar [hidden]="tab != 2" (swiperight)="tab = 0" (swipeleft)="tab = 1"> 
   <button (click)="delete()" matRipple class="btn btn-action animated flipInX">
     <i class="fas fa-trash"></i>
   </button>

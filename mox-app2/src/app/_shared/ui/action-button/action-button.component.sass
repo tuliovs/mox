@@ -4,10 +4,7 @@ $shad: rgba(0, 0, 0, .25);
 
 .action-button
   align-items: center
-  background-color: color(_white)
-  border-radius: 25em
   bottom: 1%
-  box-shadow: 0 0 20px $shad-action-button
   display: flex
   height: 66px
   justify-content: center
@@ -17,11 +14,22 @@ $shad: rgba(0, 0, 0, .25);
   width: 66px
   z-index: 10
 
+  .bounce
+    animation-duration: 1.5s
+    background-color: color(_blue)
+    border-radius: 50%
+    filter: blur(4px)
+    height: 78%
+    opacity: 1
+    position: absolute
+    width: 78%
+    z-index: 11
+
   div
     align-items: center
-    background-color: color(_white)
-    border-radius: 25em
-    box-shadow: 0 0 5px $shad-action-button
+    // background-color: color(_white)
+    // border-radius: 25em
+    // box-shadow: 0 0 5px $shad-action-button
     display: flex
     height: 56px
     justify-content: center
@@ -53,3 +61,6 @@ $shad: rgba(0, 0, 0, .25);
   color: color(_white) !important
   font-size: .81em !important
   text-align: center !important
+
+.fa-sync-alt
+  font-size: 1.8em !important
