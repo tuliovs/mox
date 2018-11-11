@@ -14,14 +14,14 @@ import { environment } from '@envoirment/environment';
 import { KarnModule } from '@karn/karn.module';
 import { MetaModule } from 'ng2-meta';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { NgxMdModule } from 'ngx-md';
 
 import * as Hammer from 'hammerjs';
 import { } from '@angular/platform-browser';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
-import { MarkdownModule, MarkdownService, MarkedRenderer, MarkedOptions } from 'ngx-markdown';
-
 import { MatBadgeModule, MatSelectModule, MatRippleModule, MatFormFieldModule,
+        MatSlideToggleModule, MatTabsModule,
         MatInputModule, MatButtonModule, MatTooltipModule, MatProgressBarModule } from '@angular/material';
 
 
@@ -68,6 +68,7 @@ import { DeckActionComponent } from './_shared/ui/picker/deck-action/deck-action
 import { CardActionComponent } from './_shared/ui/picker/card-action/card-action.component';
 import { DeckImportComponent } from './_shared/ui/picker/deck-import/deck-import.component';
 import { StatsHolderComponent } from './_shared/ui/stats-holder/stats-holder.component';
+import { DeckSocialComponent } from './deck-hub/deck-view/deck-social/deck-social.component';
 
 
 export const firebaseConfig = environment.firebaseConfig;
@@ -76,25 +77,6 @@ export class MyHammerConfig extends HammerGestureConfig  {
   overrides = <any>{
       // override hammerjs default configuration
       'swipe': { direction: Hammer.DIRECTION_ALL  }
-  };
-}
-
-export function markedOptions(): MarkedOptions {
-  const renderer = new MarkedRenderer();
-
-  renderer.blockquote = (text: string) => {
-    return '<blockquote class="blockquote"><p>' + text + '</p></blockquote>';
-  };
-
-  return {
-    renderer: renderer,
-    gfm: true,
-    tables: true,
-    breaks: false,
-    pedantic: false,
-    sanitize: false,
-    smartLists: true,
-    smartypants: false,
   };
 }
 
@@ -133,6 +115,7 @@ export function markedOptions(): MarkedOptions {
     CardActionComponent,
     DeckImportComponent,
     StatsHolderComponent,
+    DeckSocialComponent,
   ],
   imports: [
     CommonModule,
@@ -152,15 +135,11 @@ export function markedOptions(): MarkedOptions {
     MatInputModule,
     MatTooltipModule,
     MatButtonModule,
+    MatSlideToggleModule,
     MatFormFieldModule,
     MatProgressBarModule,
-    MarkdownModule.forRoot({
-      loader: HttpClient,
-      markedOptions: {
-        provide: MarkedOptions,
-        useFactory: markedOptions,
-      },
-    }),
+    MatTabsModule,
+    NgxMdModule.forRoot(),
     MetaModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
@@ -180,7 +159,6 @@ export function markedOptions(): MarkedOptions {
     ScryfallCardService,
     ScryfallSearchService,
     LocalstorageService,
-    MarkdownService,
     ToastService,
   ],
   schemas: [

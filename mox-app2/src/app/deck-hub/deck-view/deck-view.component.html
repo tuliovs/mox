@@ -1,123 +1,73 @@
 <app-mox-loading-spinner *ngIf="!_deck"></app-mox-loading-spinner>
 <div *ngIf="_deck | async as deck">
-  <app-mox-titlebar titleHeight="1.72">
-    <ol (swipeleft)="changetab('left')" (swiperight)="changetab('right')">
-      <li (click)="tab = 'deckList'" [ngClass]="{'active': tab == 'deckList'}">DeckList <app-mox-dot *ngIf="tab == 'deckList'"></app-mox-dot></li>
-      <li (click)="tab = 'socialTab'"  [ngClass]="{'active': tab == 'socialTab'}">Social <app-mox-dot *ngIf="tab == 'socialTab'"></app-mox-dot></li>
-      <li (click)="tab = 'statsTab'"   [ngClass]="{'active': tab == 'statsTab'}">Stats <app-mox-dot *ngIf="tab == 'statsTab'"></app-mox-dot></li>
-    </ol>
-  </app-mox-titlebar>
   <div *ngIf="_auth.getUser() | async as user" class="main">
-    <div [hidden]="tab != 'statsTab'">
-      <app-mox-deck-stats class="animated fadeIn" [deckStats]="_deckService.deckProcess._deckStats"></app-mox-deck-stats>
-    </div>
-    <div [hidden]="tab !='deckList'">
-      <div class="summary animated fadeInDown" *ngIf="user.uid === deck.ownerId || deck.public">
-        <div class="decksize mox-font">
-          <i class="fas fa-clone"></i>{{deck.cards.length}}
-          /
-          <i class="far fa-clone"></i>{{(deck.side) ? deck.side.length : 0}}
-        </div>
-        <div class="deckname">{{deck.name}}</div>
-        <div class="decktype">{{deck.format}}</div>
-      </div>
-      <div *ngIf="!deck.public && user.uid !== deck.ownerId">
-        <p>Deck Private</p>
-      </div>
-      <ul *ngIf="user.uid === deck.ownerId || deck.public">
-        <li *ngFor="let card of _deckService.deckProcess._cardList" class="animated fadeInDown">
-          <app-mox-row-card *ngIf="card" [cardAmout]="cardAmount(card.id)" [card]="card" [deckFormat]="deck.format" [selected]="(this._selectedCard && this._selectedCard === card)"
-            (plus)="cardPlus($event)" (minus)="cardMinus($event)" (cardSelect)="selectedCard($event)" (cardView)="activateCardView($event)"
-          ></app-mox-row-card>
-        </li>
-      </ul>
-      <app-mox-divider *ngIf="deck.side && deck.side.length > 0" [format]="deck.format" [color]="'000000'"></app-mox-divider>
-      <ul *ngIf="user.uid === deck.ownerId || deck.public">
-        <li *ngFor="let card of _deckService.deckProcess._sideList" class="animated fadeInDown">
-          <app-mox-row-card *ngIf="card" [cardAmout]="cardSideAmount(card.id)" [card]="card" [selected]="(this._selectedCard && this._selectedCard === card)"
-            (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)" (cardSelect)="selectedCard($event)" (cardView)="activateCardView($event)"
-          ></app-mox-row-card>
-        </li>
-      </ul>
-      <div *ngIf="cardView" class="lightbox" (click)="cardView = false"></div>
-      <div *ngIf="cardView && _selectedCard" class="card-viewer">
-        <div class="fullcard animated flipInY" *ngIf="!side"
-          (tap)="side = true"
-          (doubletap) ="cardView = false;selectedCard(_selectedCard)"
-          (swipedown) ="cardView = false;selectedCard(_selectedCard)"
-          (swipeup)   ="cardView = false;selectedCard(_selectedCard)"
-          (swiperight)="cardView = false;selectedCard(_selectedCard)"
-          (swipeleft) ="cardView = false;selectedCard(_selectedCard)"
-          [ngStyle]="{ 'background-image': 'url(' + getCardImgUri() + ')' }" ></div>
-
-        <div class="fullcard animated flipInY" *ngIf="side"
-          (tap)="side = false"
-          (doubletap) ="cardView = false;selectedCard(_selectedCard)"
-          (swipedown) ="cardView = false;selectedCard(_selectedCard)"
-          (swipeup)   ="cardView = false;selectedCard(_selectedCard)"
-          (swiperight)="cardView = false;selectedCard(_selectedCard)"
-          (swipeleft) ="cardView = false;selectedCard(_selectedCard)"
-          [ngStyle]="{ 'background-image': 'url(' + getCardBackImgUri() + ')' }"></div>
-      </div>
-    </div>
-    <div [hidden]=" tab !='socialTab'">
-      <form class="new-deck-form" *ngIf="deck">
-        <div class="deck-cover animated fadeIn" *ngIf="deck.cover != ''" socialshare-media="deck.cover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
-          <section class="deck-data">
-            <div class="deck-colors">
-              <p *ngIf="deck.colorIdentity">
-                  <i *ngFor="let ico of deck.colorIdentity"
-                  [className]="'ms ms-' + ico.toLowerCase()"
-                  [class.ms-cost]=" ico != ''"
-                  [class.shadow]=" ico != ''"
-                ></i>
-              </p>
+    <mat-tab-group mat-stretch-tabs dynamicHeight class="example-stretched-tabs mat-elevation-z4 animated fadeIn"
+      [(selectedIndex)]="tab" [color]="'primary'" [backgroundColor]="'primary'">
+      <mat-tab label="Deck List"> 
+        <div class="tab-content">
+          <div class="summary animated fadeInDown" *ngIf="user.uid === deck.ownerId || deck.public">
+            <div class="decksize mox-font">
+              <i class="fas fa-clone"></i>{{deck.cards.length}}
+              /
+              <i class="far fa-clone"></i>{{(deck.side) ? deck.side.length : 0}}
             </div>
-            <div class="deck-owner">
-              <label class="mox-font">by {{deck.ownerName}}</label>
-            </div>
-            <div class="deck-name-container">
-              <i class="fas fa-pen"></i>
-              <input id="inputTextID" type="text"
-              class="mox-font"
-              (change)="saveDeck()"
-              [disabled]="user.uid !== _deckService.deckProcess._deck.ownerId"
-              [(ngModel)]="_deckService.deckProcess._deck.name" value="{{_deckService.deckProcess._deck.name}}" name="iname">
-            </div>
-          </section>
-        </div>
-        <span #invisibleText id="invisibleTextID" [hidden]="true">{{ deck.name }}</span>
-        <div class="deck-cover" *ngIf="deck.cover == ''">
-          <i class="fas fa-frog"></i>
-        </div>
-        <section class="deck-extra-data">
-          <div class="item" [ngClass]="{'positive': deck.public }" (click)="togglePublicDeck(user.uid)">
-            <i class="fas fa-lock" *ngIf="!deck.public"></i>
-            <i class="fas fa-unlock-alt" *ngIf="deck.public"></i>
+            <div class="deckname">{{deck.name}}</div>
+            <div class="decktype">{{deck.format}}</div>
           </div>
-
-          <div class="item" [ngClass]="{'positive': deck.legal}">
-            <i class="fas fa-times-circle" *ngIf="!deck.legal"></i>
-            <i class="far fa-check-circle" *ngIf="deck.legal"></i>
+          <div *ngIf="!deck.public && user.uid !== deck.ownerId">
+            <p>Deck Private</p>
           </div>
-
-          <div class="item" [ngClass]="{'positive': deck.format }">
-            <div class="select">
-              <select id="iformat" [disabled]="user.uid !== _deckService.deckProcess._deck.ownerId"
-                  [(ngModel)]="_deckService.deckProcess._deck.format" (change)="saveDeck()" name="format" required>
-                <option *ngFor="let f of formats" [value]="f">{{f}}</option>
-              </select>
-            </div>
+          <ul *ngIf="user.uid === deck.ownerId || deck.public">
+            <li *ngFor="let card of _deckService.deckProcess._cardList" class="animated fadeInDown">
+              <app-mox-row-card *ngIf="card" [cardAmout]="cardAmount(card.id)" [card]="card" [deckFormat]="deck.format" [selected]="(this._selectedCard && this._selectedCard === card)"
+                (plus)="cardPlus($event)" (minus)="cardMinus($event)" (cardSelect)="selectedCard($event)" (cardView)="activateCardView($event)"
+              ></app-mox-row-card>
+            </li>
+          </ul>
+          <app-mox-divider *ngIf="deck.side && deck.side.length > 0" [format]="deck.format" [color]="'000000'"></app-mox-divider>
+          <ul *ngIf="user.uid === deck.ownerId || deck.public">
+            <li *ngFor="let card of _deckService.deckProcess._sideList" class="animated fadeInDown">
+              <app-mox-row-card *ngIf="card" [cardAmout]="cardSideAmount(card.id)" [card]="card" [selected]="(this._selectedCard && this._selectedCard === card)"
+                (plus)="cardSidePlus($event)" (minus)="cardSideMinus($event)" (cardSelect)="selectedCard($event)" (cardView)="activateCardView($event)"
+              ></app-mox-row-card>
+            </li>
+          </ul>
+          <div *ngIf="cardView" class="lightbox" (click)="cardView = false"></div>
+          <div *ngIf="cardView && _selectedCard" class="card-viewer">
+            <div class="fullcard animated flipInY" *ngIf="!side"
+              (tap)="side = true"
+              (doubletap) ="cardView = false;selectedCard(_selectedCard)"
+              (swipedown) ="cardView = false;selectedCard(_selectedCard)"
+              (swipeup)   ="cardView = false;selectedCard(_selectedCard)"
+              (swiperight)="cardView = false;selectedCard(_selectedCard)"
+              (swipeleft) ="cardView = false;selectedCard(_selectedCard)"
+              [ngStyle]="{ 'background-image': 'url(' + getCardImgUri() + ')' }" ></div>
+    
+            <div class="fullcard animated flipInY" *ngIf="side"
+              (tap)="side = false"
+              (doubletap) ="cardView = false;selectedCard(_selectedCard)"
+              (swipedown) ="cardView = false;selectedCard(_selectedCard)"
+              (swipeup)   ="cardView = false;selectedCard(_selectedCard)"
+              (swiperight)="cardView = false;selectedCard(_selectedCard)"
+              (swipeleft) ="cardView = false;selectedCard(_selectedCard)"
+              [ngStyle]="{ 'background-image': 'url(' + getCardBackImgUri() + ')' }"></div>
           </div>
-        </section>
-        <div>
-          <markdown>{{_deckService.deckProcess._deck.description}}</markdown>
-          <!-- <input type="text" name="description" value="" [(ngModel)]="_deckService.deckProcess._deck.description"> -->
         </div>
-      </form>
-    </div>
+      </mat-tab>
+      <mat-tab label="Social">
+        <div class="tab-content">
+          <app-mox-deck-social *ngIf="deck"></app-mox-deck-social>
+        </div>  
+      </mat-tab>
+      <mat-tab label="Stats">
+        <div class="tab-content">
+          <app-mox-deck-stats class="animated fadeIn" [deckStats]="_deckService.deckProcess._deckStats"></app-mox-deck-stats>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>
+
 <div class="data-handlers">
   <div *ngIf="_cardFilter" class="data filters">
     <span >no-filters</span>
@@ -128,45 +78,45 @@
   </div>
 </div>
 
-<app-mox-action-bar [hidden]="tab !='statsTab'"> 
-  <button (click)="delete()" matRipple class="btn btn-action">
-    <i class="fas fa-trash"></i>
-  </button>
-  <button disabled matRipple class="btn btn-action">
-    <i class="fas fa-flask"></i>
-  </button>
-  <div class="fixer"></div>
-  <button disabled matRipple class="btn btn-action">
-    <i class="fas fa-qrcode"></i>
-  </button>
-  <button (click)="processStats()" matRipple class="btn btn-action">
-    <i class="fas fa-cogs"></i>
-  </button>        
-</app-mox-action-bar>
-
-<app-mox-action-bar [hidden]=" tab !='deckList'"> 
+<app-mox-action-bar [hidden]=" tab != 0"> 
   <button (click)="activateCardView()" matRipple [disabled]="!(this._selectedCard)" class="btn btn-action animated flipInX">
     <i  class="fas fa-search-plus"></i>
   </button>
-  <app-mox-filter-picker></app-mox-filter-picker>
+  <app-mox-filter-picker class="animated flipInX"></app-mox-filter-picker>
   <div class="fixer"></div>
   <app-mox-picker [pickerType]="'sort'" [currentState]="_cardSort" (sortSelection)="sortChoosen($event)"></app-mox-picker>
   <app-mox-picker *ngIf="!_selectedCard" [pickerType]="'deck-action'" [currentState]="_deck | async"></app-mox-picker>
   <app-mox-picker *ngIf="_selectedCard" [pickerType]="'card'" [currentState]="_selectedCard" (sortSelection)="sortChoosen($event)"></app-mox-picker>
 </app-mox-action-bar>
 
-<app-mox-action-bar [hidden]=" tab !='socialTab'"> 
-  <button disabled matRipple class="btn btn-action">
+<app-mox-action-bar [hidden]="tab != 1"> 
+  <button disabled matRipple class="btn btn-action animated flipInX">
     <i class="fas fa-address-card"></i>
   </button>
-  <button disabled matRipple class="btn btn-action">
-    <i class="fas fa-folder"></i>
+  <button disabled matRipple class="btn btn-action animated flipInX">
+    <i class="fas fa-retweet"></i>
   </button>
   <div class="fixer"></div>
-  <button disabled matRipple class="btn btn-action">
+  <button disabled matRipple class="btn btn-action animated flipInX">
     <i class="fas fa-comments"></i>
   </button>
-  <button disabled matRipple class="btn btn-action">
+  <button disabled matRipple class="btn btn-action animated flipInX">
     <i class="far fa-heart"></i>
+  </button>        
+</app-mox-action-bar>
+
+<app-mox-action-bar [hidden]="tab != 2"> 
+  <button (click)="delete()" matRipple class="btn btn-action animated flipInX">
+    <i class="fas fa-trash"></i>
+  </button>
+  <button disabled matRipple class="btn btn-action animated flipInX">
+    <i class="fas fa-flask"></i>
+  </button>
+  <div class="fixer"></div>
+  <button disabled matRipple class="btn btn-action animated flipInX">
+    <i class="fas fa-qrcode"></i>
+  </button>
+  <button (click)="processStats()" matRipple class="btn btn-action animated flipInX">
+    <i class="fas fa-cogs"></i>
   </button>        
 </app-mox-action-bar>

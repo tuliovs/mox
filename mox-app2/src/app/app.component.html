@@ -20,45 +20,54 @@
         </div>
       </div> -->
       <section class="sidenav-content">
-        <button (click)="goToUser()"     matRipple type="button" class="btn btn-icon animated bounceInUp" *ngIf="_auth.getUser() | async as user">
-          <i class="fas fa-user"></i>
-          <label>Profile</label>
+        <button (click)="goToUser()" *ngIf="_auth.getUser() | async as user" 
+          matRipple type="button" class="btn btn-icon animated bounceInUp" style="background-color: #070C12">
+            <i class="fas fa-user"></i>
+            <label>Profile</label>
         </button>
-        <button (click)="goToHome()"     matRipple type="button" class="btn btn-icon animated bounceInUp" style="background-color: #5A6572">
-          <i class="fas fa-home"></i>
-          <label>Home</label>
+        <button (click)="goToHome()"     
+          matRipple type="button" class="btn btn-icon animated bounceInUp" style="background-color: #090F16; animation-delay: .01s;">
+            <i class="fas fa-home"></i>
+            <label>Home</label>
         </button>
-        <button                          matRipple type="button" class="btn btn-icon animated bounceInUp" disabled style="background-color: #132030">
-          <i class="fas fa-envelope"></i>
-          <label>Messages</label>
+        <button
+          matRipple type="button" class="btn btn-icon animated bounceInUp" disabled style="background-color: #0B121B; animation-delay: .02s;">
+            <i class="fas fa-envelope"></i>
+            <label>Messages</label>
         </button>
-        <button                          matRipple type="button" class="btn btn-icon animated bounceInUp" disabled style="background-color: #302B2C">
-          <i class="fas fa-archive"></i>
-          <label>CollectionHub</label>
+        <button                          
+          matRipple type="button" class="btn btn-icon animated bounceInUp" disabled style="background-color: #0D151F; animation-delay: .03s;">
+            <i class="fas fa-archive"></i>
+            <label>CollectionHub</label>
         </button>
-        <button (click)="goToDeckHub()"  matRipple type="button" class="btn btn-icon animated bounceInUp" style="background-color: #8B97A7">
+        <button (click)="goToDeckHub()"
+          matRipple type="button" class="btn btn-icon animated bounceInUp" style="background-color: #0E1823; animation-delay: .04s;">
           <i class="fas fa-list"></i>
           <label>DeckHub</label>
         </button>
-        <button                          matRipple type="button" class="btn btn-icon animated bounceInUp" disabled style="background-color: #667A95"> 
+        <button  disabled
+          matRipple type="button" class="btn btn-icon animated bounceInUp" style="background-color: #101B28; animation-delay: .05s;">
           <i class="fas fa-dice"></i>
           <label>Utils</label>
         </button>
-        <button                          matRipple type="button" class="btn btn-icon animated bounceInUp" disabled style="background-color: #000000 ">
-          <i class="fas fa-flask"></i>
-          <label>Lab</label>
+        <button  disabled
+          matRipple type="button" class="btn btn-icon animated bounceInUp" style="background-color: #121E2C; animation-delay: .06s;">
+            <i class="fas fa-flask"></i>
+            <label>Lab</label>
         </button>
-        <button (click)="goToSeachHub()" matRipple type="button" class="btn btn-icon animated bounceInUp" style="background-color: #353743">
+        <button (click)="goToSeachHub()" 
+          matRipple type="button" class="btn btn-icon animated bounceInUp" style="background-color: #132030; animation-delay: .07s;">
           <i class="fas fa-search"></i>
           <label>Card Search</label>
         </button>
-        <button                          matRipple type="button" class="btn btn-icon animated bounceInUp" disabled style="background-color: #8B97A7">
-          <i class="fas fa-cog"></i>
-          <label>Settings</label>
+        <button disabled                         
+          matRipple type="button" class="btn btn-icon animated bounceInUp"  style="background-color: #283442; animation-delay: .08s;">
+            <i class="fas fa-cog"></i>
+            <label>Settings</label>
         </button>
       </section>
-      <div class="closer">
-        <i class="fas fa-times" (tap)="menuOpen('rubberBand');animateNav();setState('nav')"></i>
+      <div class="closer" (tap)="menuOpen('rubberBand');animateNav();setState('nav')">
+        <i class="fas fa-bars"></i>
       </div>
     </nav>
   </div>

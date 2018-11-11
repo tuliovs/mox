@@ -10,7 +10,6 @@ import { MoxDeckService } from '@application/_services/mox-services/deck/mox-dec
 import { tap } from 'rxjs/operators';
 import { AuthService } from '@karn/_services/auth.service';
 import { MetaService } from 'ng2-meta';
-import { MarkdownService } from 'ngx-markdown';
 
 @Component({
   selector: 'app-mox-deck-view',
@@ -23,7 +22,7 @@ export class DeckViewComponent implements OnInit {
   public formats = FORMATS;
   public _deck: Observable<MoxDeck>;
   public _selectedCard: Card;
-  public tab = 'deckList';
+  public tab = 0;
   public _orderAsc = false;
   public cardView = false;
   public side = false;
@@ -37,11 +36,9 @@ export class DeckViewComponent implements OnInit {
     private _toast: ToastService,
     private _state: ActionStateService,
     private _metaService: MetaService,
-    public _mdService: MarkdownService
   ) { }
 
   ngOnInit() {
-    this.initMarkdown();
     this._route.params.subscribe(params => {
       const deckId = params['id'];
       if (!deckId) {
@@ -66,16 +63,7 @@ export class DeckViewComponent implements OnInit {
     });
   }
 
-  initMarkdown() {
-    this._mdService.renderer.heading = (text: string, level: number) => {
-      const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
-      return '<h' + level + '>' +
-              '<a name="' + escapedText + '" class="anchor" href="#' + escapedText + '">' +
-                '<span class="header-link"></span>' +
-              '</a>' + text +
-            '</h' + level + '>';
-    };
-  }
+
 
   saveDeck() {
     this._deckService.updateDeck(this._deckService.deckProcess);
@@ -241,45 +229,45 @@ export class DeckViewComponent implements OnInit {
   }
 
   changetab(side) {
-    this.selectedCard = null;
-    switch (side) {
-      case 'left':
-        // alert('LEFT');
-        switch (this.tab) {
-          case 'statsTab':
-              this.tab = 'socialTab';
-            break;
-          case 'socialTab':
-              this.tab = 'deckList';
-            break;
-          case 'deckList':
-              this.tab = 'statsTab';
-            break;
-          default:
-              alert('I`m sorry, I got lost');
-            break;
-        }
-        break;
-      case 'right':
-        // alert('RIGHT');
-        switch (this.tab) {
-          case 'statsTab':
-              this.tab = 'deckList';
-            break;
-          case 'deckList':
-              this.tab = 'socialTab';
-            break;
-          case 'socialTab':
-              this.tab = 'statsTab';
-            break;
-          default:
-              alert('I`m sorry, I got lost');
-            break;
-        }
-        break;
-      default:
-        break;
-    }
+    // this.selectedCard = null;
+    // switch (side) {
+    //   case 'left':
+    //     // alert('LEFT');
+    //     switch (this.tab) {
+    //       case 'statsTab':
+    //           this.tab = 'socialTab';
+    //         break;
+    //       case 'socialTab':
+    //           this.tab = 'deckList';
+    //         break;
+    //       case 'deckList':
+    //           this.tab = 'statsTab';
+    //         break;
+    //       default:
+    //           alert('I`m sorry, I got lost');
+    //         break;
+    //     }
+    //     break;
+    //   case 'right':
+    //     // alert('RIGHT');
+    //     switch (this.tab) {
+    //       case 'statsTab':
+    //           this.tab = 'deckList';
+    //         break;
+    //       case 'deckList':
+    //           this.tab = 'socialTab';
+    //         break;
+    //       case 'socialTab':
+    //           this.tab = 'statsTab';
+    //         break;
+    //       default:
+    //           alert('I`m sorry, I got lost');
+    //         break;
+    //     }
+    //     break;
+    //   default:
+    //     break;
+    // }
   }
 
 }

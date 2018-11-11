@@ -1,6 +1,9 @@
 @import './../styles/theme.colors'
+
 $shad-action-button: rgba(0, 0, 0, .15);
 $shad: rgba(0, 0, 0, .25);
+$menu-shad: rgb(9, 15, 22);
+$white: rgba(255, 255, 255, .8);
 
 .alert-text
   margin-top: 0
@@ -85,7 +88,7 @@ $shad: rgba(0, 0, 0, .25);
   padding: 0
 
 .sidenav
-  background: $bg-sidenav
+  background-color: $white
   box-shadow: 15px 15px 30px $shad
   color: color(_ice)
   font-size: 1em
@@ -103,9 +106,10 @@ $shad: rgba(0, 0, 0, .25);
 .sidenav-content
   display: inline-flex
   flex-direction: column
-  height: 95vh
+  height: 100vh
   justify-content: initial
   overflow: scroll
+  padding-bottom: 3%
   width: 100%
 
   .btn-icon
@@ -113,17 +117,24 @@ $shad: rgba(0, 0, 0, .25);
     background-color: currentColor
     border: 0
     border-radius: 0
+    box-shadow: $menu-shad 0 1px, $menu-shad 0 -1px
     display: inline-flex
     flex-direction: row
     height: 90px
-    justify-content: initial
+    justify-content: center
     margin: 0
     min-height: 90px
-    padding-left: 25%
+
+    &:disabled
+      i
+        color: color(_disabled) !important
+
+      label
+        color: color(_disabled) !important
 
     i
       border: 0
-      font-size: 2.4em
+      font-size: 2em
       padding: .2em .4em
 
     label
@@ -132,13 +143,19 @@ $shad: rgba(0, 0, 0, .25);
       font-size: 1.1em
       font-weight: 600
       line-height: normal
-      text-align: center
+      min-width: 120px
+      text-align: left
       text-transform: capitalize
 
+
+
 .closer
-  bottom: 0
+  background-color: color(_blue)
+  border-radius: 20px
+  bottom: -20px
+  color: color(_ice)
   font-size: .45em
+  height: 6.5em
   left: 0
-  opacity: .1
   position: fixed
   width: 100%

@@ -1,0 +1,170 @@
+@import './../../../../styles/theme.colors'
+@import './../../../../../node_modules/prismjs/themes/prism-coy'
+
+$white: rgba(255, 255, 255, .4);
+
+.deck-cover
+  background-position: center
+  background-size: cover
+  border-radius: 0
+  filter: blur(4px)
+  height: 33em
+  margin: -.8em
+  position: absolute
+  width: 108%
+
+.deck-data
+  align-content: space-between
+  align-items: center
+  background: $white
+  color: color(_blue)
+  display: inline-flex
+  flex-direction: column
+  height: 77vh
+  justify-content: start
+  left: 0
+  position: absolute
+  width: 100%
+
+  .deck-name-container
+    align-items: center
+    color: color(_white)
+    padding: 0 1%
+    text-align: left
+    width: 100%
+
+    i
+      font-size: 13px
+      text-shadow: 0 0 5px color(_darkblue)
+
+    input
+      background-color: transparent
+      border: 0
+      color: color(_white)
+      font-family: 'Exo 2'
+      font-size: 30px
+      font-weight: 600
+      text-shadow: 0 0 5px color(_darkblue)
+      width: 97%
+
+  .deck-base
+    display: inline-flex
+    flex-direction: column
+    height: 15.313em
+    margin-bottom: 1%
+    width: 100%
+
+    .title
+      align-items: center
+      display: inline-flex
+
+      .deck-name-container
+        text-indent: 10px
+        width: 90%
+
+      h1
+        color: #132030
+        font-size: 30px
+        font-weight: 600
+        margin-right: .5%
+        text-align: left
+        text-indent: 6px
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, .5)
+        width: 90%
+
+      button
+        animation-delay: 2s
+        background: #667A95
+        border-radius: 50%
+        box-shadow: 0 4px 4px rgba(0, 0, 0, .25)
+        color: #fff
+        font-size: .85em
+        height: 32px
+        width: 32px
+
+    .middle
+      display: inline-flex
+      flex-direction: column
+
+      label
+        animation-delay: .5s
+        color: #132030
+        font-family: 'Exo 2'
+        font-size: 16px
+        font-style: normal
+        font-weight: 600
+        line-height: normal
+        text-align: left
+        text-indent: 30px
+
+      i
+        animation-delay: .5s
+        color: rgba(158, 158, 158, .1)
+        font-size: 9em
+        margin: 1.8% 0
+        opacity: .15
+        text-shadow: 0 1px 0 rgba(255, 255, 255, .1), 0 -1px 0 rgba(0, 0, 0, .1)
+
+    .bottom
+      display: inline-flex
+
+      i
+        animation-delay: 1.5s
+        color: #132030
+        font-size: 1.35em
+        margin: 0 3%
+        opacity: .6
+
+      label
+        animation-delay: 1.5s
+        color: #132030
+        font-family: Exo 2
+        font-size: 14px
+        font-style: normal
+        font-weight: 600
+        line-height: normal
+        opacity: .6
+        text-indent: 10px
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, .5)
+        text-transform: capitalize
+
+  .deck-desc
+    background: linear-gradient(150.65deg, #334151 0%, #132030 100%)
+    border-radius: 8px
+    height: 36vh
+    overflow-y: scroll
+    padding: 0
+    width: 98%
+
+    h2
+      background-color: #667A95
+      border-radius: 8px 8px 0 0
+      color: color(_white)
+      font-family: 'Exo 2'
+      font-size: 12px
+      line-height: 2em
+      text-align: left
+      text-indent: 6px
+
+    .md-edit
+      color: color(_darkblue)
+      font-family: 'Exo 2'
+      font-size: 15px
+      height: 35vh
+      overflow-y: scroll
+      text-align: left
+      width: 100%
+
+    .md-view
+      display: block
+      margin: 1% 2.5%
+      width: 95%
+
+      h1
+        font-size: 1em
+        text-align: left
+
+  .deck-medals
+    width: 98%
+
+

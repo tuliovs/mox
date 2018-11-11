@@ -49,11 +49,7 @@
             </p>
           </div>
         </app-mox-stats-holder>
-        <app-mox-stats-holder
-          [ico]="'fas fa-tasks'"
-          [title]="'Format Legal'"
-          (action)="proLegal()"
-        >
+        <app-mox-stats-holder [ico]="'fas fa-tasks'" [title]="'Format Legal'" (action)="proLegal()">
           <div class="legal-container animated fadeIn">
             <i *ngIf="deck.legal" class="fas fa-check"></i>
             <i *ngIf="!deck.legal" class="fas fa-times"></i>
@@ -63,27 +59,9 @@
                 <label>Deck does not have a format yet.</label>
               </ng-container>
               <ng-container *ngIf="deck.format">
-                <label
-                  *ngIf="
-                    !_deckService.deckProcess.errorList ||
-                    _deckService.deckProcess.errorList.length == 0
-                  "
-                  >Process to get error list</label
-                >
-                <label
-                  *ngIf="
-                    _deckService.deckProcess.errorList &&
-                    _deckService.deckProcess.errorList.length > 0
-                  "
-                  style="width: 1.4%;margin-right: 2px"
-                  >Error List:</label
-                >
-                <ul
-                  *ngIf="
-                    _deckService.deckProcess.errorList &&
-                    _deckService.deckProcess.errorList.length > 0
-                  "
-                >
+                <label *ngIf="!_deckService.deckProcess.errorList || _deckService.deckProcess.errorList.length == 0">Process to get error list</label>
+                <label *ngIf="_deckService.deckProcess.errorList && _deckService.deckProcess.errorList.length > 0" style="margin-right: 2px;width: 25%;">Error List:</label>
+                <ul *ngIf="_deckService.deckProcess.errorList && _deckService.deckProcess.errorList.length > 0">
                   <li *ngFor="let err of _deckService.deckProcess.errorList">
                     {{ err }}
                   </li>
@@ -92,11 +70,7 @@
             </div>
           </div>
         </app-mox-stats-holder>
-        <app-mox-stats-holder
-          [ico]="'fas fa-address-card'"
-          *ngIf="deck.creatorId"
-          [title]="'Original Creator'"
-        >
+        <app-mox-stats-holder [ico]="'fas fa-address-card'" *ngIf="deck.creatorId" [title]="'Original Creator'">
           <p class="animated fadeIn">{{ deck.creatorId }}</p>
         </app-mox-stats-holder>
         <app-mox-stats-holder [ico]="'fas fa-list-ol'" *ngIf="deckStats.typeLineCounter" [title]="'Type Sumary'" (action)="proTypes()"

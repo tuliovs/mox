@@ -1,0 +1,63 @@
+<ng-container *ngIf="_deckService.deckProcess._deck as deck">
+  <div class="deck-cover animated fadeIn" *ngIf="deck.cover != ''" socialshare-media="deck.cover" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }"></div>
+  <section class="deck-data animated fadeIn" style="animation-delay: .01s;" *ngIf="_auth.getUser() | async as user">
+
+    <div class="deck-base">
+      <ng-container *ngIf="!editing">
+        <div class="title animated fadeIn">
+          <h1>{{deck.name}}</h1>
+          <button *ngIf="user.uid == deck.ownerId" matRipple (click)="editing = true">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+        <div class="middle animated fadeIn">
+          <label class="mox-font">by {{deck.ownerName}}</label>
+          <i *ngIf="_deckService.deckProcess._deckStats.guildIco" class="{{_deckService.deckProcess._deckStats.guildIco}} animated fadeIn"></i>
+        </div>
+        <div class="bottom animated fadeIn">
+          <i *ngIf="deck.public" class="fas fa-eye"></i>
+          <i *ngIf="!deck.public" class="fas fa-eye-slash"></i>
+          <label class="mox-font">{{deck.format ? deck.format : 'No format' }}</label>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="editing">
+        <div class="title">
+          <div class="deck-name-container animated flipInX">
+            <input id="inputTextID" type="text"
+            [(ngModel)]="deck.name" value="{{deck.name}}" name="iname">
+          </div>
+          <button (click)="saveDeck()" matRipple class="animated flipInX">
+            <i class="fas fa-save"></i>
+          </button>
+        </div>
+        <div class="middle">
+          <label class="animated flipInX">by {{deck.ownerName}}</label>
+          <i *ngIf="_deckService.deckProcess._deckStats.guildIco" class="{{_deckService.deckProcess._deckStats.guildIco}} animated fadeIn"></i>
+        </div>
+        <div class="bottom">
+          <i *ngIf="deck.public" class="fas fa-eye animated flipInX"></i>
+          <i *ngIf="!deck.public" class="fas fa-eye-slash animated flipInX"></i>
+          <mat-slide-toggle [color]="'primary'" class="animated flipInX" [(ngModel)]="deck.public" [checked]="deck.public"></mat-slide-toggle>
+          <mat-select placeholder="Deck Format" class="animated flipInX" [(ngModel)]="deck.format">
+            <mat-option *ngFor="let f of formats" [value]="f">
+              {{f.toUpperCase()}}
+            </mat-option>
+          </mat-select>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="deck-desc animated slideInUp">
+      <h2>Description.md</h2>
+      <ngx-md   *ngIf="!editing" class="md-view" [data]="deck.description"></ngx-md>
+      <textarea *ngIf="editing"  class="md-edit" [(ngModel)]="deck.description"></textarea>
+      <!-- <markdown ngPreserveWhitespaces>
+        {{deck.description}}
+      </markdown> -->
+    </div>
+
+    <div class="deck-medals">
+
+    </div>
+  </section>
+</ng-container>

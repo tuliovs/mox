@@ -4,18 +4,14 @@ $shad: rgba(102, 122, 149, .17);
 $shad-low: rgba(0, 0, 0, .25);
 
 .main
-  margin-top: 1.84em
+  margin-top: 0
+  max-height: 85%
+  overflow-y: hidden
 
 hr
   border: solid 1px color(_darkblue)
   margin: 5% 10%
   width: 80%
-
-.deck-cover
-  background-size: cover
-  border-radius: 0
-  height: 16em
-  width: 100%
 
 .summary
   background: color(_lightblue)
@@ -44,48 +40,6 @@ hr
 
   i
     margin: 0 2px
-
-.new-deck-form
-  .deck-data
-    align-content: space-between
-    color: color(_blue)
-    display: inline-flex
-    flex-wrap: wrap
-    height: 50%
-    justify-content: space-between
-    left: 0
-    position: absolute
-    width: 100%
-
-    .deck-name-container
-      align-items: center
-      color: color(_white)
-      padding: 0 1%
-      text-align: left
-      width: 100%
-
-      i
-        font-size: 13px
-        text-shadow: 0 0 5px color(_darkblue)
-
-      input
-        background-color: transparent
-        border: 0
-        color: color(_white)
-        font-size: 1.5em
-        font-weight: 600
-        text-shadow: 0 0 5px color(_darkblue)
-
-    .deck-colors
-      margin: 2%
-
-    .deck-owner
-      label
-        color: color(_white)
-        font-size: 18px
-        font-weight: 600
-        text-align: right
-        text-shadow: 0 0 5px color(_darkblue)
 
   .deck-extra-data
     color: color(_ice)
@@ -212,4 +166,7 @@ ol
   border-bottom: 1px solid color(_darkblue)
   box-shadow: 3px 3px 5px $shad-low
   height: 65px
-  
+
+.tab-content
+  height: 90%
+  overflow-y: scroll
