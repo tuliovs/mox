@@ -41,12 +41,12 @@
                     <div class="owner" >by {{deck.ownerName}}</div>
                     <div class="icons">
                       <span>
-                        <i class="fas fa-lock" *ngIf="!deck.public"></i>
-                        <i class="fas fa-unlock" *ngIf="deck.public"></i>
+                        <i class="fas fa-eye-slash" *ngIf="!deck.public"></i>
+                        <i class="fas fa-eye" *ngIf="deck.public"></i>
                       </span>
                       <span>
-                        <i class="far fa-times-circle" *ngIf="!deck.legal"></i>
-                        <i class="far fa-check-circle" *ngIf="deck.legal"></i>
+                        <i class="fas fa-times" *ngIf="!deck.legal"></i>
+                        <i class="fas fa-check" *ngIf="deck.legal"></i>
                       </span>
                     </div>
                   </div>
@@ -82,12 +82,12 @@
               <div class="owner" >by {{deck.ownerName}}</div>
               <div class="icons">
                 <span>
-                  <i class="fas fa-lock" *ngIf="!deck.public"></i>
-                  <i class="fas fa-unlock" *ngIf="deck.public"></i>
+                  <i class="fas fa-eye-slash" *ngIf="!deck.public"></i>
+                  <i class="fas fa-eye" *ngIf="deck.public"></i>
                 </span>
                 <span>
-                  <i class="far fa-times-circle" *ngIf="!deck.legal"></i>
-                  <i class="far fa-check-circle" *ngIf="deck.legal"></i>
+                  <i class="fas fa-times" *ngIf="!deck.legal"></i>
+                  <i class="fas fa-check" *ngIf="deck.legal"></i>
                 </span>
               </div>
             </div>
@@ -96,9 +96,10 @@
       </ng-container>
     </ol>
   </div>
+
   <app-mox-action-bar *ngIf="internalDeck">
-    <button class="btn btn-action" matRipple routerLink="/search">
-      <i class="fas fa-plus-square"></i>
+    <button class="btn btn-action" matRipple (click)="viewDeck()">
+      <i class="fas fa-book-open"></i>
     </button>
     <button class="btn btn-action" matRipple disabled>
       <i class="far fa-heart"></i>
@@ -109,8 +110,8 @@
   </app-mox-action-bar>
 
   <app-mox-action-bar *ngIf="!internalDeck" (swipeleft)="changeFormat('left')" (swiperight)="changeFormat('right')">
-    <button class="btn btn-action" matRipple (click)="navigateToDeckList()">
-      <i class="fas fa-search"></i>
+    <button (click)="newDeck()" matRipple type="button" class="btn btn-action">
+      <i class="fas fa-plus"></i>
     </button>
     <button class="btn btn-action" matRipple disabled>
       <i class="fas fa-filter" style="font-size: .9em"></i>
@@ -119,8 +120,8 @@
     <button class="btn btn-action" matRipple disabled>
       <i class="fas fa-sort" style="font-size: 1.3em"></i>
     </button>
-    <button (click)="newDeck()" matRipple type="button" class="btn btn-action">
-      <i class="fas fa-plus"></i>
+    <button class="btn btn-action" matRipple disabled>
+      <i class="fas fa-search"></i>
     </button>
   </app-mox-action-bar>
 </ng-template>

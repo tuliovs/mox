@@ -87,3 +87,9 @@ export class List {
   warnings: any[];
 
 }
+
+export class Catalog {
+  uri: string;          // URI		A link to the current catalog on Scryfall’s API.
+  total_values: number; // Integer		The number of items in the data array.
+  data: [];             // Array
+}

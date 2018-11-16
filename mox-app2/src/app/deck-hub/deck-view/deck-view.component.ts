@@ -1,15 +1,17 @@
 import { FORMATS } from '@application/_constraints/FORMATS';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
-import { Card } from '@application/_models/_scryfall-models/models';
+import { Card, Catalog } from '@application/_models/_scryfall-models/models';
 import { ToastService } from '@application/_services/toast/toast.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { AuthService } from '@karn/_services/auth.service';
 import { MetaService } from 'ng2-meta';
+import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-mox-deck-view',
@@ -26,10 +28,15 @@ export class DeckViewComponent implements OnInit {
   public _orderAsc = false;
   public cardView = false;
   public side = false;
+  public cardSearchActive = false;
+  public searchParam;
+  public searchResults: Observable<Catalog>;
+  public stateCtrl = new FormControl();
   public _cardFilter;
   public _cardSort: string;
   constructor(
     public  _auth: AuthService,
+    public _searchService: ScryfallSearchService,
     public _deckService: MoxDeckService,
     private _route: ActivatedRoute,
     public _router: Router,
@@ -66,7 +73,35 @@ export class DeckViewComponent implements OnInit {
     });
   }
 
+  searchSelect(param) {
+    const selectedValue = param.option.value;
+    const dkSrvc = this._deckService;
+    this._state.setState('loading');
+    this._searchService.fuzzySearch(selectedValue).pipe(
+      tap((c: Card) => {
+          dkSrvc.deckProcess._deck.cards.push(c.id);
+          dkSrvc.getCardData(dkSrvc.deckProcess)
+          .then(dp => dkSrvc.updateDeck(dp))
+          .then(() => {
+              this._state.setState('nav');
+            }
+          );
+        }
+      ),
+    ).subscribe();
+  }
 
+  activateSearch() {
+    this.cardSearchActive = true;
+    this.stateCtrl.valueChanges
+      .pipe(
+        tap((value: string) => {
+          if (value.length >= 3) {
+            this.searchResults = this._searchService.autoSearch(value);
+          }
+        }
+      )).subscribe();
+  }
 
   saveDeck() {
     this._deckService.updateDeck(this._deckService.deckProcess);

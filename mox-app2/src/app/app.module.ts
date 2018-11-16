@@ -21,7 +21,7 @@ import { } from '@angular/platform-browser';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { MatBadgeModule, MatSelectModule, MatRippleModule, MatFormFieldModule,
-        MatSlideToggleModule, MatTabsModule,
+        MatSlideToggleModule, MatTabsModule, MatAutocompleteModule,
         MatInputModule, MatButtonModule, MatTooltipModule, MatProgressBarModule } from '@angular/material';
 
 
@@ -138,6 +138,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     MatSlideToggleModule,
     MatFormFieldModule,
     MatProgressBarModule,
+    MatAutocompleteModule,
     MatTabsModule,
     NgxMdModule.forRoot(),
     MetaModule.forRoot(),

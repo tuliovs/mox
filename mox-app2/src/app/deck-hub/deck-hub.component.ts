@@ -106,6 +106,10 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     this._router.navigateByUrl('/deck/new');
   }
 
+  viewDeck() {
+    this._deckService.viewDeck();
+  }
+
   setFormat(f) {
     (f === 'all') ? this.formatSelected = null : this.formatSelected = f;
   }
@@ -135,7 +139,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
       this.internalDeck = deck;
       this._deckService.editDeck(deck)
       .then(() => {
-        this._state.setState('view');
+        this._state.setState('nav');
       })
       .catch(() => {
         this._state.setState('error');

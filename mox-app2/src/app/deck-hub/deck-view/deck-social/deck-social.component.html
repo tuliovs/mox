@@ -7,7 +7,7 @@
         <div class="title animated fadeIn">
           <h1>{{deck.name}}</h1>
           <button *ngIf="user.uid == deck.ownerId" matRipple (click)="editing = true">
-            <i class="fas fa-cog"></i>
+            <i class="fas fa-edit"></i>
           </button>
         </div>
         <div class="middle animated fadeIn">

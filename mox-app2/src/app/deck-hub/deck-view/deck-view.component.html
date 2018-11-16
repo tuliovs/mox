@@ -5,6 +5,7 @@
       [(selectedIndex)]="tab" [color]="'primary'" [backgroundColor]="'primary'">
       <mat-tab label="Deck List"> 
         <div class="tab-content">
+
           <div class="summary animated fadeInDown" *ngIf="user.uid === deck.ownerId || deck.public">
             <div class="decksize mox-font">
               <i class="fas fa-clone"></i>{{deck.cards.length}}
@@ -14,11 +15,24 @@
             <div class="deckname">{{deck.name}}</div>
             <div class="decktype">{{deck.format}}</div>
           </div>
+
+          <div class="search-box animated slideInDown" *ngIf="cardSearchActive" id="searchbox" #searchbox>
+            <input matInput type="text" placeholder="Search Card Name" [matAutocomplete]="auto" [formControl]="stateCtrl">
+            <mat-autocomplete #auto="matAutocomplete"(optionSelected)="searchSelect($event)" >
+              <ng-container *ngIf="searchResults | async as catalog">
+                <mat-option *ngFor="let res of catalog.data" [value]="res">
+                  <!-- <img class="example-option-img" aria-hidden [src]="state.flag" height="25"> -->
+                  <span>{{res}}</span>
+                </mat-option>  
+              </ng-container>
+            </mat-autocomplete>
+          </div>
+
           <div *ngIf="!deck.public && user.uid !== deck.ownerId">
             <p>Deck Private</p>
           </div>
-          <ul *ngIf="user.uid === deck.ownerId || deck.public">
-            <li *ngFor="let card of _deckService.deckProcess._cardList" class="animated fadeInDown">
+          <ul *ngIf="user.uid === deck.ownerId || deck.public" [class.searchactive]="cardSearchActive">
+            <li *ngFor="let card of _deckService.deckProcess._cardList.reverse()" class="animated fadeInDown">
               <app-mox-row-card *ngIf="card" [cardAmout]="cardAmount(card.id)" [card]="card" [deckFormat]="deck.format" [selected]="(this._selectedCard && this._selectedCard === card)"
                 (plus)="cardPlus($event)" (minus)="cardMinus($event)" (cardSelect)="selectedCard($event)" (cardView)="activateCardView($event)"
               ></app-mox-row-card>
@@ -78,18 +92,34 @@
   </div>
 </div>
 
-<app-mox-action-bar [hidden]=" tab != 0" (swiperight)="tab = 1" (swipeleft)="tab = 2"> 
-  <button (click)="activateCardView()" matRipple [disabled]="!(this._selectedCard)" class="btn btn-action animated flipInX">
-    <i  class="fas fa-search-plus"></i>
+<app-mox-action-bar *ngIf="tab == 0 && !_selectedCard" (swiperight)="tab = 1" (swipeleft)="tab = 2"> 
+  <button *ngIf="!cardSearchActive" (click)="activateSearch()" matRipple class="btn btn-action animated flipInX">
+    <i  class="fas fa-plus"></i>
+  </button>
+  <button *ngIf="cardSearchActive" (click)="cardSearchActive = false" matRipple class="btn btn-action animated flipInX">
+    <i  class="fas fa-undo-alt"></i>
   </button>
   <app-mox-filter-picker class="animated flipInX"></app-mox-filter-picker>
   <div class="fixer"></div>
   <app-mox-picker [pickerType]="'sort'" [currentState]="_cardSort" (sortSelection)="sortChoosen($event)"></app-mox-picker>
-  <app-mox-picker *ngIf="!_selectedCard" [pickerType]="'deck-action'" [currentState]="_deck | async"></app-mox-picker>
-  <app-mox-picker *ngIf="_selectedCard" [pickerType]="'card'" [currentState]="_selectedCard" (sortSelection)="sortChoosen($event)"></app-mox-picker>
+  <app-mox-picker [pickerType]="'deck-action'" [currentState]="_deck | async"></app-mox-picker>
 </app-mox-action-bar>
 
-<app-mox-action-bar [hidden]="tab != 1" (swiperight)="tab = 2" (swipeleft)="tab = 0"> 
+<app-mox-action-bar *ngIf="tab == 0 && _selectedCard" (swiperight)="tab = 1" (swipeleft)="tab = 2">
+  <button (click)="activateCardView()" matRipple class="btn btn-action animated flipInX">
+    <i  class="fas fa-search-plus"></i>
+  </button>
+  <button matRipple class="btn btn-action animated flipInX" disabled>
+    <i  class="fas fa-heart"></i>
+  </button>
+  <div class="fixer"></div>
+  <button matRipple class="btn btn-action animated flipInX" disabled>
+    <i  class="fas fa-archive"></i>
+  </button>
+  <app-mox-picker [pickerType]="'card'" [currentState]="_selectedCard" (sortSelection)="sortChoosen($event)"></app-mox-picker>
+</app-mox-action-bar>
+
+<app-mox-action-bar *ngIf="tab == 1" (swiperight)="tab = 2" (swipeleft)="tab = 0"> 
   <button disabled matRipple class="btn btn-action animated flipInX">
     <i class="fas fa-address-card"></i>
   </button>
@@ -105,7 +135,7 @@
   </button>        
 </app-mox-action-bar>
 
-<app-mox-action-bar [hidden]="tab != 2" (swiperight)="tab = 0" (swipeleft)="tab = 1"> 
+<app-mox-action-bar *ngIf="tab == 2" (swiperight)="tab = 0" (swipeleft)="tab = 1"> 
   <button (click)="delete()" matRipple class="btn btn-action animated flipInX">
     <i class="fas fa-trash"></i>
   </button>

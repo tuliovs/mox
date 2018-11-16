@@ -16,7 +16,7 @@
     <i *ngIf="!user || (isState('nav') && !user.actionIco)" [className]="'animated pulse ss ss-pmtg1'" [@actionIcoAnimator]="animationState2"
       (@actionIcoAnimator.done)="resetAnimationState()" (tap)="menuOpen('opened');setState('closed')"></i>
 
-    <i *ngIf="isState('closed')"  (tap)="setState('nav')" class="animated pulse fas fa-times-circle"></i>
+    <i *ngIf="isState('closed')"  (tap)="setState('nav')" class="animated pulse fas fa-bars"></i>
     <i *ngIf="isState('loading')" (tap)="abortState()"    class="fas fa-sync-alt fa-spin"></i>
     <i *ngIf="isState('sort')"    (tap)="abortState()"    class="fas fa-sort"></i>
     <i *ngIf="isState('config')"  (tap)="abortState()"    class="animated pulse fas fa-cog fa-spin"></i>

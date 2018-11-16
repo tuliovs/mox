@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { List } from '@application/_models/_scryfall-models/models';
+import { List, Catalog } from '@application/_models/_scryfall-models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,11 @@ export class ScryfallSearchService {
   arenaUrl = `https://api.scryfall.com/cards`;
   fuzzyUrl = `https://api.scryfall.com/cards/named?fuzzy=`;
   mtgoUrl  = `https://api.scryfall.com/cards/mtgo/`;
+  autoUrl  = `https://api.scryfall.com/cards/autocomplete?q=`;
+
+  autoSearch(param: string): Observable<Catalog> {
+    return this.http.get<Catalog>(`${this.autoUrl}${encodeURI(param)}`);
+  }
 
   search(param: string): Observable<List> {
     return this.http.get<List>(`${this.url}${encodeURI(param)}`);
