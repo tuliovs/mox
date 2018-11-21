@@ -1,0 +1,164 @@
+@import './../../../../../styles/theme.colors'
+\:host
+  display: flex
+
+$light-white: rgba(255, 255, 255, .7);
+$shad: 15px 15px 30px rgba(0, 0, 0, .25);
+$bg-picker: rgba(19, 32, 48, .85);
+$shad-action-button: rgba(0, 0, 0, .15);
+$shad-picker: 0 4px 4px rgba(0, 0, 0, .25)
+$shad-title: 2px 2px 10px rgba(0, 0, 0, .81);
+
+.mat-select
+  background-color: color(_white)
+  color: color(_dark_blue)
+  display: inline-block
+  font-family: 'Exo 2'
+  outline: 0
+  width: 53%
+
+.action-button
+  align-items: center
+  background-color: color(_white)
+  border-radius: 25em
+  bottom: 1.3%
+  box-shadow: 0 0 20px $shad-action-button
+  color: color(_white)
+  display: flex
+  font-size: 2.1em
+  height: 66px
+  justify-content: center
+  left: 39.9%
+  position: fixed
+  right: 40%
+  width: 66px
+  z-index: 20
+
+  div
+    align-items: center
+    background-color: color(_white)
+    border-radius: 25em
+    box-shadow: 0 0 5px $shad-action-button
+    display: flex
+    height: 56px
+    justify-content: center
+    width: 56px
+    z-index: 21
+
+    i
+      color: color(_darkblue)
+      padding: 0
+      text-align: center
+      text-shadow: 0 0 0 color(_white)
+      vertical-align: middle
+
+.picker-bg-1
+  background-color: color(_blue)
+  background-position: center
+  border-radius: 5px
+  display: inline-flex
+  height: 30em
+  left: 2.5%
+  opacity: .6
+  position: fixed
+  top: 6%
+  width: 95%
+  z-index: 18
+
+.picker-bg-2
+  background-color: color(_blue)
+  border-radius: 5px
+  display: inline-flex
+  height: 1em
+  left: 5%
+  opacity: .4
+  position: fixed
+  top: 5%
+  width: 90%
+  z-index: 18
+
+.action-menu
+  background-color: $bg-picker
+  border-radius: 5px
+  bottom: 6.7%
+  box-shadow: $shad-picker
+  color: color(_white)
+  display: inline-flex
+  flex-direction: column
+  height: 80vh
+  justify-content: initial
+  left: 0%
+  overflow-y: scroll
+  padding: 0
+  position: absolute
+  text-align: center
+  width: 100%
+  z-index: 19
+
+  h2
+    font-size: 1.3em
+    font-weight: 600
+    text-shadow: $shad-title
+
+  .options
+    display: inline-flex
+    flex-direction: column
+    height: 70vh
+    justify-content: initial
+    overflow: scroll
+    padding: 0 1%
+    width: 100%
+
+    .form-block
+      p
+        font-size: 1em
+        padding: 2%
+
+.import-stats
+  .progress
+    padding: 0 6%
+
+  .error-container
+    .err-item
+      p
+        color: color(notification, error)
+        font-size: 10px
+        padding: 2px
+
+    .error-actions
+      display: inline-flex
+      flex-direction: row
+      justify-content: space-around
+      width: 75%
+
+.actions
+  display: inline-flex
+  justify-content: space-evenly
+  width: 94%
+
+.selected
+  font-style: italic
+  font-weight: 600
+
+  i
+    border: solid 2px color(_blue)
+    border-radius: 25em
+    color: color(_blue)
+
+.closer
+  background-color: color(_darkblue)
+  border-radius: 33%
+  bottom: 0
+  font-size: .8em
+  justify-content: center
+  margin: auto 0
+  opacity: 1
+  position: fixed
+  width: 15%
+
+  i
+    color: color(_white)
+    font-size: 2.1em
+    padding: .4em
+
+

@@ -1,0 +1,177 @@
+@import './../../../styles/theme.colors'
+
+$shad: rgba(102, 122, 149, .17);
+$shad-low: rgba(0, 0, 0, .25);
+
+.main
+  margin-top: 0
+  max-height: 85%
+  overflow-y: hidden
+
+hr
+  border: solid 1px color(_darkblue)
+  margin: 5% 10%
+  width: 80%
+
+.summary
+  background: color(_lightblue)
+  border: 1px solid $shad
+  box-shadow: 0 0 4px $shad-low
+  color: color(_ice)
+  display: flex
+  font-size: .81em
+  height: 1.65em
+  justify-content: space-between
+  padding: 0
+  position: fixed
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, .3)
+  width: 100%
+  z-index: 2
+
+  div
+    align-items: center
+    display: inline-flex
+    font-size: 12px
+    height: 90%
+    padding: 0 .5%
+
+  .deckname
+    font-size: 14px
+    padding: 0 1%
+
+  i
+    margin: 0 2px
+
+  .deck-extra-data
+    color: color(_ice)
+    display: inline-flex
+    width: 100%
+
+    .item
+      align-items: center
+      background-color: color(_blue)
+      display: inline-flex
+      font-size: .6em
+      height: 3%
+      justify-content: center
+      text-align: center
+      width: 34%
+
+      option
+        background-color: color(_darkblue)
+        text-transform: capitalize
+
+
+    .positive
+      background-color: color(_darkblue)
+
+.lightbox
+  background-color: color(_ice)
+  display: flex
+  filter: blur(5px)
+  flex-flow: column
+  height: 100%
+  justify-content: center
+  left: 0
+  opacity: .67
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 2
+
+.card-viewer
+  display: flex
+  flex-flow: column
+  height: 100%
+  justify-content: center
+  left: 0
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 3
+
+  .fullcard
+    background-size: cover
+    border-radius: 15px
+    box-shadow: 0 2px 9px $shad-card-row
+    height: 28em
+    left: 50%
+    margin: -13.5em 0 0 -10em
+    padding: 0
+    position: fixed
+    top: 50%
+    width: 20em
+    z-index: 12
+
+ul
+  margin-bottom: 6%
+  margin-top: 0%
+  overflow-x: hidden
+  overflow-y: hidden
+  padding-top: 5%
+
+.searchactive
+  margin-top: 15%
+
+$wtf: #e2e2e2;
+ol
+  display: inline-flex
+  justify-content: space-between
+  list-style: none
+  padding: 0
+  width: 100%
+
+  li
+    color: $wtf
+    cursor: pointer
+    display: inline-flex
+    flex-direction: column
+    font-size: .81em
+    font-weight: 500
+    justify-content: center
+    text-align: center
+    width: 30%
+
+  .active
+    color: color(_blue)
+    font-size: 1.2em
+    font-weight: 600
+
+.selected
+  border-bottom: 1px solid color(_darkblue)
+  box-shadow: 3px 3px 5px $shad-low
+  height: 65px
+
+.tab-content
+  height: 90%
+  overflow-y: scroll
+
+  .search-box
+    display: flex
+    height: 3em
+    margin: 0
+    margin-bottom: -5%
+    margin-top: 5%
+    position: fixed
+    width: 100%
+    z-index: 1
+
+.mat-ink-bar
+  background-color: color(_darkblue) !important
+  border-radius: 50%
+  height: 6px
+  margin: -2px 16.5%
+  width: 6px !important
+
+.mat-tab-header
+  background-color: color(_white) !important
+  line-height: 1em !important
+  max-height: 2em
+
+.mat-tab-group
+  .mat-background-primary
+    .mat-tab-label
+      color: color(_darkblue)
+      font-family: 'Exo 2'
+      font-weight: 600
+      height: 2em

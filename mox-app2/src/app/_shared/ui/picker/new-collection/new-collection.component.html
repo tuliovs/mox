@@ -1,0 +1,59 @@
+<div class="picker-bg-2 animated bounceInLeft"></div>
+<div class="picker-bg-1 animated bounceInLeft"></div>
+<div class="action-menu">
+  <div class="animated fadeIn">
+    <h2>New Collection</h2>
+  </div>
+  <section class="options mox-font animated bounceInRight">
+    <section class="form-block">
+      <div class="import-stats animated fadeIn" *ngIf="showLoader && _collServ._collProcess.collection">
+        <p class="">Creating a new Collection: {{_collServ._collProcess.collection.name}}</p>
+        <p class="">Status: {{_collServ._collProcess.status}}</p>
+        <div class="progress animated fadeIn">
+          <mat-progress-bar [color]="'accent'" mode="indeterminate">
+          </mat-progress-bar>
+        </div>
+        <div *ngIf="errorList" class="error-container">
+          <ul>
+            <li *ngFor="let e of errorList; let i = index" class="err-item animated slideInUp">
+              <p *ngIf="e.msg">{{e.msg}}</p>
+              <app-mox-row-card *ngIf="e.card" [cardAmout]="cardAmount(e.card.id)" [card]="e.card"
+                (plus)="cardPlus($event)" (minus)="cardMinus($event)"
+              ></app-mox-row-card>
+            </li>
+          </ul>
+          <div class="error-actions">
+            <button (click)="return()"   class="animated fadeIn" mat-raised-button color="accent"><i class="fas fa-times"></i> Restart</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!showLoader">
+        <p>
+          Hello! This is Karn collection creation interface. Here you can create a new magic collection!
+        </p>
+        <p>
+          <label>Name: </label> 
+          <input id="inputTextID" type="text"
+            [(ngModel)]="newCollection.name" value="{{newCollection.name}}" name="iname">
+        </p>
+        <p>
+          <label>Type: </label>
+          <mat-select placeholder="Collection Type" class="animated flipInX" [(ngModel)]="newCollection.type">
+            <mat-option *ngFor="let t of types" [value]="t">
+              {{t.toUpperCase()}}
+            </mat-option>
+          </mat-select>
+        </p>
+        <div class="actions">
+          <button (click)="create()" mat-raised-button color="accent"><i class="fas fa-cloud-upload-alt"></i> Create</button>
+        </div>
+      </div>
+    </section>
+  </section>
+</div>
+<div class="action-button animated bounceInUp">
+  <div matRipple (click)="closeContext()">
+    <i class="fas fa-archive"></i>
+  </div>
+</div>

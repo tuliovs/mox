@@ -36,7 +36,12 @@
               "src/styles/theme.sass",
               "node_modules/prismjs/themes/prism-coy.css",
               "node_modules/mana-font/css/mana.css",
-              "node_modules/animate.css/animate.min.css"
+              "node_modules/animate.css/animate.min.css",
+              {
+                "input": "src/styles/theme.sass",
+                "lazy": true, 
+                "bundleName": "lazy-loaded-style"
+              }
             ],
             "scripts": [
               "node_modules/@webcomponents/custom-elements/custom-elements.min.js",

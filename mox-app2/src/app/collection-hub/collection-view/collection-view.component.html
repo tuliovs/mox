@@ -1,0 +1,109 @@
+<app-mox-loading-spinner *ngIf="!_collection"></app-mox-loading-spinner>
+<div *ngIf="_collection | async as collection">
+  <div *ngIf="_auth.getUser() | async as user" class="main">
+    <mat-tab-group mat-stretch-tabs dynamicHeight class="example-stretched-tabs mat-elevation-z4 animated fadeIn"
+      [(selectedIndex)]="tab" [color]="'primary'" [backgroundColor]="'primary'">
+      <mat-tab label="Card List"> 
+        <div class="tab-content">
+
+          <div class="summary animated fadeInDown">
+            <div class="decksize mox-font">
+              <i class="fas fa-clone"></i>{{(collection.cards) ? collection.cards.length : 0}}
+            </div>
+            <div class="deckname">{{collection.name}}</div>
+            <div class="decktype">{{collection.type}}</div>
+          </div>
+
+          <div class="search-box animated flipInX" *ngIf="cardSearchActive" id="searchbox" #searchbox>
+            <input matInput type="text" placeholder="Search Card Name" [matAutocomplete]="auto" [formControl]="stateCtrl">
+            <mat-autocomplete #auto="matAutocomplete"(optionSelected)="searchSelect($event)" >
+              <ng-container *ngIf="searchResults | async as catalog">
+                <mat-option *ngFor="let res of catalog.data" [value]="res">
+                  <span>{{res}}</span>
+                </mat-option>  
+              </ng-container>
+            </mat-autocomplete>
+          </div>
+          <ul *ngIf="user.uid === collection.ownerId" [class.searchactive]="cardSearchActive">
+            <li *ngFor="let card of _colleServ._collProcess.cardList" class="animated fadeInDown">
+              <app-mox-card-item [cardAmout]="cardAmount(card.id)" [card]="card" [owner]="isOwner(user)" [selected]="(this._selectedCard && this._selectedCard === card)"
+                (plus)="cardPlus($event)" (minus)="cardMinus($event)" (cardSelect)="selectedCard($event)" (cardView)="activateCardView($event)"
+              ></app-mox-card-item>
+            </li>
+          </ul>
+
+          <div *ngIf="cardView" class="lightbox" (click)="cardView = false"></div>
+          <div *ngIf="cardView && _selectedCard" class="card-viewer">
+            <div class="fullcard animated flipInY" *ngIf="!side"
+              (tap)="side = true"
+              (doubletap) ="cardView = false;selectedCard(_selectedCard)"
+              (swipedown) ="cardView = false;selectedCard(_selectedCard)"
+              (swipeup)   ="cardView = false;selectedCard(_selectedCard)"
+              (swiperight)="cardView = false;selectedCard(_selectedCard)"
+              (swipeleft) ="cardView = false;selectedCard(_selectedCard)"
+              [ngStyle]="{ 'background-image': 'url(' + getCardImgUri() + ')' }" ></div>
+    
+            <div class="fullcard animated flipInY" *ngIf="side"
+              (tap)="side = false"
+              (doubletap) ="cardView = false;selectedCard(_selectedCard)"
+              (swipedown) ="cardView = false;selectedCard(_selectedCard)"
+              (swipeup)   ="cardView = false;selectedCard(_selectedCard)"
+              (swiperight)="cardView = false;selectedCard(_selectedCard)"
+              (swipeleft) ="cardView = false;selectedCard(_selectedCard)"
+              [ngStyle]="{ 'background-image': 'url(' + getCardBackImgUri() + ')' }"></div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Stats">
+        <div class="tab-content">
+
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+
+<app-mox-action-bar *ngIf="tab == 0 && !_selectedCard"> 
+  <button *ngIf="!cardSearchActive" (click)="activateSearch()" matRipple class="btn btn-action animated flipInX">
+    <i  class="fas fa-plus"></i>
+  </button>
+  <button *ngIf="cardSearchActive" (click)="cardSearchActive = false" matRipple class="btn btn-action animated flipInX">
+    <i  class="fas fa-undo-alt"></i>
+  </button>
+  <app-mox-filter-picker class="animated flipInX"></app-mox-filter-picker>
+  <div class="fixer"></div>
+  <app-mox-picker [pickerType]="'sort'" [currentState]="_cardSort" (sortSelection)="sortChoosen($event)"></app-mox-picker>
+  <app-mox-picker [pickerType]="'deck-action'" [currentState]="_deck | async"></app-mox-picker>
+</app-mox-action-bar>
+
+<app-mox-action-bar *ngIf="tab == 0 && _selectedCard">
+  <button (click)="activateCardView()" matRipple class="btn btn-action animated flipInX">
+    <i  class="fas fa-search-plus"></i>
+  </button>
+  <button matRipple class="btn btn-action animated flipInX" disabled>
+    <i  class="fas fa-heart"></i>
+  </button>
+  <div class="fixer"></div>
+  <button matRipple class="btn btn-action animated flipInX" disabled>
+    <i  class="fas fa-archive"></i>
+  </button>
+  <app-mox-picker [pickerType]="'card'" [currentState]="_selectedCard" (coverActionChoosen)="setCover($event)" (sortSelection)="sortChoosen($event)" (deckAddChoosen)="activateDeckPicker($event)"></app-mox-picker>
+  <app-mox-picker [pickerType]="'deck-picker'" [btnHidden]="'true'" [currentState]="_cardPicked" (sortSelection)="sortChoosen($event)" #deckPiker></app-mox-picker>
+</app-mox-action-bar>
+
+<app-mox-action-bar *ngIf="tab == 1"> 
+  <button (click)="delete()" matRipple class="btn btn-action animated flipInX">
+    <i class="fas fa-trash"></i>
+  </button>
+  <button disabled matRipple class="btn btn-action animated flipInX">
+    <i class="fas fa-flask"></i>
+  </button>
+  <div class="fixer"></div>
+  <button disabled matRipple class="btn btn-action animated flipInX">
+    <i class="fas fa-qrcode"></i>
+  </button>
+  <button (click)="processStats()" matRipple class="btn btn-action animated flipInX">
+    <i class="fas fa-cogs"></i>
+  </button>        
+</app-mox-action-bar>

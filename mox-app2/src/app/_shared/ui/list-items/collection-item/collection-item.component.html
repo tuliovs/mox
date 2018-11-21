@@ -1,0 +1,21 @@
+<!-- <div *ngIf="this.internalcollection === collection" class="zoom" (click)="viewcollection()"><i class="fas fa-search-plus"></i></div> -->
+<app-mox-loading-spinner *ngIf="!collection"></app-mox-loading-spinner>
+<div *ngIf="collection" class="collection-item animated slideInLeft" [class.selected-coll]="selected">
+  <i [className]="collTypeIcon() + ' big-ico animated fadeIn'"></i>
+  <div class="cover" matRipple (click)="collectionSelected(collection)" (press)="collSelected.emit(collection)"
+    [ngStyle]="{ 'background-image': 'url(' + collection.cover + ')' }">
+    <p class="color-identity" *ngIf="collection.colorIdentity">
+      <i *ngFor="let ico of collection.colorIdentity" [className]="'ms ms-' + ico.toLowerCase()" [class.ms-cost]=" ico != ''"
+        [class.shadow]=" ico != ''"></i>
+    </p>
+  </div>
+  <div class="content" matRipple (click)="collSelected.emit(collection)">
+    <div>
+      <label>{{collection.name}}</label>
+      <span>{{(collection.cards) ? collection.cards.length : 0}}</span>
+    </div>
+    <div class="second-level">
+      <span>{{collection.type}}</span>
+    </div>
+  </div>
+</div>

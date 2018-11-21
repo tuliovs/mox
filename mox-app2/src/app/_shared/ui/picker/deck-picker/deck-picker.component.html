@@ -1,0 +1,14 @@
+<div class="deck-actions">
+  <mat-form-field>
+    <mat-select placeholder="Your Decks" [(ngModel)]="_deckSelection">
+      <mat-option *ngFor="let deck of _userDecks" [value]="deck.key">
+        {{deck.name}} - <small>{{deck.format}}</small>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-slide-toggle [checked]="_side" [color]="color">Side</mat-slide-toggle>
+  <div class="confirmation animated slideInDown">
+    <button (click)="addOne()"      mat-raised-button color="primary" [disabled]="!_deckSelection"><i class="fas fa-plus"></i> 1</button>
+    <button (click)="cancel.emit()" mat-raised-button color="primary" ><i class="fas fa-times"></i> Cancel</button>
+  </div>
+</div>

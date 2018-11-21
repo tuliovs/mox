@@ -1,0 +1,85 @@
+@import './../../../../../styles/theme.colors'
+
+$bg-zoom: rgba(255, 255, 255, .5);
+$shad: rgba(0, 0, 0, .5);
+$shad-base: rgba(0, 0, 0, .25);
+$shad-in: rgba(0, 0, 0, .15);
+$sily-gray: rgba(158, 158, 158, .2);
+
+.collection-item
+  align-content: flex-end
+  align-items: center
+  border-bottom: 1px solid color(_grayer)
+  display: inline-flex
+  height: 4.6em
+  margin: .5%
+  margin-left: 1%
+  padding-bottom: 5%
+  position: relative
+  width: 98%
+
+  .big-ico
+    animation-delay: .5s
+    color: $sily-gray
+    font-size: 3em
+    margin: 0 5.8%
+    opacity: .35
+    position: absolute
+    text-shadow: 0 1px 0 $bg-zoom, 0 -1px 0 $shad-in
+    z-index: 2
+
+  .cover
+    background-color: $bg-uclass-normal
+    background-size: cover
+    border-radius: 50px
+    box-shadow: 0 0 4px $shad-base, inset 3px 3px 14px $shad-in
+    display: inline-flex
+    filter: blur(1.3px)
+    flex-direction: column-reverse
+    height: 3em
+    margin-left: 5%
+    opacity: .9
+    position: relative
+    width: 3em
+
+  .content
+    display: inline-block
+    height: 100%
+    margin-left: 10%
+    padding: 1%
+    position: relative
+    width: 70%
+
+    div
+      color: color(_darkblue)
+      display: inline-flex
+      font-size: .7em
+      font-weight: 600
+      height: 50%
+      justify-content: space-between
+      margin: 0
+      width: 100%
+
+      span
+        color: color(_blue)
+
+      label
+        font-size: 1.5em
+        max-width: 77%
+        text-align: left
+
+  .second-level
+    align-items: flex-end
+
+    .owner
+      color: color(_slate)
+      font-size: 1em
+
+    .icons
+      font-size: 1.3em
+      width: 15%
+
+.selected-coll
+  border: 1px solid color(_darkblue)
+  border-radius: 4px
+  box-shadow: 3px 3px 5px $shad

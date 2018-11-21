@@ -1,3 +1,4 @@
+import { MoxCollection } from './../../../_application/_models/_mox-models/MoxCollection';
 import { ActionStateService } from './../../../_application/_services/action-state/action-state.service';
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
@@ -28,10 +29,14 @@ export class PickerComponent implements OnInit {
   @Input() pickerType: any;
   @Input() userFolders?: string[];
   @Input() currentState?: string;
+  @Input() btnHidden = false;
   @ViewChild(MatRipple) ripple: MatRipple;
-  @Output() deckFolderRemove: EventEmitter<any> = new EventEmitter();
-  @Output() deckFolderInclude: EventEmitter<any> = new EventEmitter();
-  @Output() sortSelection: EventEmitter<string> = new EventEmitter();
+  @Output() folderRemove: EventEmitter<any> = new EventEmitter();
+  @Output() folderInclude: EventEmitter<any> = new EventEmitter();
+  @Output() coverActionChoosen: EventEmitter<string> = new EventEmitter();
+  @Output() deckAddChoosen: EventEmitter<string> = new EventEmitter();
+  @Output() pickerSelection: EventEmitter<string> = new EventEmitter();
+  @Output() collectionSelection: EventEmitter<MoxCollection> = new EventEmitter();
   public componentState = 'closed';
   public lightboxActive = false;
   constructor(
@@ -39,24 +44,23 @@ export class PickerComponent implements OnInit {
   ) {  }
 
   ngOnInit() {
-    this.ripple.centered = true;
-    this.ripple.radius = 20;
+    if (this.ripple) {
+      this.ripple.centered = true;
+      this.ripple.radius = 20;
+    }
   }
 
   pickerIcon() {
     switch (this.pickerType) {
-      case 'folder':
-        return 'fas fa-folder';
-      case 'sort':
-        return 'fas fa-sort';
-      case 'card':
-        return 'ss ss-bcore';
-      case 'deck-action':
-        return 'fas fa-book';
-      case 'deck-import':
-        return 'fas fa-cloud-upload-alt';
-      default:
-        return 'fas fa-question';
+      case 'folder' : return 'fas fa-folder';
+      case 'sort' : return 'fas fa-sort';
+      case 'card' : return 'ss ss-bcore';
+      case 'deck-action' : return 'fas fa-book';
+      case 'deck-import' : return 'fas fa-cloud-upload-alt';
+      case 'new-coll' : return 'fas fa-plus';
+      case 'coll-action' : return 'fas fa-archive';
+      case 'deck-picker' : return 'fas fa-book';
+      default : return 'fas fa-question';
     }
   }
 

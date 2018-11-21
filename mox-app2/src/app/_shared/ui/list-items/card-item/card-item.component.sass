@@ -1,0 +1,151 @@
+@import './../../../../../styles/theme.colors'
+
+$shad-text: rgba(0, 0, 0, .25)
+$bg-zoom: rgba(255, 255, 255, .5)
+
+.shadow
+  box-shadow: 0 0 2px #111, 0 .06em 1px #111
+
+.card-row
+  background: color(_white)
+  border-radius: 4px
+  box-shadow: 0 4px 12px $shad-card-row
+  display: inline-flex
+  flex-direction: row
+  height: 64px
+  margin: 2% 0% 0%
+  padding: 2px
+  width: 98%
+
+  .card-rarity
+    border-radius: 4px
+    margin-right: -6px
+    width: 12px
+
+  .common
+    background: $common-vert
+
+  .uncommon
+    background: $uncommon-vert
+
+  .rare
+    background: $rare-vert
+
+  .mythic
+    background: $mythic-vert
+
+  .card-counter
+    align-items: center
+    background-color: color(_black)
+    border-radius: 4px
+    box-shadow: 0 0 10px $shad-low
+    color: color(_white)
+    display: flex
+    font-size: 1.1em
+    height: 100%
+    margin-right: -4px
+    text-align: center
+    width: 25px
+
+    label
+      margin: auto
+
+  .zoom
+    align-items: center
+    background-color: $bg-zoom
+    border-radius: 0 4px 4px 0
+    display: inline-flex
+    flex-direction: column
+    height: 3.73em
+    justify-content: center
+    margin-left: 8%
+    position: absolute
+    width: 68px
+    z-index: 2
+
+    i
+      color: color(_white)
+      font-size: 1.75em
+      text-shadow: 2px 2px 10px $shad-text
+
+  .card-img
+    background-size: cover
+    border-radius: 4px
+    box-shadow: 0 0 4px $shad-low, inset 3px 3px 14px $shad-in
+    display: inline-flex
+    flex-direction: column-reverse
+    width: 68px
+
+    label
+      color: color(_white)
+      font-size: 13px
+      justify-content: center
+      text-align: center
+      text-shadow: 1px 2px 1px color(_darkblue)
+
+  .data-container
+    display: inline-flex
+    flex-direction: column
+    text-align: initial
+    width: 58%
+
+    .card-data
+      color: color(_slate)
+      display: inline-flex
+      font-size: .6em
+      padding: 0 1%
+      text-align: start
+
+      h4
+        color: color(_darkblue)
+        display: flex
+        font-size: 150%
+        font-weight: 600
+        height: 72%
+        margin: 0
+        text-align: start
+        text-overflow: unset
+        vertical-align: top
+        width: 100%
+        word-wrap: break-word
+
+    .typeline
+      font-size: 75%
+
+  .card-actions
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    margin: 0
+    padding: 0
+    width: 16.3%
+
+    div
+      display: inline-flex
+
+      .btn
+        border: 0
+        color: color(_blue)
+        font-size: 1.55em
+        height: 60%
+        margin: 0
+        min-width: 1.15em
+        padding: 0
+
+        i
+          text-shadow: 0 2px 0 color(_grayer)
+
+    .mana-cost
+      flex-wrap: wrap
+      font-size: 65%
+      height: 30%
+      justify-content: flex-end
+      text-align: right
+      width: 100%
+
+.selected-card
+  border-bottom: 1px solid color(_darkblue)
+  box-shadow: 3px 3px 5px $shad-dark !important
+
+.ilegal-card
+  border: 1px solid color(notification, error)

@@ -12,7 +12,6 @@ import { MoxCardService } from '@application/_services/mox-services/card/mox-car
 import { LocalstorageService } from '@application/_services/localstorage/localstorage.service';
 import { CardListSort } from '@application/_utils/sorts';
 import { DeckStats } from '@application/_utils/stats';
-import { DeckIO } from '@application/_utils/io';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +39,7 @@ export class MoxDeckService {
           this._user = user;
         })
       ).subscribe();
-  }
+    }
 
   public getWorkingDeck(): Observable<MoxDeck> {
     return this.workingDeck.asObservable();
@@ -52,29 +51,25 @@ export class MoxDeckService {
 
   quickCreate(name?: string) {
     return new Promise<MoxDeck>((resolve, reject) => {
-      this._auth.getUser().pipe(
-        tap((user) => {
-          if (user) {
-            const d = new MoxDeck();
-            d.key = this.makeId();
-            d.name = (name) ? name : 'QuickDeck';
-            d.cover = '';
-            d.legal = false;
-            d.ownerId = user.uid;
-            d.ownerName = user.displayName;
-            d.public = true;
-            d.froze = false;
-            d.cards = [];
-            d.side = [];
-            d.updated = [];
-            this.deckProcess._deck = d;
-            resolve(d);
-          } else {
-            console.error('#333 [quickCreate] User not found!: ', user);
-            reject(new Error('Error creating a new deck'));
-          }
-        })
-      ).subscribe();
+      if (this._user) {
+        const d = new MoxDeck();
+        d.key = this.makeId();
+        d.name = (name) ? name : 'QuickDeck';
+        d.cover = '';
+        d.legal = false;
+        d.ownerId = this._user.uid;
+        d.ownerName = this._user.displayName;
+        d.public = true;
+        d.froze = false;
+        d.cards = [];
+        d.side = [];
+        d.updated = [];
+        this.deckProcess._deck = d;
+        resolve(d);
+      } else {
+        console.error('#333 [quickCreate] User not found!: ', this._user);
+        reject(new Error('Error creating a new deck'));
+      }
     });
   }
 
@@ -82,17 +77,11 @@ export class MoxDeckService {
     return new Promise<MoxDeck>((resolve, reject) => {
       try {
         if (this._user) {
-          const forked = new MoxDeck();
-          const deck = this.deckProcess._deck;
-          forked.cards = deck.cards;
-          forked.side = deck.side;
-          forked.colorIdentity = deck.colorIdentity;
-          forked.format = deck.format;
-          forked.cover = deck.cover;
-          forked.name = deck.name;
+          const proDeck = this.deckProcess._deck;
+          const forked = { ...proDeck };
           forked.public = true;
-          forked.originayKey = (deck.originayKey ? deck.originayKey : deck.key);
-          forked.creatorId = (deck.creatorId ? deck.creatorId : deck.ownerId);
+          forked.originayKey = (proDeck.originayKey ? proDeck.originayKey : proDeck.key);
+          forked.creatorId = (proDeck.creatorId ? proDeck.creatorId : proDeck.ownerId);
           forked.ownerName = this._user.displayName;
           forked.ownerId = this._user.uid;
           forked.key = this.makeId();
@@ -182,7 +171,7 @@ export class MoxDeckService {
                   if (Array.from(new Set(deck.cards)).length === this.deckProcess._cardList.length) {
                     this._state.returnState();
                   }
-                }   else {
+                } else {
                   console.log('#135 Error');
                   reject('#135 [GetCardData] - Error');
                 }
@@ -362,96 +351,41 @@ export class MoxDeckService {
   }
 
   addCard(cardId: string, deckId?: string) {
-    if (deckId) {
-      this._state.setState('cloud');
-      this.deckCollection = this.afs.collection('decks');
-      this.deckCollection.doc(deckId).valueChanges()
-      .pipe(
-        tap((tempDeck: MoxDeck) => {
-          tempDeck.cards.push(cardId);
-          this.deckCollection.doc(tempDeck.key).update({
-            cards: tempDeck.cards
-          }).then(() => {
-            this._state.returnState();
-            this._toast.sendMessage(
-              'Done! Add to your: ' + this.deckProcess._deck.name + ' decklist.',
-              'success',
-              this.deckProcess._deck.ownerId);
-          }).catch((err) => {
-            this._state.setState('error');
-            this._toast.sendMessage(
-              'Error! ' + err,
-              'error',
-              this.deckProcess._deck.ownerId);
-          });
-        })
-      )
-      .subscribe();
-
-    } else {
-      this.deckProcess.active = true;
-      this.deckProcess._deck.cards.push(cardId);
-      this.deckCollection = this.afs.collection('decks');
-      this.deckCollection.doc(this.deckProcess._deck.key).update({
-        cards: this.deckProcess._deck.cards
-      }).then(() => {
-        this._toast.sendMessage(
-          'Done! Add to your: ' + this.deckProcess._deck.name + ' decklist.',
-          'success',
-          this.deckProcess._deck.ownerId);
-      }).catch((err) => {
-        this._toast.sendMessage(
-          'Error! ' + err,
-          'error',
-          this.deckProcess._deck.ownerId);
-      });
-    }
+    return new Promise<DeckProcess>((result, reject) => {
+      if (deckId) {
+        let tempDk;
+        this._state.setState('cloud');
+        this.deckCollection = this.afs.collection('decks');
+        this.deckCollection.doc(deckId).valueChanges().pipe(
+          tap((tempDeck: MoxDeck) => {
+            tempDk = tempDeck;
+            tempDk.cards.push(cardId);
+            this.editDeck(tempDk)
+            .then(dk => result(dk));
+          })).subscribe();
+      } else {
+        reject ('NO DECK TO UPDATE');
+      }
+    });
   }
 
   addCardSide(cardId: string, deckId?: string) {
-    if (deckId) {
-      this._state.setState('cloud');
-      this.deckCollection = this.afs.collection('decks');
-      this.deckCollection.doc(deckId).valueChanges()
-      .pipe(
-        tap((tempDeck: MoxDeck) => {
-          tempDeck.side.push(cardId);
-          this.deckCollection.doc(tempDeck.key).update({
-            side: tempDeck.side
-          }).then(() => {
-            this._state.returnState();
-            this._toast.sendMessage(
-              'Done! Add to your: ' + this.deckProcess._deck.name + ' side.',
-              'success',
-              this.deckProcess._deck.ownerId);
-          }).catch((err) => {
-            this._state.setState('error');
-            this._toast.sendMessage(
-              'Error! ' + err,
-              'error',
-              this.deckProcess._deck.ownerId);
-          });
-        })
-      )
-      .subscribe();
-
-    } else {
-      this.deckProcess._deck.side.push(cardId);
-      this.deckCollection = this.afs.collection('decks');
-      this.deckCollection.doc(this.deckProcess._deck.key).update({
-        side: this.deckProcess._deck.side
-      }).then(() => {
-        this._toast.sendMessage(
-          'Done! Add to your: ' + this.deckProcess._deck.name + ' side.',
-          'success',
-          this.deckProcess._deck.ownerId);
-      }).catch((err) => {
-        this._toast.sendMessage(
-          'Error! ' + err,
-          'error',
-          this.deckProcess._deck.ownerId);
-      });
-    }
+    return new Promise<DeckProcess>((result, reject) => {
+      if (deckId) {
+        let tempDk;
+        this._state.setState('cloud');
+        this.deckCollection = this.afs.collection('decks');
+        this.deckCollection.doc(deckId).valueChanges().pipe(
+          tap((tempDeck: MoxDeck) => {
+            tempDk = tempDeck;
+            tempDk.side.push(cardId);
+            this.editDeck(tempDk)
+            .then(dk => result(dk));
+          })).subscribe();
+      } else {
+        reject ('NO DECK TO UPDATE');
+      }
+    });
   }
 
   makeId() {

@@ -44,6 +44,11 @@ export class DeckActionComponent implements OnInit, OnChanges {
     this._deckService.statTools.processStats(this._deckService.deckProcess);
   }
 
+  collPicker() {
+    navigator.vibrate([30]);
+    this.closeContext();
+  }
+
   share() {
     this.ngNavigatorShareService.share({
       title: 'Mox',

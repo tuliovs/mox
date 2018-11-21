@@ -2,12 +2,12 @@ import { FORMATS } from '@application/_constraints/FORMATS';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { Card, Catalog } from '@application/_models/_scryfall-models/models';
 import { ToastService } from '@application/_services/toast/toast.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
-import { tap, map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { AuthService } from '@karn/_services/auth.service';
 import { MetaService } from 'ng2-meta';
 import { ScryfallSearchService } from '@application/_services/scryfall-services/search/scryfall-search.service';
@@ -20,18 +20,18 @@ import { FormControl } from '@angular/forms';
 })
 
 export class DeckViewComponent implements OnInit {
+  public searchResults: Observable<Catalog>;
   public navigator = navigator;
   public formats = FORMATS;
-  public _deck: Observable<MoxDeck>;
-  public _selectedCard: Card;
+  public searchParam;
   public tab = 0;
-  public _orderAsc = false;
   public cardView = false;
   public side = false;
   public cardSearchActive = false;
-  public searchParam;
-  public searchResults: Observable<Catalog>;
   public stateCtrl = new FormControl();
+  public _deck: Observable<MoxDeck>;
+  public _selectedCard: Card;
+  public _orderAsc = false;
   public _cardFilter;
   public _cardSort: string;
   constructor(
@@ -79,11 +79,18 @@ export class DeckViewComponent implements OnInit {
     this._state.setState('loading');
     this._searchService.fuzzySearch(selectedValue).pipe(
       tap((c: Card) => {
-          dkSrvc.deckProcess._deck.cards.push(c.id);
-          dkSrvc.getCardData(dkSrvc.deckProcess)
-          .then(dp => dkSrvc.updateDeck(dp))
+          const dl = dkSrvc.deckProcess._deck.cards.reverse();
+          dl.push(c.id);
+          dl.reverse();
+          dkSrvc.updateDeck(dkSrvc.deckProcess)
+          .then(dp => dkSrvc.editDeck(dp._deck))
           .then(() => {
               this._state.setState('nav');
+            }
+          ).catch(
+            (err) => {
+              console.error(err);
+              this._state.setState('error');
             }
           );
         }
@@ -201,6 +208,21 @@ export class DeckViewComponent implements OnInit {
     }
   }
 
+  setCover(param) {
+    navigator.vibrate([30]);
+    // this._colleServ._collProcess.status = 'Updating Cover';
+    // const fbCollec = this._afs.collection('decks');
+    // fbCollec.doc(this._colleServ._collProcess.collection.key).update({
+    //   cover: param
+    // }).then(
+    //   () => {
+    //     this._toast.sendMessage(`Success! Collectio Cover Updated!`, 'success', this._colleServ.deckProcess._deck.ownerId);
+    //     this._colleServ._collProcess.status = 'Complete';
+    //     this._state.returnState();
+    //   }
+    // );
+  }
+
   cardPlus(event) {
     navigator.vibrate([30]);
     this._deckService.deckProcess._deck.cards.push(event);
@@ -265,47 +287,4 @@ export class DeckViewComponent implements OnInit {
   activateCardView() {
     this.cardView = true;
   }
-
-  changetab(side) {
-    // this.selectedCard = null;
-    // switch (side) {
-    //   case 'left':
-    //     // alert('LEFT');
-    //     switch (this.tab) {
-    //       case 'statsTab':
-    //           this.tab = 'socialTab';
-    //         break;
-    //       case 'socialTab':
-    //           this.tab = 'deckList';
-    //         break;
-    //       case 'deckList':
-    //           this.tab = 'statsTab';
-    //         break;
-    //       default:
-    //           alert('I`m sorry, I got lost');
-    //         break;
-    //     }
-    //     break;
-    //   case 'right':
-    //     // alert('RIGHT');
-    //     switch (this.tab) {
-    //       case 'statsTab':
-    //           this.tab = 'deckList';
-    //         break;
-    //       case 'deckList':
-    //           this.tab = 'socialTab';
-    //         break;
-    //       case 'socialTab':
-    //           this.tab = 'statsTab';
-    //         break;
-    //       default:
-    //           alert('I`m sorry, I got lost');
-    //         break;
-    //     }
-    //     break;
-    //   default:
-    //     break;
-    // }
-  }
-
 }

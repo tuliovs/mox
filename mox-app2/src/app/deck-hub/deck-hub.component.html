@@ -8,6 +8,7 @@
     </div>
   </app-mox-titlebar>
   <div class="main animated fadeInDown">
+    <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
     <span *ngIf="!showLoader && deckList.length == 0" >Empty decklist</span>
     <ul *ngIf="!showLoader && folders.length > 0">
       <li *ngFor="let folder of folders; let i=index" >

@@ -1,0 +1,34 @@
+@import './../../styles/theme.colors'
+
+.tab-content
+
+  h4
+    border-bottom: solid 2px
+    color: color(_darkblue)
+    display: inline-flex
+    flex-direction: row
+    font-size: .92em
+    font-weight: 600
+    margin: 2% 3%
+    text-transform: uppercase
+    width: 90%
+
+    i
+      padding-right: 2%
+
+  .coll-count
+    position: absolute
+    right: 0
+
+  &::before
+    background-color: color(_jeans)
+    border-radius: 5px
+    content: ''
+    display: inline-block
+    height: 15px
+    left: -3%
+    position: absolute
+    top: 1%
+    width: 15px
+
+

@@ -129,6 +129,10 @@ export class AppComponent implements OnInit {
     navigator.vibrate([40]);
     this.router.navigateByUrl('/deckhub');
   }
+  goToCollHub() {
+    navigator.vibrate([40]);
+    this.router.navigateByUrl('/collhub');
+  }
   goToSeachHub() {
     navigator.vibrate([40]);
     this.router.navigateByUrl('/search');
