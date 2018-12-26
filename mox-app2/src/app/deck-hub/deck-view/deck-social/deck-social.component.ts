@@ -32,7 +32,7 @@ export class DeckSocialComponent implements OnInit {
   // }
 
   saveDeck() {
-    this._deckService.updateDeck(this._deckService.deckProcess);
+    this._deckService.update(this._deckService.deckProcess);
     this.editing = false;
   }
 }

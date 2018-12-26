@@ -76,6 +76,8 @@ import { CollectionActionComponent } from './_shared/ui/picker/collection-action
 import { CollectionViewComponent } from './collection-hub/collection-view/collection-view.component';
 import { CardItemComponent } from './_shared/ui/list-items/card-item/card-item.component';
 import { DeckPickerComponent } from './_shared/ui/picker/deck-picker/deck-picker.component';
+import { CollectionPickerComponent } from './_shared/ui/picker/collection-picker/collection-picker.component';
+import { DeckItemComponent } from './_shared/ui/list-items/deck-item/deck-item.component';
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -129,6 +131,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     CollectionViewComponent,
     CardItemComponent,
     DeckPickerComponent,
+    CollectionPickerComponent,
+    DeckItemComponent,
   ],
   imports: [
     CommonModule,

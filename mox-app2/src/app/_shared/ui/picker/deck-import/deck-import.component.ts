@@ -61,12 +61,12 @@ export class DeckImportComponent implements OnInit {
     this._afs.collection('decks').doc(s.deckProcess._deck.key).ref.get()
     .then(async (doc) => {
       if (doc.exists) {
-        s.updateDeck(s.deckProcess);
+        s.update(s.deckProcess);
       } else {
-        await s.setDeck(s.deckProcess._deck)
-        .then( sk => this._deckService.editDeck(sk._deck))
+        await s.set(s.deckProcess._deck)
+        .then( sk => this._deckService.edit(sk._deck))
         .then( kk => this._deckService.statTools.processStats(kk))
-        .then( dd => this._deckService.setDeckStats(dd))
+        .then( dd => this._deckService.setStats(dd))
         .then( dp => {
           this._state.returnState();
           this.closeContext();
@@ -100,8 +100,8 @@ export class DeckImportComponent implements OnInit {
         await me._deckService.quickCreate(deckName)
         .then(async quickDeck => process._deck = quickDeck)
         .then(me._deckService.ioTools.importMTGO(process, xmlDoc))
-        .then(async ak => me._deckService.setDeck(ak))
-        .then(async bk => me._deckService.editDeck(bk._deck))
+        .then(async ak => me._deckService.set(ak))
+        .then(async bk => me._deckService.edit(bk._deck))
         .catch(err => {
           console.error(err);
         })
@@ -136,8 +136,8 @@ export class DeckImportComponent implements OnInit {
       this.showLoader = true;
       await this._deckService.quickCreate('Imported Deck - Arena')
       .then(qk => this._deckService.ioTools.importArena(process, this.importText))
-      .then(ik => this._deckService.setDeck(ik))
-      .then(sk => this._deckService.editDeck(sk._deck))
+      .then(ik => this._deckService.set(ik))
+      .then(sk => this._deckService.edit(sk._deck))
       .then(dP => this._deckService.statTools.processStats(dP))
       .then((pp: DeckProcess) => {
         this._state.returnState();
@@ -162,8 +162,8 @@ export class DeckImportComponent implements OnInit {
       this.showLoader = true;
       await this._deckService.quickCreate('Imported Deck - Txt')
       .then(qk => this._deckService.ioTools.importTxt(process, this.importText))
-      .then(dk => this._deckService.setDeck(dk))
-      .then(sk => this._deckService.editDeck(sk._deck))
+      .then(dk => this._deckService.set(dk))
+      .then(sk => this._deckService.edit(sk._deck))
       .then(dP => this._deckService.statTools.processStats(dP))
       .then((pp: DeckProcess) => {
         this._state.returnState();

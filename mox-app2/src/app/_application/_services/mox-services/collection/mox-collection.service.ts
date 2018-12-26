@@ -90,8 +90,38 @@ export class MoxCollectionService {
   }
 
   get(collectionId: string): Observable<MoxCollection> {
-    const afs = this._afs.collection('user-collections');
-    return afs.doc<MoxCollection>(collectionId).valueChanges();
+    return this._afs.collection('user-collections').
+      doc<MoxCollection>(collectionId).valueChanges();
+  }
+
+  fork(pro: CollectionProcess) {
+    return new Promise<CollectionProcess>((resolve, reject) => {
+      if (pro.collection) {
+        if (this._user) {
+          const forked = { ...pro.collection };
+          forked.ownerName = this._user.displayName;
+          forked.ownerId = this._user.uid;
+          forked.key = this.makeId();
+          pro.collection = forked;
+          this.set(pro)
+          .then(() => {
+            this._toast.sendMessage('Collection Forked!', 'success', forked.ownerId);
+            this._state.returnState();
+            resolve(pro);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+        } else {
+          console.error('#333 [forkCollection] User not found!');
+          reject ('ERROR! User not found! I`m lost help!');
+        }
+      } else {
+        pro.status = 'Error';
+        console.error('#234 [updateCollection] Coulnd find any Collection to update!');
+        reject ('#234 [updateCollection] Coulnd find any Collection to update!');
+      }
+    });
   }
 
   update(pro: CollectionProcess) {

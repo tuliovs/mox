@@ -6,7 +6,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-slide-toggle [checked]="_side" [color]="color">Side</mat-slide-toggle>
+  <mat-slide-toggle [checked]="_side" [color]="color" class="animated fadeIn">Side</mat-slide-toggle>
   <div class="confirmation animated slideInDown">
     <button (click)="addOne()"      mat-raised-button color="primary" [disabled]="!_deckSelection"><i class="fas fa-plus"></i> 1</button>
     <button (click)="cancel.emit()" mat-raised-button color="primary" ><i class="fas fa-times"></i> Cancel</button>

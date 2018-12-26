@@ -1,56 +1,25 @@
 <div *ngIf="infinite | async as deckList">
-  <app-mox-titlebar>
+  <!-- <app-mox-titlebar>
     <div class="deck-format mox-font animate fadeInDown">
       <label>Listing {{(formatSelected)? formatSelected : 'All'}} decks</label>
-      <!-- <label>{{deckList.length | number:'2.0'}}</label> -->
     </div>
-  </app-mox-titlebar>
+  </app-mox-titlebar> -->
 
-  <div class="main">
-    <span *ngIf="deckList.length == 0" >Empty decklist</span>
-    <ol>
-      <cdk-virtual-scroll-viewport itemSize="68" (scrolledIndexChange)="nextBatch($event, (deckList[deckList.length - 1].name))">
-        <ng-container *cdkVirtualFor="let deck of deckList; let i = index; trackBy: trackByIdx">
-          <!-- *ngIf="!formatSelected || formatSelected && formatSelected == deck.format" -->
-          <li class="animated fadeInDown" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
-            <div class="cover" matRipple (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
-              <p class="color-identity" *ngIf="deck.colorIdentity">
-                  <i *ngFor="let ico of deck.colorIdentity"
-                  [className]="'ms ms-' + ico.toLowerCase()"
-                  [class.ms-cost]=" ico != ''"
-                  [class.shadow]=" ico != ''"
-                ></i>
-              </p>
-            </div>
-            <div class="content" matRipple (click)="deckSelected(deck)">
-              <div>
-                <label>{{deck.name}}</label>
-                <span>{{(deck.format) ? deck.format : 'No Format' }}</span>
-              </div>
-              <div class="second-level">
-                <div class="owner" >by {{deck.ownerName}}</div>
-                <div class="icons">
-                  <span>
-                    <i class="fas fa-lock" *ngIf="!deck.public"></i>
-                    <i class="fas fa-unlock" *ngIf="deck.public"></i>
-                  </span>
-                  <span>
-                    <i class="far fa-times-circle" *ngIf="!deck.legal"></i>
-                    <i class="far fa-check-circle" *ngIf="deck.legal"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ng-container>
-        <div *ngIf="theEnd" matRipple (click)="viewport.scrollToIndex(0)" class="list-end animate fadeInDown">
-          <i class="fas fa-angle-double-up"></i>
-        </div>
-      </cdk-virtual-scroll-viewport>
-    </ol>
-  </div>
+  <span *ngIf="deckList.length == 0" >Empty decklist</span>
+  <ol>
+    <cdk-virtual-scroll-viewport itemSize="77" (scrolledIndexChange)="nextBatch($event, (deckList[deckList.length - 1].name))">
+      <ng-container *cdkVirtualFor="let deck of deckList; let i = index; trackBy: trackByIdx">
+        <li class="animated fadeInDown">
+          <app-mox-deck-item [deck]="deck" [selected]="this.internalDeck === deck" (deckSelected)="deckSelected($event)"></app-mox-deck-item>
+        </li>
+      </ng-container>
+      <div *ngIf="theEnd" matRipple (click)="viewport.scrollToIndex(0)" class="list-end animate fadeInDown">
+        <i class="fas fa-angle-double-up"></i>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </ol>
 
-  <app-mox-action-bar *ngIf="internalDeck">
+  <!-- <app-mox-action-bar *ngIf="internalDeck">
     <button class="btn btn-action" matRipple routerLink="/search" [disabled]="internalDeck.ownerId !== _user.uid">  
       <i class="fas fa-plus-square"></i>
     </button>
@@ -79,7 +48,7 @@
       <i class="fas fa-plus"></i>
     </button>
   </app-mox-action-bar>
-</div>
+</div> -->
 
 <div class="container" *ngIf="!infinite">
   <app-mox-loading-spinner></app-mox-loading-spinner>

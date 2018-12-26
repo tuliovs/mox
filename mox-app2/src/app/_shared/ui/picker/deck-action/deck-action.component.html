@@ -18,9 +18,9 @@
       <i class="fas fa-address-card" style="font-size: 1.3em"></i> Creator Profile
     </button>
     <button (click)="collPicker()" matRipple>
-      <i class="fas fa-box-open" style="font-size: 1.3em"></i> Check In Collection
+      <i class="fas fa-box-open" style="font-size: 1.3em"></i> Add cards to a Collection
     </button>
-    <button disabled matRipple>
+    <button (click)="exportList()" matRipple>
       <i class="fas fa-cloud-download-alt" style="font-size: 1.3em"></i> Export Deck
     </button>
     <button (click)="forkDeck()" [disabled]="!_deckService.deckProcess._deck" matRipple>

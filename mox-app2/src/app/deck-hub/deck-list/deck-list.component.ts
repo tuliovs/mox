@@ -4,7 +4,7 @@ import { AuthService } from '@karn/_services/auth.service';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { MoxDeck } from '@application/_models/_mox-models/MoxDeck';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { FORMATS } from '@application/_constraints/FORMATS';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -19,7 +19,7 @@ import { MatRipple } from '@angular/material';
 export class DeckListComponent implements OnInit {
   @ViewChild(CdkVirtualScrollViewport)
   viewport: CdkVirtualScrollViewport;
-  batch = 8;
+  batch = 5;
   theEnd = false;
 
   offset = new BehaviorSubject(null);
@@ -126,7 +126,7 @@ export class DeckListComponent implements OnInit {
       this._state.setState('nav');
     } else {
       navigator.vibrate([30]);
-      this._deckService.editDeck(deck);
+      this._deckService.edit(deck);
       this.internalDeck = deck;
       this._state.setState('view');
     }

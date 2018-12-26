@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, OnChanges } from '@angular/core';
 import { MoxDeckService } from '@application/_services/mox-services/deck/mox-deck.service';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
@@ -16,7 +16,7 @@ import { ActionStateService } from '@application/_services/action-state/action-s
   templateUrl: './deck-stats.component.html',
   styleUrls: ['./deck-stats.component.sass']
 })
-export class DeckStatsComponent implements OnInit, AfterViewInit {
+export class DeckStatsComponent implements OnInit, OnChanges {
   public object = Object;
   @Input() deckStats;
   public typeIcons = TYPE_SUMARY_ICONS;
@@ -107,29 +107,36 @@ export class DeckStatsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.deckStats) {
-      const s = this._deckService.deckProcess._deckStats;
-      let data;
-      data = [
-        ['Types', 'N in deck'],
-        ['Lands', s.typeLineData[0]],
-        ['Creatures', s.typeLineData[1]],
-        ['Instants', s.typeLineData[2]],
-        ['Sorcerys', s.typeLineData[3]],
-        ['Artifacts', s.typeLineData[4]],
-        ['Enchantments', s.typeLineData[5]],
-        ['Planeswalker', s.typeLineData[6]]
-      ];
-      this.chartPie.dataTable = data;
-      this._chartSelection = 'cardtypes';
-      this._chartData = this.chartPie;
-      this.formOptions = this._formbuilder.group({
-        color: 'accent',
-        chartSelection: this._chartSelection,
-      });
+      this.statsInit();
     }
   }
 
-  ngAfterViewInit() {
+  statsInit() {
+    const s = this._deckService.deckProcess._deckStats;
+    let data;
+    data = [
+      ['Types', 'N in deck'],
+      ['Lands', s.typeLineData[0]],
+      ['Creatures', s.typeLineData[1]],
+      ['Instants', s.typeLineData[2]],
+      ['Sorcerys', s.typeLineData[3]],
+      ['Artifacts', s.typeLineData[4]],
+      ['Enchantments', s.typeLineData[5]],
+      ['Planeswalker', s.typeLineData[6]]
+    ];
+    this.chartPie.dataTable = data;
+    this._chartSelection = 'cardtypes';
+    this._chartData = this.chartPie;
+    this.formOptions = this._formbuilder.group({
+      color: 'accent',
+      chartSelection: this._chartSelection,
+    });
+  }
+
+  ngOnChanges() {
+    if (this.deckStats) {
+      this.statsInit();
+    }
   }
 
   changeDataChart() {
@@ -168,7 +175,7 @@ export class DeckStatsComponent implements OnInit, AfterViewInit {
     const dk = this._deckService;
     this._state.setState('loading');
     await dk.statTools.proCmcTotals(dk.deckProcess)
-    .then(p => dk.updateDeckStats(p))
+    .then(p => dk.updateStats(p))
     .then(() => {
         this._state.setState('nav');
       }
@@ -183,7 +190,7 @@ export class DeckStatsComponent implements OnInit, AfterViewInit {
     const dk = this._deckService;
     this._state.setState('loading');
     await dk.statTools.proColorId(dk.deckProcess)
-    .then(p => dk.updateDeckStats(p))
+    .then(p => dk.updateStats(p))
     .then(() => {
         this._state.setState('nav');
       }
@@ -198,7 +205,7 @@ export class DeckStatsComponent implements OnInit, AfterViewInit {
     const dk = this._deckService;
     this._state.setState('loading');
     await dk.statTools.proPrice(dk.deckProcess)
-    .then(p => dk.updateDeckStats(p))
+    .then(p => dk.updateStats(p))
     .then(() => {
         this._state.setState('nav');
       }
@@ -213,7 +220,7 @@ export class DeckStatsComponent implements OnInit, AfterViewInit {
     const dk = this._deckService;
     this._state.setState('loading');
     await dk.statTools.proLegalities(dk.deckProcess)
-    .then(p => dk.updateDeckStats(p))
+    .then(p => dk.updateStats(p))
     .then(() => {
         this._state.setState('nav');
       }
@@ -228,7 +235,7 @@ export class DeckStatsComponent implements OnInit, AfterViewInit {
     const dk = this._deckService;
     this._state.setState('loading');
     await dk.statTools.proCardTypesTotals(dk.deckProcess)
-    .then(p => dk.updateDeckStats(p))
+    .then(p => dk.updateStats(p))
     .then(() => {
         this._state.setState('nav');
       }
@@ -243,7 +250,7 @@ export class DeckStatsComponent implements OnInit, AfterViewInit {
     const dk = this._deckService;
     this._state.setState('loading');
     await dk.statTools.proColorDevo(dk.deckProcess)
-    .then(p => dk.updateDeckStats(p))
+    .then(p => dk.updateStats(p))
     .then(() => {
         this._state.setState('nav');
       }

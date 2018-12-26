@@ -1,6 +1,10 @@
 @import './../../styles/theme.colors'
 
 .tab-content
+  height: 75vh
+  overflow-x: hidden
+  overflow-y: scroll
+  text-align: center
 
   h4
     border-bottom: solid 2px
@@ -20,15 +24,7 @@
     position: absolute
     right: 0
 
-  &::before
-    background-color: color(_jeans)
-    border-radius: 5px
-    content: ''
-    display: inline-block
-    height: 15px
-    left: -3%
-    position: absolute
-    top: 1%
-    width: 15px
-
-
+.folder
+  border-right: 3px solid color(_blue)
+  display: block
+  margin-bottom: 3%

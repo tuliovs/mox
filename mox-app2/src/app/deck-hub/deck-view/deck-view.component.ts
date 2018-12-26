@@ -52,13 +52,13 @@ export class DeckViewComponent implements OnInit {
         this._toast.sendMessage('Not founded DeckID, maybe he got deleted?', 'danger', deckId);
         throw new Error('Not founded DeckID');
       } else {
-        this._deck = this._deckService.getDeck(deckId);
+        this._deck = this._deckService.get(deckId);
         this._deck.pipe(
           tap((dck: MoxDeck) => {
             if (dck) {
               this._metaService.setTitle('[Mox]DeckData - ' + dck.name);
               this._metaService.setTag('og:image', dck.cover);
-              this._deckService.editDeck(dck).then(
+              this._deckService.edit(dck).then(
                 () => {
                   this._state.setState('nav');
                   if (this._cardSort) {
@@ -82,8 +82,8 @@ export class DeckViewComponent implements OnInit {
           const dl = dkSrvc.deckProcess._deck.cards.reverse();
           dl.push(c.id);
           dl.reverse();
-          dkSrvc.updateDeck(dkSrvc.deckProcess)
-          .then(dp => dkSrvc.editDeck(dp._deck))
+          dkSrvc.update(dkSrvc.deckProcess)
+          .then(dp => dkSrvc.edit(dp._deck))
           .then(() => {
               this._state.setState('nav');
             }
@@ -111,7 +111,7 @@ export class DeckViewComponent implements OnInit {
   }
 
   saveDeck() {
-    this._deckService.updateDeck(this._deckService.deckProcess);
+    this._deckService.update(this._deckService.deckProcess);
   }
 
   filteredDeckList() {
@@ -124,7 +124,7 @@ export class DeckViewComponent implements OnInit {
 
   delete() {
     if (confirm('This action can not be undone, are you sure?')) {
-      this._deckService.deleteDeck(this._deckService.deckProcess._deck)
+      this._deckService.delete(this._deckService.deckProcess._deck)
       .then(
         (res) => {
           if (res) {
@@ -145,8 +145,8 @@ export class DeckViewComponent implements OnInit {
   processStats() {
     this._state.setState('loading');
     this._deckService.statTools.processStats(this._deckService.deckProcess)
-    .then(p1 => this._deckService.updateDeckStats(p1))
-    .then(p2 => this._deckService.updateDeck(p2))
+    .then(p1 => this._deckService.updateStats(p1))
+    .then(p2 => this._deckService.update(p2))
     .then((dp) => {
       this._state.setState('nav');
       this._toast.sendMessage('Deck Fully Processed!', 'info', dp._deck.ownerId);

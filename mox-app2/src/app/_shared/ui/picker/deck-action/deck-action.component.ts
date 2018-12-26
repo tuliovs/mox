@@ -25,8 +25,9 @@ export class DeckActionComponent implements OnInit, OnChanges {
   ) {
     this.ngNavigatorShareService = ngNavigatorShareService;
   }
-  @Input() deck: any;
+  @Input() deck: MoxDeck;
   @Output() cancel: EventEmitter<any> = new EventEmitter();
+  @Output() collAddChoosen: EventEmitter<any> = new EventEmitter();
   ngOnInit() {
   }
 
@@ -46,6 +47,7 @@ export class DeckActionComponent implements OnInit, OnChanges {
 
   collPicker() {
     navigator.vibrate([30]);
+    this.collAddChoosen.emit(this.deck.key);
     this.closeContext();
   }
 
@@ -68,7 +70,8 @@ export class DeckActionComponent implements OnInit, OnChanges {
   forkDeck() {
     if (confirm('Hi dear friend! This action make a copy of this deck for you! Is that what you want?')) {
       this.closeContext();
-      this._deckService.forkDeck().then(
+      const pro = this._deckService.deckProcess;
+      this._deckService.fork(pro).then(
         (deck: MoxDeck) => {
           this._router.navigate(['deck/' + deck.key]);
         }

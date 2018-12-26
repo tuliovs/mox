@@ -74,7 +74,7 @@
   <app-mox-filter-picker class="animated flipInX"></app-mox-filter-picker>
   <div class="fixer"></div>
   <app-mox-picker [pickerType]="'sort'" [currentState]="_cardSort" (sortSelection)="sortChoosen($event)"></app-mox-picker>
-  <app-mox-picker [pickerType]="'deck-action'" [currentState]="_deck | async"></app-mox-picker>
+  <app-mox-picker [pickerType]="'coll-action'" *ngIf="_collection" [currentState]="_collection"></app-mox-picker>
 </app-mox-action-bar>
 
 <app-mox-action-bar *ngIf="tab == 0 && _selectedCard">

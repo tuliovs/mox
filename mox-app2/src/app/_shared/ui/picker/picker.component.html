@@ -12,14 +12,16 @@
 ></div>
 <div class="action-menu" [@deck-contextTrigger]="componentState" [ngSwitch]="pickerType">
   <app-mox-folder-picker      *ngSwitchCase="'folder'" (cancel)="closeContext()" (remove)="folderRemove.emit($event);closeContext()" (include)="folderInclude.emit($event);closeContext()" [folders]="userFolders" ></app-mox-folder-picker>
-  <app-mox-sort-picker        *ngSwitchCase="'sort'" [selected]="currentState" (cancel)="closeContext()" (sortChoosen)="pickerSelection.emit($event)"></app-mox-sort-picker>
   <app-mox-deck-picker        *ngSwitchCase="'deck-picker'" [card]="currentState" (cancel)="closeContext()"></app-mox-deck-picker>
+  <app-mox-collection-picker  *ngSwitchCase="'coll-picker'" [deckId]="currentState" (cancel)="closeContext()" ></app-mox-collection-picker>
+
+  <app-mox-sort-picker        *ngSwitchCase="'sort'" [selected]="currentState" (cancel)="closeContext()" (sortChoosen)="pickerSelection.emit($event)"></app-mox-sort-picker>
 
   <app-mox-card-action        *ngSwitchCase="'card'" [card]="currentState" (cancel)="closeContext()" (deckAddChoosen)="deckAddChoosen.emit($event)" (coverActionChoosen)="coverActionChoosen.emit($event)" (cardActionChoosen)="pickerSelection.emit($event)"></app-mox-card-action>
-  <app-mox-deck-action        *ngSwitchCase="'deck-action'" [deck]="currentState" (cancel)="closeContext()"></app-mox-deck-action>
-  
+  <app-mox-deck-action        *ngSwitchCase="'deck-action'" [deck]="currentState" (collAddChoosen)="collAddChoosen.emit($event)" (cancel)="closeContext()"></app-mox-deck-action>
+  <app-mox-collection-action  *ngSwitchCase="'coll-action'" [collection]="currentState" (cancel)="closeContext()"></app-mox-collection-action>
+
   <app-mox-deck-import        *ngSwitchCase="'deck-import'" (cancel)="closeContext()"></app-mox-deck-import>
   
   <app-mox-new-collection     *ngSwitchCase="'new-coll'" (selection)="collectionSelection.emit($event)" (cancel)="closeContext()"></app-mox-new-collection>
-  <app-mox-collection-action  *ngSwitchCase="'coll-action'" [collection]="currentState" (cancel)="closeContext()"></app-mox-collection-action>
 </div>
