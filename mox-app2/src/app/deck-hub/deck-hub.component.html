@@ -1,135 +1,73 @@
-<div *ngIf="(deckList) then deckListed else emptyList"></div>
-
-<ng-template #deckListed>
-  <app-mox-titlebar>
-    <div class="deck-format mox-font animated fadeInDown">
-      <label>Listing {{(formatSelected)? formatSelected : 'All'}} decks</label>
-      <label>{{filteredDeckList().length | number:'2.0'}}</label>
-    </div>
-  </app-mox-titlebar>
-  <div class="main animated fadeInDown">
-    <app-mox-loading-spinner *ngIf="showLoader"></app-mox-loading-spinner>
-    <span *ngIf="!showLoader && deckList.length == 0" >Empty decklist</span>
-    <ul *ngIf="!showLoader && folders.length > 0">
-      <li *ngFor="let folder of folders; let i=index" >
-        <div class="folder">
-          <h4 class="folder-name" matRipple (click)="folderVisible[i] = !folderVisible[i]">
-            <i *ngIf="folderVisible[i]" class="fas fa-folder-open"></i> 
-            <i *ngIf="!folderVisible[i]" class="fas fa-folder"></i>
-            {{folder}}
-          </h4>
-          
-          <ol *ngIf="!showLoader && folderVisible[i]"
-          class="animated fadeIn">
-            <ng-container *ngFor="let deck of filteredDeckList()" >
-              <li *ngIf="deck.folder === folder" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
-                <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
-                <div class="cover" matRipple (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
-                  <p class="color-identity" *ngIf="deck.colorIdentity">
-                      <i *ngFor="let ico of deck.colorIdentity"
-                      [className]="'ms ms-' + ico.toLowerCase()"
-                      [class.ms-cost]=" ico != ''"
-                      [class.shadow]=" ico != ''"
-                    ></i>
-                  </p>
-                </div>
-                <div class="content" matRipple (click)="deckSelected(deck)">
-                  <div>
-                    <label>{{deck.name}}</label>
-                    <span>{{deck.format}}</span>
-                  </div>
-                  <div class="second-level">
-                    <div class="owner" >by {{deck.ownerName}}</div>
-                    <div class="icons">
-                      <span>
-                        <i class="fas fa-eye-slash" *ngIf="!deck.public"></i>
-                        <i class="fas fa-eye" *ngIf="deck.public"></i>
-                      </span>
-                      <span>
-                        <i class="fas fa-times" *ngIf="!deck.legal"></i>
-                        <i class="fas fa-check" *ngIf="deck.legal"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ng-container>
-          </ol>
-        </div>
-      </li>
-    </ul>
-    <hr />
-    <ol *ngIf="!showLoader" 
-    [@listAnimator]="listAnimator"
-    (@listAnimator.done)="resetAnimationState()">
-      <ng-container *ngFor="let deck of filteredDeckList()" >
-        <li *ngIf="!deck.folder || (deck.folder && !folders.includes(deck.folder))" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
-          <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
-          <div class="cover" matRipple  (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
-            <p class="color-identity" *ngIf="deck.colorIdentity">
-                <i *ngFor="let ico of deck.colorIdentity"
-                [className]="'ms ms-' + ico.toLowerCase()"
-                [class.ms-cost]=" ico != ''"
-                [class.shadow]=" ico != ''"
-              ></i>
-            </p>
-          </div>
-          <div class="content" matRipple (click)="deckSelected(deck)">
-            <div>
-              <label>{{deck.name}}</label>
-              <span>{{deck.format}}</span>
+<mat-tab-group mat-stretch-tabs dynamicHeight class="example-stretched-tabs mat-elevation-z4 animated fadeIn"
+  [(selectedIndex)]="tab" [color]="'primary'" [backgroundColor]="'primary'">
+  <mat-tab label="Your Decks {{deckList ? filteredDeckList().length : 0 | number:'2.0'}}">
+    <div class="tab-content">
+      <app-mox-loading-spinner *ngIf="showLoader || !deckList"></app-mox-loading-spinner>
+      <ng-container *ngIf="!showLoader || deckList">
+        <span *ngIf="deckList && filteredDeckList().length == 0">Empty decklist</span>
+        <ul *ngIf="!showLoader && folders.length > 0">
+          <li *ngFor="let folder of folders; let i=index">
+            <div class="folder">
+              <h4 class="folder-name" matRipple (click)="folderVisible[i] = !folderVisible[i]">
+                <i *ngIf="folderVisible[i]" class="fas fa-folder-open"></i>
+                <i *ngIf="!folderVisible[i]" class="fas fa-folder"></i>
+                {{folder}}
+              </h4>
+              <ol *ngIf="!showLoader && folderVisible[i]" class="animated fadeIn">
+                <ng-container *ngFor="let deck of filteredDeckList()">
+                  <li *ngIf="deck.folder === folder">
+                    <app-mox-deck-item [deck]="deck" [selected]="this.internalDeck === deck" (deckSelected)="deckSelected($event)"></app-mox-deck-item>
+                  </li>
+                </ng-container>
+              </ol>
             </div>
-            <div class="second-level">
-              <div class="owner" >by {{deck.ownerName}}</div>
-              <div class="icons">
-                <span>
-                  <i class="fas fa-eye-slash" *ngIf="!deck.public"></i>
-                  <i class="fas fa-eye" *ngIf="deck.public"></i>
-                </span>
-                <span>
-                  <i class="fas fa-times" *ngIf="!deck.legal"></i>
-                  <i class="fas fa-check" *ngIf="deck.legal"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-        </li>
+          </li>
+        </ul>
+        <hr />
+        <ol *ngIf="!showLoader" [@listAnimator]="listAnimator" (@listAnimator.done)="resetAnimationState()">
+          <ng-container *ngFor="let deck of filteredDeckList()">
+            <li *ngIf="!deck.folder || (deck.folder && !folders.includes(deck.folder))">
+              <app-mox-deck-item [deck]="deck" [selected]="this.internalDeck === deck" (deckSelected)="deckSelected($event)"></app-mox-deck-item>
+            </li>
+          </ng-container>
+        </ol>
       </ng-container>
-    </ol>
-  </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Community Decks">
+    <div class="tab-content">
+      <app-mox-deck-list></app-mox-deck-list>
+    </div>
+  </mat-tab>
+</mat-tab-group>
 
-  <app-mox-action-bar *ngIf="internalDeck">
-    <button class="btn btn-action" matRipple (click)="viewDeck()">
-      <i class="fas fa-book-open"></i>
-    </button>
-    <button class="btn btn-action" matRipple disabled>
-      <i class="far fa-heart"></i>
-    </button>
-    <div class="fixer"></div>
-    <app-mox-picker [pickerType]="'folder'" (deckFolderRemove)="deckFolderRemove()" (deckFolderInclude)="deckFolderInclude($event)"  [userFolders]="folders" ></app-mox-picker>
-    <app-mox-picker *ngIf="internalDeck" [pickerType]="'deck-action'" [currentState]="internalDeck"></app-mox-picker>
-  </app-mox-action-bar>
+<app-mox-action-bar *ngIf="internalDeck">
+  <button class="btn btn-action" matRipple (click)="viewDeck()">
+    <i class="fas fa-book-open"></i>
+  </button>
+  <button class="btn btn-action" matRipple disabled>
+    <i class="far fa-heart"></i>
+  </button>
+  <div class="fixer"></div>
+  <app-mox-picker [pickerType]="'folder'" (deckFolderRemove)="deckFolderRemove()" (deckFolderInclude)="deckFolderInclude($event)"
+    [userFolders]="folders"></app-mox-picker>
+  <app-mox-picker *ngIf="internalDeck" [pickerType]="'deck-action'" [currentState]="internalDeck" (collAddChoosen)="activateCollPicker($event)"></app-mox-picker>
+  <app-mox-picker [pickerType]="'coll-picker'" [btnHidden]="'true'" [currentState]="_deckPicked" (sortSelection)="sortChoosen($event)"
+    #collPiker></app-mox-picker>
+</app-mox-action-bar>
 
-  <app-mox-action-bar *ngIf="!internalDeck" (swipeleft)="changeFormat('left')" (swiperight)="changeFormat('right')">
-    <button (click)="newDeck()" matRipple type="button" class="btn btn-action">
-      <i class="fas fa-plus"></i>
-    </button>
-    <button class="btn btn-action" matRipple disabled>
-      <i class="fas fa-filter" style="font-size: .9em"></i>
-    </button>
-    <div class="fixer"></div>
-    <button class="btn btn-action" matRipple disabled>
-      <i class="fas fa-sort" style="font-size: 1.3em"></i>
-    </button>
-    <button class="btn btn-action" matRipple disabled>
-      <i class="fas fa-search"></i>
-    </button>
-  </app-mox-action-bar>
-</ng-template>
-
-<ng-template #emptyList>
-  <div class="container">
-    <app-mox-loading-spinner></app-mox-loading-spinner>
-  </div>
-</ng-template>
-
+<app-mox-action-bar *ngIf="!internalDeck" (swipeleft)="changeFormat('left')" (swiperight)="changeFormat('right')">
+  <button (click)="newDeck()" matRipple type="button" class="btn btn-action">
+    <i class="fas fa-plus"></i>
+  </button>
+  <button class="btn btn-action" matRipple disabled>
+    <i class="fas fa-filter" style="font-size: .9em"></i>
+  </button>
+  <div class="fixer"></div>
+  <button class="btn btn-action" matRipple disabled>
+    <i class="fas fa-sort" style="font-size: 1.3em"></i>
+  </button>
+  <button class="btn btn-action" matRipple disabled>
+    <i class="fas fa-search"></i>
+  </button>
+</app-mox-action-bar>

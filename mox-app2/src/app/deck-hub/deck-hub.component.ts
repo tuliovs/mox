@@ -11,6 +11,7 @@ import { MoxDeckService } from '@application/_services/mox-services/deck/mox-dec
 import { FORMATS } from '@application/_constraints/FORMATS';
 import { slideOutLeft, slideOutRight, slideInLeft, slideInRight } from '@application/_constraints/KEYFRAMES';
 import { MatRipple } from '@angular/material';
+import { PickerComponent } from '@shared/ui/picker/picker.component';
 
 @Component({
   selector: 'app-mox-deck-hub',
@@ -34,6 +35,7 @@ import { MatRipple } from '@angular/material';
 
 export class DeckHubComponent implements OnInit, AfterViewInit {
   @ViewChild(MatRipple) ripple: MatRipple;
+  @ViewChild('collPiker') collPiker: PickerComponent;
   public deckList: MoxDeck[];
   private internalDeck: any;
   private formatSelected: string;
@@ -41,6 +43,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
   public listAnimator: string;
   public folders: string[] = [];
   public folderVisible: boolean[] = [];
+  public _deckPicked;
   constructor(
     private _afs: AngularFirestore,
     private _deckService: MoxDeckService,
@@ -88,6 +91,10 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
     );
   }
 
+  activateCollPicker(param) {
+    this._deckPicked = param;
+    this.collPiker.activatePicker();
+  }
   ngAfterViewInit() {
     this._deckService.getWorkingDeck().pipe(
       tap((workingDeck) => {
@@ -120,12 +127,12 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
 
   deckFolderInclude(fparam) {
     this._deckService.deckProcess._deck.folder = fparam;
-    this._deckService.updateDeck(this._deckService.deckProcess);
+    this._deckService.update(this._deckService.deckProcess);
   }
 
   deckFolderRemove() {
     this._deckService.deckProcess._deck.folder = null;
-    this._deckService.updateDeck(this._deckService.deckProcess);
+    this._deckService.update(this._deckService.deckProcess);
   }
 
   deckSelected(deck: MoxDeck) {
@@ -137,7 +144,7 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
       navigator.vibrate([30]);
       this._state.setState('loading');
       this.internalDeck = deck;
-      this._deckService.editDeck(deck)
+      this._deckService.edit(deck)
       .then(() => {
         this._state.setState('nav');
       })

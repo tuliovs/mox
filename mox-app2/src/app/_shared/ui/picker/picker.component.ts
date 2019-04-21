@@ -35,6 +35,7 @@ export class PickerComponent implements OnInit {
   @Output() folderInclude: EventEmitter<any> = new EventEmitter();
   @Output() coverActionChoosen: EventEmitter<string> = new EventEmitter();
   @Output() deckAddChoosen: EventEmitter<string> = new EventEmitter();
+  @Output() collAddChoosen: EventEmitter<string> = new EventEmitter();
   @Output() pickerSelection: EventEmitter<string> = new EventEmitter();
   @Output() collectionSelection: EventEmitter<MoxCollection> = new EventEmitter();
   public componentState = 'closed';
@@ -74,6 +75,6 @@ export class PickerComponent implements OnInit {
   closeContext() {
     this.lightboxActive = false;
     this.componentState = 'closed';
-    this._state.returnState();
+    this._state.setState('nav');
   }
 }

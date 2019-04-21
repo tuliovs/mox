@@ -19,8 +19,8 @@ export class NewDeckComponent implements OnInit {
     navigator.vibrate([30]);
     this._moxService.quickCreate().then(
       (newDeck: MoxDeck) => {
-        this._moxService.editDeck(newDeck);
-        this._moxService.setDeck(newDeck);
+        this._moxService.edit(newDeck);
+        this._moxService.set(newDeck);
       }
     ).catch(
       (err) => {

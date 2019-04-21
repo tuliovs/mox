@@ -6,7 +6,7 @@ $shad-base: rgba(0, 0, 0, .25);
 $shad-in: rgba(0, 0, 0, .15);
 $sily-gray: rgba(158, 158, 158, .2);
 
-.collection-item
+.deck-item
   align-content: flex-end
   align-items: center
   border-bottom: 1px solid color(_grayer)
@@ -14,6 +14,7 @@ $sily-gray: rgba(158, 158, 158, .2);
   height: 4.6em
   margin: .5%
   margin-left: 1%
+  min-width: 354px
   padding-bottom: 5%
   position: relative
   width: 98%
@@ -45,6 +46,11 @@ $sily-gray: rgba(158, 158, 158, .2);
     position: relative
     width: 3em
 
+    p
+      font-size: .75em
+      margin: 1% 0
+      text-align: center
+
   .content
     display: inline-block
     height: 100%
@@ -67,22 +73,29 @@ $sily-gray: rgba(158, 158, 158, .2);
         color: color(_blue)
 
       label
-        font-size: 1.5em
+        font-size: 1.4em
         max-width: 77%
         text-align: left
 
-  .second-level
-    align-items: flex-end
+    .second-level
+      align-items: flex-end
 
-    .owner
-      color: color(_slate)
-      font-size: 1em
+      label
+        font-size: 1em
 
-    .icons
-      font-size: 1.3em
-      width: 15%
+.fa-eye-slash
+  color: color(_darkblue)
 
-.selected-coll
+.fa-eye
+  color: color(_grayer)
+
+.fa-times
+  color: color(_darkblue)
+
+.fa-check
+  color: color(_grayer)
+
+.selected-deck
   border-left: 2px solid color(_blue)
   border-radius: 0 4px 4px 0
   box-shadow: -3px 2px 10px  $shad

@@ -1,0 +1,13 @@
+<div class="coll-actions">
+  <mat-form-field>
+    <mat-select placeholder="Your Collections" [(ngModel)]="_collSelection">
+      <mat-option *ngFor="let coll of _userColls" [value]="coll">
+        {{coll.name}} - <small>{{coll.type}}</small>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="confirmation animated slideInDown">
+    <button (click)="addAll()"      mat-raised-button color="primary" [disabled]="!_collSelection">Add all Cards</button>
+    <button (click)="cancel.emit()" mat-raised-button color="primary" ><i class="fas fa-times"></i> Cancel</button>
+  </div>
+</div>

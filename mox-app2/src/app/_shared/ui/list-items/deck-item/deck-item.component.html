@@ -1,0 +1,27 @@
+<app-mox-loading-spinner *ngIf="!deck"></app-mox-loading-spinner>
+<div *ngIf="deck" matRipple class="deck-item animated slideInLeft" [class.selected-deck]="selected">
+  <!-- <i [className]="deckTypeIcon() + ' big-ico animated fadeIn'"></i> -->
+  <div class="cover" (click)="deckSelected.emit(deck)" (press)="deckSelected.emit(deck)"
+    [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+    <p class="color-identity" *ngIf="deck.colorIdentity">
+      <i *ngFor="let ico of deck.colorIdentity" [className]="'ms ms-' + ico.toLowerCase()" [class.ms-cost]=" ico != ''"
+        [class.shadow]=" ico != ''"></i>
+    </p>
+  </div>
+  <div class="content" (click)="deckSelected.emit(deck)">
+    <div>
+      <label>{{deck.name}}</label>
+      <span>{{(deck.cards) ? deck.cards.length : 0}} / {{(deck.side) ? deck.side.length : 0}}</span>
+    </div>
+    <div class="second-level">
+      <span>{{deck.format}}</span>
+      <label>by {{deck.ownerName}}</label>
+      <span>
+        <i class="fas fa-eye-slash" *ngIf="!deck.public"></i>
+        <i class="fas fa-eye" *ngIf="deck.public"></i>
+        <i class="fas fa-times" *ngIf="!deck.legal"></i>
+        <i class="fas fa-check" *ngIf="deck.legal"></i>
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,37 @@
-<p>
-  collection-action works!
-</p>
+<div class="picker-bg-2 animated bounceInLeft"></div>
+<ng-container *ngIf="collection">
+  <div class="picker-bg-1 animated bounceInLeft" *ngIf="collection.cover" [ngStyle]="{ 'background-image': 'url(' + collection.cover + ')' }"></div>
+  <div class="no-img" *ngIf="collection.cover">
+    <i class="fas fa-camera-retro"></i>
+  </div>
+  <div class="action-menu">
+    <div class="animated fadeIn">
+      <h2>{{name}}</h2>
+    </div>
+    <section class="options mox-font animated bounceInRight">
+      <button disabled matRipple>
+        <i class="fas fa-shopping-bag" style="font-size: 1.4em"></i> Shop
+      </button>
+      <button (click)="collPicker()" matRipple>
+        <i class="fas fa-box-open" style="font-size: 1.3em"></i> Add cards to a Collection
+      </button>
+      <button (click)="exportList()" matRipple>
+        <i class="fas fa-cloud-download-alt" style="font-size: 1.3em"></i> Export Collection
+      </button>
+      <button (click)="forkDeck()" matRipple>
+        <i class="fas fa-code-branch" style="font-size: 1.4em"></i> Fork Collection
+      </button>
+      <button (click)="share()" matRipple>
+        <i class="fas fa-retweet" style="font-size: 1.3em"></i> Share
+      </button>
+      <button disabled matRipple>
+        <i class="fas fa-flask" style="font-size: 1.4em"></i> Take to the Lab
+      </button>
+    </section>
+  </div>
+</ng-container>
+<div class="action-button animated bounceInUp">
+  <div matRipple (click)="closeContext()">
+    <i class="fas fa-archive"></i>
+  </div>
+</div>

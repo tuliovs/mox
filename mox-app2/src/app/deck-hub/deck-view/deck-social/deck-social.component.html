@@ -12,7 +12,7 @@
         </div>
         <div class="middle animated fadeIn">
           <label class="mox-font">by {{deck.ownerName}}</label>
-          <i *ngIf="_deckService.deckProcess._deckStats.guildIco" class="{{_deckService.deckProcess._deckStats.guildIco}} animated fadeIn"></i>
+          <i *ngIf="_deckService.deckProcess._deckStats && _deckService.deckProcess._deckStats.guildIco" class="{{_deckService.deckProcess._deckStats.guildIco}} animated fadeIn"></i>
         </div>
         <div class="bottom animated fadeIn">
           <i *ngIf="deck.public" class="fas fa-eye"></i>

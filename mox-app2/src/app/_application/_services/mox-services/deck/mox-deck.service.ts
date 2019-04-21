@@ -41,11 +41,19 @@ export class MoxDeckService {
       ).subscribe();
     }
 
-  public getWorkingDeck(): Observable<MoxDeck> {
+  viewDeck() {
+    if (this.deckProcess._deck) {
+      this._router.navigateByUrl('/deck/' + this.deckProcess._deck.key);
+    } else {
+      console.error('#233 [ViewDeck] No Deck');
+    }
+  }
+
+  getWorkingDeck(): Observable<MoxDeck> {
     return this.workingDeck.asObservable();
   }
 
-  public getCreatedDeck(): Observable<MoxDeck> {
+  getCreatedDeck(): Observable<MoxDeck> {
     return this.creatingDeck;
   }
 
@@ -73,19 +81,18 @@ export class MoxDeckService {
     });
   }
 
-  forkDeck() {
+  fork(pro: DeckProcess) {
     return new Promise<MoxDeck>((resolve, reject) => {
       try {
         if (this._user) {
-          const proDeck = this.deckProcess._deck;
-          const forked = { ...proDeck };
+          const forked = { ...pro._deck };
           forked.public = true;
-          forked.originayKey = (proDeck.originayKey ? proDeck.originayKey : proDeck.key);
-          forked.creatorId = (proDeck.creatorId ? proDeck.creatorId : proDeck.ownerId);
+          forked.originayKey = (pro._deck.originayKey ? pro._deck.originayKey : pro._deck.key);
+          forked.creatorId = (pro._deck.creatorId ? pro._deck.creatorId : pro._deck.ownerId);
           forked.ownerName = this._user.displayName;
           forked.ownerId = this._user.uid;
           forked.key = this.makeId();
-          this.setDeck(forked)
+          this.set(forked)
           .then(() => {
             this._toast.sendMessage('Deck Forked!', 'success', forked.ownerId);
             this._state.returnState();
@@ -104,7 +111,7 @@ export class MoxDeckService {
     });
   }
 
-  editDeck(deck: MoxDeck) {
+  edit(deck: MoxDeck) {
     return new Promise<DeckProcess>((resolve, reject) => {
       if (deck) {
         const pro = this.deckProcess;
@@ -115,7 +122,7 @@ export class MoxDeckService {
         pro.errorList = [];
         pro.totalcards = (deck.cards.length + deck.side.length);
         this.getCardData(pro)
-        .then(pp => this.getDeckStats(pp))
+        .then(pp => this.getStats(pp))
         .then(dP => resolve(dP))
         .catch(
           (err) => {
@@ -128,7 +135,7 @@ export class MoxDeckService {
     });
   }
 
-  setDeck(deck: MoxDeck) {
+  set(deck: MoxDeck) {
     return new Promise<DeckProcess>((resolve, reject) => {
       if (deck) {
         this.deckCollection = this.afs.collection('decks');
@@ -147,7 +154,7 @@ export class MoxDeckService {
     });
   }
 
-  getDeck(deckId: string): Observable<MoxDeck> {
+  get(deckId: string): Observable<MoxDeck> {
     this.deckCollection = this.afs.collection('decks');
     return this.deckCollection.doc<MoxDeck>(deckId).valueChanges();
   }
@@ -206,15 +213,7 @@ export class MoxDeckService {
     });
   }
 
-  viewDeck() {
-    if (this.deckProcess._deck) {
-      this._router.navigateByUrl('/deck/' + this.deckProcess._deck.key);
-    } else {
-      console.error('#233 [ViewDeck] No Deck');
-    }
-  }
-
-  updateDeck(dkPs: DeckProcess) {
+  update(dkPs: DeckProcess) {
     return new Promise<DeckProcess>((resolve, reject) => {
       if (dkPs._deck) {
         dkPs.status = 'Updating Deck';
@@ -239,7 +238,7 @@ export class MoxDeckService {
     });
   }
 
-  deleteDeck(deck: MoxDeck) {
+  delete(deck: MoxDeck) {
     return new Promise<Boolean>((resolve, reject) => {
       if (!deck) {
         reject(false);
@@ -282,7 +281,7 @@ export class MoxDeckService {
     });
   }
 
-  getDeckStats(deckProcess: DeckProcess) {
+  getStats(deckProcess: DeckProcess) {
     return new Promise<DeckProcess>((resolve, reject) => {
       if (!deckProcess) {
         reject('#563 [getDeckStats] No deck process');
@@ -304,7 +303,7 @@ export class MoxDeckService {
     });
   }
 
-  setDeckStats(deckP: DeckProcess) {
+  setStats(deckP: DeckProcess) {
     return new Promise<DeckProcess>((resolve, reject) => {
       if (deckP) {
         this.deckCollection = this.afs.collection('decks-stats');
@@ -323,7 +322,7 @@ export class MoxDeckService {
     });
   }
 
-  updateDeckStats(dkPs: DeckProcess) {
+  updateStats(dkPs: DeckProcess) {
     return new Promise<DeckProcess>((resolve, reject) => {
       if (dkPs._deckStats) {
         dkPs.status = 'Updating Deck Stats';
@@ -360,7 +359,7 @@ export class MoxDeckService {
           tap((tempDeck: MoxDeck) => {
             tempDk = tempDeck;
             tempDk.cards.push(cardId);
-            this.editDeck(tempDk)
+            this.edit(tempDk)
             .then(dk => result(dk));
           })).subscribe();
       } else {
@@ -379,7 +378,7 @@ export class MoxDeckService {
           tap((tempDeck: MoxDeck) => {
             tempDk = tempDeck;
             tempDk.side.push(cardId);
-            this.editDeck(tempDk)
+            this.edit(tempDk)
             .then(dk => result(dk));
           })).subscribe();
       } else {
