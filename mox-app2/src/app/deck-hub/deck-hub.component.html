@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <mat-tab-group mat-stretch-tabs dynamicHeight class="example-stretched-tabs mat-elevation-z4 animated fadeIn"
   [(selectedIndex)]="tab" [color]="'primary'" [backgroundColor]="'primary'">
   <mat-tab label="Your Decks {{deckList ? filteredDeckList().length : 0 | number:'2.0'}}">
@@ -20,6 +21,87 @@
                   </li>
                 </ng-container>
               </ol>
+=======
+<div *ngIf="(deckList) then deckListed else emptyList"></div>
+
+<ng-template #deckListed>
+  <app-mox-titlebar>
+    <div class="deck-format mox-font animated fadeInDown">
+      <label>Listing {{(formatSelected)? formatSelected : 'All'}} decks</label>
+      <label>{{filteredDeckList().length | number:'2.0'}}</label>
+    </div>
+  </app-mox-titlebar>
+  <div class="main animated fadeInDown">
+    <span *ngIf="!showLoader && deckList.length == 0" >Empty decklist</span>
+    <ul *ngIf="!showLoader && folders.length > 0">
+      <li *ngFor="let folder of folders; let i=index" >
+        <div class="folder">
+          <h4 class="folder-name" matRipple (click)="folderVisible[i] = !folderVisible[i]">
+            <i *ngIf="folderVisible[i]" class="fas fa-folder-open"></i> 
+            <i *ngIf="!folderVisible[i]" class="fas fa-folder"></i>
+            {{folder}}
+          </h4>
+          
+          <ol *ngIf="!showLoader && folderVisible[i]"
+          class="animated fadeIn">
+            <ng-container *ngFor="let deck of filteredDeckList()" >
+              <li *ngIf="deck.folder === folder" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
+                <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
+                <div class="cover" matRipple (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+                  <p class="color-identity" *ngIf="deck.colorIdentity">
+                      <i *ngFor="let ico of deck.colorIdentity"
+                      [className]="'ms ms-' + ico.toLowerCase()"
+                      [class.ms-cost]=" ico != ''"
+                      [class.shadow]=" ico != ''"
+                    ></i>
+                  </p>
+                </div>
+                <div class="content" matRipple (click)="deckSelected(deck)">
+                  <div>
+                    <label>{{deck.name}}</label>
+                    <span>{{deck.format}}</span>
+                  </div>
+                  <div class="second-level">
+                    <div class="owner" >by {{deck.ownerName}}</div>
+                    <div class="icons">
+                      <span>
+                        <i class="fas fa-eye-slash" *ngIf="!deck.public"></i>
+                        <i class="fas fa-eye" *ngIf="deck.public"></i>
+                      </span>
+                      <span>
+                        <i class="fas fa-times" *ngIf="!deck.legal"></i>
+                        <i class="fas fa-check" *ngIf="deck.legal"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ng-container>
+          </ol>
+        </div>
+      </li>
+    </ul>
+    <hr />
+    <ol *ngIf="!showLoader" 
+    [@listAnimator]="listAnimator"
+    (@listAnimator.done)="resetAnimationState()">
+      <ng-container *ngFor="let deck of filteredDeckList()" >
+        <li *ngIf="!deck.folder || (deck.folder && !folders.includes(deck.folder))" [ngClass]="{'selected-deck': this.internalDeck === deck}" >
+          <!-- <div *ngIf="this.internalDeck === deck" class="zoom" (click)="viewDeck()"><i class="fas fa-search-plus"></i></div> -->
+          <div class="cover" matRipple  (click)="deckSelected(deck)" (press)="deckSelected(deck);_deckService.viewDeck()" [ngStyle]="{ 'background-image': 'url(' + deck.cover + ')' }">
+            <p class="color-identity" *ngIf="deck.colorIdentity">
+                <i *ngFor="let ico of deck.colorIdentity"
+                [className]="'ms ms-' + ico.toLowerCase()"
+                [class.ms-cost]=" ico != ''"
+                [class.shadow]=" ico != ''"
+              ></i>
+            </p>
+          </div>
+          <div class="content" matRipple (click)="deckSelected(deck)">
+            <div>
+              <label>{{deck.name}}</label>
+              <span>{{deck.format}}</span>
+>>>>>>> parent of ee554d1d... --many many collection things
             </div>
           </li>
         </ul>

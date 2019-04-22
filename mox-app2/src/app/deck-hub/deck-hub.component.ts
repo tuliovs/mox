@@ -39,11 +39,15 @@ export class DeckHubComponent implements OnInit, AfterViewInit {
   public deckList: MoxDeck[];
   private internalDeck: any;
   private formatSelected: string;
+  public folderVisible: boolean[] = [];
   private deckCollection: AngularFirestoreCollection;
   public listAnimator: string;
   public folders: string[] = [];
+<<<<<<< HEAD
   public folderVisible: boolean[] = [];
   public _deckPicked;
+=======
+>>>>>>> parent of ee554d1d... --many many collection things
   constructor(
     private _afs: AngularFirestore,
     private _deckService: MoxDeckService,

@@ -5,13 +5,14 @@ $font-path: '/app/assets/fonts';
   $file-path: '#{$font-path}/#{$name}/#{$file}';
 
   @font-face {
-    font-display: auto;
-    font-family: $name;
-    font-style: $style;
+		font-family: $name;
+		font-style: $style;
+    font-display: swap;
     font-weight: $weight;
-    src: url('#{$file-path}.eot?') format('eot');
-    src: url('#{$file-path}.eot#iefix') format('eot'), url('#{$file-path}.svg##{$file}') format('svg');
-  }
+		src: url('#{$file-path}.eot?') format('eot');
+		src: url('#{$file-path}.eot#iefix') format('eot'),
+			url('#{$file-path}.svg##{$file}') format('svg');
+	}
 };
 
 // @include set-font-face('Cursive', 'Audiowide', 300);

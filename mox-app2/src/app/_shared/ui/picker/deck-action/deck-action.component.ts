@@ -45,12 +45,15 @@ export class DeckActionComponent implements OnInit, OnChanges {
     this._deckService.statTools.processStats(this._deckService.deckProcess);
   }
 
+<<<<<<< HEAD
   collPicker() {
     navigator.vibrate([30]);
     this.collAddChoosen.emit(this.deck.key);
     this.closeContext();
   }
 
+=======
+>>>>>>> parent of ee554d1d... --many many collection things
   share() {
     this.ngNavigatorShareService.share({
       title: 'Mox',

@@ -31,13 +31,11 @@ export class CardActionComponent implements OnInit {
   }
   @Input() card;
   @Output() cardActionChoosen: EventEmitter<string> = new EventEmitter();
-  @Output() coverActionChoosen: EventEmitter<string> = new EventEmitter();
-  @Output() deckAddChoosen: EventEmitter<string> = new EventEmitter();
   @Output() cancel: EventEmitter<any> = new EventEmitter();
   constructor(
     public _favService: MoxFavoriteService,
     public _router: Router,
-    public _afs: AngularFirestore,
+    public afs: AngularFirestore,
     public _localstorageService: LocalstorageService,
     public _auth: AuthService,
     public _deckService: MoxDeckService,
@@ -55,9 +53,13 @@ export class CardActionComponent implements OnInit {
     }
   }
 
-  addOneCard() {
+  addOneCard(side?: boolean) {
+    if (!side) {
+      this._deckService.addCard(this.card.id);
+    } else {
+      this._deckService.addCardSide(this.card.id);
+    }
     navigator.vibrate([30]);
-    this.deckAddChoosen.emit(this.card.id);
     this.closeContext();
   }
 
@@ -65,6 +67,7 @@ export class CardActionComponent implements OnInit {
     navigator.vibrate([30]);
     this._favService.favoriteCard(card).then(
       () => {
+        // console.log('!SUCESS!');
       }
     ).catch((err) => {
       console.error(err);
@@ -76,7 +79,24 @@ export class CardActionComponent implements OnInit {
   }
 
   setCover() {
-    this.coverActionChoosen.emit(this.getCardImgUriCrop());
+    if (this._deckService.deckProcess._deck) {
+      navigator.vibrate([30]);
+      this._deckService.deckProcess.active = true;
+      this.deckCollection = this.afs.collection('decks');
+      this.deckCollection.doc(this._deckService.deckProcess._deck.key).update({
+        cover: this.getCardImgUriCrop()
+      }).then(
+        () => {
+          this._toast.sendMessage(
+            'Congrats! ' + this.card.name + ' set as DeckCover for ' + this._deckService.deckProcess._deck.name + ' !',
+            'success',
+            this._deckService.deckProcess._deck.ownerId);
+          this._deckService.deckProcess.active = false;
+          this.closeContext();
+          this._state.returnState();
+        }
+      );
+    }
     this.closeContext();
   }
 

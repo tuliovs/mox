@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { ReversePipe } from '@application/_pipes/reverse.pipe';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -23,6 +23,7 @@ import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { MatBadgeModule, MatSelectModule, MatRippleModule, MatFormFieldModule,
         MatSlideToggleModule, MatTabsModule, MatAutocompleteModule,
         MatInputModule, MatButtonModule, MatTooltipModule, MatProgressBarModule } from '@angular/material';
+
 
 import { ActionBarComponent } from '@shared/ui/action-bar/action-bar.component';
 import { ActionStateService } from '@application/_services/action-state/action-state.service';
@@ -68,6 +69,7 @@ import { CardActionComponent } from './_shared/ui/picker/card-action/card-action
 import { DeckImportComponent } from './_shared/ui/picker/deck-import/deck-import.component';
 import { StatsHolderComponent } from './_shared/ui/stats-holder/stats-holder.component';
 import { DeckSocialComponent } from './deck-hub/deck-view/deck-social/deck-social.component';
+<<<<<<< HEAD
 import { CollectionHubComponent } from './collection-hub/collection-hub.component';
 import { MoxCollectionService } from '@application/_services/mox-services/collection/mox-collection.service';
 import { NewCollectionComponent } from './_shared/ui/picker/new-collection/new-collection.component';
@@ -78,6 +80,9 @@ import { CardItemComponent } from './_shared/ui/list-items/card-item/card-item.c
 import { DeckPickerComponent } from './_shared/ui/picker/deck-picker/deck-picker.component';
 import { CollectionPickerComponent } from './_shared/ui/picker/collection-picker/collection-picker.component';
 import { DeckItemComponent } from './_shared/ui/list-items/deck-item/deck-item.component';
+=======
+
+>>>>>>> parent of ee554d1d... --many many collection things
 
 export const firebaseConfig = environment.firebaseConfig;
 
@@ -124,6 +129,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     DeckImportComponent,
     StatsHolderComponent,
     DeckSocialComponent,
+<<<<<<< HEAD
     CollectionHubComponent,
     NewCollectionComponent,
     CollectionItemComponent,
@@ -133,6 +139,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     DeckPickerComponent,
     CollectionPickerComponent,
     DeckItemComponent,
+=======
+>>>>>>> parent of ee554d1d... --many many collection things
   ],
   imports: [
     CommonModule,
@@ -173,7 +181,6 @@ export class MyHammerConfig extends HammerGestureConfig  {
     MoxCardService,
     MoxFavoriteService,
     MoxDeckService,
-    MoxCollectionService,
     NotificationService,
     ScryfallCardService,
     ScryfallSearchService,

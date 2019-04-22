@@ -15,16 +15,19 @@
       Add to Favorites
     </button>
     <button disabled matRipple>
-      <i class="fas fa-shopping-bag" style="font-size: 1.4em"></i> Shop U${{card.usd}} | tix{{card.tix}}
+      <i class="fas fa-shopping-bag" style="font-size: 1.4em"></i> Shop  U${{card.usd}} | tix{{card.tix}}
     </button>
     <button (click)="addOneCard()" matRipple>
-      <i class="fas fa-plus-circle" style="font-size: 1.4em"></i> Add to a Deck/Side List
+      <i class="fas fa-plus-circle" style="font-size: 1.4em"></i> Add 1 to Deck List
+    </button>
+    <button (click)="addOneCard(true)" matRipple>
+      <i class="fas fa-plus-circle" style="font-size: 1.4em"></i> Add 1 to Side List
     </button>
     <button disabled matRipple>
-      <i class="fas fa-box-open" style="font-size: 1.4em"></i> Add to a Collection
+      <i class="fas fa-box-open" style="font-size: 1.4em"></i> Add 1 to collection
     </button>
     <button (click)="setCover()" matRipple>
-      <i class="fas fa-tags" style="font-size: 1.4em"></i> Make Cover
+      <i class="fas fa-tags" style="font-size: 1.4em"></i> Make Deck Cover
     </button>
     <button disabled matRipple>
       <i class="fas fa-retweet" style="font-size: 1.4em"></i> Share

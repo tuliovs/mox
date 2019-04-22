@@ -1,172 +1,123 @@
 @import './../../../../styles/theme.colors'
 
-$color: #132030;
-$size: 6px;
-$time: 1;
+.spinner
+  height: 40px
+  margin: 100px auto
+  position: relative
+  width: 40px
 
-.dank-ass-loader
-  align-items: center
-  bottom: 15%
-  display: flex
-  flex-direction: column
-  left: 40%
+.double-bounce1
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out
+  animation: sk-bounce 2.0s infinite ease-in-out
+  background-color: #333
+  border-radius: 50%
+  height: 100%
+  left: 0
+  opacity: .6
   position: absolute
-  transform: rotate(90deg)
-  z-index: 10
+  top: 0
+  width: 100%
 
-  .row
-    display: flex
+.double-bounce2
+  -webkit-animation-delay: -1.0s
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out
+  animation-delay: -1.0s
+  animation: sk-bounce 2.0s infinite ease-in-out
+  background-color: #333
+  border-radius: 50%
+  height: 100%
+  left: 0
+  opacity: .6
+  position: absolute
+  top: 0
+  width: 100%
 
-.arrow
-  animation: blink $time + s infinite
-  border-bottom: ($size * 1.8) solid $color
-  border-left: $size solid transparent
-  border-right: $size solid transparent
-  filter: drop-shadow(0 0 ($size * 1.5) $color)
-  height: 0
-  margin: 0 (-$size / 2)
-  width: 0
-
-  &.down
-    transform: rotate(180deg)
-
-  @for $i from 1 through 18
-    &.outer-#{$i}
-      animation-delay: -($time / 18) * $i + s
-
-  @for $i from 1 through 6
-    &.inner-#{$i}
-      animation-delay: -($time / 6) * $i + s;
-
-@keyframes blink
-  0%
-    opacity: .1
-
-  30%
-    opacity: 1
-
+@-webkit-keyframes sk-bounce
+  0%,
   100%
-    opacity: .1
+    -webkit-transform: scale(0)
 
-
-// .spinner
-//   height: 40px
-//   margin: 100px auto
-//   position: relative
-//   width: 40px
-
-// .double-bounce1
-//   -webkit-animation: sk-bounce 2.0s infinite ease-in-out
-//   animation: sk-bounce 2.0s infinite ease-in-out
-//   background-color: #333
-//   border-radius: 50%
-//   height: 100%
-//   left: 0
-//   opacity: .6
-//   position: absolute
-//   top: 0
-//   width: 100%
-
-// .double-bounce2
-//   -webkit-animation-delay: -1.0s
-//   -webkit-animation: sk-bounce 2.0s infinite ease-in-out
-//   animation-delay: -1.0s
-//   animation: sk-bounce 2.0s infinite ease-in-out
-//   background-color: #333
-//   border-radius: 50%
-//   height: 100%
-//   left: 0
-//   opacity: .6
-//   position: absolute
-//   top: 0
-//   width: 100%
-
-// @-webkit-keyframes sk-bounce
-//   0%,
-//   100%
-//     -webkit-transform: scale(0)
-
-//   50%
-//     -webkit-transform: scale(1)
+  50%
+    -webkit-transform: scale(1)
 
 
 @keyframes sk-bounce
-//   0%,
-//   100%
-//     -webkit-transform: scale(0)
-//     transform: scale(0)
+  0%,
+  100%
+    -webkit-transform: scale(0)
+    transform: scale(0)
 
-//   50%
-//     -webkit-transform: scale(1)
-//     transform: scale(1)
+  50%
+    -webkit-transform: scale(1)
+    transform: scale(1)
 
-// .sk-cube-grid
-//   height: 40px
-//   margin: 100px auto
-//   width: 40px
+.sk-cube-grid
+  height: 40px
+  margin: 100px auto
+  width: 40px
 
-//   .sk-cube
-//     -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out
-//     animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out
-//     float: left
-//     height: 33%
-//     width: 33%
+  .sk-cube
+    -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out
+    animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out
+    float: left
+    height: 33%
+    width: 33%
 
-//   .sk-cube1
-//     -webkit-animation-delay: .2s
-//     animation-delay: .2s
+  .sk-cube1
+    -webkit-animation-delay: .2s
+    animation-delay: .2s
 
-//   .sk-cube2
-//     -webkit-animation-delay: .3s
-//     animation-delay: .3s
+  .sk-cube2
+    -webkit-animation-delay: .3s
+    animation-delay: .3s
 
-//   .sk-cube3
-//     -webkit-animation-delay: .4s
-//     animation-delay: .4s
+  .sk-cube3
+    -webkit-animation-delay: .4s
+    animation-delay: .4s
 
-//   .sk-cube4
-//     -webkit-animation-delay: .1s
-//     animation-delay: .1s
+  .sk-cube4
+    -webkit-animation-delay: .1s
+    animation-delay: .1s
 
-//   .sk-cube5
-//     -webkit-animation-delay: .2s
-//     animation-delay: .2s
+  .sk-cube5
+    -webkit-animation-delay: .2s
+    animation-delay: .2s
 
-//   .sk-cube6
-//     -webkit-animation-delay: .3s
-//     animation-delay: .3s
+  .sk-cube6
+    -webkit-animation-delay: .3s
+    animation-delay: .3s
 
-//   .sk-cube7
-//     -webkit-animation-delay: 0s
-//     animation-delay: 0s
+  .sk-cube7
+    -webkit-animation-delay: 0s
+    animation-delay: 0s
 
-//   .sk-cube8
-//     -webkit-animation-delay: .1s
-//     animation-delay: .1s
+  .sk-cube8
+    -webkit-animation-delay: .1s
+    animation-delay: .1s
 
-//   .sk-cube9
-//     -webkit-animation-delay: .2s
-//     animation-delay: .2s
+  .sk-cube9
+    -webkit-animation-delay: .2s
+    animation-delay: .2s
 
-// @-webkit-keyframes sk-cubeGridScaleDelay
-//   0%,
-//   70%,
-//   100%
-//     -webkit-transform: scale3D(1, 1, 1)
-//     transform: scale3D(1, 1, 1)
+@-webkit-keyframes sk-cubeGridScaleDelay
+  0%,
+  70%,
+  100%
+    -webkit-transform: scale3D(1, 1, 1)
+    transform: scale3D(1, 1, 1)
 
-//   35%
-//     -webkit-transform: scale3D(0, 0, 1)
-//     transform: scale3D(0, 0, 1)
+  35%
+    -webkit-transform: scale3D(0, 0, 1)
+    transform: scale3D(0, 0, 1)
 
 
 @keyframes sk-cubeGridScaleDelay
-//   0%,
-//   70%,
-//   100%
-//     -webkit-transform: scale3D(1, 1, 1)
-//     transform: scale3D(1, 1, 1)
+  0%,
+  70%,
+  100%
+    -webkit-transform: scale3D(1, 1, 1)
+    transform: scale3D(1, 1, 1)
 
-//   35%
-//     -webkit-transform: scale3D(0, 0, 1)
-//     transform: scale3D(0, 0, 1)
+  35%
+    -webkit-transform: scale3D(0, 0, 1)
+    transform: scale3D(0, 0, 1)

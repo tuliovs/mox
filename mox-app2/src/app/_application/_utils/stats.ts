@@ -345,21 +345,3 @@ export class DeckStats {
   }
 
 }
-
-
-export class CollectionStats {
-  constructor(
-    public _state: ActionStateService
-  ) { }
-
-
-  static countOccurrences(arr: string[], value: string) {
-    let res = 0;
-    arr.forEach(el => {
-      if (el === value) {
-        res++;
-      }
-    });
-    return res;
-  }
-}
