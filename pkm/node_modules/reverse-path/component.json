@@ -1,0 +1,22 @@
+{
+  "name": "reverse-path",
+  "repo": "duncaen/reverse-path",
+  "description": "Turns Express-style paths to urls by passing parameters",
+  "version": "0.0.1",
+  "keywords": [
+    "path",
+    "reverse",
+    "express",
+    "route",
+    "router",
+    "url",
+    "params"
+  ],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js"
+  ]
+}
