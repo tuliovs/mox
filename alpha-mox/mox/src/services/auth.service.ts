@@ -17,7 +17,6 @@ interface User {
   fcmTokens?: { [token: string]: true };
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -73,7 +72,7 @@ export class AuthService {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
-      nickName: user.nickName,
+      // nickName: user.nickName,
       photoURL: user.photoURL,
     };
     return userRef.update(data);

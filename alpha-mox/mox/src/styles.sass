@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'src/theme.scss'
+@import '~@nebular/theme/styles/globals'
+
+// install the framework styles
+@include nb-install() 
+@include nb-theme-global()
+
+* 
+  font-family: 'Exo 2', sans-serif
+
+body
+  background-color: #1b1c1d
+

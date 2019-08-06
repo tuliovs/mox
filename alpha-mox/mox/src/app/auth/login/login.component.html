@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="logo">
+    <!-- <h1 class="mox-font">0</h1> -->
+    <img src="./../../../assets/big_logo.svg" />
+    <h1>Wellcome to M0X</h1>
+  </div>
+  <section>
+    <p>
+      Here in mox we don't keep your personal data! So all we need is your e-mail (to, you know, save your stuff).
+    </p>
+    <p>
+      So we can send you an email with a link and then when you click it we will magically know it's you and that's it! (today's technologies, can you believe it? its awesome)
+    </p>
+  </section>
+  <ng-container *ngIf="!formActive">
+    <div class="buttons">
+      <button (click)="formActive = true" type="button" nbButton class="btn btn-primary">
+        <fa-icon [icon]="faEnvelopeOpen"></fa-icon> E-Mail Connect
+      </button>
+      <button (click)="_AUTH.googleLogin()" type="button" nbButton class="btn btn-primary google">
+        <fa-icon [icon]="faGooglePlusG"></fa-icon> Google Connect
+      </button>
+      <button (click)="_AUTH.twitterLogin()" type="button" nbButton class="btn btn-primary twitter">
+        <fa-icon [icon]="faTwitter"></fa-icon> Twitter Login
+      </button>
+      <button (click)="_AUTH.gitHubLogin()" type="button" nbButton class="btn btn-primary github">
+        <fa-icon [icon]="faGithub"></fa-icon> GitHub Login
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="formActive">
+    <form class="newUser">
+      <section class="form-block">
+        <b>Email:</b> <input type="email" nbInput fullWidth [(ngModel)]="email" name="email">
+      </section>
+      <section class="form-block">
+        <button [disabled]="emailSent" nbButton (click)="sendEmailLink(email)" type="button" class="btn btn-primary">Join M0X</button>
+        <button nbButton outline (click)="formActive = false" type="button" class="btn btn-primary">Back</button>
+      </section>
+      <hr />
+      <section class="form-block" *ngIf='emailSent'>
+        <p>Cool! We appreciate your interest in Mox. I just got you a topther with the e-mail so check it out!</p>
+      </section>
+      <section class="form-block" *ngIf="errorMessage">
+        <p>I'm so sorry, it's not you, really it's me. I got: {{errorMessage}}</p>
+        <p>Don't worry</p>
+      </section>
+    </form>
+  </ng-container>
+  <div class="disclaimer">
+    <p class="mox-disc">
+      <small>Mox is a open not official community of Magic the Gathering™</small>
+    </p>
+    <p class="mtg-disc">
+      <small>Magic: The Gathering, including card images, the mana symbols, and Oracle text, is copyright Wizards of the Coast, LLC, a subsidiary of Hasbro, Inc. This website is not produced by, endorsed by, supported by, or affiliated with Wizards of the Coast.</small>
+    </p>
+    <p class="mtg-logo">
+      <i class="ss ss-pmtg1"></i>
+    </p>
+  </div>
+</div>

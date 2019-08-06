@@ -2,12 +2,13 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@envoirment/*" : ["src/environments/*"],
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
-    "module": "esnext",
-    "moduleResolution": "node",
     "experimentalDecorators": true,
     "module": "esnext",
     "moduleResolution": "node",
